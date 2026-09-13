@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:window_manager/window_manager.dart';
+import 'core/content_manager.dart';
+import 'ui/quiz_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await windowManager.ensureInitialized();
   runApp(const ConceptsReminderApp());
 }
 
@@ -15,10 +20,10 @@ class ConceptsReminderApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF10B981), // Color esmeralda moderno
+          seedColor: const Color(0xFF10B981),
           brightness: Brightness.dark,
         ),
-        fontFamily: 'Segoe UI', // Fuente limpia
+        fontFamily: 'Segoe UI',
       ),
       home: const MainDashboard(),
     );
@@ -40,7 +45,6 @@ class _MainDashboardState extends State<MainDashboard> {
     return Scaffold(
       body: Row(
         children: [
-          // Barra lateral de navegación (Navigation Rail)
           NavigationRail(
             selectedIndex: _selectedIndex,
             onDestinationSelected: (int index) {
@@ -51,28 +55,13 @@ class _MainDashboardState extends State<MainDashboard> {
             labelType: NavigationRailLabelType.all,
             backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
             destinations: const [
-              NavigationRailDestination(
-                icon: Icon(Icons.dashboard_outlined),
-                selectedIcon: Icon(Icons.dashboard),
-                label: Text('Inicio'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.code_outlined),
-                selectedIcon: Icon(Icons.code),
-                label: Text('Lenguajes'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.settings_outlined),
-                selectedIcon: Icon(Icons.settings),
-                label: Text('Ajustes'),
-              ),
+              NavigationRailDestination(icon: Icon(Icons.dashboard_outlined), selectedIcon: Icon(Icons.dashboard), label: Text('Inicio')),
+              NavigationRailDestination(icon: Icon(Icons.code_outlined), selectedIcon: Icon(Icons.code), label: Text('Lenguajes')),
+              NavigationRailDestination(icon: Icon(Icons.settings_outlined), selectedIcon: Icon(Icons.settings), label: Text('Ajustes')),
             ],
           ),
           const VerticalDivider(thickness: 1, width: 1),
-          // Contenido Principal
-          Expanded(
-            child: _buildContent(),
-          ),
+          Expanded(child: _buildContent()),
         ],
       ),
     );
@@ -80,14 +69,10 @@ class _MainDashboardState extends State<MainDashboard> {
 
   Widget _buildContent() {
     switch (_selectedIndex) {
-      case 0:
-        return const HomePage();
-      case 1:
-        return const LanguagesPage();
-      case 2:
-        return const SettingsPage();
-      default:
-        return const HomePage();
+      case 0: return const HomePage();
+      case 1: return const LanguagesPage();
+      case 2: return const SettingsPage();
+      default: return const HomePage();
     }
   }
 }
@@ -102,21 +87,10 @@ class HomePage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '¡Hola!',
-            style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
+          Text('¡Hola, Leo!', style: Theme.of(context).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
-          Text(
-            'Es hora de refrescar tus conocimientos.',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Colors.grey,
-                ),
-          ),
+          Text('Es hora de refrescar tus conocimientos.', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Colors.grey)),
           const SizedBox(height: 40),
-          // Tarjeta Principal (Call to Action)
           Card(
             elevation: 4,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -125,29 +99,24 @@ class HomePage extends StatelessWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF10B981), Color(0xFF059669)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+                gradient: const LinearGradient(colors: [Color(0xFF10B981), Color(0xFF059669)], begin: Alignment.topLeft, end: Alignment.bottomRight),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Icon(Icons.lightbulb_outline, size: 48, color: Colors.white),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Práctica de Hoy: Python Básico',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
+                  const Text('Práctica de Hoy: Python Básico', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Tienes 3 conceptos pendientes para repasar hoy.',
-                    style: TextStyle(fontSize: 16, color: Colors.white70),
-                  ),
+                  const Text('Tienes conceptos pendientes para repasar hoy.', style: TextStyle(fontSize: 16, color: Colors.white70)),
                   const SizedBox(height: 24),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      final q = ContentManager().getDueQuestion();
+                      if (q != null) {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizScreen(question: q)));
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       foregroundColor: const Color(0xFF059669),
@@ -168,7 +137,6 @@ class HomePage extends StatelessWidget {
 
 class LanguagesPage extends StatelessWidget {
   const LanguagesPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -180,9 +148,7 @@ class LanguagesPage extends StatelessWidget {
           const SizedBox(height: 20),
           Expanded(
             child: GridView.count(
-              crossAxisCount: 3,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
+              crossAxisCount: 3, crossAxisSpacing: 20, mainAxisSpacing: 20,
               children: [
                 _buildLangCard(context, 'Python', Icons.terminal, true),
                 _buildLangCard(context, 'Java', Icons.coffee, false),
@@ -194,7 +160,6 @@ class LanguagesPage extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildLangCard(BuildContext context, String title, IconData icon, bool active) {
     return Card(
       elevation: active ? 4 : 1,
@@ -221,7 +186,6 @@ class LanguagesPage extends StatelessWidget {
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -231,29 +195,9 @@ class SettingsPage extends StatelessWidget {
         children: [
           Text('Ajustes', style: Theme.of(context).textTheme.headlineLarge),
           const SizedBox(height: 40),
-          ListTile(
-            title: const Text('Frecuencia de Notificaciones'),
-            subtitle: const Text('Cada 60 minutos'),
-            leading: const Icon(Icons.timer),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () {},
-          ),
+          ListTile(title: const Text('Frecuencia de Notificaciones'), subtitle: const Text('Cada 60 minutos'), leading: const Icon(Icons.timer), trailing: const Icon(Icons.arrow_forward_ios, size: 16)),
           const Divider(),
-          ListTile(
-            title: const Text('Nivel de Dificultad'),
-            subtitle: const Text('Intermedio'),
-            leading: const Icon(Icons.leaderboard),
-            trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () {},
-          ),
-          const Divider(),
-          SwitchListTile(
-            title: const Text('Bloqueo de Pantalla Completa'),
-            subtitle: const Text('Exige responder para continuar usando la PC'),
-            secondary: const Icon(Icons.lock),
-            value: true,
-            onChanged: (bool value) {},
-          ),
+          SwitchListTile(title: const Text('Bloqueo de Pantalla Completa'), subtitle: const Text('Exige responder para continuar usando la PC'), secondary: const Icon(Icons.lock), value: true, onChanged: (bool value) {}),
         ],
       ),
     );
