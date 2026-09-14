@@ -62,8 +62,14 @@ class WindowService {
 
     if (await isHyprlandAvailable()) {
       try {
-        await Process.run('hyprctl', ['dispatch', 'focuswindow', 'class:concepts_reminder']);
-        await Process.run('hyprctl', ['dispatch', 'fullscreen', '1']);
+        // Move window to the user's currently active workspace (e.g. where YouTube/browser is)
+        await Process.run('hyprctl', ['dispatch', 'movetoworkspace', 'current,class:^(.*concepts_reminder.*)\$']);
+        // Make it floating so it detaches from any tiling layout
+        await Process.run('hyprctl', ['dispatch', 'setfloating', 'class:^(.*concepts_reminder.*)\$']);
+        // Force focus directly on concepts_reminder
+        await Process.run('hyprctl', ['dispatch', 'focuswindow', 'class:^(.*concepts_reminder.*)\$']);
+        // Fullscreen 0 = true fullscreen overlay covering the entire monitor and existing windows
+        await Process.run('hyprctl', ['dispatch', 'fullscreen', '0']);
       } catch (e) {
         debugPrint('WindowService: Error executing hyprctl commands on enterOverlayMode: $e');
       }

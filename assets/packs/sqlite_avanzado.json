@@ -1,0 +1,158 @@
+[
+  {
+    "id": "sqlite_001",
+    "difficulty": "basic",
+    "question": "¿Cuál es la característica arquitectónica principal que distingue a SQLite de sistemas de gestión de bases de datos tradicionales como PostgreSQL o MySQL?",
+    "options": [
+      "SQLite requiere un proceso demonio en segundo plano (daemon) que escucha peticiones en un puerto TCP local.",
+      "SQLite es una biblioteca embebida serverless que se compila y ejecuta directamente en el mismo espacio de proceso de la aplicación anfitriona, almacenando la base de datos completa (tablas, índices, esquema) en un único archivo binario multiplataforma en disco.",
+      "SQLite solo puede ejecutarse si está instalado un servidor Apache HTTP con soporte para módulos mod_sqlite.",
+      "SQLite no utiliza archivos en disco y opera únicamente como almacenamiento volátil en la memoria de la GPU."
+    ],
+    "correct_index": 1,
+    "hint": "SQLite no tiene arquitectura cliente-servidor ni procesos background; es 'in-process' y 'serverless'. Las llamadas SQL son simples llamadas a funciones de biblioteca (C API) que leen y escriben directamente en un único archivo ordinario en disco."
+  },
+  {
+    "id": "sqlite_002",
+    "difficulty": "basic",
+    "question": "¿En qué consiste el sistema de 'Afinidad de Tipos' (Type Affinity) característico de SQLite en contraste con el sistema de tipos rígido de SQL estándar?",
+    "options": [
+      "SQLite rechaza cualquier inserción donde el valor no coincida de manera exacta y estricta con el tipo declarado en la definición de la columna (DDL).",
+      "El tipo de dato es una propiedad del valor individual almacenado en tiempo de ejecución y no de la columna; la columna tiene una 'afinidad' sugerida (TEXT, NUMERIC, INTEGER, REAL, BLOB), pero admite valores de otros tipos salvo que se defina como tabla STRICT.",
+      "Todas las columnas se convierten automáticamente a cadenas de texto codificadas en UTF-16 al momento de la escritura.",
+      "Solo admite enteros de 64 bits y convierte los valores de texto en punteros de memoria inaccesibles."
+    ],
+    "correct_index": 1,
+    "hint": "SQLite usa tipado dinámico con afinidad de tipos. Si declaras una columna INTEGER pero insertas la cadena 'hello', SQLite la guardará como TEXT sin lanzar un error (a menos que uses la directiva moderna `STRICT` introducida en SQLite 3.37)."
+  },
+  {
+    "id": "sqlite_003",
+    "difficulty": "basic",
+    "question": "En SQLite, ¿cuál es el comportamiento de los valores `NULL` al evaluar expresiones lógicas con el operador de igualdad (`=`) frente al operador `IS`?",
+    "options": [
+      "La expresión `NULL = NULL` evalúa a TRUE porque ambos son valores nulos idénticos.",
+      "La expresión `NULL = NULL` evalúa a NULL (equivalente a falso en condiciones WHERE) según la lógica trivaluada de SQL, mientras que `NULL IS NULL` evalúa estrictamente a TRUE.",
+      "SQLite no permite el uso del operador `IS` con columnas que admitan valores nulos.",
+      "Comparar con `NULL` genera una excepción fatal `SQLITE_MISUSE` que interrumpe la transacción."
+    ],
+    "correct_index": 1,
+    "hint": "En lógica trivaluada (Three-Valued Logic), `NULL` representa un estado 'desconocido'. Por lo tanto, `NULL = NULL` no es verdadero sino desconocido (`NULL`), requiriendo el operador de identidad `IS NULL` o `IS` para comparaciones directas de nulidad."
+  },
+  {
+    "id": "sqlite_004",
+    "difficulty": "medium",
+    "question": "¿Por qué es necesario ejecutar explícitamente `PRAGMA foreign_keys = ON;` al abrir una nueva conexión a una base de datos SQLite si se desea integridad referencial?",
+    "options": [
+      "Porque las claves foráneas en SQLite se consideran una función experimental en fase beta.",
+      "Porque por razones de retrocompatibilidad estricta con versiones antiguas (SQLite 2 y SQLite 3 pre-3.6.19), la comprobación de restricciones de claves foráneas viene desactivada por defecto y debe habilitarse por cada conexión individual.",
+      "Porque activarlo en el esquema global corrompería permanentemente las tablas creadas sin foreign keys.",
+      "Porque SQLite solo puede verificar claves foráneas si se compila con soporte para librerías criptográficas OpenSSL."
+    ],
+    "correct_index": 1,
+    "hint": "Históricamente SQLite ignoraba la sintaxis de FOREIGN KEY. Cuando se implementó su validación en la versión 3.6.19, se mantuvo deshabilitada por defecto para no romper aplicaciones existentes. La directiva `PRAGMA foreign_keys = ON` debe ser ejecutada por cada conexión que se abra."
+  },
+  {
+    "id": "sqlite_005",
+    "difficulty": "medium",
+    "question": "En cuanto al balance entre velocidad de escritura y durabilidad en SQLite, ¿cuál es el efecto de configurar `PRAGMA synchronous = NORMAL` cuando la base de datos está operando en modo WAL (Write-Ahead Logging)?",
+    "options": [
+      "Provoca que la base de datos sea completamente vulnerable a la corrupción ante un apagón súbito del sistema operativo.",
+      "Proporciona una excelente combinación de rendimiento y seguridad: solo sincroniza físicamente a disco (fsync) durante los checkpoints críticos del WAL, garantizando que un crash de la aplicación o del SO no corrompa la base de datos, aunque podría perder transacciones muy recientes ante pérdida abrupta de energía.",
+      "Desactiva todas las lecturas concurrentes obligando a un bloqueo exclusivo por cada consulta SELECT.",
+      "Duplica el tamaño del archivo `.db` en disco reservando el 50% para memoria virtual swap."
+    ],
+    "correct_index": 1,
+    "hint": "En modo WAL, `PRAGMA synchronous = NORMAL` es ampliamente recomendado por el creador de SQLite (D. Richard Hipp): se evita un costoso `fsync` en cada commit individual al archivo WAL, haciéndolo solo durante los checkpoints, con casi cero riesgo de corrupción de base de datos."
+  },
+  {
+    "id": "sqlite_006",
+    "difficulty": "medium",
+    "question": "¿Qué ventaja técnica ofrecen los 'Índices Parciales' (`CREATE INDEX idx ON tbl(col) WHERE condition;`) en SQLite?",
+    "options": [
+      "Permiten indexar únicamente el 50% de las filas para reducir el uso de CPU a la mitad.",
+      "Indexan únicamente aquellas filas que cumplen el predicado del `WHERE`, reduciendo significativamente el tamaño del árbol B-Tree en disco y la sobrecarga de mantenimiento en escrituras para filas irrelevantes.",
+      "Permiten crear índices que funcionan exclusivamente durante transacciones de solo lectura.",
+      "Hacen que las tablas admitan valores alfanuméricos en columnas estrictamente numéricas."
+    ],
+    "correct_index": 1,
+    "hint": "Un índice parcial solo incluye entradas para las filas que satisfacen la cláusula `WHERE` (por ejemplo, `WHERE active = 1` o `WHERE deleted_at IS NULL`). Ocupa mucho menos espacio en disco/RAM y acelera las mutaciones de filas que no cumplen la condición."
+  },
+  {
+    "id": "sqlite_007",
+    "difficulty": "medium",
+    "question": "Al utilizar el módulo de extensión FTS5 (Full-Text Search) en SQLite, ¿cómo se efectúa una búsqueda por relevancia textual utilizando el algoritmo Okapi BM25?",
+    "options": [
+      "Utilizando la función nativa `bm25(virtual_table)` en la cláusula `ORDER BY` junto con el operador `MATCH` en el `WHERE`.",
+      "Ejecutando `SELECT * FROM tbl WHERE col LIKE '%query%' ORDER BY relevance`.",
+      "Invocando un procedimiento almacenado compilado en Java mediante `PRAGMA fts_rank`.",
+      "Creando un índice B-Tree convencional sobre la columna de texto y aplicando la función `SOUNDEX()`."
+    ],
+    "correct_index": 0,
+    "hint": "FTS5 crea tablas virtuales para indexación de texto invertido. Permite consultas con el operador `MATCH` y provee la función auxiliar `bm25()` que calcula un score estadístico según la frecuencia del término y la longitud del documento, ordenando los resultados de menor (más relevante en la convención FTS5) a mayor."
+  },
+  {
+    "id": "sqlite_008",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la diferencia fundamental en el modelo de concurrencia entre el modo clásico Rollback Journal y el modo WAL (Write-Ahead Logging) en SQLite?",
+    "options": [
+      "En Rollback Journal múltiples hilos pueden escribir a la vez, mientras que WAL restringe el sistema a un único usuario.",
+      "En Rollback Journal un escritor requiere un bloqueo exclusivo sobre todo el archivo de base de datos impidiendo cualquier lectura, mientras que en modo WAL los lectores nunca bloquean al escritor y el escritor concurrente nunca bloquea a los lectores.",
+      "WAL guarda las modificaciones directamente en la memoria RAM volátil sin escribir jamás al disco duro.",
+      "Rollback Journal requiere un cluster de tres nodos sincronizados mediante Paxos para evitar bifurcaciones."
+    ],
+    "correct_index": 1,
+    "hint": "En el modo Rollback Journal, una escritura bloquea tanto a otros escritores como a todos los lectores. En modo WAL (`journal_mode=WAL`), los cambios se escriben secuencialmente al final del archivo `-wal`, permitiendo que múltiples lectores consulten concurrentemente el archivo `.db` y frames del WAL sin bloquear al escritor."
+  },
+  {
+    "id": "sqlite_009",
+    "difficulty": "advanced",
+    "question": "Al iniciar una transacción en SQLite, ¿cuál es la diferencia crítica entre `BEGIN DEFERRED` y `BEGIN IMMEDIATE` en escenarios de alta concurrencia de escritura?",
+    "options": [
+      "`BEGIN DEFERRED` adquiere inmediatamente el lock de escritura bloqueando la base de datos por completo.",
+      "`BEGIN DEFERRED` no adquiere ningún bloqueo hasta que se ejecuta la primera lectura o escritura, lo que puede provocar errores `SQLITE_BUSY` si otro hilo intenta escribir simultáneamente; `BEGIN IMMEDIATE` adquiere un bloqueo `RESERVED` al instante, garantizando que ningún otro hilo pueda iniciar una transacción de escritura mientras transcurre.",
+      "`BEGIN IMMEDIATE` solo funciona en bases de datos temporales en memoria (`:memory:`).",
+      "Ambos comandos son idénticos y se mantienen únicamente por compatibilidad de sintaxis con Oracle SQL."
+    ],
+    "correct_index": 1,
+    "hint": "`BEGIN DEFERRED` (comportamiento por defecto) posterga la adquisición de bloqueos. Si dos conexiones inician con `DEFERRED`, ambas pueden leer, pero cuando ambas intentan escribir, una fallará inevitablemente con `SQLITE_BUSY`. `BEGIN IMMEDIATE` bloquea la escritura desde el inicio evitando este deadlock."
+  },
+  {
+    "id": "sqlite_010",
+    "difficulty": "advanced",
+    "question": "¿Cómo opera el proceso de 'Checkpointing' en SQLite con modo WAL y qué circunstancia puede impedir que el archivo `-wal` se vacíe o trunque, provocando su crecimiento desmedido en disco?",
+    "options": [
+      "El checkpoint copia páginas desde el archivo `-wal` de vuelta a la base de datos `.db`; si existen transacciones de lectura activas (lectores de larga duración) que retienen punteros a versiones antiguas del WAL, el checkpoint no puede sobrepasar esos frames y el archivo WAL continúa creciendo.",
+      "El checkpoint solo se ejecuta si el usuario desconecta el cable de red del servidor.",
+      "El crecimiento del archivo WAL es un bug de memoria del kernel de Linux que solo se soluciona reiniciando el equipo.",
+      "El checkpoint trunca el archivo `.db` principal y transfiere todas las consultas al archivo `-shm` compartido."
+    ],
+    "correct_index": 0,
+    "hint": "El checkpointing traslada las páginas modificadas del archivo WAL al archivo `.db` principal. Si hay una conexión lectora abierta con una transacción larga leyendo frames antiguos del WAL, SQLite no puede reciclar los frames posteriores para no entregar datos inconsistentes a ese lector, haciendo crecer el `-wal` indefinidamente."
+  },
+  {
+    "id": "sqlite_011",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la técnica recomendada por la documentación oficial de SQLite para mitigar de forma transparente los errores de concurrencia `SQLITE_BUSY` en aplicaciones multi-hilo?",
+    "options": [
+      "Matar el hilo que lanzó el error mediante la señal `pthread_cancel` inmediatamente.",
+      "Configurar un tiempo de espera con `PRAGMA busy_timeout = milliseconds;` (o mediante `sqlite3_busy_timeout()`), lo que instruye a SQLite a dormir y reintentar automáticamente la adquisición del bloqueo durante ese período antes de retornar el error.",
+      "Desactivar por completo el sistema de locking de archivos compilando con `-DSQLITE_THREADSAFE=0`.",
+      "Eliminar el archivo `.db-journal` manualmente desde el sistema operativo mediante un script cron cada segundo."
+    ],
+    "correct_index": 1,
+    "hint": "Por defecto, SQLite retorna `SQLITE_BUSY` de inmediato si un recurso está bloqueado. Al configurar `sqlite3_busy_timeout(db, 5000)` o `PRAGMA busy_timeout = 5000`, la biblioteca entra en un bucle con retardo y backoff exponencial, esperando hasta 5 segundos a que el otro hilo libere el lock."
+  },
+  {
+    "id": "sqlite_012",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la función del motor VDBE (Virtual Database Engine) en la arquitectura interna de SQLite?",
+    "options": [
+      "Es un hipervisor de virtualización que permite correr contenedores Docker dentro de SQLite.",
+      "Es una máquina virtual basada en registros que ejecuta el bytecode compilado por el analizador/optimizador de SQLite para llevar a cabo la lógica de las consultas, interactuando con los módulos de B-Tree y Pager para leer y modificar páginas.",
+      "Es un motor de renderizado gráfico para previsualizar esquemas relacionales en ventanas X11.",
+      "Es un servidor DNS embebido que resuelve nombres de host para réplicas distribuidas."
+    ],
+    "correct_index": 1,
+    "hint": "El núcleo de SQLite compila sentencias SQL en un programa de bytecode para una máquina virtual abstracta llamada VDBE (Virtual Database Engine). El comando `EXPLAIN <sql>` muestra las instrucciones bytecode de VDBE que manipulan cursores sobre los B-Trees a través del subsistema Pager."
+  }
+]

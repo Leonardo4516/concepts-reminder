@@ -1,6 +1,7 @@
 [
   {
     "id": "db_001",
+    "difficulty": "medium",
     "question": "En el modelo transaccional ACID de bases de datos relacionales, ¿qué garantiza la propiedad de 'Aislamiento' (Isolation)?",
     "options": [
       "Que el servidor de base de datos no tenga conexión física a internet.",
@@ -13,6 +14,7 @@
   },
   {
     "id": "db_002",
+    "difficulty": "medium",
     "question": "Según el Teorema CAP de Eric Brewer, ¿cuál es la limitación intrínseca de cualquier sistema de almacenamiento distribuido en red?",
     "options": [
       "No puede almacenar más de 1 Terabyte de información en nodos compartidos.",
@@ -25,6 +27,7 @@
   },
   {
     "id": "db_003",
+    "difficulty": "medium",
     "question": "¿En qué consiste el clásico antipatrón 'N+1 Query Problem' al utilizar ORMs (como Hibernate, Prisma, Entity Framework)?",
     "options": [
       "Crear N+1 tablas idénticas para cada usuario registrado.",
@@ -37,6 +40,7 @@
   },
   {
     "id": "db_004",
+    "difficulty": "medium",
     "question": "¿Cómo opera un índice B-Tree (B+Tree) en un motor de base de datos relacional (PostgreSQL, MySQL)?",
     "options": [
       "Escanea todas las páginas del disco de principio a fin de manera secuencial.",
@@ -49,6 +53,7 @@
   },
   {
     "id": "db_005",
+    "difficulty": "basic",
     "question": "¿Cuál es la diferencia fundamental entre el modelo de consistencia ACID (SQL) y el modelo BASE (NoSQL)?",
     "options": [
       "ACID prioriza consistencia inmediata y rigidez; BASE prioriza alta disponibilidad y admite 'consistencia eventual' (Eventually Consistent).",
@@ -61,6 +66,7 @@
   },
   {
     "id": "db_006",
+    "difficulty": "medium",
     "question": "¿Qué problema resuelve la técnica de 'Database Sharding' (particionamiento horizontal)?",
     "options": [
       "Evita que se borren datos cuando un administrador comete un error en un script.",
@@ -70,5 +76,83 @@
     ],
     "correct_index": 1,
     "hint": "Escalabilidad horizontal cuando una sola máquina no puede soportar la carga de escritura o almacenamiento de cientos de millones de filas."
+  },
+  {
+    "id": "db_007",
+    "difficulty": "basic",
+    "question": "¿Qué define la Tercera Forma Normal (3NF) en el diseño de bases de datos relacionales?",
+    "options": [
+      "Que cada tabla deba tener un máximo de 3 columnas.",
+      "Estar en 2NF y que ninguna columna no clave dependa transitivamente de la clave primaria.",
+      "Que todos los campos de texto se conviertan a minúsculas automáticamente.",
+      "Tener exactamente 3 copias de seguridad de cada registro."
+    ],
+    "correct_index": 1,
+    "hint": "Elimina dependencias transitivas: cada atributo no clave debe depender únicamente de la clave primaria y nada más que de la clave primaria."
+  },
+  {
+    "id": "db_008",
+    "difficulty": "basic",
+    "question": "¿Cuál es la diferencia entre un INNER JOIN y un LEFT JOIN en SQL estándar?",
+    "options": [
+      "INNER JOIN solo une tablas numéricas; LEFT JOIN une cadenas de texto.",
+      "INNER JOIN devuelve solo registros coincidentes en ambas tablas; LEFT JOIN devuelve todos los registros de la tabla izquierda más las coincidencias de la derecha.",
+      "LEFT JOIN borra los registros que no coinciden en la base de datos.",
+      "No hay diferencia, son sinónimos sintácticos."
+    ],
+    "correct_index": 1,
+    "hint": "Si un registro de la izquierda no tiene correspondencia en la derecha, LEFT JOIN rellenará las columnas de la derecha con valores NULL."
+  },
+  {
+    "id": "db_009",
+    "difficulty": "basic",
+    "question": "¿Qué efecto tiene definir una clave foránea con 'ON DELETE CASCADE'?",
+    "options": [
+      "Impide borrar el registro padre mientras existan registros hijos.",
+      "Elimina automáticamente los registros hijos asociados cuando se elimina el registro de la tabla padre.",
+      "Mueve los registros hijos a una papelera de reciclaje temporal.",
+      "Convierte los valores de la clave foránea a NULL sin borrar las filas hijas."
+    ],
+    "correct_index": 1,
+    "hint": "Útil para relaciones fuertes (ej. Items de un Carrito de compras), pero debe usarse con precaución para evitar borrados accidentales masivos."
+  },
+  {
+    "id": "db_010",
+    "difficulty": "medium",
+    "question": "¿Por qué un índice compuesto en las columnas (apellido, nombre) NO suele utilizarse en una consulta filtrada únicamente por 'nombre'?",
+    "options": [
+      "Porque los índices compuestos solo admiten búsquedas por ID numérico.",
+      "Por la regla del prefijo más a la izquierda (Leftmost Prefix Rule): el árbol está ordenado primero por 'apellido' y luego por 'nombre'.",
+      "Porque el motor SQL bloquea consultas que no utilicen todas las columnas de la tabla.",
+      "Porque los nombres propios tienen caracteres especiales no indexables."
+    ],
+    "correct_index": 1,
+    "hint": "Es como buscar en una guía telefónica ordenada por Apellido: buscar a todas las personas llamadas 'Carlos' sin saber su apellido te obliga a leer toda la guía."
+  },
+  {
+    "id": "db_011",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Deadlock' (interbloqueo) en un motor transaccional de base de datos relacional y cómo suele resolverse?",
+    "options": [
+      "El disco se llena al 100% y el sistema operativo apaga el servicio de base de datos.",
+      "Dos o más transacciones mantienen bloqueos sobre recursos que la otra necesita para continuar, y el motor aborta (rollback) automáticamente una de las transacciones (la víctima).",
+      "Un cable de red se desconecta y la base de datos se reinicia en modo solo lectura.",
+      "Un usuario escribe una consulta infinita con WHILE en un procedimiento almacenado."
+    ],
+    "correct_index": 1,
+    "hint": "El detector de deadlocks del motor (ciclo en el grafo de espera) selecciona una transacción como víctima (Deadlock Victim) y lanza una excepción para que la aplicación reintente."
+  },
+  {
+    "id": "db_012",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la diferencia entre un 'Pessimistic Lock' (Bloqueo Pesimista) y un 'Optimistic Lock' (Bloqueo Optimista)?",
+    "options": [
+      "El pesimista usa contraseñas más seguras que el optimista.",
+      "El pesimista bloquea el registro en la BD (SELECT FOR UPDATE) impidiendo lecturas/escrituras ajenas; el optimista no bloquea, sino que valida una columna de versión al hacer UPDATE.",
+      "El optimista solo funciona en bases de datos NoSQL y el pesimista en SQL.",
+      "El pesimista guarda datos en disco y el optimista únicamente en memoria volátil."
+    ],
+    "correct_index": 1,
+    "hint": "El bloqueo optimista es ideal para sistemas con baja contención (muchas lecturas, pocas colisiones), mientras que el pesimista es necesario en alta contención financiera para evitar sobreventa."
   }
 ]

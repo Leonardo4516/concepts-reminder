@@ -45,13 +45,21 @@ void _triggerReminderQuiz() {
     final contentManager = ContentManager();
     final activeLangs = settings.activeLanguages;
     
-    // Buscar pregunta de alguno de los lenguajes activos
+    // Buscar pregunta de alguno de los lenguajes activos filtrado por dificultad
     Question? selectedQuestion;
     for (final lang in activeLangs) {
-      selectedQuestion = contentManager.getDueQuestion(lang.toLowerCase());
+      selectedQuestion = contentManager.getDueQuestion(
+        lang.toLowerCase(),
+        false,
+        settings.difficulty,
+      );
       if (selectedQuestion != null) break;
     }
-    selectedQuestion ??= contentManager.getDueQuestion(null, true);
+    selectedQuestion ??= contentManager.getDueQuestion(
+      null,
+      true,
+      settings.difficulty,
+    );
 
     if (selectedQuestion != null) {
       navigatorKey.currentState?.push(
@@ -213,9 +221,9 @@ class _HomePageState extends State<HomePage> {
     int due = 0;
 
     for (final lang in widget.settings.activeLanguages) {
-      final questions = cm.getQuestionsByLanguage(lang.toLowerCase());
+      final questions = cm.getQuestionsByLanguage(lang.toLowerCase(), widget.settings.difficulty);
       total += questions.length;
-      due += cm.getDueQuestions(lang.toLowerCase()).length;
+      due += cm.getDueQuestions(lang.toLowerCase(), widget.settings.difficulty).length;
     }
 
     setState(() {
@@ -297,7 +305,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Tienes $_dueQuestions conceptos pendientes de $_totalQuestions disponibles.',
+                    'Tienes $_dueQuestions conceptos pendientes de $_totalQuestions disponibles (${widget.settings.difficulty.toUpperCase()}).',
                     style: const TextStyle(fontSize: 16, color: Colors.white70),
                   ),
                   const SizedBox(height: 24),
@@ -311,10 +319,18 @@ class _HomePageState extends State<HomePage> {
                           final cm = ContentManager();
                           Question? q;
                           for (final lang in widget.settings.activeLanguages) {
-                            q = cm.getDueQuestion(lang.toLowerCase());
+                            q = cm.getDueQuestion(
+                              lang.toLowerCase(),
+                              false,
+                              widget.settings.difficulty,
+                            );
                             if (q != null) break;
                           }
-                          q ??= cm.getDueQuestion(null, true);
+                          q ??= cm.getDueQuestion(
+                            null,
+                            true,
+                            widget.settings.difficulty,
+                          );
 
                           if (q != null) {
                             await Navigator.of(context).push(

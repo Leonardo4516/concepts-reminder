@@ -4,6 +4,7 @@ class Question {
   final List<String> options;
   final int correctIndex;
   final String hint;
+  final String difficulty;
 
   Question({
     required this.id,
@@ -11,6 +12,7 @@ class Question {
     required this.options,
     required this.correctIndex,
     required this.hint,
+    this.difficulty = 'medium',
   });
 
   factory Question.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,18 @@ class Question {
       options: List<String>.from(json['options']),
       correctIndex: json['correct_index'],
       hint: json['hint'] ?? 'No hint available.',
+      difficulty: (json['difficulty'] as String?)?.toLowerCase().trim() ?? 'medium',
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'question': question,
+      'options': options,
+      'correct_index': correctIndex,
+      'hint': hint,
+      'difficulty': difficulty,
+    };
   }
 }

@@ -1,0 +1,197 @@
+[
+  {
+    "id": "pg_001",
+    "difficulty": "basic",
+    "question": "En PostgreSQL moderno (versión 10 en adelante), ¿cuál es la diferencia técnica fundamental entre definir una columna con SERIAL frente a GENERATED ALWAYS AS IDENTITY?",
+    "options": [
+      "SERIAL reserva bloques contiguos de IDs en la memoria RAM del proceso cliente, mientras que IDENTITY consulta un catálogo externo mediante sockets UNIX.",
+      "IDENTITY cumple con el estándar SQL:2003, asocia la propiedad estricta de la secuencia a la columna impidiendo inconsistencias o eliminación aislada, y bloquea por defecto inserciones manuales de ID a menos que se declare explícitamente OVERRIDING SYSTEM VALUE; a diferencia de SERIAL, que es un pseudo-tipo legacy susceptible a desincronización por inserciones accidentales.",
+      "SERIAL admite claves alfanuméricas tipo UUID nativo, mientras que IDENTITY está restringido estrictamente a números enteros de 16 bits (SMALLINT).",
+      "No existe ninguna diferencia técnica ni estructural; IDENTITY es meramente un alias cosmético introducido para facilitar la migración desde MySQL."
+    ],
+    "correct_index": 1,
+    "hint": "GENERATED ALWAYS AS IDENTITY vincula fuertemente la secuencia subyacente con la tabla (si se elimina la columna, la secuencia se borra automáticamente) y protege la integridad de la clave al rechazar INSERTs con IDs explícitos a menos que se utilice OVERRIDING SYSTEM VALUE. En cambio, SERIAL crea una secuencia independiente ligada solo mediante DEFAULT nextval(...), lo que permite saltarse la secuencia sin advertencia."
+  },
+  {
+    "id": "pg_002",
+    "difficulty": "basic",
+    "question": "¿Cuál es la diferencia real en términos de rendimiento y almacenamiento físico entre los tipos de datos TEXT y VARCHAR(n) en PostgreSQL?",
+    "options": [
+      "VARCHAR(n) siempre se asigna con longitud fija rellenada con espacios en disco, ofreciendo mayor velocidad de ordenamiento en memoria.",
+      "TEXT no permite la creación de índices B-Tree ordinarios, forzando el uso de índices Hash, mientras que VARCHAR(n) sí soporta B-Tree.",
+      "Ambos utilizan internamente la misma estructura física de almacenamiento variable ('varlena') con soporte para compresión TOAST fuera de línea; VARCHAR(n) no ofrece ninguna ventaja de rendimiento y solo agrega una sobrecarga de validación de longitud máxima en cada operación DML.",
+      "TEXT está estrictamente limitado a un máximo de 64 Kilobytes por registro, mientras que VARCHAR(n) puede alcanzar hasta 1 Gigabyte."
+    ],
+    "correct_index": 2,
+    "hint": "En PostgreSQL no existe ganancia de rendimiento en usar VARCHAR(n) en lugar de TEXT. Ambos tipos se implementan sobre la estructura interna 'varlena' (variable-length array con encabezado de 1 o 4 bytes). La única diferencia es que VARCHAR(n) valida que la cadena no exceda 'n' caracteres en cada inserción o actualización, consumiendo ciclos adicionales de CPU."
+  },
+  {
+    "id": "pg_003",
+    "difficulty": "basic",
+    "question": "En el diseño relacional con PostgreSQL, ¿qué comportamiento garantizan la restricción referencial ON DELETE RESTRICT y la consulta con patrón Anti-Join 'LEFT JOIN ... WHERE right_table.id IS NULL'?",
+    "options": [
+      "RESTRICT aborta de forma inmediata el borrado de una fila padre si existen dependencias hijas asociadas, y la consulta filtra los registros del lado izquierdo que carecen de correspondencia en el lado derecho.",
+      "RESTRICT elimina automáticamente en cascada las filas hijas huérfanas, y la consulta devuelve el producto cartesiano completo entre ambas entidades.",
+      "RESTRICT asigna valores NULL a la clave foránea en la tabla hija, y la consulta genera un bloqueo exclusivo sobre el índice de la tabla derecha.",
+      "RESTRICT envía las filas eliminadas a una tabla temporal de auditoría, y la consulta obliga al planificador a realizar un Full Table Scan irreversible."
+    ],
+    "correct_index": 0,
+    "hint": "ON DELETE RESTRICT impide la eliminación de la fila padre arrojando una violación de clave foránea inmediata si existe al menos una fila en la tabla hija referenciándola. Por otro lado, un LEFT JOIN filtrado en el WHERE por la condición IS NULL de la clave primaria derecha es la sintaxis clásica de un Anti-Join, aislando registros de la izquierda sin coincidencia a la derecha."
+  },
+  {
+    "id": "pg_004",
+    "difficulty": "basic",
+    "question": "¿Para qué conjunto de operaciones y operadores el optimizador de consultas de PostgreSQL puede utilizar directamente un índice B-Tree predeterminado?",
+    "options": [
+      "Únicamente para búsquedas de igualdad estricta (=) sobre tipos numéricos primitivos y comparaciones booleanas.",
+      "Para consultas de similitud trigram mediante el operador %, distancias euclidianas K-NN y búsquedas con comodines bilaterales '%patrón%'.",
+      "Para cálculos de pertenencia difusa en documentos JSONB y desestructuración de vectores multidimensionales.",
+      "Para operadores de ordenamiento e igualdad escalares (=, <, <=, >, >=), cláusulas BETWEEN, IN, ORDER BY y búsquedas LIKE con prefijo constante sin comodín inicial ('prefijo%')."
+    ],
+    "correct_index": 3,
+    "hint": "Los índices B-Tree de PostgreSQL implementan la variante de Lehman & Yao para estructuras de árbol balanceado de alta concurrencia. Operan sobre tipos de datos con ordenamiento lineal estricto, optimizando igualdades, rangos, ordenamientos y coincidencias LIKE cuando el patrón tiene un prefijo fijo conocido (en collations compatibles o con operadores de clase como text_pattern_ops)."
+  },
+  {
+    "id": "pg_005",
+    "difficulty": "medium",
+    "question": "En PostgreSQL, ¿cuál es la diferencia técnica entre los tipos de datos JSON y JSONB, y qué evalúa exactamente el operador de contención @>?",
+    "options": [
+      "JSON comprime la estructura usando compresión GZIP en RAM, mientras que JSONB almacena un archivo plano en disco; el operador @> concatena dos documentos JSON.",
+      "JSON almacena el texto original literal requiriendo re-parsing en cada lectura, mientras que JSONB almacena los datos descompuestos en un formato binario estructurado e indexable; el operador @> evalúa si el documento JSONB de la izquierda contiene íntegramente la estructura y valores del operando derecho.",
+      "JSONB no soporta arrays anidados ni números de coma flotante; el operador @> evalúa si una clave específica existe dentro de una lista de cadenas de texto.",
+      "JSON admite la creación de índices GIN nativos mientras que JSONB requiere convertir los campos a tipo TEXT; el operador @> extrae el elemento raíz como un valor escalar."
+    ],
+    "correct_index": 1,
+    "hint": "El tipo JSON preserva espacios, formato y duplicados porque es texto plano; su escritura es rápida pero su lectura es lenta. JSONB parsea el JSON al insertar y lo guarda en binario organizado por páginas, eliminando duplicados y ordenando claves. Esto permite búsquedas ultrarrápidas e indexación GIN con operadores como @> (containment), el cual comprueba si la estructura derecha está contenida dentro de la izquierda."
+  },
+  {
+    "id": "pg_006",
+    "difficulty": "medium",
+    "question": "Al ejecutar 'REFRESH MATERIALIZED VIEW CONCURRENTLY vista_metricas;', ¿cuál es el requisito estructural indispensable y cuál es el beneficio operativo frente a un refresco convencional?",
+    "options": [
+      "Requiere que la vista esté definida sobre una única tabla física sin cláusulas JOIN; permite actualizar datos en memoria RAM sin emitir escrituras al WAL.",
+      "Requiere que el parámetro autovacuum esté apagado; elimina la necesidad de contar con espacio libre temporal en disco.",
+      "Requiere que la vista posea al menos un índice UNIQUE sobre una o más columnas sin predicado WHERE condicional; permite que las consultas SELECT concurrentes sigan leyendo la vista sin ser bloqueadas por un AccessExclusiveLock.",
+      "Requiere que todas las columnas de la vista pertenezcan al tipo BIGINT o TIMESTAMP; garantiza que el tiempo de ejecución del refresco sea constante e inferior a un segundo."
+    ],
+    "correct_index": 2,
+    "hint": "Un REFRESH MATERIALIZED VIEW regular adquiere un bloqueo 'AccessExclusiveLock', bloqueando todas las lecturas concurrentes hasta finalizar. La opción CONCURRENTLY crea una versión temporal de la vista y genera un diff para actualizar las filas en su lugar; para resolver las diferencias fila por fila sin ambigüedades requiere de forma obligatoria la presencia de un índice UNIQUE (sin cláusula WHERE) en la vista."
+  },
+  {
+    "id": "pg_007",
+    "difficulty": "medium",
+    "question": "En el análisis de un plan con 'EXPLAIN (ANALYZE, BUFFERS)', ¿qué proceso describe la presencia de un 'Bitmap Index Scan' seguido de un 'Bitmap Heap Scan', y qué representa la métrica 'Buffers: shared hit=85 read=12'?",
+    "options": [
+      "El Bitmap Index Scan examina el índice y construye un mapa de bits en memoria con las direcciones de tuplas (TID), y el Bitmap Heap Scan visita las páginas del Heap en orden físico reduciendo el I/O aleatorio; 'shared hit=85' son bloques hallados en el buffer pool y 'read=12' son bloques leídos de disco o sistema operativo.",
+      "El Bitmap Index Scan indica que el índice está corrupto y debió regenerarse en RAM; 'shared hit=85' representa lecturas secuenciales de disco y 'read=12' transacciones abortadas.",
+      "El Bitmap Heap Scan realiza una transformación de las filas a vectores binarios para procesarlas en paralelo con la GPU; 'read=12' representa lecturas no autorizadas denegadas por el sistema de permisos.",
+      "Ambos nodos indican un escaneo forzado de tabla completa porque el planificador descartó los índices; 'shared hit=85' indica que el 85% de la consulta se resolvió en caché de CPU L1."
+    ],
+    "correct_index": 0,
+    "hint": "Cuando una consulta coincide con muchas filas, un Index Scan convencional generaría saltos de I/O aleatorio excesivos en el Heap. El planificador opta por Bitmap Index Scan: recorre el índice, anota los punteros de tuplas (TIDs) en un mapa de bits en memoria y luego Bitmap Heap Scan lee las páginas físicas del disco ordenadas secuencialmente. 'shared hit' indica páginas servidas directamente desde la memoria RAM del Buffer Pool de Postgres, mientras 'read' necesitó lectura física a disco."
+  },
+  {
+    "id": "pg_008",
+    "difficulty": "medium",
+    "question": "En el particionamiento declarativo de PostgreSQL (PARTITION BY RANGE o LIST), ¿cómo opera la técnica de 'Partition Pruning' y qué papel crucial desempeña una partición DEFAULT?",
+    "options": [
+      "Partition Pruning trunca y borra los datos de particiones con más de 30 días de antigüedad; la partición DEFAULT almacena las copias de seguridad en formato WAL.",
+      "Partition Pruning comprime las particiones inactivas en formato columnar Parquet; la partición DEFAULT captura únicamente las consultas SELECT sin parámetros.",
+      "Partition Pruning convierte las particiones hijas en réplicas de solo lectura; la partición DEFAULT almacena el índice global de claves primarias.",
+      "Partition Pruning excluye del plan de ejecución aquellas particiones cuyos rangos o listas no satisfacen los filtros del WHERE (tanto en planificación como en ejecución); la partición DEFAULT almacena filas que no encajan en ningún rango explícito, previniendo errores de inserción."
+    ],
+    "correct_index": 3,
+    "hint": "Partition Pruning analiza los predicados de la consulta para descartar el escaneo de tablas hijas no pertinentes, disminuyendo drásticamente el I/O. La partición DEFAULT actúa como salvaguarda: si un INSERT proporciona un valor de partición que no coincide con ninguno de los límites declarados, se almacena allí en lugar de lanzar una excepción que aborte la transacción."
+  },
+  {
+    "id": "pg_009",
+    "difficulty": "medium",
+    "question": "¿Cuál es la utilidad técnica de la extensión 'pg_trgm' en búsquedas de texto y cuál es la diferencia entre generar identificadores con 'gen_random_uuid()' y la extensión 'uuid-ossp'?",
+    "options": [
+      "pg_trgm permite cifrado asimétrico RSA de cadenas; uuid-ossp solo puede generar identificadores secuenciales de 32 bits.",
+      "pg_trgm descompone cadenas en secuencias de 3 caracteres contiguos (trigramas), permitiendo búsquedas de similitud y soporte de índices GIN/GiST para operadores ILIKE con comodines arbitrarios ('%texto%'); gen_random_uuid() es una función nativa del núcleo (PostgreSQL 13+) para UUID v4 criptográficos sin librerías externas, a diferencia de uuid-ossp que depende de la biblioteca externa OSSP UUID.",
+      "pg_trgm traduce texto entre diferentes idiomas en tiempo de ejecución; gen_random_uuid() solo funciona si el servidor tiene activado el protocolo Kerberos.",
+      "pg_trgm comprime cadenas de texto reduciendo el espacio en disco; uuid-ossp fue desaprobada en PostgreSQL 8.0 por generar colisiones numéricas constantes."
+    ],
+    "correct_index": 1,
+    "hint": "pg_trgm divide strings en trigramas (ej. 'sql' genera '  s', ' sq', 'sql', 'ql '), permitiendo calcular similitud de texto y acelerar consultas LIKE/ILIKE con comodines al inicio y al final mediante índices GIN o GiST. Por otra parte, gen_random_uuid() se incorporó nativamente en el core de Postgres 13 para generar UUIDs v4 aleatorios de forma eficiente, dejando obsoleta la necesidad de instalar uuid-ossp (que requería librerías C externas del sistema operativo)."
+  },
+  {
+    "id": "pg_010",
+    "difficulty": "advanced",
+    "question": "En el modelo de concurrencia multiversión (MVCC) de PostgreSQL, ¿cómo se gestionan a nivel físico las operaciones UPDATE en las páginas del Heap y cuál es la función de los campos de encabezado 'xmin' y 'xmax'?",
+    "options": [
+      "Un UPDATE sobreescribe directamente los bytes de la fila en su posición física in-place; xmin y xmax son marcas de tiempo UNIX que guardan la hora exacta de la modificación.",
+      "PostgreSQL no guarda versiones históricas en el Heap; las tuplas anteriores se transfieren a un archivo separado de Undo Log idéntico al de Oracle o MySQL InnoDB.",
+      "Un UPDATE no sobreescribe la fila original; inserta una nueva tupla en el Heap (nuevo row version) y actualiza el campo xmax de la tupla anterior con el ID de la transacción actual, convirtiendo la tupla previa en una 'dead tuple' cuando ninguna transacción activa pueda verla según su snapshot.",
+      "Un UPDATE bloquea permanentemente la página física de 8 KB en el Buffer Pool y la marca como corrupta hasta que se ejecute un REINDEX manual."
+    ],
+    "correct_index": 2,
+    "hint": "En PostgreSQL no existe un Undo Tablespace dedicado. Las modificaciones generan nuevas versiones de tuplas en el Heap. El campo xmin registra el identificador de la transacción que creó la tupla, y xmax el identificador de la transacción que la eliminó o actualizó. Las tuplas antiguas se convierten en 'dead tuples' que ocupan espacio físico hasta que el proceso autovacuum las recicle."
+  },
+  {
+    "id": "pg_011",
+    "difficulty": "advanced",
+    "question": "¿Por qué ocurre el fenómeno crítico de 'Transaction ID (TXID) Wraparound' en PostgreSQL y qué mecanismo ejecuta el autovacuum para prevenirlo?",
+    "options": [
+      "Los identificadores de transacción (TXID) son enteros de 32 bits (~4.2 mil millones) con aritmética modular circular donde solo ~2 mil millones se consideran pasados; si no se congelan tuplas antiguas con el flag HEAP_XMIN_FROZEN antes de alcanzar el umbral, los datos pasados parecerán pertenecer al futuro y se volverán repentinamente invisibles.",
+      "Los TXIDs provocan que el archivo Write-Ahead Log (WAL) se sature y comience a registrar valores negativos, destruyendo el índice primario de todas las tablas del sistema.",
+      "El desbordamiento de TXID reinicia el contador de conexiones activas a cero, denegando el acceso a todos los usuarios del pool excepto al superusuario postgres.",
+      "Ocurre cuando una sola consulta SELECT tarda más de 24 horas continuas en ejecutarse, provocando un bloqueo exclusivo sobre el catálogo pg_class."
+    ],
+    "correct_index": 0,
+    "hint": "Al ser los TXIDs de 32 bits, PostgreSQL usa aritmética circular módulo 2^31. Si una base de datos supera ~2 mil millones de transacciones sin congelar tuplas, una fila vieja parecerá haber sido creada en el futuro y ningún snapshot la leerá (pérdida catastrófica de datos). Autovacuum previene esto ejecutando 'vacuum freeze' agresivo cuando se alcanza autovacuum_freeze_max_age, marcando las tuplas con el bit congelado para que no dependan de una comparación aritmética con el TXID."
+  },
+  {
+    "id": "pg_012",
+    "difficulty": "advanced",
+    "question": "En la arquitectura de almacenamiento de índices en PostgreSQL, ¿cuál es la correlación técnica óptima para la elección entre índices GIN, GiST y BRIN?",
+    "options": [
+      "GIN para columnas de claves foráneas numéricas; GiST para valores booleanos; BRIN para tablas pequeñas de configuración en memoria.",
+      "BRIN para búsquedas de texto completo con operadores booleanos; GIN para distancias euclidianas K-NN; GiST para claves primarias autoincrementales.",
+      "Son tipos de índices idénticos y completamente intercambiables que solo difieren en el algoritmo de compresión ZIP aplicado en disco.",
+      "GIN para estructuras compuestas donde se requiere indexar elementos internos individuales (JSONB, arrays, tsvector); GiST para datos multidimensionales y relaciones geométricas o de solapamiento de rangos (PostGIS, tsrange); BRIN para tablas masivas correlacionadas físicamente con el orden de inserción secuencial (como logs o series temporales)."
+    ],
+    "correct_index": 3,
+    "hint": "GIN (Generalized Inverted Index) descompone valores compuestos en entradas individuales de un árbol B-Tree interno. GiST (Generalized Search Tree) es una estructura de árbol balanceada multipropósito ideal para árboles R en datos geoespaciales o rangos. BRIN (Block Range Index) almacena únicamente el valor mínimo y máximo de cada rango de páginas físicas (típicamente 128 páginas por entrada), consumiendo apenas unos cuantos kilobytes de índice en tablas de cientos de gigabytes ordenadas secuencialmente."
+  },
+  {
+    "id": "pg_013",
+    "difficulty": "advanced",
+    "question": "En el nivel de aislamiento SERIALIZABLE implementado mediante Serializable Snapshot Isolation (SSI), ¿cómo previene PostgreSQL la anomalía de Write Skew sin recurrir a bloqueos pesados de lectura (SELECT ... FOR UPDATE)?",
+    "options": [
+      "Pausa todas las conexiones entrantes y procesa las transacciones en un único hilo secuencial de la CPU de forma síncrona.",
+      "Rastrea dependencias de lectura y escritura (rw-antidependencies) utilizando bloqueos lógicos no restrictivos en memoria llamados SIREAD locks; si detecta un ciclo en el grafo de dependencias que viola la serialización estricta, aborta una de las transacciones con el código de error 40001 (serialization_failure).",
+      "Adquiere un bloqueo AccessExclusiveLock sobre la tabla completa cada vez que se detecta una cláusula WHERE compuesta.",
+      "Genera una copia física completa de la base de datos para cada cliente conectado utilizando mecanismos de Copy-on-Write del sistema de archivos ZFS."
+    ],
+    "correct_index": 1,
+    "hint": "Write Skew ocurre cuando transacciones leen conjuntos de datos solapados, evalúan una restricción de negocio y escriben en filas independientes que anulan mutuamente la validez del estado final. SSI en Postgres soluciona esto sin bloqueos pesados: adquiere 'SIREAD locks' (meras marcas de lectura en memoria compartida) para construir un grafo de dependencias. Si surge un ciclo T1 -> T2 -> T1, una de las transacciones se aborta con error 40001 para que la aplicación la reintente."
+  },
+  {
+    "id": "pg_014",
+    "difficulty": "advanced",
+    "question": "Al utilizar el connection pooler PgBouncer, ¿cuál es la diferencia crítica entre el modo 'Transaction Pooling' y el modo 'Session Pooling', y qué capacidades de PostgreSQL quedan restringidas en el modo de transacción?",
+    "options": [
+      "En Transaction Pooling, la conexión backend física de PostgreSQL se devuelve al pool tan pronto como finaliza cada transacción individual (COMMIT o ROLLBACK); quedan inhabilitadas variables de sesión (SET), tablas temporales creadas en sesión y sentencias preparadas a nivel de protocolo de sesión.",
+      "En Transaction Pooling, las consultas de lectura SELECT se envían a un archivo en disco y nunca acceden a las conexiones activas del servidor.",
+      "En Session Pooling, cada consulta dentro de una misma transacción puede ejecutarse en un nodo físico o réplica distinta sin previo aviso.",
+      "Transaction Pooling restringe el uso de transacciones ACID y únicamente permite sentencias DML de inserción simple sin claves foráneas."
+    ],
+    "correct_index": 0,
+    "hint": "En Transaction Pooling, PgBouncer asigna una conexión física del servidor únicamente mientras dura el bloque transaccional (BEGIN ... COMMIT/ROLLBACK). Al finalizar, la conexión se entrega a otro cliente. Por ende, cualquier estado que dependa de la persistencia de la sesión TCP (como CREATE TEMP TABLE, SET search_path, o PREPARE de sentencias que no usen el protocolo extendido preparado de PgBouncer 1.21+) se corromperá o causará errores."
+  },
+  {
+    "id": "pg_015",
+    "difficulty": "advanced",
+    "question": "Al implementar búsqueda semántica y recuperación vectorial con la extensión 'pgvector', ¿cuál es la diferencia técnica entre los índices HNSW e IVFFlat, y qué operador calcula la distancia coseno?",
+    "options": [
+      "El operador de distancia coseno es <->; IVFFlat utiliza grafos pequeños navegables mientras HNSW divide el espacio en árboles binarios KD.",
+      "El operador de distancia coseno es <#>; HNSW está limitado estrictamente a un máximo de 16 dimensiones por vector mientras IVFFlat admite dimensiones infinitas.",
+      "El operador de distancia coseno es <=>; IVFFlat particiona el espacio en listas invertidas mediante clustering k-means y requiere ser entrenado con datos preexistentes, mientras que HNSW construye un grafo multicapa navegable (Hierarchical Navigable Small World) que ofrece búsquedas de alto recall y velocidad sin requerir entrenamiento previo, a cambio de mayor consumo de RAM y tiempo de construcción.",
+      "pgvector no requiere operadores específicos; calcula la distancia euclidiana automáticamente mediante el operador aritmético de resta '-'."
+    ],
+    "correct_index": 2,
+    "hint": "En pgvector: <=> es distancia coseno (1 - similitud coseno), <-> es distancia euclidiana L2 y <#> es producto interno negativo. IVFFlat entrena centroides con k-means; si se construye en una tabla vacía sin datos representativos, su calidad de búsqueda cae a cero. En contraste, HNSW construye una jerarquía de grafos navegables de mundos pequeños en memoria, ofreciendo excelente velocidad y un recall muy superior en entornos en tiempo real sin fase de pre-entrenamiento."
+  }
+]

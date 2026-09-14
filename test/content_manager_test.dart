@@ -134,5 +134,52 @@ void main() {
       expect(duePy, isNotNull);
       expect(duePy!.id, isNot(qId)); // qId is no longer due
     });
+
+    test('validates database packs and tiered difficulty filtering', () {
+      final manager = ContentManager();
+      
+      final dbFiles = [
+        'assets/packs/postgresql_avanzado.json',
+        'assets/packs/mysql_avanzado.json',
+        'assets/packs/mongodb_avanzado.json',
+        'assets/packs/redis_avanzado.json',
+        'assets/packs/sqlite_avanzado.json',
+        'assets/packs/bases_de_datos.json',
+      ];
+
+      for (final filePath in dbFiles) {
+        final file = File(filePath);
+        expect(file.existsSync(), isTrue, reason: '$filePath must exist');
+
+        final decoded = jsonDecode(file.readAsStringSync()) as List<dynamic>;
+        expect(decoded.length, greaterThanOrEqualTo(12), reason: '$filePath must have at least 12 questions');
+
+        for (final item in decoded) {
+          final q = Question.fromJson(Map<String, dynamic>.from(item as Map));
+          expect(q.id, isNotEmpty);
+          expect(q.question, isNotEmpty);
+          expect(q.options.length, 4);
+          expect(q.correctIndex, inInclusiveRange(0, 3));
+          expect(q.hint, isNotEmpty);
+          expect(['basic', 'medium', 'advanced'], contains(q.difficulty));
+        }
+      }
+
+      // Test tiered difficulty logic
+      final testQuestions = [
+        Question(id: '1', question: 'q1', options: ['a', 'b'], correctIndex: 0, hint: 'h', difficulty: 'basic'),
+        Question(id: '2', question: 'q2', options: ['a', 'b'], correctIndex: 0, hint: 'h', difficulty: 'medium'),
+        Question(id: '3', question: 'q3', options: ['a', 'b'], correctIndex: 0, hint: 'h', difficulty: 'advanced'),
+      ];
+
+      final basicOnly = manager.filterByDifficulty(testQuestions, 'basic');
+      expect(basicOnly.map((q) => q.id), ['1']);
+
+      final mediumTier = manager.filterByDifficulty(testQuestions, 'medium');
+      expect(mediumTier.map((q) => q.id), ['1', '2']);
+
+      final advancedTier = manager.filterByDifficulty(testQuestions, 'advanced');
+      expect(advancedTier.map((q) => q.id), ['1', '2', '3']);
+    });
   });
 }

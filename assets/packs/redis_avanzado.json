@@ -1,0 +1,197 @@
+[
+  {
+    "id": "redis_001",
+    "difficulty": "basic",
+    "question": "¿Por qué Redis logra tiempos de respuesta en el orden de submilisegundos en comparación con los motores de bases de datos relacionales tradicionales?",
+    "options": [
+      "Porque almacena todo su conjunto de datos principal en memoria RAM (in-memory data store) y utiliza estructuras de datos primitivas directas en memoria, eliminando por completo la latencia de I/O de disco y el overhead de parsing/planificación de SQL en la ruta crítica.",
+      "Porque compila cada consulta SQL a código ensamblador del kernel antes de ejecutarla.",
+      "Porque ejecuta cada comando en un subproceso aislado con prioridad en tiempo real en la CPU.",
+      "Porque delega el almacenamiento en caché al navegador web del cliente mediante WebSockets sincrónicos."
+    ],
+    "correct_index": 0,
+    "hint": "Redis opera como un almacén de estructuras de datos en memoria RAM (O(1) o O(log N)). La memoria RAM es órdenes de magnitud más rápida que SSD/NVMe y evita la sobrecarga de planificadores de consultas relacionales y bloqueos de disco en lectura/escritura."
+  },
+  {
+    "id": "redis_002",
+    "difficulty": "basic",
+    "question": "¿Cuál es la garantía de concurrencia que ofrecen los comandos `INCR` y `DECR` en Redis cuando múltiples clientes los ejecutan en paralelo sobre una misma clave?",
+    "options": [
+      "Requieren que el cliente implemente previamente un mutex distribuido mediante `SETNX` para evitar inconsistencias.",
+      "Son operaciones estrictamente atómicas; debido al bucle de eventos secuencial de Redis, cada incremento o decremento se procesa sin condiciones de carrera (race conditions) ni lecturas sucias.",
+      "Solo son atómicos si la clave ha sido configurada con la política de replicación `WAIT` a todos los nodos réplica.",
+      "Pueden perder incrementos si dos clientes envían el comando en el mismo milisegundo a menos que se ejecuten dentro de un script Lua."
+    ],
+    "correct_index": 1,
+    "hint": "En Redis, los comandos `INCR` y `DECR` son atómicos por diseño. El hilo principal de ejecución procesa los comandos secuencialmente, asegurando que ningún cliente lea un valor a medio modificar."
+  },
+  {
+    "id": "redis_003",
+    "difficulty": "basic",
+    "question": "Al configurar la expiración de claves con `EXPIRE key seconds`, ¿qué valores especiales retorna el comando `TTL key` en Redis para describir el estado de la clave?",
+    "options": [
+      "`0` si la clave no tiene expiración y `-1` si la clave no existe.",
+      "`-1` si la clave existe pero no tiene un tiempo de expiración asignado (persiste indefinidamente), y `-2` si la clave no existe en la base de datos.",
+      "`null` en ambos casos pero con códigos de error HTTP distintos.",
+      "`false` si la clave expiró y `true` si aún sigue activa en la memoria RAM."
+    ],
+    "correct_index": 1,
+    "hint": "El comando `TTL` devuelve los segundos restantes si la clave tiene expiración. Si la clave existe pero no expira devuelve `-1`. Si la clave no existe (o ya fue purgada) devuelve `-2`."
+  },
+  {
+    "id": "redis_004",
+    "difficulty": "basic",
+    "question": "En el tipo de dato List de Redis, ¿cuál es la estructura interna subyacente y qué caso de uso clásico se implementa combinando `LPUSH` con `RPOP` (o `BLPOP`)?",
+    "options": [
+      "Un array dinámico contiguo que se reasigna al crecer; se usa como tabla hash indexada.",
+      "Una lista doblemente enlazada (quicklist interna con compresión listpack); implementa una cola FIFO (First-In, First-Out) ideal para colas de tareas de fondo.",
+      "Un árbol binario rojo-negro que mantiene los elementos ordenados alfabéticamente; implementa un índice de texto.",
+      "Una matriz dispersa de bytes que permite compresión LZ4; se usa para streaming de video."
+    ],
+    "correct_index": 1,
+    "hint": "Las listas en Redis son implementadas como quicklists (nodos de bloques de memoria enlazados doblemente). `LPUSH` inserta por la cabeza y `RPOP`/`BLPOP` extrae por la cola, formando una cola de mensajes FIFO eficiente O(1)."
+  },
+  {
+    "id": "redis_005",
+    "difficulty": "medium",
+    "question": "¿Por qué resulta más eficiente en memoria y rendimiento utilizar la estructura `Hash` (`HSET`, `HGETALL`, `HINCRBY`) de Redis para representar una entidad (por ejemplo, un perfil de usuario) en vez de almacenar un string JSON serializado con `SET`?",
+    "options": [
+      "Porque los Hashes encriptan los datos en reposo automáticamente usando AES-256.",
+      "Porque cuando un Hash contiene pocos campos, Redis lo codifica internamente como `listpack` (anteriormente `ziplist`), compactando memoria contigua sin punteros, y permite leer o actualizar campos individuales atómicamente sin deserializar todo el payload.",
+      "Porque los strings normales tienen un límite máximo estricto de 256 bytes por clave.",
+      "Porque los comandos de Hash no consumen ciclos de CPU en el hilo principal."
+    ],
+    "correct_index": 1,
+    "hint": "Con Hashes, Redis utiliza estructuras compactas (`listpack`) ahorrando una cantidad sustancial de punteros de memoria. Además, actualizar un solo campo (`HSET user:1 visits 5`) evita transferir y re-serializar el JSON completo por la red."
+  },
+  {
+    "id": "redis_006",
+    "difficulty": "medium",
+    "question": "¿Qué comportamiento y complejidad temporal ofrecen las operaciones algebraicas de conjuntos `SINTER` y `SUNION` sobre la estructura Set en Redis?",
+    "options": [
+      "`SINTER` calcula la intersección y `SUNION` la unión entre múltiples conjuntos de elementos únicos; son operaciones en memoria con complejidad O(N*M) o O(N) que se resuelven en el servidor sin descargar los datos al cliente.",
+      "Ambos comandos devuelven siempre cadenas aleatorias sin importar los miembros existentes, operando en tiempo amortizado O(1).",
+      "Solo pueden operar entre dos claves que contengan exactamente la misma cantidad de elementos.",
+      "`SINTER` y `SUNION` modifican permanentemente los conjuntos de entrada eliminando los elementos duplicados."
+    ],
+    "correct_index": 0,
+    "hint": "Los Sets en Redis almacenan miembros no ordenados y únicos (vía hashtable o intset). `SINTER` calcula los elementos comunes entre conjuntos y `SUNION` todos los miembros combinados en el servidor, ideal para grafos sociales y filtros de etiquetas."
+  },
+  {
+    "id": "redis_007",
+    "difficulty": "medium",
+    "question": "¿Qué estructuras de datos combinadas utiliza internamente un Sorted Set (`ZSET`) de Redis para permitir tanto búsquedas de miembros por valor en O(1) como consultas por rango de score en O(log N)?",
+    "options": [
+      "Una lista circular enlazada y un árbol AVL balanceado en disco.",
+      "Una Hash Table (para mapear miembro -> score en O(1)) junto a una Skip List (para ordenar por score y recuperar rangos en O(log N)).",
+      "Un B+Tree similar al de InnoDB de MySQL con páginas de 16KB.",
+      "Un Bloom Filter probabilístico acoplado a un array ordenado por QuickSort."
+    ],
+    "correct_index": 1,
+    "hint": "Un `ZSET` mantiene una tabla Hash para conocer el score de cualquier miembro instantáneamente en O(1), y una Skip List (lista por saltos probabilística) para mantener los elementos ordenados por score y resolver rangos (`ZRANGEBYSCORE`) eficientemente en O(log N)."
+  },
+  {
+    "id": "redis_008",
+    "difficulty": "medium",
+    "question": "¿Cuál es la principal característica y limitación del mecanismo clásico de Mensajería Pub/Sub (`PUBLISH` y `SUBSCRIBE`) en Redis?",
+    "options": [
+      "Almacena los mensajes en un log duradero en disco hasta que todos los suscriptores confirmen con ACK.",
+      "Es un sistema de tipo 'Fire and Forget' efímero en memoria: si un suscriptor se desconecta o pierde la red en el momento del envío, el mensaje se pierde irreversiblemente para ese cliente.",
+      "Solo permite que un único cliente se suscriba a cada canal al mismo tiempo.",
+      "Requiere que todos los mensajes se envíen formateados estrictamente como XML válido."
+    ],
+    "correct_index": 1,
+    "hint": "El Pub/Sub nativo de Redis no tiene almacenamiento en búfer ni confirmaciones ACK: si un cliente no está escuchando activamente en el instante exacto del `PUBLISH`, el mensaje se descarta. Para mensajería duradera con persistencia y grupos de consumidores se utiliza Redis Streams (`XADD`/`XREADGROUP`)."
+  },
+  {
+    "id": "redis_009",
+    "difficulty": "medium",
+    "question": "¿Cuál es la ventaja arquitectónica fundamental de utilizar 'Pipelines' al ejecutar múltiples comandos en Redis desde una aplicación cliente?",
+    "options": [
+      "Permite ejecutar comandos en múltiples núcleos de CPU simultáneamente dentro del proceso Redis.",
+      "Empaqueta múltiples comandos consecutivos en una sola transmisión de red hacia el servidor y lee las respuestas en bloque, reduciendo dramáticamente el costo acumulado de latencia de red (RTT - Round Trip Time) y llamadas al sistema de sockets.",
+      "Garantiza aislamiento transaccional estricto con rollback automático si uno de los comandos falla en tiempo de ejecución.",
+      "Fuerza a Redis a escribir sincrónicamente en disco los resultados antes de procesar el siguiente comando."
+    ],
+    "correct_index": 1,
+    "hint": "El Pipelining no es una característica transaccional del servidor, sino una técnica de red del cliente: envía N comandos seguidos sin esperar la respuesta de cada uno individualmente. Esto colapsa el costo del Round-Trip Time (RTT) y los context switches de llamadas a sockets."
+  },
+  {
+    "id": "redis_010",
+    "difficulty": "advanced",
+    "question": "¿Cómo maneja el bucle de eventos monohilo de Redis (Reactor pattern sobre `epoll`/`kqueue`) miles de conexiones concurrentes sin sufrir bloqueos por concurrencia?",
+    "options": [
+      "Crea un hilo de sistema operativo por cada socket TCP conectado usando `pthread_create`.",
+      "Utiliza multiplexación de E/S no bloqueante para registrar eventos de lectura/escritura en un solo hilo; al no haber concurrencia interna sobre las estructuras en memoria, no requiere locks, mutexes ni sincronización defensiva.",
+      "Delega el procesamiento de comandos a interrupciones DMA de la tarjeta de red.",
+      "Convierte todos los sockets en buffers compartidos con memoria mapeada (`mmap`)."
+    ],
+    "correct_index": 1,
+    "hint": "El núcleo de Redis es monohilo en su lógica de ejecución de comandos. Al usar multiplexación de E/S (`epoll`/`kqueue`), reacciona ante sockets listos y ejecuta cada comando secuencialmente de inicio a fin, eliminando por completo la sobrecarga de context switches y sincronización por mutex."
+  },
+  {
+    "id": "redis_011",
+    "difficulty": "advanced",
+    "question": "Al comparar la persistencia RDB vs AOF en Redis, ¿cómo evita el comando `BGSAVE` interferir con las operaciones concurrentes de lectura y escritura del hilo principal?",
+    "options": [
+      "Detiene temporalmente el servidor y guarda la memoria completa en formato swap.",
+      "Invoca la llamada al sistema `fork()`, creando un proceso hijo que aprovecha la semántica Copy-On-Write (COW) del kernel de Linux: el hijo escribe el snapshot en disco mientras el padre continúa atendiendo clientes, duplicando en memoria solo las páginas modificadas.",
+      "Bloquea todas las escrituras hasta que el snapshot termine de escribirse por completo.",
+      "Envía la memoria RAM a un servidor NFS externo mediante streaming UDP sin compresión."
+    ],
+    "correct_index": 1,
+    "hint": "`BGSAVE` ejecuta `fork()` para crear un subproceso hijo idéntico. Gracias al Copy-On-Write (COW) del sistema operativo, ambos comparten las mismas páginas físicas de memoria hasta que el padre escribe en alguna de ellas, momento en que el kernel clona solo esa página puntual."
+  },
+  {
+    "id": "redis_012",
+    "difficulty": "advanced",
+    "question": "Cuando Redis alcanza el límite configurado en `maxmemory`, ¿cuál es la diferencia operacional entre la política de desalojo `allkeys-lru` y `allkeys-lfu`?",
+    "options": [
+      "`allkeys-lru` elimina claves basándose en cuándo fue el último acceso (Least Recently Used), mientras que `allkeys-lfu` contabiliza la frecuencia histórica de accesos mediante un contador logarítmico con decaimiento en el tiempo (Least Frequently Used).",
+      "`allkeys-lru` solo elimina claves que tienen un TTL configurado, mientras que `allkeys-lfu` borra la base de datos entera.",
+      "`allkeys-lfu` requiere un disco de estado sólido para calcular promedios ponderados en segundo plano.",
+      "Ambas políticas son sinónimas y utilizan el mismo algoritmo probabilístico FIFO."
+    ],
+    "correct_index": 0,
+    "hint": "LRU desaloja las claves cuyo último acceso fue el más lejano en el tiempo. LFU (Least Frequently Used) usa un contador probabilístico logarítmico de 8 bits con decaimiento temporal, protegiendo claves que se consultan con frecuencia constante frente a ráfagas puntuales."
+  },
+  {
+    "id": "redis_013",
+    "difficulty": "advanced",
+    "question": "En arquitecturas de alta concurrencia con Redis como caché, ¿qué fenómeno describe el 'Cache Stampede' (o Dogpiling) y cuál es una técnica comprobada para mitigarlo?",
+    "options": [
+      "La memoria RAM física se agota súbitamente debido a un fallo en el allocation de glibc; se mitiga reiniciando Redis.",
+      "Ocurre cuando una clave con tráfico extremo expira, provocando que cientos o miles de solicitudes concurrentes fallen en caché y consulten la base de datos principal al mismo tiempo; se mitiga con bloqueos distribuidos (mutex) o expiración probabilística temprana (algoritmo XFetch).",
+      "Ocurre cuando los clientes consultan masivamente claves inexistentes para forzar accesos a disco; se mitiga con filtros de Bloom.",
+      "Múltiples réplicas de Redis intentan sincronizarse a la vez saturando el enlace de red; se mitiga deshabilitando AOF."
+    ],
+    "correct_index": 1,
+    "hint": "El Cache Stampede ocurre al expirar una clave 'caliente': todos los hilos leen miss y golpean la BD relacional al unísono. Se mitiga con un lock/mutex para que solo un worker regenere el dato, o con refresco probabilístico anticipado (XFetch: recalcular antes de que expire según la probabilidad del tiempo de cálculo)."
+  },
+  {
+    "id": "redis_014",
+    "difficulty": "advanced",
+    "question": "En el algoritmo de bloqueo distribuido Redlock propuesto para clusters de instancias Redis independientes, ¿cuál es el criterio fundamental para considerar que un lock fue adquirido con éxito?",
+    "options": [
+      "El cliente debe adquirir el lock en al menos una instancia y notificar a las demás mediante un canal Pub/Sub global.",
+      "El cliente debe adquirir el lock en la mayoría simple de nodos independientes (N/2 + 1) usando la misma clave y valor único aleatorio, y el tiempo total empleado debe ser sustancialmente inferior al TTL de validez del bloqueo.",
+      "Debe existir un nodo líder Paxos que certifique el orden de las transacciones antes de validar el lock.",
+      "El lock solo es válido si todos los nodos Redis corren exactamente en la misma zona de disponibilidad física y comparten reloj atómico GPS."
+    ],
+    "correct_index": 1,
+    "hint": "Redlock exige que el cliente intente adquirir el lock (`SET key val NX PX ttl`) en N nodos independientes. Si logra obtenerlo en la mayoría (`N/2 + 1`) y el tiempo transcurrido para adquirirlo es menor al tiempo de vida del lock (restando margen de drift de reloj), el lock es válido."
+  },
+  {
+    "id": "redis_015",
+    "difficulty": "advanced",
+    "question": "¿Cuál es el comportamiento de una transacción definida con `MULTI` y `EXEC` en Redis ante un error en tiempo de ejecución (por ejemplo, aplicar `INCR` sobre una clave que contiene un Hash)?",
+    "options": [
+      "Redis detiene la ejecución inmediatamente y revierte (rollback) automáticamente todas las operaciones previas de la transacción para mantener el estado inicial.",
+      "Redis ejecuta todos los comandos de la cola de la transacción secuencialmente; el comando inválido falla y devuelve un error específico, pero los demás comandos se aplican de manera irreversible sin realizar rollback.",
+      "Redis congela la conexión del cliente y marca la base de datos como de solo lectura hasta una intervención manual del administrador.",
+      "El comando `MULTI` delega la comprobación de tipos al compilador de C en tiempo de ejecución para prevenir errores de tipo antes del envío."
+    ],
+    "correct_index": 1,
+    "hint": "Redis NO implementa rollback en transacciones (`MULTI`/`EXEC`). Si un comando falla en tiempo de ejecución (ej. incompatibilidad de tipos), ese comando particular devuelve un error pero los comandos anteriores y posteriores de la transacción se aplican y persisten. El rollback solo ocurre si hay fallos de sintaxis en el encolado previo."
+  }
+]

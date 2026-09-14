@@ -1,0 +1,197 @@
+[
+  {
+    "id": "mongo_001",
+    "difficulty": "basic",
+    "question": "¿Cuál es la diferencia fundamental entre el formato de almacenamiento interno BSON y el estándar de texto JSON en MongoDB?",
+    "options": [
+      "BSON es una codificación binaria que incluye metadatos de longitud y tipos de datos adicionales como Date, Decimal128 y ObjectId, permitiendo un recorrido eficiente de campos sin parsear todo el documento.",
+      "JSON permite serializar tipos binarios nativos sin codificación Base64, mientras que BSON se limita estrictamente a strings y enteros de 32 bits.",
+      "BSON requiere un esquema rígido predefinido en el servidor similar a Protobuf, mientras que JSON es dinámico y sin esquema.",
+      "BSON comprime los documentos usando el algoritmo gzip en cada escritura para reducir el tamaño del payload de red a costa de CPU."
+    ],
+    "correct_index": 0,
+    "hint": "BSON (Binary JSON) fue diseñado específicamente para MongoDB: incluye prefijos de longitud por campo que permiten saltar (skip) elementos en memoria y tipos de datos enriquecidos (Date, ObjectId, Int64, Decimal128)."
+  },
+  {
+    "id": "mongo_002",
+    "difficulty": "basic",
+    "question": "En cuanto a la atomicidad en operaciones de escritura en MongoDB, ¿cuál de las siguientes afirmaciones describe con exactitud las garantías por defecto sin transacciones multi-documento?",
+    "options": [
+      "La atomicidad solo se garantiza si la base de datos opera en modo monohilo con journaling sincrónico desactivado.",
+      "Las operaciones de modificación son atómicas a nivel de documento individual, incluso si modifican múltiples subdocumentos y elementos de arrays anidados dentro de él.",
+      "Cualquier operación `updateMany()` es completamente atómica y revierte todos los cambios si falla el último documento actualizado.",
+      "MongoDB no ofrece ninguna garantía de atomicidad a menos que se invoque explícitamente `session.startTransaction()`."
+    ],
+    "correct_index": 1,
+    "hint": "En MongoDB, la escritura o actualización sobre un único documento es siempre atómica en sí misma. `updateMany` actualiza los documentos de forma secuencial e individual, no de forma global atómica a menos que se envuelva en una transacción."
+  },
+  {
+    "id": "mongo_003",
+    "difficulty": "basic",
+    "question": "¿Cómo está constituido internamente el tipo de dato identificador por defecto `ObjectId` (12 bytes) en MongoDB?",
+    "options": [
+      "16 bytes correspondientes a un UUID v4 generado de forma puramente pseudoaleatoria.",
+      "4 bytes de timestamp Unix epoch (segundos), 5 bytes de valor aleatorio único por proceso/máquina y 3 bytes de contador incremental.",
+      "8 bytes de hash SHA-256 del contenido del documento y 4 bytes de offset de disco en el motor WiredTiger.",
+      "6 bytes de dirección MAC del host servidor y 6 bytes con la fecha y hora en microsegundos UTC."
+    ],
+    "correct_index": 1,
+    "hint": "El ObjectId de 12 bytes almacena: 4 bytes de timestamp en segundos (permitiendo orden cronológico natural), 5 bytes aleatorios únicos por proceso, y 3 bytes de contador incremental iniciado aleatoriamente."
+  },
+  {
+    "id": "mongo_004",
+    "difficulty": "basic",
+    "question": "Al ejecutar una actualización sobre un documento existente en MongoDB, ¿cuál es la diferencia clave entre usar los operadores de actualización (`$set`, `$inc`) frente a enviar un documento con nuevos campos sin operadores?",
+    "options": [
+      "No existe diferencia; MongoDB infiere automáticamente qué campos cambiaron mediante un diff en memoria.",
+      "El envío sin operadores modifica únicamente los campos especificados preservando los demás, mientras que `$set` elimina las claves no mencionadas.",
+      "El operador `$set` modifica o agrega únicamente los campos indicados de forma in-place, mientras que omitir operadores de actualización reemplaza el documento entero (save/replace semantics) excepto el campo `_id`.",
+      "`$inc` solo funciona en colecciones Capped y requiere que el valor inicial sea cero antes de la ejecución."
+    ],
+    "correct_index": 2,
+    "hint": "Si pasas un documento de actualización a `updateOne` sin operadores como `$set` o `$inc`, MongoDB asume un reemplazo de documento completo (`replaceOne`), borrando todos los campos previos salvo el `_id` inmutable."
+  },
+  {
+    "id": "mongo_005",
+    "difficulty": "medium",
+    "question": "En el Aggregation Pipeline de MongoDB, ¿por qué es una buena práctica crítica de rendimiento ubicar una etapa `$match` lo antes posible en la canalización?",
+    "options": [
+      "Porque `$match` solo puede utilizar índices existentes si se encuentra al principio del pipeline antes de cualquier etapa transformadora como `$group`, `$project` o `$unwind`.",
+      "Porque etapas posteriores a `$match` ejecutan paralelismo automático en workers de GPU.",
+      "Porque `$project` desactiva de manera irreversible el motor de consultas optimizado de WiredTiger.",
+      "Porque el estándar BSON prohíbe evaluar filtros booleanos después de un `$group` por razones de memoria."
+    ],
+    "correct_index": 0,
+    "hint": "Si `$match` se coloca al inicio del pipeline, el optimizador de consultas puede aprovechar índices para filtrar documentos rápidamente. Si se ubica tras un `$group` o `$unwind`, debe procesar todos los documentos en memoria."
+  },
+  {
+    "id": "mongo_006",
+    "difficulty": "medium",
+    "question": "Al diseñar un esquema de datos para una relación de uno a muchos (1:N) en MongoDB, ¿cuál es la heurística recomendada para decidir entre documentos embebidos (Embedding) y referenciado (Referencing)?",
+    "options": [
+      "Embeber siempre sin importar la cantidad de elementos secundarios, ya que MongoDB amplía documentos en disco automáticamente sin límites de tamaño.",
+      "Usar embedding si los elementos hijos son limitados ('1:few'), se consultan siempre juntos y no crecen sin límite, y usar referencing si la cardinalidad es alta o ilimitada ('1:many' / '1:squillions') para evitar exceder el límite BSON de 16MB.",
+      "Referenciar obligatoriamente mediante `$lookup` en todas las entidades, pues el embedding no permite crear índices secundarios sobre campos anidados.",
+      "El embedding solo está permitido en colecciones temporales o capped collections por motivos de fragmentación de memoria."
+    ],
+    "correct_index": 1,
+    "hint": "Documentos embebidos ofrecen lecturas atómicas y rápidas en un único I/O de disco para relaciones '1:pocos'. Relaciones ilimitadas ('1:muchos' o '1:millones') violarían el límite BSON estricto de 16MB y provocarían fragmentación de memoria."
+  },
+  {
+    "id": "mongo_007",
+    "difficulty": "medium",
+    "question": "¿Qué restricción y comportamiento caracterizan a los índices 'Multikey' en MongoDB cuando se indexa un campo cuyo valor es un array?",
+    "options": [
+      "MongoDB crea una entrada en el índice para cada elemento individual del array, y prohíbe que un índice compuesto contenga más de un campo de tipo array.",
+      "El índice almacena únicamente el hash MD5 de la lista completa, por lo que no permite búsquedas de elementos individuales.",
+      "Solo se admiten hasta 16 elementos por array para poder generar un índice multikey.",
+      "Los índices multikey requieren obligatoriamente que todos los elementos del array sean valores escalares idénticos en longitud."
+    ],
+    "correct_index": 0,
+    "hint": "Un índice multikey descompone cada elemento del array en una entrada de índice B-Tree independiente. Para evitar una explosión combinatoria de entradas de índice, un índice compuesto no puede abarcar más de un campo array a la vez."
+  },
+  {
+    "id": "mongo_008",
+    "difficulty": "medium",
+    "question": "¿Cuáles son las propiedades mecánicas y restricciones operativas de una 'Capped Collection' en MongoDB?",
+    "options": [
+      "Es una colección sin persistencia en disco que se almacena exclusivamente en memoria RAM compartida mediante shm_open.",
+      "Es una colección de tamaño fijo que preserva el orden de inserción de forma circular (FIFO), sobrescribiendo los documentos más antiguos al llenarse, y no admite eliminación explícita de documentos individuales.",
+      "Es una colección encriptada a nivel de hardware que requiere un chip TPM para operaciones de inserción.",
+      "Permite actualizaciones que incrementen libremente el tamaño de los documentos sin restricciones de espacio."
+    ],
+    "correct_index": 1,
+    "hint": "Las Capped Collections tienen un tamaño preasignado en bytes. Escriben secuencialmente como un ring buffer circular (FIFO). Al llenarse, los registros más viejos se pisan automáticamente; no soportan `remove()` individual ni actualizaciones que aumenten el tamaño del documento."
+  },
+  {
+    "id": "mongo_009",
+    "difficulty": "medium",
+    "question": "¿Cómo opera internamente un índice TTL (Time To Live) en MongoDB para depurar datos obsoletos?",
+    "options": [
+      "El cliente de la base de datos evalúa la expiración antes de cada consulta y borra el documento si su tiempo expiró.",
+      "Un hilo en segundo plano en `mongod` se ejecuta periódicamente (aproximadamente cada 60 segundos) leyendo el índice sobre un campo Date y eliminando los documentos cuya marca temporal más el `expireAfterSeconds` sea menor a la hora actual.",
+      "El kernel del sistema operativo emite una señal SIGALRM directamente al puntero de memoria del documento expirado.",
+      "Cada documento se autodestruye en el instante exacto (precisión de nanosegundos) mediante interrupciones del reloj de hardware del servidor."
+    ],
+    "correct_index": 1,
+    "hint": "MongoDB ejecuta una tarea en segundo plano cada 60 segundos para eliminar documentos expirados mediante el índice TTL. Requiere que el campo sea de tipo BSON Date (no timestamp ni entero epoch). No ofrece precisión en tiempo real de milisegundos."
+  },
+  {
+    "id": "mongo_010",
+    "difficulty": "advanced",
+    "question": "En el motor de almacenamiento WiredTiger de MongoDB, ¿cómo interactúan los 'Checkpoints', la compresión de bloques y el Journal para garantizar la durabilidad sin degradar el rendimiento?",
+    "options": [
+      "WiredTiger escribe cada modificación directamente al archivo de datos principal con compresión zlib sincrónica, descartando la memoria intermedia.",
+      "WiredTiger genera checkpoints consistentes en disco cada 60 segundos o 2GB de datos; entre checkpoints, las escrituras se registran secuencialmente en el Journal en disco y se mantienen en caché en RAM comprimida (Snappy por defecto).",
+      "Los checkpoints solo se generan cuando la memoria RAM disponible en el servidor desciende por debajo del 5%, utilizando un algoritmo de paging swap del sistema operativo.",
+      "El Journal solo almacena índices de texto, mientras que los datos sin comprimir se envían directamente a la red sin pasar por checkpoints."
+    ],
+    "correct_index": 1,
+    "hint": "WiredTiger sincroniza un snapshot completo de la base de datos a disco cada 60 segundos (checkpoint). Si el servidor falla, se recupera el último checkpoint consistente y se reproducen los registros faltantes a partir del Journal secuencial."
+  },
+  {
+    "id": "mongo_011",
+    "difficulty": "advanced",
+    "question": "En un Replica Set de MongoDB, ¿qué garantiza exactamente una escritura ejecutada con Write Concern `{ w: 'majority', j: true }` ante una falla catastrófica del nodo Primario?",
+    "options": [
+      "Que los datos fueron replicados en todos los nodos secundarios sin excepción, incluyendo árbitros.",
+      "Que la operación fue confirmada en la mayoría calculada de nodos con derecho a voto y que ha sido persistida en el Journal en disco del nodo primario, impidiendo reversiones (rollbacks) si el primario colapsa y se elige un nuevo líder.",
+      "Que la transacción fue evaluada por un clúster de ZooKeeper externo para certificar el timestamp antes de la inserción.",
+      "Que los nodos secundarios procesaron todas las lecturas de los clientes antes de retornar el ack al hilo de escritura."
+    ],
+    "correct_index": 1,
+    "hint": "`w: 'majority'` exige confirmación de más del 50% de los miembros votantes del replica set. Al sumar `j: true`, el primario garantiza que el cambio se escribió físicamente en su journal en disco antes de devolver éxito, evitando pérdida de datos por failover."
+  },
+  {
+    "id": "mongo_012",
+    "difficulty": "advanced",
+    "question": "Al particionar una colección en un clúster sharded de MongoDB, ¿por qué seleccionar una Shard Key basada en un valor monótonamente creciente (como un `ObjectId` por defecto o un campo `createdAt`) suele ser considerado un grave antipatrón?",
+    "options": [
+      "Porque impide que el servicio `mongos` pueda comunicarse con los servidores de configuración (config servers).",
+      "Porque los valores numéricos secuenciales no pueden ser indexados por árboles B-Tree en arquitecturas de 64 bits.",
+      "Porque genera un 'hot-spot' de escritura, canalizando todas las inserciones concurrentes al último chunk ubicado en un único shard, neutralizando los beneficios del escalado horizontal de escrituras.",
+      "Porque el balanceador de chunks entra en un ciclo infinito de split de chunks vacíos en shards inactivos."
+    ],
+    "correct_index": 2,
+    "hint": "Cualquier clave monótona creciente (fechas, secuencias, ObjectId) hace que todas las inserciones nuevas vayan al rango máximo de chunks, impactando siempre el mismo shard (hot spot). Para mitigar esto, se usa Hashed Sharding o claves compuestas con alta cardinalidad aleatoria."
+  },
+  {
+    "id": "mongo_013",
+    "difficulty": "advanced",
+    "question": "En relación a las transacciones ACID multi-documento introducidas en MongoDB, ¿cuál es el mecanismo de aislamiento subyacente y cuál es su principal limitación operacional?",
+    "options": [
+      "Operan bajo Snapshot Isolation proporcionado por los timestamps de WiredTiger; imponen bloqueos y sobrecarga que pueden provocar abortos si superan `transactionLifetimeLimitSeconds` (por defecto 60s) o entran en conflicto de escritura.",
+      "Implementan el protocolo 2-Phase Locking clásico bloqueando toda la colección a nivel de tabla durante la transacción completa.",
+      "Solo funcionan en bases de datos con un único shard y desactivan por completo el replica set durante el commit.",
+      "Permiten transacciones sin límite de tiempo pero obligan a deshabilitar el journaling en todos los nodos secundarios."
+    ],
+    "correct_index": 0,
+    "hint": "Las transacciones multi-documento usan Snapshot Isolation mediante marcas de tiempo en WiredTiger. Si una transacción excede `transactionLifetimeLimitSeconds` (60s por defecto) o compite por modificar los mismos documentos que otra transacción, es abortada automáticamente con error WriteConflict."
+  },
+  {
+    "id": "mongo_014",
+    "difficulty": "advanced",
+    "question": "¿Qué problema resuelve la propiedad de 'Causal Consistency' en sesiones de cliente de MongoDB cuando se utiliza una Read Preference de tipo `secondaryPreferred` o `secondary`?",
+    "options": [
+      "Garantiza que ningún nodo secundario pueda desincronizarse por más de 10 milisegundos respecto al primario.",
+      "Asegura orden causal lógico (como 'Read-Your-Own-Writes' y 'Monotonic Reads') propagando timestamps de cluster lógico en la sesión, evitando que un cliente lea un estado anterior a una escritura que él mismo ya confirmó.",
+      "Bloquea todas las escrituras en el primario hasta que el nodo secundario elegido procese el oplog correspondiente a la lectura.",
+      "Transforma automáticamente todas las lecturas de los secundarios en consultas de agregación paralelas."
+    ],
+    "correct_index": 1,
+    "hint": "En lecturas sobre secundarios con consistencia eventual, un usuario podría escribir en el primario y luego leer un dato desactualizado en un secundario rezagado. Las sesiones con Causal Consistency sincronizan marcadores de tiempo lógicos (`operationTime`), garantizando Read-Your-Own-Writes."
+  },
+  {
+    "id": "mongo_015",
+    "difficulty": "advanced",
+    "question": "¿Cómo gestiona el motor WiredTiger el control de concurrencia y los conflictos entre dos hilos concurrentes que intentan modificar el mismo documento al mismo tiempo?",
+    "options": [
+      "Utiliza un bloqueo exclusivo pesimista a nivel de base de datos completa que encola todos los hilos de manera estricta.",
+      "Aplica control de concurrencia optimista (OCC) a nivel de documento sin bloqueos pesimistas; si dos hilos colisionan modificando el mismo registro, uno de ellos recibe un `WriteConflict` y MongoDB reintenta la operación internamente de forma transparente.",
+      "Provoca un crash inmediato del proceso `mongod` con un error SIGSEGV para proteger la integridad de la memoria.",
+      "Fusiona automáticamente los campos de ambos hilos mediante un algoritmo de merge de tres vías al estilo Git."
+    ],
+    "correct_index": 1,
+    "hint": "WiredTiger implementa control de concurrencia optimista a nivel de documento (document-level concurrency). Si dos escrituras concurrentes intentan actualizar el mismo registro al mismo tiempo, la segunda detecta un conflicto de escritura y MongoDB reintenta la mutación sin bloquear al resto de la colección."
+  }
+]

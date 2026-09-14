@@ -1,0 +1,197 @@
+[
+  {
+    "id": "mysql_001",
+    "difficulty": "basic",
+    "question": "En MySQL, ¿cuál es la diferencia arquitectónica fundamental entre los motores de almacenamiento InnoDB y MyISAM respecto a transacciones, concurrencia y recuperación ante fallos?",
+    "options": [
+      "MyISAM soporta transacciones distribuidas ACID y bloqueos a nivel de fila (row-level locking), mientras que InnoDB solo admite bloqueos a nivel de tabla (table-level locking).",
+      "MyISAM almacena los datos únicamente en memoria volátil RAM, mientras que InnoDB requiere una base de datos NoSQL externa para materializar la persistencia en disco.",
+      "InnoDB es un motor transaccional que cumple con ACID, utiliza bloqueos finos a nivel de fila y se recupera automáticamente tras una caída abrupta mediante su Redo Log; en contraste, MyISAM no es transaccional, bloquea la tabla completa en cualquier operación DML de escritura y requiere reparaciones manuales de índices (REPAIR TABLE) tras un fallo.",
+      "InnoDB carece de soporte para claves foráneas (FOREIGN KEY), mientras que MyISAM fue diseñado específicamente para garantizar integridad referencial estricta."
+    ],
+    "correct_index": 2,
+    "hint": "InnoDB (motor por defecto en MySQL) ofrece transaccionalidad ACID completa, control de concurrencia multiversión (MVCC), bloqueos por fila y recuperación automática de caídas (crash recovery) usando el Redo Log. MyISAM bloquea tablas completas durante escrituras, no tiene soporte de transacciones ni claves foráneas, y es propenso a corrupción de índices ante apagones repentinos."
+  },
+  {
+    "id": "mysql_002",
+    "difficulty": "basic",
+    "question": "¿Cómo gestiona InnoDB la generación de identificadores con el atributo AUTO_INCREMENT y qué impacto tiene la configuración del parámetro 'innodb_autoinc_lock_mode'?",
+    "options": [
+      "El parámetro controla el algoritmo de bloqueo: con el valor 2 ('interleaved mode', por defecto en MySQL 8.0) no utiliza bloqueos de tabla para inserciones masivas, mejorando sustancialmente la concurrencia pero pudiendo dejar huecos y secuencias no deterministas en inserciones simultáneas.",
+      "InnoDB genera números aleatorios no secuenciales usando una función de hash criptográfico SHA-256 para prevenir colisiones en clústeres distribuidos.",
+      "Si se reinicia el servidor MySQL, los valores de AUTO_INCREMENT en InnoDB se resetean siempre al valor mínimo disponible, reutilizando los IDs eliminados.",
+      "Los identificadores se guardan en un archivo de texto plano en /tmp para permitir que clientes externos los consulten sin pasar por el motor de almacenamiento."
+    ],
+    "correct_index": 0,
+    "hint": "innodb_autoinc_lock_mode define cómo se asignan los cerrojos de auto-incremento: 0 (traditional, con cerrojo de tabla AUTO-INC), 1 (consecutive, mutex ligero para inserts simples), y 2 (interleaved, concurrencia máxima sin bloqueos a nivel de tabla, seguro con replicación basada en filas pero riesgoso con replicación basada en sentencias porque múltiples inserts concurrentes pueden intercalar IDs)."
+  },
+  {
+    "id": "mysql_003",
+    "difficulty": "basic",
+    "question": "¿Por qué se considera obligatorio utilizar el juego de caracteres 'utf8mb4' en lugar de 'utf8' (utf8mb3) en MySQL, y qué distingue a la colación 'utf8mb4_0900_ai_ci' de 'utf8mb4_unicode_ci'?",
+    "options": [
+      "utf8mb3 solo admite caracteres del alfabeto inglés ASCII; utf8mb4 permite almacenar imágenes binarias directamente dentro de columnas VARCHAR.",
+      "utf8mb4_unicode_ci consume exactamente el triple de memoria RAM en el Buffer Pool que utf8mb4_0900_ai_ci para cualquier valor numérico.",
+      "utf8 cifra los datos en disco usando algoritmos AES, mientras que utf8mb4 los almacena en texto plano sin saneamiento.",
+      "El 'utf8' legacy en MySQL solo reserva un máximo de 3 bytes por carácter, truncando o fallando ante caracteres suplementarios de 4 bytes (como emojis o ideogramas); utf8mb4_0900_ai_ci implementa el estándar Unicode Collation Algorithm 9.0, ofreciendo mayor velocidad, insensibilidad a acentos (ai) e insensibilidad a mayúsculas/minúsculas (ci)."
+    ],
+    "correct_index": 3,
+    "hint": "En MySQL, la denominación histórica 'utf8' era un alias de 'utf8mb3' (3 bytes por carácter), incapaz de codificar símbolos Unicode que ocupan 4 bytes (como emojis o ciertos caracteres matemáticos/orientales), arrojando el error 'Incorrect string value'. utf8mb4 soporta los 4 bytes completos. MySQL 8.0 introdujo como default utf8mb4_0900_ai_ci (basada en Unicode 9.0, ai = accent-insensitive, ci = case-insensitive), mucho más rápida y precisa que la antigua utf8mb4_unicode_ci (basada en Unicode 5.2)."
+  },
+  {
+    "id": "mysql_004",
+    "difficulty": "basic",
+    "question": "En una tabla con un índice compuesto B+Tree definido como 'CREATE INDEX idx_cliente ON clientes (apellido, nombre, edad);', ¿cuál de las siguientes consultas NO puede beneficiarse del índice según la regla del prefijo más a la izquierda (Leftmost Prefix Rule)?",
+    "options": [
+      "SELECT * FROM clientes WHERE apellido = 'Pérez';",
+      "SELECT * FROM clientes WHERE nombre = 'Carlos' AND edad = 28;",
+      "SELECT * FROM clientes WHERE apellido = 'Pérez' AND nombre = 'Carlos';",
+      "SELECT * FROM clientes WHERE apellido = 'Pérez' AND edad = 28;"
+    ],
+    "correct_index": 1,
+    "hint": "Los índices compuestos en B+Tree se ordenan estrictamente de izquierda a derecha. Para que el índice pueda utilizarse en una búsqueda directa (range o ref), la consulta debe filtrar obligatoriamente por la primera columna ('apellido'). Filtrar únicamente por 'nombre' y 'edad' omite la columna guía, impidiendo al optimizador navegar la raíz del árbol B+Tree y forzando un escaneo completo (Full Table Scan)."
+  },
+  {
+    "id": "mysql_005",
+    "difficulty": "medium",
+    "question": "En la arquitectura clásica de replicación asíncrona de MySQL, ¿cuál es el rol exacto que desempeñan el 'I/O Thread' y el 'SQL Thread' en la instancia réplica?",
+    "options": [
+      "El I/O Thread ejecuta las sentencias SQL sobre InnoDB en la réplica, mientras que el SQL Thread atiende las conexiones de red de los clientes de solo lectura.",
+      "Ambos hilos residen exclusivamente en el servidor Master para distribuir los paquetes binarios mediante broadcast UDP a todas las réplicas en red local.",
+      "El I/O Thread se conecta al servidor primario (Master), lee los eventos del Binary Log y los escribe en los Relay Logs locales de la réplica; el SQL Thread lee de los Relay Logs locales y aplica secuencialmente los cambios en los datos de la réplica.",
+      "El I/O Thread comprime los archivos de base de datos en formato tar.gz y el SQL Thread sincroniza las transacciones mediante el protocolo Paxos bidireccional."
+    ],
+    "correct_index": 2,
+    "hint": "La réplica ejecuta dos hilos independientes: el hilo de recepción de I/O (que se autentica en el master, descarga las transacciones del Binary Log y las vuelca en los Relay Logs de almacenamiento local) y el hilo SQL (que interpreta los eventos de los Relay Logs y ejecuta los cambios en el motor de almacenamiento de la réplica). Si el hilo SQL se retrasa respecto al I/O Thread, se produce el 'Replication Lag'."
+  },
+  {
+    "id": "mysql_006",
+    "difficulty": "medium",
+    "question": "¿Cómo se configura y explota el registro de consultas lentas ('Slow Query Log') en MySQL para diagnosticar cuellos de botella en producción?",
+    "options": [
+      "Se activa mediante 'slow_query_log = 1', estableciendo el límite de tiempo con 'long_query_time' (con precisión de microsegundos) y opcionalmente 'log_queries_not_using_indexes = 1'; las consultas se agrupan y analizan típicamente con la utilidad CLI 'mysqldumpslow'.",
+      "Se habilita mediante 'innodb_buffer_pool_dump_now = ON' y captura exclusivamente sentencias DROP TABLE y ALTER TABLE ejecutadas por root.",
+      "Requiere instalar obligatoriamente el motor Apache Spark en el host de la base de datos para parsear los volcados binarios en tiempo real.",
+      "Se activa mediante 'general_log = 1' e interrumpe de forma forzada cualquier consulta que supere los 500 milisegundos de ejecución."
+    ],
+    "correct_index": 0,
+    "hint": "El Slow Query Log se habilita con slow_query_log = 1. El parámetro long_query_time define el umbral (por ejemplo 0.5 para 500 ms). log_queries_not_using_indexes permite registrar además consultas que realizan escaneos completos de tabla aunque tarden poco tiempo. La herramienta mysqldumpslow resume el archivo consolidando consultas idénticas (sustituyendo literales por N o 'S') y ordenándolas por tiempo total o promedio."
+  },
+  {
+    "id": "mysql_007",
+    "difficulty": "medium",
+    "question": "Al analizar la salida de una sentencia EXPLAIN en MySQL, ¿qué combinación de valores en las columnas 'type' y 'Extra' indica el plan de acceso MÁS eficiente?",
+    "options": [
+      "type: ALL con Extra: Using filesort; Using temporary",
+      "type: range con Extra: Using where",
+      "type: index con Extra: Using join buffer (Block Nested Loop)",
+      "type: const (o eq_ref / ref) con Extra: Using index"
+    ],
+    "correct_index": 3,
+    "hint": "En la columna 'type', el orden de eficiencia es: system > const > eq_ref > ref > range > index > ALL (donde const lee solo una fila única y ALL es un Full Table Scan). En la columna 'Extra', 'Using index' significa que la consulta se resuelve enteramente en el índice (Covering Index), sin necesidad de acceder a las páginas de datos físicas de la tabla. En contraste, 'Using filesort' y 'Using temporary' con 'type: ALL' representan el peor escenario posible."
+  },
+  {
+    "id": "mysql_008",
+    "difficulty": "medium",
+    "question": "En el motor InnoDB, ¿cómo se estructura el 'Clustered Index' frente a un 'Secondary Index' y por qué se produce el efecto 'Bookmark Lookup'?",
+    "options": [
+      "InnoDB organiza las filas de manera desordenada en un montículo (Heap); los índices secundarios contienen punteros directos a memoria RAM virtual.",
+      "El Clustered Index almacena las filas físicas completas en los nodos hoja de un B+Tree ordenado por la Clave Primaria (PK); los Secondary Indexes almacenan en sus hojas solo las columnas indexadas junto con el valor de la PK, requiriendo una segunda búsqueda en el Clustered Index para recuperar columnas no indexadas (Bookmark Lookup).",
+      "Los Secondary Indexes replican de forma redundante todas las columnas de la tabla en sus hojas para evitar segundas búsquedas, multiplicando el uso de almacenamiento por diez.",
+      "Si una tabla no posee clave primaria explícita, InnoDB no crea ningún índice y desactiva las búsquedas B+Tree, pasando a escaneos lineales."
+    ],
+    "correct_index": 1,
+    "hint": "En InnoDB, la tabla es físicamente el Clustered Index (organizado por la PK, o el primer UNIQUE NOT NULL, o un ID oculto autogenerado de 6 bytes). Cada índice secundario almacena la clave secundaria y el valor de la Clave Primaria. Cuando un SELECT solicita columnas adicionales no presentes en el índice secundario, el motor debe hacer un 'doble salto': ubica la PK en el índice secundario y luego navega el árbol clusterizado para traer el resto de columnas (Bookmark Lookup)."
+  },
+  {
+    "id": "mysql_009",
+    "difficulty": "medium",
+    "question": "En la gestión transaccional de InnoDB, ¿cuáles son los roles diferenciados del 'Undo Log' y del 'Redo Log' para garantizar las propiedades ACID?",
+    "options": [
+      "El Undo Log garantiza la Durabilidad física en disco; el Redo Log almacena permisos de usuarios y logs de auditoría de seguridad.",
+      "El Redo Log se borra inmediatamente tras cada COMMIT; el Undo Log solo se conserva en memoria RAM y nunca se escribe en disco.",
+      "El Undo Log permite revertir modificaciones durante un ROLLBACK y soporta el aislamiento multiversión (MVCC construyendo versiones históricas); el Redo Log garantiza la Durabilidad (D) registrando cambios de páginas a nivel de byte antes de volcarlas a disco, permitiendo la recuperación ante caídas (crash recovery).",
+      "Ambos logs son idénticos y se alternan en modo round-robin para nivelar el desgaste de unidades SSD de estado sólido."
+    ],
+    "correct_index": 2,
+    "hint": "El Undo Log guarda las instrucciones inversas para deshacer cambios si una transacción hace ROLLBACK y proporciona 'lecturas consistentes' en MVCC para que lectores concurrentes vean el estado anterior sin bloqueos. El Redo Log (WAL) es un búfer circular en disco que registra los cambios físicos aplicados a las páginas de datos en memoria (Buffer Pool), permitiendo que tras un apagón inesperado el motor repita las transacciones confirmadas pendientes de escribir en los archivos .ibd."
+  },
+  {
+    "id": "mysql_010",
+    "difficulty": "advanced",
+    "question": "¿Cómo opera la variante adaptativa del algoritmo LRU en el 'InnoDB Buffer Pool' y cuál es la función técnica del parámetro 'innodb_old_blocks_time'?",
+    "options": [
+      "Divide la lista LRU en dos secciones: la sublista 'young' (reciente, ~63%) y la 'old' (~37%); las páginas nuevas ingresan en la cabecera de la sublista old y solo son promovidas a young si reciben un nuevo acceso tras permanecer al menos 'innodb_old_blocks_time' milisegundos en old, evitando que escaneos masivos de tablas contaminen el Buffer Pool (Buffer Pool Pollution).",
+      "Utiliza una cola FIFO simple donde las páginas más frecuentemente accedidas se descartan de inmediato para liberar canales de transferencia PCI Express.",
+      "innodb_old_blocks_time define el intervalo en el cual la memoria RAM se vuelca íntegramente al archivo de swap del sistema operativo.",
+      "La lista LRU clasifica las páginas según la longitud de sus columnas de texto y descarta páginas que no contengan números enteros válidos."
+    ],
+    "correct_index": 0,
+    "hint": "En un algoritmo LRU puro, una consulta masiva (como un mysqldump o un batch analítico con Full Table Scan) expulsaría de la memoria RAM todas las páginas críticas de uso frecuente. InnoDB mitiga esto dividiendo la lista LRU (por defecto 3/8 en la sublista old). Al leer una página nueva, entra en 'old'. Solo si se vuelve a consultar después de que hayan transcurrido al menos innodb_old_blocks_time milisegundos (por defecto 1000 ms), se transfiere a la sublista 'young'."
+  },
+  {
+    "id": "mysql_011",
+    "difficulty": "advanced",
+    "question": "En el nivel de aislamiento predeterminado de MySQL (REPEATABLE READ), ¿cómo previene InnoDB las lecturas fantasma (Phantom Reads) durante lecturas de bloqueo (FOR UPDATE) o sentencias de modificación DML?",
+    "options": [
+      "Bloquea la tabla completa en modo exclusivo impidiendo cualquier lectura concurrente hasta que finalice la transacción.",
+      "Fuerza a que todas las transacciones concurrentes se ejecuten en orden cronológico en un solo hilo de CPU.",
+      "Aplica bloqueos de página fijos de 64 KB que invalidan el Query Cache de MySQL Server.",
+      "Utiliza 'Next-Key Locks', que combinan un 'Record Lock' sobre el registro del índice con un 'Gap Lock' sobre el espacio abierto que precede a ese registro en el B+Tree, impidiendo que transacciones concurrentes inserten nuevas filas en los intervalos evaluados por la consulta."
+    ],
+    "correct_index": 3,
+    "hint": "En REPEATABLE READ, las lecturas consistentes ordinarias previenen fantasmas mediante snapshots MVCC. Sin embargo, para lecturas bloqueantes (SELECT ... FOR UPDATE) o escrituras (UPDATE/DELETE), InnoDB recurre a Next-Key Locks: bloquea tanto el registro en el índice (Record Lock) como el hueco previo entre registros (Gap Lock), incluyendo el hueco hasta el registro 'supremum'. Así, ninguna otra transacción puede insertar un registro que caiga en dicho rango, evitando lecturas fantasma."
+  },
+  {
+    "id": "mysql_012",
+    "difficulty": "advanced",
+    "question": "Al configurar 'innodb_flush_log_at_trx_commit' en MySQL, ¿cuáles son las implicaciones de durabilidad y rendimiento para los valores 0, 1 y 2?",
+    "options": [
+      "Con 0 se garantiza cumplimiento estricto de ACID; con 1 se desconectan las escrituras de disco; con 2 se utiliza almacenamiento RAID de red.",
+      "Con 1 se escribe y sincroniza (fsync) el Redo Log a disco en cada COMMIT, garantizando ACID estricto; con 2 se escribe en el page cache del SO en cada COMMIT y se sincroniza a disco cada segundo (resistente a caídas de MySQL pero no del OS); con 0 se retiene en el búfer de InnoDB y se escribe/sincroniza una vez por segundo (máximo riesgo de perder hasta 1 segundo de transacciones).",
+      "El valor 1 solo es compatible con discos mecánicos HDD y genera corrupción inmediata en discos SSD NVMe modernos.",
+      "El valor 2 deshabilita el Undo Log y ejecuta todas las transacciones directamente en la memoria volátil del procesador sin persistencia."
+    ],
+    "correct_index": 1,
+    "hint": "innodb_flush_log_at_trx_commit = 1 es el estándar ACID: cada commit ejecuta un fsync() al disco en el Redo Log. El valor 2 escribe en el búfer del kernel del sistema operativo en cada commit, pero solo ejecuta fsync una vez por segundo; si MySQL colapsa repentinamente, el SO escribe los datos a disco sin pérdida (solo se pierde ante un corte de energía o crash del kernel). El valor 0 deja los logs en memoria de InnoDB y flushea cada segundo, ofreciendo la menor latencia a costa del mayor riesgo."
+  },
+  {
+    "id": "mysql_013",
+    "difficulty": "advanced",
+    "question": "En el contexto de Point-in-Time Recovery (PITR) y replicación, ¿cuál es la diferencia técnica entre los formatos del Binary Log ('STATEMENT', 'ROW', 'MIXED') y cómo se aplica la recuperación?",
+    "options": [
+      "STATEMENT guarda capturas binarias de la memoria RAM del servidor; ROW solo guarda sentencias SELECT; MIXED cifra los registros con clave pública.",
+      "ROW convierte las tablas al formato MyISAM antes de transferir los eventos a los Relay Logs de las réplicas secundarias.",
+      "STATEMENT registra las sentencias SQL literales (propenso a desincronización con funciones no deterministas como NOW(), UUID() o RAND()); ROW registra el estado antes y después de cada fila modificada individualmente, garantizando consistencia absoluta; en PITR se restaura el último backup consistente y se reproducen los eventos binarios con 'mysqlbinlog' usando --start-position y --stop-position (o fechas).",
+      "El formato ROW no es compatible con el motor InnoDB y requiere que las tablas carezcan de claves primarias autoincrementales."
+    ],
+    "correct_index": 2,
+    "hint": "El formato STATEMENT registra el texto SQL de la sentencia; si la consulta invoca UUID() o depende del orden no determinista de un UPDATE sin ORDER BY, la réplica o la restauración obtendrá datos distintos. El formato ROW registra imágenes binarias de las filas cambiadas (antes y después), siendo totalmente determinista y seguro para PITR. La recuperación en el tiempo combina la restauración de una copia de seguridad base seguida de la aplicación de transacciones del binlog hasta la coordenada previa al desastre."
+  },
+  {
+    "id": "mysql_014",
+    "difficulty": "advanced",
+    "question": "¿Cómo interviene la directiva 'FORCE INDEX' en el optimizador basado en costos (CBO) de MySQL y qué consecuencia interna tiene exceder el valor de 'sort_buffer_size' en consultas con ORDER BY?",
+    "options": [
+      "FORCE INDEX otorga un costo prácticamente infinito al escaneo de tabla (Table Scan), forzando al optimizador a elegir el índice indicado siempre que sea técnicamente aplicable; si los registros a ordenar superan sort_buffer_size, MySQL particiona el ordenamiento en disco creando archivos temporales y ejecutando un merge sort externo en múltiples pasadas, degradando severamente la latencia.",
+      "FORCE INDEX reescribe el binario de la tabla en disco de inmediato; superar sort_buffer_size cancela la transacción con el error 1064 de sintaxis.",
+      "sort_buffer_size es una memoria global compartida; si se supera, el servidor MySQL detiene las conexiones de red y entra en modo de solo lectura.",
+      "FORCE INDEX convierte el índice B+Tree en un árbol AVL binario en memoria volátil descartando las claves primarias existentes."
+    ],
+    "correct_index": 0,
+    "hint": "USE INDEX solo recomienda el índice (el optimizador puede ignorarlo si calcula que un escaneo de tabla es más barato). FORCE INDEX incrementa artificialmente el costo del Full Table Scan para asegurar que el optimizador utilice el índice sugerido si es viable. Por su parte, sort_buffer_size se reserva por hilo al ejecutar ORDER BY o GROUP BY; si la cantidad de datos a ordenar excede esta capacidad en memoria, MySQL crea archivos temporales en disco y realiza un 'filesort' con ordenamiento externo por mezclas (merge sort)."
+  },
+  {
+    "id": "mysql_015",
+    "difficulty": "advanced",
+    "question": "¿Cómo detecta y resuelve el motor InnoDB los interbloqueos ('deadlocks') entre transacciones concurrentes, y qué criterio emplea para seleccionar a la transacción víctima?",
+    "options": [
+      "InnoDB carece de detector de deadlocks; las conexiones bloqueadas esperan indefinidamente hasta que expira el tiempo de arrendamiento DHCP de la red.",
+      "Utiliza un algoritmo de detección de ciclos sobre un grafo de esperas en memoria (wait-for graph); al detectar un ciclo cerrado, selecciona como víctima y revierte (ROLLBACK) la transacción de menor peso o costo de deshacer (trx_weight, la que modificó menos filas), arrojando a la aplicación el error 1213 (ER_LOCK_DEADLOCK).",
+      "Selecciona siempre como víctima a la transacción más antigua en el sistema para evitar saturar el espacio del Undo Log.",
+      "Convierte en caliente una de las tablas involucradas al motor MyISAM para suprimir los bloqueos de fila de forma instantánea."
+    ],
+    "correct_index": 1,
+    "hint": "El detector de interbloqueos de InnoDB construye y analiza un grafo dirigido de esperas ('wait-for graph'). Cuando se produce una dependencia circular (A espera a B y B espera a A), se genera un ciclo. InnoDB identifica la transacción con menor número de inserciones, actualizaciones o eliminaciones ('trx_weight') y le aplica un ROLLBACK forzado, liberando sus bloqueos para que la otra transacción prospere. La aplicación recibe el error 1213 y debe estar diseñada para reintentar la operación."
+  }
+]

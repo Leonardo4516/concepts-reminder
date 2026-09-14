@@ -30,6 +30,11 @@ class ContentManager {
     'arquitectura_hexagonal': 'assets/packs/arquitectura_hexagonal.json',
     'metodologia_scrum': 'assets/packs/metodologia_scrum.json',
     'bases_de_datos': 'assets/packs/bases_de_datos.json',
+    'postgresql': 'assets/packs/postgresql_avanzado.json',
+    'mysql': 'assets/packs/mysql_avanzado.json',
+    'mongodb': 'assets/packs/mongodb_avanzado.json',
+    'redis': 'assets/packs/redis_avanzado.json',
+    'sqlite': 'assets/packs/sqlite_avanzado.json',
     'redes_y_apis': 'assets/packs/redes_y_apis.json',
     'ciberseguridad_web': 'assets/packs/ciberseguridad_web.json',
     'devops_cloud': 'assets/packs/devops_cloud.json',
@@ -44,7 +49,7 @@ class ContentManager {
     'POO & Fundamentos': ['poo_conceptos'],
     'Metodologías & Agile': ['principios_solid', 'metodologia_scrum'],
     'Arquitectura & Patrones': ['patrones_diseno', 'arquitectura_hexagonal'],
-    'Bases de Datos': ['bases_de_datos'],
+    'Bases de Datos': ['bases_de_datos', 'postgresql', 'mysql', 'mongodb', 'redis', 'sqlite'],
     'Redes & APIs': ['redes_y_apis'],
     'Ciberseguridad Web': ['ciberseguridad_web'],
     'DevOps & Cloud': ['devops_cloud'],
@@ -66,7 +71,12 @@ class ContentManager {
     'patrones_diseno': 'Patrones de Diseño',
     'arquitectura_hexagonal': 'Arquitectura Hexagonal & Clean',
     'metodologia_scrum': 'Metodología SCRUM & Agile',
-    'bases_de_datos': 'Bases de Datos & SQL',
+    'bases_de_datos': 'Bases de Datos (Fundamentos)',
+    'postgresql': 'PostgreSQL',
+    'mysql': 'MySQL & MariaDB',
+    'mongodb': 'MongoDB & NoSQL',
+    'redis': 'Redis & In-Memory',
+    'sqlite': 'SQLite & Embebidas',
     'redes_y_apis': 'Redes & Protocolos HTTP',
     'ciberseguridad_web': 'Ciberseguridad Web (OWASP)',
     'devops_cloud': 'DevOps, Docker & Cloud',
@@ -90,6 +100,11 @@ class ContentManager {
     'patrones_diseno': 'Arquitectura & Patrones',
     'arquitectura_hexagonal': 'Arquitectura & Patrones',
     'bases_de_datos': 'Bases de Datos',
+    'postgresql': 'Bases de Datos',
+    'mysql': 'Bases de Datos',
+    'mongodb': 'Bases de Datos',
+    'redis': 'Bases de Datos',
+    'sqlite': 'Bases de Datos',
     'redes_y_apis': 'Redes & APIs',
     'ciberseguridad_web': 'Ciberseguridad Web',
     'devops_cloud': 'DevOps & Cloud',
@@ -221,20 +236,59 @@ class ContentManager {
     'machine learning': 'ia_machine_learning',
     'deep learning': 'ia_machine_learning',
     'ml': 'ia_machine_learning',
+    'postgres': 'postgresql',
+    'postgresql': 'postgresql',
+    'mysql': 'mysql',
+    'mariadb': 'mysql',
+    'mongo': 'mongodb',
+    'mongodb': 'mongodb',
+    'redis': 'redis',
+    'sqlite': 'sqlite',
+    'sql': 'bases_de_datos',
+    'bases de datos': 'bases_de_datos',
   };
 
-  /// Query questions by pack key (e.g. 'python', 'poo_conceptos')
-  List<Question> getQuestionsByPack(String packKey) {
+  /// Returns the list of difficulties allowed for a given target difficulty:
+  /// - 'basic'    => ['basic'] (only easy questions)
+  /// - 'medium'   => ['basic', 'medium'] (medium and easy questions)
+  /// - 'advanced' => ['basic', 'medium', 'advanced'] (hard, medium, and easy questions)
+  static List<String> getAllowedDifficulties(String difficulty) {
+    final diff = difficulty.toLowerCase().trim();
+    switch (diff) {
+      case 'basic':
+        return const ['basic'];
+      case 'medium':
+        return const ['basic', 'medium'];
+      case 'advanced':
+      default:
+        return const ['basic', 'medium', 'advanced'];
+    }
+  }
+
+  /// Filters a list of questions based on a user's selected difficulty level.
+  /// If [difficulty] is null, all questions are returned.
+  List<Question> filterByDifficulty(List<Question> questions, String? difficulty) {
+    if (difficulty == null || difficulty.isEmpty) return questions;
+    final allowed = getAllowedDifficulties(difficulty);
+    final filtered = questions.where((q) => allowed.contains(q.difficulty)).toList();
+    // If no questions match the filter (e.g. legacy pack), fallback to all questions
+    return filtered.isNotEmpty ? filtered : questions;
+  }
+
+  /// Query questions by pack key (e.g. 'python', 'poo_conceptos', 'postgresql'),
+  /// optionally filtered by [difficulty].
+  List<Question> getQuestionsByPack(String packKey, [String? difficulty]) {
     String key = packKey.toLowerCase().trim();
     if (_topicAliases.containsKey(key)) {
       key = _topicAliases[key]!;
     }
-    return List.unmodifiable(_questionsByPack[key] ?? []);
+    final raw = List<Question>.unmodifiable(_questionsByPack[key] ?? []);
+    return filterByDifficulty(raw, difficulty);
   }
 
   /// Backwards-compatible alias for getQuestionsByPack
-  List<Question> getQuestionsByLanguage(String language) {
-    return getQuestionsByPack(language);
+  List<Question> getQuestionsByLanguage(String language, [String? difficulty]) {
+    return getQuestionsByPack(language, difficulty);
   }
 
   /// Returns available registered pack keys
@@ -269,8 +323,9 @@ class ContentManager {
         (key.isNotEmpty ? '${key[0].toUpperCase()}${key.substring(1)}' : key);
   }
 
-  /// Returns all questions belonging to all packs within a given category
-  List<Question> getQuestionsByCategory(String category) {
+  /// Returns all questions belonging to all packs within a given category,
+  /// optionally filtered by [difficulty].
+  List<Question> getQuestionsByCategory(String category, [String? difficulty]) {
     final packs = getPacksByCategory(category);
     final List<Question> result = [];
     for (final packKey in packs) {
@@ -279,7 +334,7 @@ class ContentManager {
         result.addAll(questions);
       }
     }
-    return result;
+    return filterByDifficulty(result, difficulty);
   }
 
   /// Check whether a question is due according to SRS progress
@@ -293,35 +348,36 @@ class ContentManager {
         progress.nextReview.isAtSameMomentAs(DateTime.now());
   }
 
-  /// Returns all questions that are due, optionally filtered by pack
-  List<Question> getDueQuestions([String? packKey]) {
+  /// Returns all questions that are due, optionally filtered by pack and difficulty
+  List<Question> getDueQuestions([String? packKey, String? difficulty]) {
     final candidateQuestions = (packKey != null && packKey.isNotEmpty)
-        ? getQuestionsByPack(packKey)
-        : getAllQuestions();
+        ? getQuestionsByPack(packKey, difficulty)
+        : filterByDifficulty(getAllQuestions(), difficulty);
 
     return candidateQuestions.where((q) => isQuestionDue(q.id)).toList();
   }
 
-  /// Returns all questions that are due within a specific category
-  List<Question> getDueQuestionsByCategory(String category) {
-    final candidateQuestions = getQuestionsByCategory(category);
+  /// Returns all questions that are due within a specific category, optionally filtered by difficulty
+  List<Question> getDueQuestionsByCategory(String category, [String? difficulty]) {
+    final candidateQuestions = getQuestionsByCategory(category, difficulty);
     return candidateQuestions.where((q) => isQuestionDue(q.id)).toList();
   }
 
   /// Returns a single question due for review, prioritizing overdue reviews then new questions.
   /// If [packKey] is provided, restricts selection to that pack.
   /// If [fallbackToAny] is true, returns a random question when none are strictly due.
-  Question? getDueQuestion([String? packKey, bool fallbackToAny = false]) {
+  /// If [difficulty] is specified, restricts candidate pool according to tiered difficulty rules.
+  Question? getDueQuestion([String? packKey, bool fallbackToAny = false, String? difficulty]) {
     final candidateQuestions = (packKey != null && packKey.isNotEmpty)
-        ? getQuestionsByPack(packKey)
-        : getAllQuestions();
+        ? getQuestionsByPack(packKey, difficulty)
+        : filterByDifficulty(getAllQuestions(), difficulty);
 
     return _pickDueQuestionFromList(candidateQuestions, fallbackToAny);
   }
 
   /// Returns a single question due for review within a specific category.
-  Question? getDueQuestionByCategory(String category, [bool fallbackToAny = false]) {
-    final candidateQuestions = getQuestionsByCategory(category);
+  Question? getDueQuestionByCategory(String category, [bool fallbackToAny = false, String? difficulty]) {
+    final candidateQuestions = getQuestionsByCategory(category, difficulty);
     return _pickDueQuestionFromList(candidateQuestions, fallbackToAny);
   }
 
