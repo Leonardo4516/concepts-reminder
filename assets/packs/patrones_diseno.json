@@ -1,0 +1,74 @@
+[
+  {
+    "id": "patron_001",
+    "question": "¿Por qué el patrón Singleton suele considerarse un antipatrón en sistemas modernos y cuáles son sus mayores riesgos?",
+    "options": [
+      "Porque degrada la velocidad de CPU al no usar memoria caché L1.",
+      "Porque introduce estado global mutable oculto, acoplamiento rígido, dificulta el testing unitario con mocks y puede generar condiciones de carrera concurrentes.",
+      "Porque los lenguajes fuertemente tipados impiden instanciar clases con constructores privados.",
+      "Porque solo puede ser utilizado en arquitecturas de microservicios."
+    ],
+    "correct_index": 1,
+    "hint": "El acceso global estático crea dependencias ocultas que hacen que las pruebas unitarias dependan del orden de ejecución."
+  },
+  {
+    "id": "patron_002",
+    "question": "¿Cuál es la diferencia fundamental entre el patrón Factory Method y el patrón Abstract Factory?",
+    "options": [
+      "Factory Method se basa en herencia (delega la instanciación a subclases mediante un método), mientras que Abstract Factory se basa en composición de objetos para crear familias de productos relacionados o dependientes.",
+      "Factory Method solo permite crear primitivos y Abstract Factory crea instancias de clases complejas.",
+      "Abstract Factory prohíbe el uso de interfaces y Factory Method solo funciona con clases abstractas.",
+      "Factory Method es un patrón de comportamiento y Abstract Factory es un patrón estructural."
+    ],
+    "correct_index": 0,
+    "hint": "Factory Method = un método virtual para crear un producto. Abstract Factory = un objeto con múltiples métodos factory para una familia de productos."
+  },
+  {
+    "id": "patron_003",
+    "question": "¿Cómo funciona el patrón Observer y cuál es su beneficio principal en arquitecturas orientadas a eventos?",
+    "options": [
+      "Permite a un sujeto mantener una lista de observadores y notificarles automáticamente cualquier cambio de estado, desacoplando al emisor de los receptores.",
+      "Ejecuta una consulta SQL periódica en una base de datos para detectar cambios en tablas.",
+      "Bloquea la ejecución del hilo principal hasta que todos los clientes confirmen la recepción del evento.",
+      "Obliga a que todos los componentes conozcan la dirección de memoria exacta de los demás."
+    ],
+    "correct_index": 0,
+    "hint": "El emisor (Subject/Publisher) solo conoce que los observadores implementan una interfaz común (Observer/Subscriber), no sus clases concretas."
+  },
+  {
+    "id": "patron_004",
+    "question": "¿Cuál es la intención principal del patrón de diseño Strategy?",
+    "options": [
+      "Definir una familia de algoritmos, encapsular cada uno y hacerlos intercambiables dinámicamente en tiempo de ejecución sin alterar el cliente.",
+      "Garantizar que una clase tenga solo una instancia en todo el ciclo de vida de la aplicación.",
+      "Convertir la interfaz de una clase existente en otra interfaz que los clientes esperan.",
+      "Añadir responsabilidades dinámicas a un objeto envolviéndolo en otra clase."
+    ],
+    "correct_index": 0,
+    "hint": "Permite seleccionar un algoritmo (por ejemplo, métodos de cálculo de impuestos o rutas de compresión) en runtime mediante inyección de una interfaz común."
+  },
+  {
+    "id": "patron_005",
+    "question": "¿Cómo agrega responsabilidades el patrón Decorator a un objeto y en qué se diferencia de la herencia tradicional?",
+    "options": [
+      "Modifica directamente el código binario compilado de la clase original.",
+      "Envuelve al objeto en otra clase que implementa la misma interfaz, agregando comportamiento antes o después de delegar la llamada al objeto original de forma dinámica.",
+      "Hereda estáticamente de múltiples clases base al mismo tiempo en tiempo de compilación.",
+      "Crea un clon idéntico del objeto en una partición de memoria protegida."
+    ],
+    "correct_index": 1,
+    "hint": "El decorador tiene una relación 'is-a' (implementa la misma interfaz) y 'has-a' (contiene una referencia al objeto envuelto), permitiendo apilar comportamientos en tiempo de ejecución."
+  },
+  {
+    "id": "patron_006",
+    "question": "¿Cuál es la diferencia entre el patrón Adapter y el patrón Facade?",
+    "options": [
+      "Adapter convierte y adapta una interfaz existente a otra interfaz incompatible que el cliente espera; Facade provee una interfaz simplificada y de alto nivel sobre un subsistema complejo.",
+      "Adapter solo funciona con bases de datos y Facade solo con librerías gráficas.",
+      "Facade altera el comportamiento interno de las clases del subsistema, mientras que Adapter no.",
+      "Ambos patrones son idénticos y reemplazables sin ningún cambio conceptual."
+    ],
+    "correct_index": 0,
+    "hint": "Adapter = resolver incompatibilidad de interfaz (hacer que encajen). Facade = simplificar la interacción con múltiples componentes complejos."
+  }
+]

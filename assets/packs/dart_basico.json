@@ -1,0 +1,74 @@
+[
+  {
+    "id": "dart_001",
+    "question": "¿Qué significa que Dart cuente con 'Sound Null Safety' (seguridad estricta ante nulos)?",
+    "options": [
+      "Que el sistema de tipos garantiza en tiempo de compilación que una variable no nulable (sin '?') nunca podrá contener un valor 'null' en tiempo de ejecución.",
+      "Que todas las variables se inicializan automáticamente con la cadena vacía '' si son nulas.",
+      "Que la palabra clave 'null' fue eliminada por completo del lenguaje.",
+      "Que los punteros a memoria se liberan manualmente para evitar fugas."
+    ],
+    "correct_index": 0,
+    "hint": "'Soundness' garantiza que si el tipo es int, nunca será null; optimizando el código generado para el runtime."
+  },
+  {
+    "id": "dart_002",
+    "question": "¿Cómo maneja Dart la concurrencia y el paralelismo a través de Isolates?",
+    "options": [
+      "Los Isolates comparten toda la memoria heap y requieren bloqueos con mutexes.",
+      "Cada Isolate posee su propia memoria y un bucle de eventos (Event Loop) independiente; no comparten estado y se comunican exclusivamente enviando mensajes por puertos (SendPort/ReceivePort).",
+      "Dart no soporta hilos ni paralelismo; corre exclusivamente en un único hilo síncrono.",
+      "Los Isolates solo se pueden ejecutar en aplicaciones móviles Android y no en Flutter Desktop."
+    ],
+    "correct_index": 1,
+    "hint": "Al no compartir memoria (isolated), los Isolates eliminan problemas clásicos de concurrencia como race conditions o deadlocks por bloqueo de memoria."
+  },
+  {
+    "id": "dart_003",
+    "question": "¿Cuál es la función de un 'Mixin' en Dart y con qué palabra clave se incorpora a una clase?",
+    "options": [
+      "Permite reutilizar código y comportamiento en múltiples jerarquías de clases sin usar herencia múltiple, mediante la palabra clave 'with'.",
+      "Sirve para definir variables globales inmutables mediante la palabra clave 'mixin'.",
+      "Permite sobrecargar operadores aritméticos usando la palabra clave 'implements'.",
+      "Es una función asíncrona que retorna streams mediante la palabra clave 'yield*'."
+    ],
+    "correct_index": 0,
+    "hint": "En Dart: `class Auto extends Vehiculo with Conducible, Motorizado`."
+  },
+  {
+    "id": "dart_004",
+    "question": "¿Para qué se utilizan los 'Extension Methods' introducidos en Dart 2.7?",
+    "options": [
+      "Para añadir nuevos métodos o propiedades a tipos y clases existentes (incluso de librerías externas) sin necesidad de modificar el código original ni crear subclases.",
+      "Para aumentar el tamaño máximo de memoria disponible para la máquina virtual de Dart.",
+      "Para convertir funciones síncronas en microprocesadores de bajo consumo.",
+      "Para forzar la compilación en tiempo de ejecución (JIT) en compilaciones de producción AOT."
+    ],
+    "correct_index": 0,
+    "hint": "Permiten escribir `extension StringParsing on String { int toInt() => int.parse(this); }`."
+  },
+  {
+    "id": "dart_005",
+    "question": "¿Qué beneficio de rendimiento y memoria aportan los constructores 'const' en clases inmutables en Flutter/Dart?",
+    "options": [
+      "Permiten la canonicalización: instancias idénticas con los mismos valores constantes en tiempo de compilación comparten la misma única referencia en memoria (evitando instanciaciones repetidas).",
+      "Aumentan el ancho de banda de red al descargar paquetes de pub.dev.",
+      "Evitan que Flutter renderice la pantalla cuando el usuario toca un botón.",
+      "Transforman la clase en un objeto dinámico que puede cambiar de tipo en runtime."
+    ],
+    "correct_index": 0,
+    "hint": "En Flutter, usar widgets `const` permite al framework saltarse la reconstrucción de subárboles de widgets inmutables."
+  },
+  {
+    "id": "dart_006",
+    "question": "En el Event Loop de Dart, ¿cómo interactúan la cola de Microtasks y la cola de Eventos?",
+    "options": [
+      "Las microtasks tienen prioridad absoluta y se vacían por completo antes de que se procese el siguiente evento de la Event queue (como I/O, timers o clics).",
+      "La cola de eventos siempre se procesa primero antes de cualquier microtask.",
+      "Ambas colas son idénticas y se ejecutan en hilos paralelos del sistema operativo.",
+      "Dart no utiliza colas; procesa el código únicamente mediante interrupciones de hardware."
+    ],
+    "correct_index": 0,
+    "hint": "scheduleMicrotask() programa tareas que se ejecutan antes del siguiente evento regular del loop."
+  }
+]

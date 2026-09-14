@@ -11,13 +11,52 @@ class ContentManager {
   factory ContentManager() => _instance;
 
   final Map<String, Progress> _progressMap = {};
-  final Map<String, List<Question>> _questionsByLanguage = {};
+  final Map<String, List<Question>> _questionsByPack = {};
   final Map<String, Question> _questionsById = {};
-  final Map<String, String> _questionLanguageMap = {};
+  final Map<String, String> _questionPackMap = {};
 
+  /// Default registered asset paths for all knowledge packs
   static const Map<String, String> defaultPackAssets = {
     'python': 'assets/packs/python_basico.json',
     'java': 'assets/packs/java_basico.json',
+    'javascript': 'assets/packs/javascript_basico.json',
+    'go': 'assets/packs/go_basico.json',
+    'dart': 'assets/packs/dart_basico.json',
+    'poo_conceptos': 'assets/packs/poo_conceptos.json',
+    'principios_solid': 'assets/packs/principios_solid.json',
+    'patrones_diseno': 'assets/packs/patrones_diseno.json',
+  };
+
+  /// Category definitions and their associated pack identifiers
+  static const Map<String, List<String>> categoryPacks = {
+    'Lenguajes': ['python', 'java', 'javascript', 'go', 'dart'],
+    'POO & Fundamentos': ['poo_conceptos'],
+    'Metodologías & SOLID': ['principios_solid'],
+    'Patrones & Arquitectura': ['patrones_diseno'],
+  };
+
+  /// Human-readable display titles for each pack
+  static const Map<String, String> packDisplayNames = {
+    'python': 'Python',
+    'java': 'Java',
+    'javascript': 'JavaScript',
+    'go': 'Go',
+    'dart': 'Dart',
+    'poo_conceptos': 'POO Conceptos',
+    'principios_solid': 'Principios SOLID',
+    'patrones_diseno': 'Patrones de Diseño',
+  };
+
+  /// Reverse lookup from pack key to category
+  static const Map<String, String> packCategoryMap = {
+    'python': 'Lenguajes',
+    'java': 'Lenguajes',
+    'javascript': 'Lenguajes',
+    'go': 'Lenguajes',
+    'dart': 'Lenguajes',
+    'poo_conceptos': 'POO & Fundamentos',
+    'principios_solid': 'Metodologías & SOLID',
+    'patrones_diseno': 'Patrones & Arquitectura',
   };
 
   bool _isLoaded = false;
@@ -63,12 +102,12 @@ class ContentManager {
     _registerQuestions('python', initialPython);
   }
 
-  void _registerQuestions(String language, List<Question> questions) {
-    final langKey = language.toLowerCase().trim();
-    _questionsByLanguage[langKey] = questions;
+  void _registerQuestions(String packKey, List<Question> questions) {
+    final key = packKey.toLowerCase().trim();
+    _questionsByPack[key] = questions;
     for (final q in questions) {
       _questionsById[q.id] = q;
-      _questionLanguageMap[q.id] = langKey;
+      _questionPackMap[q.id] = key;
     }
   }
 
@@ -80,28 +119,29 @@ class ContentManager {
     _isLoaded = true;
   }
 
-  /// Loads a specific language pack from default registered assets
-  Future<List<Question>> loadPack(String language) async {
-    final langKey = language.toLowerCase().trim();
-    final assetPath = defaultPackAssets[langKey];
+  /// Loads a specific pack from default registered assets
+  Future<List<Question>> loadPack(String packKey) async {
+    final key = packKey.toLowerCase().trim();
+    final assetPath = defaultPackAssets[key];
     if (assetPath != null) {
-      return await loadPackFromAsset(langKey, assetPath);
+      return await loadPackFromAsset(key, assetPath);
     }
     return [];
   }
 
   /// Loads and parses JSON from the specified asset path into Question objects
-  Future<List<Question>> loadPackFromAsset(String language, String assetPath) async {
+  Future<List<Question>> loadPackFromAsset(String packKey, String assetPath) async {
+    final key = packKey.toLowerCase().trim();
     try {
       final jsonStr = await rootBundle.loadString(assetPath);
       final List<Question> questions = parseQuestionsJson(jsonStr);
       if (questions.isNotEmpty) {
-        _registerQuestions(language, questions);
+        _registerQuestions(key, questions);
       }
       return questions;
     } catch (e) {
-      debugPrint("Error al cargar asset pack $language ($assetPath): $e");
-      return _questionsByLanguage[language.toLowerCase().trim()] ?? [];
+      debugPrint("Error al cargar asset pack $key ($assetPath): $e");
+      return _questionsByPack[key] ?? [];
     }
   }
 
@@ -121,15 +161,60 @@ class ContentManager {
     return _questionsById.values.toList();
   }
 
-  /// Query questions by language (e.g. 'python', 'java')
-  List<Question> getQuestionsByLanguage(String language) {
-    final langKey = language.toLowerCase().trim();
-    return List.unmodifiable(_questionsByLanguage[langKey] ?? []);
+  /// Query questions by pack key (e.g. 'python', 'poo_conceptos')
+  List<Question> getQuestionsByPack(String packKey) {
+    final key = packKey.toLowerCase().trim();
+    return List.unmodifiable(_questionsByPack[key] ?? []);
   }
 
-  /// Returns available registered languages
+  /// Backwards-compatible alias for getQuestionsByPack
+  List<Question> getQuestionsByLanguage(String language) {
+    return getQuestionsByPack(language);
+  }
+
+  /// Returns available registered pack keys
+  List<String> getAvailablePacks() {
+    return defaultPackAssets.keys.toList();
+  }
+
+  /// Backwards-compatible alias for getAvailablePacks
   List<String> getAvailableLanguages() {
-    return _questionsByLanguage.keys.toList();
+    return _questionsByPack.keys.toList();
+  }
+
+  /// Returns list of all defined category names
+  List<String> getAvailableCategories() {
+    return categoryPacks.keys.toList();
+  }
+
+  /// Returns pack keys belonging to a category
+  List<String> getPacksByCategory(String category) {
+    return categoryPacks[category] ?? [];
+  }
+
+  /// Returns category name for a given pack key
+  String? getCategoryForPack(String packKey) {
+    return packCategoryMap[packKey.toLowerCase().trim()];
+  }
+
+  /// Returns human-readable display title for a pack
+  String getPackDisplayName(String packKey) {
+    final key = packKey.toLowerCase().trim();
+    return packDisplayNames[key] ??
+        (key.isNotEmpty ? '${key[0].toUpperCase()}${key.substring(1)}' : key);
+  }
+
+  /// Returns all questions belonging to all packs within a given category
+  List<Question> getQuestionsByCategory(String category) {
+    final packs = getPacksByCategory(category);
+    final List<Question> result = [];
+    for (final packKey in packs) {
+      final questions = _questionsByPack[packKey];
+      if (questions != null) {
+        result.addAll(questions);
+      }
+    }
+    return result;
   }
 
   /// Check whether a question is due according to SRS progress
@@ -143,30 +228,46 @@ class ContentManager {
         progress.nextReview.isAtSameMomentAs(DateTime.now());
   }
 
-  /// Returns all questions that are due, optionally filtered by language
-  List<Question> getDueQuestions([String? language]) {
-    final candidateQuestions = (language != null && language.isNotEmpty)
-        ? getQuestionsByLanguage(language)
+  /// Returns all questions that are due, optionally filtered by pack
+  List<Question> getDueQuestions([String? packKey]) {
+    final candidateQuestions = (packKey != null && packKey.isNotEmpty)
+        ? getQuestionsByPack(packKey)
         : getAllQuestions();
 
     return candidateQuestions.where((q) => isQuestionDue(q.id)).toList();
   }
 
+  /// Returns all questions that are due within a specific category
+  List<Question> getDueQuestionsByCategory(String category) {
+    final candidateQuestions = getQuestionsByCategory(category);
+    return candidateQuestions.where((q) => isQuestionDue(q.id)).toList();
+  }
+
   /// Returns a single question due for review, prioritizing overdue reviews then new questions.
-  /// If [language] is provided, restricts selection to that language.
+  /// If [packKey] is provided, restricts selection to that pack.
   /// If [fallbackToAny] is true, returns a random question when none are strictly due.
-  Question? getDueQuestion([String? language, bool fallbackToAny = false]) {
-    final candidateQuestions = (language != null && language.isNotEmpty)
-        ? getQuestionsByLanguage(language)
+  Question? getDueQuestion([String? packKey, bool fallbackToAny = false]) {
+    final candidateQuestions = (packKey != null && packKey.isNotEmpty)
+        ? getQuestionsByPack(packKey)
         : getAllQuestions();
 
-    if (candidateQuestions.isEmpty) return null;
+    return _pickDueQuestionFromList(candidateQuestions, fallbackToAny);
+  }
+
+  /// Returns a single question due for review within a specific category.
+  Question? getDueQuestionByCategory(String category, [bool fallbackToAny = false]) {
+    final candidateQuestions = getQuestionsByCategory(category);
+    return _pickDueQuestionFromList(candidateQuestions, fallbackToAny);
+  }
+
+  Question? _pickDueQuestionFromList(List<Question> candidates, bool fallbackToAny) {
+    if (candidates.isEmpty) return null;
 
     final now = DateTime.now();
     final List<Question> overdueQuestions = [];
     final List<Question> newQuestions = [];
 
-    for (final q in candidateQuestions) {
+    for (final q in candidates) {
       final progress = _progressMap[q.id];
       if (progress == null) {
         newQuestions.add(q);
@@ -181,7 +282,7 @@ class ContentManager {
     } else if (newQuestions.isNotEmpty) {
       return newQuestions[random.nextInt(newQuestions.length)];
     } else if (fallbackToAny) {
-      return candidateQuestions[random.nextInt(candidateQuestions.length)];
+      return candidates[random.nextInt(candidates.length)];
     }
 
     return null;

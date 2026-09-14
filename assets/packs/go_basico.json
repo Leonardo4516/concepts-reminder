@@ -1,0 +1,74 @@
+[
+  {
+    "id": "go_001",
+    "question": "¿Cuál es la principal ventaja arquitectónica de una Goroutine frente a un hilo tradicional (thread) del sistema operativo?",
+    "options": [
+      "Las goroutines son administradas en espacio de usuario por el runtime de Go (modelo M:N), iniciando con un stack dinámico y ligero (~2 KB) frente a los MBs requeridos por un thread de OS.",
+      "Las goroutines no pueden ser ejecutadas en procesadores multinúcleo.",
+      "Las goroutines solo funcionan de manera síncrona dentro de la función main().",
+      "Las goroutines requieren llamadas al kernel del sistema operativo para cada cambio de contexto (context switch)."
+    ],
+    "correct_index": 0,
+    "hint": "El runtime de Go multiplexa miles de goroutines sobre una cantidad pequeña de hilos del SO mediante un scheduler cooperativo de bajo coste."
+  },
+  {
+    "id": "go_002",
+    "question": "¿En qué se diferencian los canales (channels) Buffered de los Unbuffered en Go?",
+    "options": [
+      "Los canales unbuffered bloquean al emisor hasta que un receptor esté listo para leer (sincrónicos); los buffered solo bloquean al emisor cuando el buffer interno alcanza su capacidad máxima.",
+      "Los canales buffered solo admiten tipos string y los unbuffered cualquier interfaz.",
+      "Los canales unbuffered almacenan hasta 100 elementos automáticamente antes de bloquearse.",
+      "Los canales buffered no requieren el operador '<-' para enviar datos."
+    ],
+    "correct_index": 0,
+    "hint": "Un canal unbuffered (capacidad 0) garantiza sincronización estricta punto a punto entre goroutines (rendezvous)."
+  },
+  {
+    "id": "go_003",
+    "question": "¿Cómo se comporta la sentencia 'defer' en Go respecto al orden de ejecución y evaluación de argumentos?",
+    "options": [
+      "Se ejecutan en orden FIFO (First-In, First-Out) y sus argumentos se calculan al cerrar el programa completo.",
+      "Se ejecutan en orden LIFO (Last-In, First-Out) justo antes de que la función retorne, pero sus argumentos se evalúan de inmediato al procesar la línea 'defer'.",
+      "Se ejecutan en paralelo en una nueva goroutine en segundo plano.",
+      "Solo pueden usarse para capturar excepciones con panic sin importar el retorno de la función."
+    ],
+    "correct_index": 1,
+    "hint": "Imagina una pila (stack): las llamadas diferidas se apilan y se desapilan en orden inverso (LIFO) cuando la función termina."
+  },
+  {
+    "id": "go_004",
+    "question": "¿Cómo se implementa una interfaz en el lenguaje Go?",
+    "options": [
+      "De forma implícita: un tipo implementa una interfaz simplemente proveyendo los métodos declarados en ella, sin requerir una palabra clave como 'implements'.",
+      "Mediante la declaración obligatoria 'type StructName implements InterfaceName'.",
+      "Heredando de una clase abstracta base mediante 'extends'.",
+      "Registrando manualmente el tipo en el compilador dentro del archivo go.mod."
+    ],
+    "correct_index": 0,
+    "hint": "Go utiliza tipado estructural (structural typing o 'duck typing en tiempo de compilación'): si un tipo define los métodos del contrato, cumple la interfaz automáticamente."
+  },
+  {
+    "id": "go_005",
+    "question": "Al definir métodos para un struct en Go, ¿cuándo se debe utilizar un Pointer Receiver (e.g. `func (s *Struct) Method()`) en lugar de un Value Receiver?",
+    "options": [
+      "Únicamente cuando el struct no contenga números enteros ni cadenas.",
+      "Cuando el método necesita mutar el estado del struct original, o para evitar el costo de copiar structs grandes en memoria en cada invocación.",
+      "Solo cuando la función deba retornar múltiples valores a la vez.",
+      "Los pointer receivers están prohibidos cuando se implementan interfaces públicas."
+    ],
+    "correct_index": 1,
+    "hint": "Un Value Receiver recibe una copia completa del struct (cualquier modificación no afecta al llamador); un Pointer Receiver opera directamente sobre la referencia original."
+  },
+  {
+    "id": "go_006",
+    "question": "¿Qué diferencia existe entre un Array y un Slice en Go?",
+    "options": [
+      "Un array tiene un tamaño fijo definido en tiempo de compilación que forma parte de su tipo; un slice es una vista dinámica sobre un array subyacente con puntero, longitud (len) y capacidad (cap).",
+      "Los slices no permiten almacenar tipos primitivos como int o float.",
+      "Los arrays son dinámicos y pueden crecer indefinidamente con la función append().",
+      "No existe ninguna diferencia; son dos palabras para la misma estructura de memoria."
+    ],
+    "correct_index": 0,
+    "hint": "El tipo [5]int es diferente de [10]int (longitud fija). Un []int es un slice flexible compuesto por un puntero al array subyacente, longitud y capacidad."
+  }
+]

@@ -1,0 +1,86 @@
+[
+  {
+    "id": "solid_001",
+    "question": "De acuerdo con el Principio de Responsabilidad Única (SRP), ¿cómo se define formalmente 'una sola responsabilidad'?",
+    "options": [
+      "Un método no debe contener más de 20 líneas de código.",
+      "Un módulo o clase debe tener una y solo una razón para cambiar (responder a un único actor o stakeholder).",
+      "Cada clase debe implementar exactamente una sola interfaz pública.",
+      "Un paquete solo puede contener una clase pública y cero clases auxiliares."
+    ],
+    "correct_index": 1,
+    "hint": "Como afirmó Robert C. Martin: 'Reúne las cosas que cambian por las mismas razones y separa aquellas que cambian por razones distintas'."
+  },
+  {
+    "id": "solid_002",
+    "question": "¿Cómo se aplica correctamente el Principio de Abierto/Cerrado (OCP) en el diseño de software orientado a objetos?",
+    "options": [
+      "Haciendo que todas las clases sean estáticas y sus atributos inmutables.",
+      "Permitiendo extender el comportamiento del sistema mediante polimorfismo o abstracciones sin modificar el código fuente existente.",
+      "Evitando el uso de interfaces y dependiendo directamente de clases concretas selladas.",
+      "Cerrando el repositorio de código a nuevos commits una vez alcanzada la versión 1.0."
+    ],
+    "correct_index": 1,
+    "hint": "'Abierto para su extensión, cerrado para su modificación'. Usualmente logrado con interfaces o clases base abstractas."
+  },
+  {
+    "id": "solid_003",
+    "question": "Según el Principio de Sustitución de Liskov (LSP), ¿qué regla aplica a las precondiciones y postcondiciones en un subtipo?",
+    "options": [
+      "El subtipo puede exigir precondiciones más estrictas y relajar las postcondiciones.",
+      "Las precondiciones no pueden ser reforzadas (deben ser iguales o más débiles) y las postcondiciones no pueden ser debilitadas (deben ser iguales o más fuertes).",
+      "El subtipo debe lanzar excepciones adicionales no comprobadas ante cualquier precondición.",
+      "Las precondiciones y postcondiciones son irrelevantes si el compilador no arroja errores sintácticos."
+    ],
+    "correct_index": 1,
+    "hint": "Un cliente que llama a un método esperando un supertipo no debe verse sorprendido por mayores exigencias ni menores garantías del subtipo."
+  },
+  {
+    "id": "solid_004",
+    "question": "¿Cuál es la premisa central del Principio de Segregación de Interfaces (ISP)?",
+    "options": [
+      "Ningún cliente debe ser forzado a depender de métodos o interfaces que no utiliza.",
+      "Toda interfaz debe tener al menos 10 métodos para considerarse completa.",
+      "Las clases deben heredar de una única 'Mega-Interfaz' para estandarizar la arquitectura.",
+      "Las interfaces no deben permitir parámetros de tipos genéricos."
+    ],
+    "correct_index": 0,
+    "hint": "Es mejor tener muchas interfaces pequeñas y cohesivas orientadas a clientes específicos que una sola interfaz monolítica ('fat interface')."
+  },
+  {
+    "id": "solid_005",
+    "question": "¿Cuál es la diferencia entre el Principio de Inversión de Dependencias (DIP) y la Inyección de Dependencias (DI)?",
+    "options": [
+      "Son exactamente lo mismo; son dos términos idénticos en ingeniería de software.",
+      "DIP es un principio arquitectónico de alto nivel (los módulos de alto y bajo nivel deben depender de abstracciones), mientras que DI es un patrón de diseño/técnica para suministrar dichas dependencias a un objeto.",
+      "DIP solo se aplica en bases de datos relacionales y DI en interfaces de usuario.",
+      "DI obliga al uso de variables globales estáticas, mientras que DIP las prohíbe."
+    ],
+    "correct_index": 1,
+    "hint": "DIP establece la regla de diseño; DI e Inversión de Control (IoC) son los mecanismos para implementarla."
+  },
+  {
+    "id": "solid_006",
+    "question": "¿Cuál es la distinción conceptual entre los principios DRY (Don't Repeat Yourself) y KISS (Keep It Simple, Stupid)?",
+    "options": [
+      "DRY busca evitar la duplicación de conocimiento y lógica de negocio unificando una única fuente de verdad; KISS advierte contra la sobreingeniería y complejidad accidental innecesaria.",
+      "DRY prohíbe el uso de funciones auxiliares y KISS fomenta la duplicación en cada archivo.",
+      "KISS solo aplica a la documentación y DRY solo al compilador de producción.",
+      "Ambos principios prohíben totalmente el uso de patrones de diseño orientados a objetos."
+    ],
+    "correct_index": 0,
+    "hint": "A veces, aplicar DRY ciegamente en código accidentalmente similar introduce abstracciones prematuras complejas, violando KISS."
+  },
+  {
+    "id": "solid_007",
+    "question": "¿En qué consiste el principio YAGNI (You Aren't Gonna Need It) en el contexto de Clean Code y desarrollo ágil?",
+    "options": [
+      "No implementar funcionalidades o abstracciones hipotéticas basadas en especulaciones futuras hasta que realmente sean necesarias.",
+      "Eliminar todas las pruebas unitarias que no se ejecuten en menos de un segundo.",
+      "Evitar la escritura de comentarios en el código bajo cualquier circunstancia.",
+      "No utilizar frameworks externos a menos que sean de código abierto."
+    ],
+    "correct_index": 0,
+    "hint": "La sobreingeniería predictiva casi siempre genera código muerto, deuda técnica y mantenimiento inútil."
+  }
+]

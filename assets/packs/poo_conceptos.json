@@ -1,0 +1,86 @@
+[
+  {
+    "id": "poo_001",
+    "question": "¿Cuál es la diferencia fundamental entre el polimorfismo dinámico (en tiempo de ejecución) y el polimorfismo estático (en tiempo de compilación)?",
+    "options": [
+      "El polimorfismo estático se resuelve mediante sobrecarga de métodos o plantillas/genéricos en compilación, mientras que el dinámico se resuelve mediante dynamic dispatch y sobrescritura de métodos (vtable) en ejecución.",
+      "El polimorfismo dinámico solo aplica a clases abstractas y el estático a interfaces.",
+      "El polimorfismo estático requiere punteros dinámicos y el dinámico utiliza enlaces de memoria fijos.",
+      "No existe diferencia práctica; ambos términos son sinónimos utilizados según el compilador."
+    ],
+    "correct_index": 0,
+    "hint": "Piensa en el momento del enlace (binding): sobrecarga de métodos (compile-time) vs dynamic dispatch de métodos virtuales (runtime)."
+  },
+  {
+    "id": "poo_002",
+    "question": "¿Cuál es el objetivo primordial del encapsulamiento y los modificadores de acceso (private, protected, public) en POO?",
+    "options": [
+      "Permitir acceso global irrestricto para evitar duplicación de getters y setters.",
+      "Ocultar detalles de implementación internos y proteger la integridad e invariantes del estado frente a mutaciones externas no controladas.",
+      "Eliminar el uso de punteros y referencias en memoria para acelerar la ejecución del CPU.",
+      "Garantizar que todas las subclases hereden obligatoriamente las variables privadas."
+    ],
+    "correct_index": 1,
+    "hint": "El encapsulamiento delimita el estado interno de un objeto y expone únicamente una interfaz pública coherente y segura."
+  },
+  {
+    "id": "poo_003",
+    "question": "En diseño orientado a objetos, ¿cuándo es preferible utilizar una interfaz frente a una clase abstracta?",
+    "options": [
+      "Cuando se requiere compartir lógica de inicialización en constructores y variables miembro protegidas.",
+      "Únicamente cuando se desea evitar el uso de polimorfismo en lenguajes compilados.",
+      "Cuando se necesita definir un contrato de comportamiento puro sin estado compartido ni atar a las clases a una jerarquía rígida.",
+      "Cuando la clase base necesita implementar métodos privados y estáticos de manera obligatoria."
+    ],
+    "correct_index": 2,
+    "hint": "Las interfaces expresan capacidades ('qué puede hacer' un objeto) sin imponer una relación de identidad ('qué es' el objeto)."
+  },
+  {
+    "id": "poo_004",
+    "question": "¿Por qué el principio de diseño 'favorecer la composición sobre la herencia' se considera una buena práctica fundamental?",
+    "options": [
+      "Porque la herencia expone los detalles internos del padre a las hijas (problema de clase base frágil), mientras que la composición desacopla responsabilidades y permite intercambios en tiempo de ejecución.",
+      "Porque la composición consume menos memoria en el stack que las llamadas polimórficas.",
+      "Porque las interfaces y clases abstractas están deprecadas en el desarrollo ágil moderno.",
+      "Porque la herencia no permite la sobrescritura de métodos virtuales en la mayoría de lenguajes."
+    ],
+    "correct_index": 0,
+    "hint": "La relación 'tiene-un' ofrece flexibilidad en tiempo de ejecución y bajo acoplamiento; la relación 'es-un' crea dependencias rígidas."
+  },
+  {
+    "id": "poo_005",
+    "question": "En la arquitectura y diseño orientado a objetos, ¿qué combinación de cohesión y acoplamiento se busca lograr para maximizar mantenibilidad?",
+    "options": [
+      "Baja cohesión y alto acoplamiento.",
+      "Alto acoplamiento y alta cohesión.",
+      "Bajo acoplamiento y baja cohesión.",
+      "Alta cohesión y bajo acoplamiento."
+    ],
+    "correct_index": 3,
+    "hint": "Alta cohesión significa que los elementos de un módulo están fuertemente enfocados en una tarea; bajo acoplamiento minimiza la interdependencia entre módulos."
+  },
+  {
+    "id": "poo_006",
+    "question": "¿Qué implica el Principio de Sustitución en una jerarquía de tipos según la POO moderna?",
+    "options": [
+      "Una clase derivada puede reemplazar a su clase base sin romper la corrección, los contratos ni las expectativas del programa.",
+      "Cualquier subclase debe aumentar las precondiciones y relajar las postcondiciones de la clase base.",
+      "Las clases hijas deben ignorar las excepciones declaradas por la interfaz del tipo base.",
+      "La clase base debe conocer explícitamente a todas sus derivadas para realizar casts en ejecución."
+    ],
+    "correct_index": 0,
+    "hint": "Un subtipo debe cumplir los contratos sintácticos y semánticos establecidos por su supertipo sin causar comportamientos inesperados."
+  },
+  {
+    "id": "poo_007",
+    "question": "¿Qué es la 'Virtual Method Table' (vtable) y en qué mecanismo de la POO participa?",
+    "options": [
+      "Es una tabla de punteros a funciones utilizada por el compilador para resolver llamadas a métodos virtuales en tiempo de ejecución (despacho dinámico).",
+      "Es una estructura de base de datos relacional para indexar clases en tiempo de despliegue.",
+      "Es la lista de atributos privados accesibles exclusivamente mediante introspección.",
+      "Es un buffer de memoria que almacena los constructores de clases estáticas."
+    ],
+    "correct_index": 0,
+    "hint": "Cada objeto con métodos polimórficos contiene un puntero oculto (vptr) a su correspondiente vtable."
+  }
+]

@@ -11,7 +11,7 @@ void main() {
     );
 
     expect(find.text('Inicio'), findsOneWidget);
-    expect(find.text('Lenguajes'), findsOneWidget);
+    expect(find.text('Temas'), findsOneWidget);
     expect(find.text('Ajustes'), findsOneWidget);
   });
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:window_manager/window_manager.dart';
 import '../models/question.dart';
 import '../core/content_manager.dart';
 import '../core/storage_service.dart';
+import '../core/window_service.dart';
 
 class QuizScreen extends StatefulWidget {
   final Question question;
@@ -14,6 +14,7 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+  final WindowService _windowService = WindowService();
   int? _selectedIndex;
   bool _answered = false;
   bool _isCorrect = false;
@@ -27,15 +28,21 @@ class _QuizScreenState extends State<QuizScreen> {
     }
   }
 
+  @override
+  void dispose() {
+    if (widget.fullScreenLock) {
+      _windowService.exitOverlayMode();
+    }
+    super.dispose();
+  }
+
   Future<void> _enterKioskMode() async {
-    await windowManager.setFullScreen(true);
-    await windowManager.setAlwaysOnTop(true);
+    await _windowService.enterOverlayMode();
   }
 
   Future<void> _exitKioskMode() async {
     if (widget.fullScreenLock) {
-      await windowManager.setFullScreen(false);
-      await windowManager.setAlwaysOnTop(false);
+      await _windowService.exitOverlayMode();
     }
   }
 

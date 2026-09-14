@@ -6,6 +6,7 @@ import 'core/reminder_scheduler.dart';
 import 'models/app_settings.dart';
 import 'models/question.dart';
 import 'ui/quiz_screen.dart';
+import 'ui/topics_page.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -150,9 +151,9 @@ class _MainDashboardState extends State<MainDashboard> {
                 label: Text('Inicio'),
               ),
               NavigationRailDestination(
-                icon: Icon(Icons.code_outlined),
-                selectedIcon: Icon(Icons.code),
-                label: Text('Lenguajes'),
+                icon: Icon(Icons.auto_stories_outlined),
+                selectedIcon: Icon(Icons.auto_stories),
+                label: Text('Temas'),
               ),
               NavigationRailDestination(
                 icon: Icon(Icons.settings_outlined),
@@ -173,7 +174,7 @@ class _MainDashboardState extends State<MainDashboard> {
       case 0:
         return HomePage(settings: widget.settings);
       case 1:
-        return LanguagesPage(
+        return TopicsPage(
           settings: widget.settings,
           onSettingsChanged: widget.onSettingsChanged,
         );
@@ -351,110 +352,6 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class LanguagesPage extends StatelessWidget {
-  final AppSettings settings;
-  final ValueChanged<AppSettings> onSettingsChanged;
-
-  const LanguagesPage({
-    super.key,
-    required this.settings,
-    required this.onSettingsChanged,
-  });
-
-  void _toggleLanguage(String language) {
-    final currentList = List<String>.from(settings.activeLanguages);
-    if (currentList.contains(language)) {
-      if (currentList.length > 1) {
-        currentList.remove(language);
-      }
-    } else {
-      currentList.add(language);
-    }
-    onSettingsChanged(settings.copyWith(activeLanguages: currentList));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final availableLanguages = [
-      {'name': 'Python', 'icon': Icons.terminal, 'color': Colors.blue},
-      {'name': 'Java', 'icon': Icons.coffee, 'color': Colors.orange},
-      {'name': 'Dart', 'icon': Icons.flutter_dash, 'color': Colors.cyan},
-    ];
-
-    return Padding(
-      padding: const EdgeInsets.all(40.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Mis Lenguajes', style: Theme.of(context).textTheme.headlineLarge),
-          const SizedBox(height: 8),
-          Text(
-            'Activa o desactiva los lenguajes sobre los que deseas recibir recordatorios:',
-            style: TextStyle(color: Colors.grey.shade400),
-          ),
-          const SizedBox(height: 24),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-              ),
-              itemCount: availableLanguages.length,
-              itemBuilder: (context, index) {
-                final lang = availableLanguages[index];
-                final String name = lang['name'] as String;
-                final IconData icon = lang['icon'] as IconData;
-                final bool active = settings.activeLanguages.contains(name);
-
-                return Card(
-                  elevation: active ? 6 : 1,
-                  color: active
-                      ? Theme.of(context).colorScheme.primaryContainer
-                      : Theme.of(context).colorScheme.surface,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    side: BorderSide(
-                      color: active ? Theme.of(context).colorScheme.primary : Colors.transparent,
-                      width: 2,
-                    ),
-                  ),
-                  child: InkWell(
-                    onTap: () => _toggleLanguage(name),
-                    borderRadius: BorderRadius.circular(16),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          icon,
-                          size: 64,
-                          color: active ? Theme.of(context).colorScheme.primary : Colors.grey,
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          name,
-                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          active ? '✓ Activado' : 'Desactivado',
-                          style: TextStyle(
-                            color: active ? Colors.greenAccent : Colors.grey,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class SettingsPage extends StatelessWidget {
   final AppSettings settings;

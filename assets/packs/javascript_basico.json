@@ -1,0 +1,74 @@
+[
+  {
+    "id": "js_001",
+    "question": "En el Event Loop de JavaScript, ¿en qué orden se procesan las Microtasks (e.g., Promise.then, queueMicrotask) frente a las Macrotasks (e.g., setTimeout, setInterval)?",
+    "options": [
+      "Las macrotasks siempre se vacían antes de comprobar si hay microtasks pendientes.",
+      "La cola de microtasks se drena por completo inmediatamente después de finalizar la tarea síncrona actual y antes de ejecutar la siguiente macrotask.",
+      "Ambas colas se procesan intercalando una microtask y una macrotask aleatoriamente.",
+      "Las microtasks solo se ejecutan cuando el hilo del navegador entra en reposo absoluto."
+    ],
+    "correct_index": 1,
+    "hint": "Microtasks tienen mayor prioridad y se ejecutan antes de que el Event Loop entregue el control al renderizado o a la siguiente macrotask de timers o I/O."
+  },
+  {
+    "id": "js_002",
+    "question": "¿Qué es una Clausura (Closure) en JavaScript y cómo opera con el Lexical Scope?",
+    "options": [
+      "Es una función que retiene acceso a las variables de su ámbito léxico exterior (enclosing scope) incluso después de que la función contenedora haya retornado.",
+      "Es un método nativo que cierra la conexión a sockets WebSocket abiertos.",
+      "Es una técnica para sellar un objeto e impedir que se le agreguen nuevas propiedades (Object.seal).",
+      "Es una variable declarada con la palabra reservada 'close' en tiempo de ejecución."
+    ],
+    "correct_index": 0,
+    "hint": "Las funciones en JS recuerdan el entorno en el que fueron creadas, reteniendo referencias vivas a sus variables externas."
+  },
+  {
+    "id": "js_003",
+    "question": "¿Qué relación existe entre la sintaxis 'async/await' y las Promesas en JavaScript moderno?",
+    "options": [
+      "async/await es azúcar sintáctico construido sobre Promesas y generadores; una función async siempre devuelve una Promesa.",
+      "async/await ejecuta el código en un hilo nativo del sistema operativo separado e independiente del Event Loop.",
+      "await solo puede esperar funciones sincrónicas sin valor de retorno.",
+      "async/await reemplazó las Promesas, eliminándolas del motor V8."
+    ],
+    "correct_index": 0,
+    "hint": "Cualquier función con la palabra clave 'async' encapsula su resultado en Promise.resolve() o Promise.reject()."
+  },
+  {
+    "id": "js_004",
+    "question": "¿Cómo funciona la cadena de prototipos (Prototype Chain) al acceder a una propiedad de un objeto en JavaScript?",
+    "options": [
+      "El motor busca en las variables globales directamente antes de revisar el objeto.",
+      "Si la propiedad no existe en el objeto propio, el motor recorre su prototipo interno (__proto__) de forma ascendente hasta encontrarla o alcanzar null (Object.prototype).",
+      "Si no existe en el objeto, se genera un error de sintaxis en tiempo de compilación sin consultar prototipos.",
+      "Solo los objetos instanciados con 'class' tienen cadena de prototipos; los literales de objeto no."
+    ],
+    "correct_index": 1,
+    "hint": "La herencia en JS es prototípica; cada objeto tiene un puntero interno a su prototipo ancestro hasta terminar en null."
+  },
+  {
+    "id": "js_005",
+    "question": "¿Cómo se comporta el enlace (binding) de 'this' en una Arrow Function en comparación con una función tradicional?",
+    "options": [
+      "Las Arrow Functions poseen su propio binding de 'this', el cual apunta siempre al objeto global.",
+      "Las Arrow Functions carecen de su propio binding de 'this'; lo capturan léxicamente del ámbito en el que fueron definidas y no pueden ser modificadas con .bind, .call o .apply.",
+      "Las funciones tradicionales siempre tienen un 'this' inmutable fijado al momento de su declaración.",
+      "Las Arrow Functions solo pueden usarse como constructores con el operador 'new'."
+    ],
+    "correct_index": 1,
+    "hint": "En funciones tradicionales 'this' depende de cómo se invoca la función; en arrow functions 'this' depende de dónde se escribe el código (ámbito léxico)."
+  },
+  {
+    "id": "js_006",
+    "question": "¿Cuál es la diferencia de Hoisting entre declaraciones con 'var' versus 'let' y 'const'?",
+    "options": [
+      "'var' se eleva e inicializa con 'undefined'; 'let' y 'const' también se elevan pero no se inicializan, quedando en la Zona Muerta Temporal (Temporal Dead Zone - TDZ) hasta su declaración.",
+      "Ninguna de las tres variables sufre hoisting en versiones de ECMAScript superiores a ES6.",
+      "'let' y 'const' se inicializan inmediatamente con null en el ámbito global.",
+      "'var' lanza ReferenceError si se lee antes de su línea de asignación."
+    ],
+    "correct_index": 0,
+    "hint": "Acceder a una variable 'let' o 'const' antes de su línea de definición arroja ReferenceError debido a la TDZ."
+  }
+]
