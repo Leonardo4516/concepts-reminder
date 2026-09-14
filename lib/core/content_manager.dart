@@ -34,6 +34,8 @@ class ContentManager {
     'ciberseguridad_web': 'assets/packs/ciberseguridad_web.json',
     'devops_cloud': 'assets/packs/devops_cloud.json',
     'estructuras_algoritmos': 'assets/packs/estructuras_algoritmos.json',
+    'ia_generativa_llms': 'assets/packs/ia_generativa_llms.json',
+    'ia_machine_learning': 'assets/packs/ia_machine_learning.json',
   };
 
   /// Category definitions and their associated pack identifiers
@@ -47,6 +49,7 @@ class ContentManager {
     'Ciberseguridad Web': ['ciberseguridad_web'],
     'DevOps & Cloud': ['devops_cloud'],
     'Estructuras & Algoritmos': ['estructuras_algoritmos'],
+    'Inteligencia Artificial': ['ia_generativa_llms', 'ia_machine_learning'],
   };
 
   /// Human-readable display titles for each pack
@@ -68,6 +71,8 @@ class ContentManager {
     'ciberseguridad_web': 'Ciberseguridad Web (OWASP)',
     'devops_cloud': 'DevOps, Docker & Cloud',
     'estructuras_algoritmos': 'Estructuras & Algoritmos (DSA)',
+    'ia_generativa_llms': 'IA Generativa & LLMs',
+    'ia_machine_learning': 'Machine Learning & Deep Learning',
   };
 
   /// Reverse lookup from pack key to category
@@ -89,6 +94,8 @@ class ContentManager {
     'ciberseguridad_web': 'Ciberseguridad Web',
     'devops_cloud': 'DevOps & Cloud',
     'estructuras_algoritmos': 'Estructuras & Algoritmos',
+    'ia_generativa_llms': 'Inteligencia Artificial',
+    'ia_machine_learning': 'Inteligencia Artificial',
   };
 
   bool _isLoaded = false;
@@ -206,6 +213,14 @@ class ContentManager {
     'singleton': 'patrones_diseno',
     'factory': 'patrones_diseno',
     'observer': 'patrones_diseno',
+    'ia': 'ia_generativa_llms',
+    'inteligencia artificial': 'ia_generativa_llms',
+    'llm': 'ia_generativa_llms',
+    'llms': 'ia_generativa_llms',
+    'rag': 'ia_generativa_llms',
+    'machine learning': 'ia_machine_learning',
+    'deep learning': 'ia_machine_learning',
+    'ml': 'ia_machine_learning',
   };
 
   /// Query questions by pack key (e.g. 'python', 'poo_conceptos')

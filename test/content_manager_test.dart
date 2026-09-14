@@ -43,6 +43,42 @@ void main() {
         expect(q.hint, isNotEmpty);
       }
     });
+
+    test('ia_generativa_llms.json exists and has valid questions', () {
+      final file = File('assets/packs/ia_generativa_llms.json');
+      expect(file.existsSync(), isTrue);
+
+      final jsonContent = file.readAsStringSync();
+      final List<dynamic> decoded = jsonDecode(jsonContent);
+      expect(decoded.length, greaterThanOrEqualTo(5));
+
+      for (final item in decoded) {
+        final q = Question.fromJson(Map<String, dynamic>.from(item as Map));
+        expect(q.id, isNotEmpty);
+        expect(q.question, isNotEmpty);
+        expect(q.options.length, greaterThanOrEqualTo(2));
+        expect(q.correctIndex, inInclusiveRange(0, q.options.length - 1));
+        expect(q.hint, isNotEmpty);
+      }
+    });
+
+    test('ia_machine_learning.json exists and has valid questions', () {
+      final file = File('assets/packs/ia_machine_learning.json');
+      expect(file.existsSync(), isTrue);
+
+      final jsonContent = file.readAsStringSync();
+      final List<dynamic> decoded = jsonDecode(jsonContent);
+      expect(decoded.length, greaterThanOrEqualTo(5));
+
+      for (final item in decoded) {
+        final q = Question.fromJson(Map<String, dynamic>.from(item as Map));
+        expect(q.id, isNotEmpty);
+        expect(q.question, isNotEmpty);
+        expect(q.options.length, greaterThanOrEqualTo(2));
+        expect(q.correctIndex, inInclusiveRange(0, q.options.length - 1));
+        expect(q.hint, isNotEmpty);
+      }
+    });
   });
 
   group('ContentManager functionality', () {

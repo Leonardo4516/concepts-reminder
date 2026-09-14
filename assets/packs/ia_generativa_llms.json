@@ -1,0 +1,74 @@
+[
+  {
+    "id": "llm_001",
+    "question": "¿En qué consiste la técnica RAG (Retrieval-Augmented Generation) y qué problema fundamental de los LLMs resuelve?",
+    "options": [
+      "Reentrena todos los pesos del modelo desde cero cada vez que el usuario hace una consulta.",
+      "Recupera fragmentos relevantes de una base de datos vectorial externa y los inyecta en el contexto del prompt, reduciendo alucinaciones y permitiendo consultar datos privados o actualizados.",
+      "Comprime el modelo para que pueda correr en la memoria RAM de un microcontrolador Arduino.",
+      "Es un algoritmo que bloquea llamadas a APIs para evitar consumo de tokens."
+    ],
+    "correct_index": 1,
+    "hint": "En lugar de confiar únicamente en la memoria estática del modelo (pesos paramétricos), RAG le proporciona 'documentos de referencia' en tiempo real."
+  },
+  {
+    "id": "llm_002",
+    "question": "En la arquitectura Transformer, ¿cuál es el propósito del mecanismo de 'Auto-Atención' (Self-Attention)?",
+    "options": [
+      "Permite a cada token de una secuencia calcular su relación y peso contextual con respecto a todos los demás tokens de la misma secuencia de manera paralela.",
+      "Obliga al modelo a procesar palabras estrictamente en orden secuencial como una red recurrente (RNN).",
+      "Detiene la generación de texto cuando la GPU alcanza una temperatura crítica.",
+      "Convierte imágenes PNG a archivos de audio WAV en tiempo de inferencia."
+    ],
+    "correct_index": 0,
+    "hint": "Permite resolver ambigüedades como en 'El banco estaba cerrado porque no tenía dinero' identificando que 'banco' se refiere a la entidad financiera y no a un asiento."
+  },
+  {
+    "id": "llm_003",
+    "question": "Al configurar la inferencia de un LLM, ¿cómo influye el parámetro 'Temperature' (Temperatura)?",
+    "options": [
+      "Controla el brillo de la pantalla durante la generación de texto.",
+      "Escala las probabilidades de los logits: temperaturas bajas (~0.1) hacen el texto determinista y predecible, mientras que temperaturas altas (~0.8+) fomentan mayor variabilidad y creatividad.",
+      "Determina la velocidad de descarga en Megabits por segundo del modelo.",
+      "Establece la cantidad máxima de tokens permitidos en la respuesta."
+    ],
+    "correct_index": 1,
+    "hint": "T cercana a 0 aplana las opciones hacia la palabra más probable (ideal para código o matemáticas); T alta distribuye la probabilidad favoreciendo alternativas menos comunes."
+  },
+  {
+    "id": "llm_004",
+    "question": "¿Qué es un 'Vector Embedding' (incrustación vectorial) en el contexto de la Inteligencia Artificial?",
+    "options": [
+      "Un archivo de diseño gráfico vectorial en formato SVG o Adobe Illustrator.",
+      "Una representación matemática de un texto, imagen o audio en un espacio multidimensional denso, donde la cercanía geométrica (distancia coseno) refleja similitud semántica.",
+      "Una clave de cifrado asimétrico para conectarse a bases de datos PostgreSQL.",
+      "Un identificador numérico único secuencial autoincremental de una tabla SQL."
+    ],
+    "correct_index": 1,
+    "hint": "Convierte conceptos como 'rey' y 'reina' en arreglos de números de cientos de dimensiones que quedan situados muy cerca en el espacio vectorial."
+  },
+  {
+    "id": "llm_005",
+    "question": "¿En qué se diferencia 'Prompt Engineering' (con Few-Shot / Chain-of-Thought) de hacer 'Fine-Tuning' a un modelo de lenguaje?",
+    "options": [
+      "Prompt Engineering modifica los pesos de la red neuronal mediante Backpropagation; Fine-Tuning solo cambia el texto de entrada.",
+      "Prompt Engineering guía al modelo existente modulando las instrucciones en el contexto de inferencia sin alterar sus pesos; Fine-Tuning reentrena y ajusta permanentemente los pesos del modelo con un dataset especializado.",
+      "Ambos términos significan exactamente lo mismo en la literatura de IA.",
+      "Fine-Tuning solo se puede realizar en lenguajes de programación compilados como C++."
+    ],
+    "correct_index": 1,
+    "hint": "Prompt Engineering es instantáneo y sin coste de reentrenamiento. Fine-Tuning altera la memoria profunda del modelo mediante entrenamiento supervisado."
+  },
+  {
+    "id": "llm_006",
+    "question": "¿Cómo funciona la capacidad de 'Tool Use' / 'Function Calling' en agentes de IA modernos?",
+    "options": [
+      "El modelo ejecuta código binario directamente dentro del procesador del cliente sin validación.",
+      "El LLM detecta cuándo una pregunta requiere una acción externa, formula los argumentos en formato JSON estructurado siguiendo un esquema dado, y espera que el sistema ejecute la función y le devuelva el resultado para continuar.",
+      "El modelo se conecta físicamente a internet descargando drivers de dispositivos locales.",
+      "Sustituye por completo la necesidad de escribir software tradicional."
+    ],
+    "correct_index": 1,
+    "hint": "El modelo no corre la herramienta por sí mismo: decide llamar a la herramienta y emite un JSON estructurado con los parámetros que tu código debe procesar."
+  }
+]

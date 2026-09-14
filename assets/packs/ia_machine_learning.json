@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ml_001",
+    "question": "¿Cuál es la diferencia fundamental entre el Aprendizaje Supervisado, No Supervisado y por Refuerzo (RL)?",
+    "options": [
+      "El supervisado entrena con datos etiquetados (pares entrada-salida); el no supervisado busca patrones ocultos en datos sin etiquetas (clustering); y RL aprende por prueba y error mediante recompensas y castigos en un entorno.",
+      "El supervisado requiere supervisores humanos mirando la pantalla las 24 horas del día.",
+      "El aprendizaje por refuerzo solo funciona para videojuegos de ajedrez.",
+      "El no supervisado prohíbe el uso de redes neuronales convolucionales."
+    ],
+    "correct_index": 0,
+    "hint": "Supervisado = ejemplos resueltos (ej: fotos con etiqueta 'gato'/'perro'). No supervisado = agrupar clientes por similitud sin etiquetas previas. Refuerzo = agente aprendiendo a caminar recibiendo recompensas."
+  },
+  {
+    "id": "ml_002",
+    "question": "En Machine Learning, ¿qué representa el dilema del 'Trade-off entre Sesgo y Varianza' (Bias-Variance Tradeoff)?",
+    "options": [
+      "La velocidad a la que se descargan los datasets desde servidores cloud.",
+      "Un modelo con alto sesgo (underfitting) es demasiado simple y no aprende los patrones; un modelo con alta varianza (overfitting) memoriza el ruido del dataset de entrenamiento y falla al generalizar en datos nuevos.",
+      "La cantidad de memoria RAM consumida por cada capa oculta de la red.",
+      "El costo financiero de comprar tarjetas gráficas NVIDIA."
+    ],
+    "correct_index": 1,
+    "hint": "El objetivo es encontrar el punto óptimo que minimice el error total, equilibrando la simplicidad del modelo frente a su capacidad de generalización."
+  },
+  {
+    "id": "ml_003",
+    "question": "En evaluación de modelos de clasificación, ¿cuándo es crítico priorizar la métrica 'Recall' (Exhaustividad) sobre 'Precision' (Precisión)?",
+    "options": [
+      "En motores de búsqueda de memes o redes sociales donde los falsos negativos no importan.",
+      "En diagnósticos médicos de enfermedades graves o detección de fraudes críticos, donde un Falso Negativo (no detectar a un enfermo) tiene consecuencias catastróficas.",
+      "Únicamente cuando el dataset contiene un número exacto de 100 muestras.",
+      "Siempre que se utilice el algoritmo de K-Means clustering."
+    ],
+    "correct_index": 1,
+    "hint": "Recall = de todos los casos reales positivos, ¿cuántos logró capturar el modelo? Minimiza los falsos negativos."
+  },
+  {
+    "id": "ml_004",
+    "question": "¿Cómo opera el algoritmo de 'Retropropagación' (Backpropagation) en el entrenamiento de Redes Neuronales?",
+    "options": [
+      "Envía copias de seguridad de los datos al servidor de origen cada 10 épocas.",
+      "Calcula el gradiente de la función de pérdida con respecto a cada peso de la red aplicando la regla de la cadena del cálculo diferencial, propagando el error desde la salida hacia atrás para actualizar los pesos mediante descenso de gradiente.",
+      "Reinicia aleatoriamente todas las neuronas que hayan generado un número negativo.",
+      "Convierte la red neuronal en un árbol de decisión binario estático."
+    ],
+    "correct_index": 1,
+    "hint": "Mide cuánto contribuyó cada peso al error final y los ajusta en la dirección que reduce la pérdida."
+  },
+  {
+    "id": "ml_005",
+    "question": "¿Qué función cumple el algoritmo de optimización RLHF (Reinforcement Learning from Human Feedback) en los modelos LLM modernos?",
+    "options": [
+      "Obliga a los ingenieros a escribir código sin ayuda de autocompletado.",
+      "Alinea las respuestas del modelo con los valores, seguridad e intenciones humanas, utilizando un modelo de recompensa entrenado a partir de preferencias humanas.",
+      "Compila el modelo en formato bytecode para máquinas virtuales Java.",
+      "Bloquea la ejecución de consultas que contengan más de 10 palabras."
+    ],
+    "correct_index": 1,
+    "hint": "Es la técnica que convirtió modelos base impredecibles (GPT-3) en asistentes conversacionales útiles, seguros y coherentes (ChatGPT)."
+  }
+]

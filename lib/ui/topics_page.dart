@@ -123,6 +123,12 @@ class _TopicsPageState extends State<TopicsPage> {
       emoji: '🧩',
       icon: Icons.psychology_rounded,
     ),
+    TopicCategory(
+      id: 'ai',
+      name: 'Inteligencia Artificial',
+      emoji: '🤖',
+      icon: Icons.smart_toy_rounded,
+    ),
   ];
 
   static const List<TopicItem> _allTopics = [
@@ -420,6 +426,32 @@ class _TopicsPageState extends State<TopicsPage> {
       defaultQuestionCount: 15,
       accentColor: Color(0xFFA855F7),
       tags: ['dsa', 'big-o', 'arboles', 'grafos', 'hashmap', 'algoritmos', 'busqueda'],
+    ),
+
+    // --- Inteligencia Artificial ---
+    TopicItem(
+      id: 'ia_generativa_llms',
+      title: 'IA Generativa & LLMs',
+      categoryId: 'ai',
+      categoryName: '🤖 Inteligencia Artificial',
+      icon: Icons.psychology_alt_rounded,
+      description:
+          'Mecanismo de Self-Attention en Transformers, RAG híbrido, Embeddings vectoriales, Fine-Tuning y Function Calling.',
+      defaultQuestionCount: 6,
+      accentColor: Color(0xFF10B981),
+      tags: ['ia', 'llm', 'rag', 'transformers', 'gpt', 'embeddings', 'prompt-engineering', 'ai'],
+    ),
+    TopicItem(
+      id: 'ia_machine_learning',
+      title: 'Machine Learning & Deep Learning',
+      categoryId: 'ai',
+      categoryName: '🤖 Inteligencia Artificial',
+      icon: Icons.auto_awesome_rounded,
+      description:
+          'Aprendizaje supervisado vs no supervisado, Tradeoff Sesgo-Varianza, Precisión vs Recall, Backpropagation y RLHF.',
+      defaultQuestionCount: 5,
+      accentColor: Color(0xFF8B5CF6),
+      tags: ['machine-learning', 'deep-learning', 'backpropagation', 'rlhf', 'datos', 'ia', 'ml'],
     ),
   ];
 
