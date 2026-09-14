@@ -154,5 +154,135 @@
     ],
     "correct_index": 1,
     "hint": "El núcleo de SQLite compila sentencias SQL en un programa de bytecode para una máquina virtual abstracta llamada VDBE (Virtual Database Engine). El comando `EXPLAIN <sql>` muestra las instrucciones bytecode de VDBE que manipulan cursores sobre los B-Trees a través del subsistema Pager."
+  },
+  {
+    "id": "sqlite_013",
+    "difficulty": "basic",
+    "question": "En SQLite, ¿para qué se utiliza la sentencia 'ATTACH DATABASE 'archivo.db' AS nombre_alias'?",
+    "options": [
+      "Para enviar la base de datos por correo electrónico como archivo adjunto.",
+      "Para conectar archivos de base de datos SQLite adicionales a la conexión actual, permitiendo ejecutar consultas JOIN y mover datos entre múltiples bases de datos distintas de forma transparente en una sola sentencia SQL.",
+      "Para comprimir la base de datos en un archivo zip.",
+      "Para otorgar permisos de solo lectura al sistema operativo."
+    ],
+    "correct_index": 1,
+    "hint": "ATTACH DATABASE permite abrir hasta 10 o más bases de datos SQLite simultáneas en la misma conexión y hacer 'SELECT * FROM db1.usuarios JOIN db2.pedidos ...'."
+  },
+  {
+    "id": "sqlite_014",
+    "difficulty": "basic",
+    "question": "¿Cómo almacena y maneja SQLite los datos binarios sin procesar (como imágenes, audio o claves criptográficas)?",
+    "options": [
+      "Los convierte obligatoriamente a cadenas Base64 dentro de columnas VARCHAR.",
+      "Utiliza el tipo de dato nativo 'BLOB' (Binary Large Object), almacenando la secuencia exacta de bytes tal cual sin interpretar ni alterar su codificación.",
+      "Los guarda en un servidor FTP remoto.",
+      "SQLite no admite datos binarios bajo ninguna circunstancia."
+    ],
+    "correct_index": 1,
+    "hint": "Los BLOBs en SQLite almacenan cargas binarias directas. El límite teórico de un BLOB o texto en SQLite es de hasta 2 Gigabytes (por defecto limitado a 1GB)."
+  },
+  {
+    "id": "sqlite_015",
+    "difficulty": "basic",
+    "question": "¿Qué utilidad ofrece el comando 'EXPLAIN QUERY PLAN SELECT ...' en SQLite?",
+    "options": [
+      "Muestra el pronóstico meteorológico del día de compilación de la biblioteca.",
+      "Describe en lenguaje comprensible la estrategia de alto nivel que el optimizador utilizará para resolver la consulta (ej. 'SCAN TABLE', 'SEARCH TABLE USING INDEX', 'USE TEMP B-TREE FOR ORDER BY').",
+      "Calcula el costo en dinero del consumo eléctrico de la consulta.",
+      "Ejecuta la consulta 100 veces para medir la velocidad promedio."
+    ],
+    "correct_index": 1,
+    "hint": "EXPLAIN QUERY PLAN es la herramienta principal del desarrollador en SQLite: distingue inmediatamente si una consulta hace un SCAN completo (lento) o un SEARCH con índice (rápido)."
+  },
+  {
+    "id": "sqlite_016",
+    "difficulty": "medium",
+    "question": "A partir de SQLite 3.37, ¿qué garantiza definir una tabla con la palabra clave final 'STRICT' (ej. CREATE TABLE t (...) STRICT;)?",
+    "options": [
+      "Impide que los usuarios puedan eliminar registros de la tabla.",
+      "Desactiva el sistema de afinidad flexible tradicional y obliga a una estricta validación de tipos de datos en inserción/actualización, rechazando con error cualquier valor que no coincida exactamente con el tipo declarado de la columna.",
+      "Cifra la tabla con el algoritmo AES de 256 bits.",
+      "Bloquea el archivo contra lecturas concurrentes de otros procesos."
+    ],
+    "correct_index": 1,
+    "hint": "Las tablas STRICT introducidas en SQLite 3.37.0 permiten que SQLite se comporte como bases de datos relacionales tradicionales, arrojando error si intentas meter un string en un campo INT."
+  },
+  {
+    "id": "sqlite_017",
+    "difficulty": "medium",
+    "question": "En la creación de Triggers (Disparadores) en SQLite, ¿cuál es la diferencia entre las pseudotablas 'OLD' y 'NEW'?",
+    "options": [
+      "OLD se refiere a bases de datos SQLite 2 y NEW a SQLite 3.",
+      "OLD contiene los valores de las columnas antes de la modificación (disponible en UPDATE y DELETE); NEW contiene los nuevos valores propuestos que se van a guardar (disponible en INSERT y UPDATE).",
+      "NEW guarda los logs de auditoría en memoria flash.",
+      "Son variables booleanas que devuelven TRUE si la tabla ha sido creada recientemente."
+    ],
+    "correct_index": 1,
+    "hint": "En triggers de UPDATE tienes acceso tanto a OLD.columna (valor previo) como a NEW.columna (nuevo valor). En INSERT solo existe NEW y en DELETE solo existe OLD."
+  },
+  {
+    "id": "sqlite_018",
+    "difficulty": "medium",
+    "question": "En SQLite, ¿cuál es la diferencia técnica entre declarar una clave primaria como 'INTEGER PRIMARY KEY' frente a 'INTEGER PRIMARY KEY AUTOINCREMENT'?",
+    "options": [
+      "No existe ninguna diferencia; son sinónimos absolutos.",
+      "INTEGER PRIMARY KEY reutiliza números de ROWID de filas previamente eliminadas cuando se agotan los números altos; añadir la palabra clave AUTOINCREMENT previene estrictamente la reutilización de ROWIDs pasados y arroja error si se alcanza el valor máximo (9223372036854775807), a costa de una pequeña sobrecarga de I/O en la tabla sqlite_sequence.",
+      "AUTOINCREMENT convierte la clave primaria en un UUID alfanumérico.",
+      "INTEGER PRIMARY KEY solo admite números del 1 al 100."
+    ],
+    "correct_index": 1,
+    "hint": "La propia documentación de SQLite advierte: 'AUTOINCREMENT consume CPU, memoria y espacio de disco adicional. No lo use a menos que necesite explícitamente evitar la reutilización de IDs históricos'."
+  },
+  {
+    "id": "sqlite_019",
+    "difficulty": "medium",
+    "question": "¿Para qué se utiliza la extensión de tablas virtuales 'R*Tree' (RTREE) en SQLite?",
+    "options": [
+      "Para dibujar diagramas de árbol genealógico en formato SVG.",
+      "Para indexar datos espaciales multidimensionales y rangos geométricos (Bounding Boxes), permitiendo búsquedas espaciales ultra rápidas de objetos contenidos dentro de rectángulos o coordenadas geográficas.",
+      "Para optimizar la velocidad de cálculo de números primos.",
+      "Para crear respaldos incrementales en servidores NAS."
+    ],
+    "correct_index": 1,
+    "hint": "El módulo R*Tree organiza rectángulos y coordenadas multidimensionales en un árbol balanceado, acelerando enormemente consultas de mapas y geolocalización en aplicaciones móviles y de escritorio."
+  },
+  {
+    "id": "sqlite_020",
+    "difficulty": "advanced",
+    "question": "En la arquitectura interna de un archivo de base de datos SQLite, ¿qué función cumple el subsistema 'Pager' y cuál es la estructura de las páginas B-Tree?",
+    "options": [
+      "Envía alertas por buscapersonas a los administradores de sistemas.",
+      "El Pager gestiona la lectura y escritura de páginas de disco de tamaño uniforme (por defecto 4096 bytes) implementando atomicidad y durabilidad mediante caché en memoria; sobre él, el motor construye B-Trees para tablas (donde las hojas contienen los datos) y B-Trees para índices.",
+      "Convierte las consultas SQL en scripts de bash antes de guardarlos.",
+      "Comprime los datos en formato MP3 para ahorrar espacio."
+    ],
+    "correct_index": 1,
+    "hint": "La arquitectura en capas de SQLite es célebre: Parser -> VDBE (bytecode) -> B-Tree -> Pager (abstracción de páginas y bloqueos) -> OS Interface (VFS)."
+  },
+  {
+    "id": "sqlite_021",
+    "difficulty": "advanced",
+    "question": "¿Qué ventaja ofrece el comando 'VACUUM INTO 'ruta/backup.db'' introducido en SQLite 3.27 frente a una copia simple de archivos del sistema operativo?",
+    "options": [
+      "Guarda el archivo en una unidad de cinta magnética.",
+      "Genera una copia de respaldo limpia, compacta y completamente consistente de la base de datos en caliente, sin interferir con las lecturas concurrentes y asegurando que las transacciones incompletas o páginas WAL en vuelo no corrompan el archivo de destino.",
+      "Obliga al usuario a reiniciar la computadora.",
+      "Desactiva las claves foráneas en la base de datos original."
+    ],
+    "correct_index": 1,
+    "hint": "Copiar un archivo .db con 'cp' mientras SQLite está en modo WAL puede generar una copia corrupta porque parte de los datos están en el archivo .db-wal. VACUUM INTO genera un snapshot autónomo perfecto."
+  },
+  {
+    "id": "sqlite_022",
+    "difficulty": "advanced",
+    "question": "En entornos multihilo dentro del mismo proceso, ¿por qué el 'Shared-Cache Mode' en SQLite está en desuso y se recomienda el uso de conexiones independientes en 'Private-Cache Mode'?",
+    "options": [
+      "Porque Shared-Cache no soporta el idioma español.",
+      "Porque Shared-Cache introduce bloqueos a nivel de tabla completa compartida entre hilos, provocando contención severa y bugs de concurrencia sutiles; mientras que Private-Cache con modo WAL permite que múltiples conexiones lean concurrentemente sin bloquearse entre sí.",
+      "Porque Shared-Cache solo funciona en microcontroladores de 8 bits.",
+      "Porque fue prohibido por el consorcio W3C."
+    ],
+    "correct_index": 1,
+    "hint": "La documentación oficial de SQLite desaconseja Shared-Cache en sistemas modernos: fue diseñado para dispositivos embebidos con muy poca RAM de los años 2000. El modo WAL moderno en Private-Cache es mucho más rápido y seguro."
   }
 ]

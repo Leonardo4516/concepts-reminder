@@ -193,5 +193,200 @@
     ],
     "correct_index": 2,
     "hint": "En pgvector: <=> es distancia coseno (1 - similitud coseno), <-> es distancia euclidiana L2 y <#> es producto interno negativo. IVFFlat entrena centroides con k-means; si se construye en una tabla vacía sin datos representativos, su calidad de búsqueda cae a cero. En contraste, HNSW construye una jerarquía de grafos navegables de mundos pequeños en memoria, ofreciendo excelente velocidad y un recall muy superior en entornos en tiempo real sin fase de pre-entrenamiento."
+  },
+  {
+    "id": "pg_016",
+    "difficulty": "basic",
+    "question": "¿Cuál es la diferencia fundamental entre ejecutar 'TRUNCATE TABLE' y 'DELETE FROM table' sin cláusula WHERE en PostgreSQL?",
+    "options": [
+      "DELETE es más rápido porque no genera registros en el catálogo del sistema.",
+      "TRUNCATE es un comando DDL que vacía la tabla rápidamente mediante la desasignación de las páginas de datos en disco sin escanear fila por fila ni generar dead tuples en el heap; mientras que DELETE es un comando DML que recorre cada fila, dispara triggers de fila y genera una versión muerta (dead tuple) por cada registro eliminado.",
+      "TRUNCATE solo elimina índices y conserva las filas intactas.",
+      "No existe diferencia; ambos comandos ejecutan el mismo plan interno en el optimizador."
+    ],
+    "correct_index": 1,
+    "hint": "TRUNCATE adquiere un bloqueo EXCLUSIVE y libera espacio en disco de inmediato creando un nuevo archivo relfilenode, mientras que DELETE marca cada fila como eliminada (dead tuple) requiriendo un posterior VACUUM para recuperar espacio."
+  },
+  {
+    "id": "pg_017",
+    "difficulty": "basic",
+    "question": "¿Cómo opera la función 'COALESCE(val1, val2, ...)' en SQL estándar y PostgreSQL?",
+    "options": [
+      "Suma todos los valores numéricos contenidos en la lista de argumentos.",
+      "Devuelve el primer argumento no nulo (NOT NULL) de izquierda a derecha, aplicando evaluación de cortocircuito (short-circuiting).",
+      "Convierte todas las cadenas de texto a valores booleanos.",
+      "Compara dos columnas y arroja un error si tienen valores diferentes."
+    ],
+    "correct_index": 1,
+    "hint": "COALESCE evalúa los argumentos secuencialmente y se detiene en el primer valor que no sea NULL. Los argumentos posteriores ni siquiera se evalúan (short-circuit)."
+  },
+  {
+    "id": "pg_018",
+    "difficulty": "basic",
+    "question": "En PostgreSQL, ¿para qué se utiliza la cláusula exclusiva 'DISTINCT ON (expresion)'?",
+    "options": [
+      "Para cifrar las columnas seleccionadas con una clave simétrica AES.",
+      "Para conservar únicamente la primera fila de cada grupo evaluado por las columnas en DISTINCT ON, de acuerdo con el orden especificado en la cláusula ORDER BY.",
+      "Para forzar que una consulta SELECT rechace tablas que no tengan clave primaria.",
+      "Para convertir los resultados en un array de JSON de una sola dimensión."
+    ],
+    "correct_index": 1,
+    "hint": "DISTINCT ON (columna_grupo) exige que dicha columna sea el primer elemento en ORDER BY. Permite obtener fácilmente el registro más reciente de cada categoría (ej. último pedido por cliente)."
+  },
+  {
+    "id": "pg_019",
+    "difficulty": "basic",
+    "question": "¿Por qué la paginación tradicional con 'LIMIT n OFFSET m' es considerada un antipatrón en tablas de PostgreSQL con millones de registros y cómo se soluciona?",
+    "options": [
+      "Porque OFFSET está restringido a un máximo de 100 registros en el motor.",
+      "Porque con OFFSET m, PostgreSQL debe leer, escanear y descartar físicamente los primeros m registros antes de devolver los n requeridos (O(m)); se soluciona utilizando 'Keyset Pagination' (o Seek Method) filtrando por el último ID visto (WHERE id > ultimo_id LIMIT n).",
+      "Porque LIMIT desactiva automáticamente los índices B-Tree en la consulta.",
+      "Porque OFFSET borra los registros temporales de la memoria compartida."
+    ],
+    "correct_index": 1,
+    "hint": "Con OFFSET 1000000 LIMIT 10, la base de datos recorre 1.000.010 filas para descartar un millón. Keyset Pagination (WHERE id > X ORDER BY id LIMIT 10) utiliza el índice directamente en O(log N)."
+  },
+  {
+    "id": "pg_020",
+    "difficulty": "medium",
+    "question": "A partir de PostgreSQL 12, ¿cuál es el comportamiento por defecto de las consultas CTE (Common Table Expressions con 'WITH') y qué función cumplen las directivas MATERIALIZED y NOT MATERIALIZED?",
+    "options": [
+      "Las CTE siempre se escriben en un archivo físico en disco duro de manera obligatoria.",
+      "Por defecto, las CTE no recursivas y sin efectos secundarios se integran (inlined) directamente en la consulta principal; 'AS MATERIALIZED' fuerza a PostgreSQL a computar la CTE por separado como una barrera de optimización, mientras que 'AS NOT MATERIALIZED' fuerza el inlining.",
+      "MATERIALIZED solo se permite en funciones escritas en lenguaje PL/pgSQL.",
+      "NOT MATERIALIZED deshabilita el recolector de basura autovacuum en las tablas involucradas."
+    ],
+    "correct_index": 1,
+    "hint": "Históricamente en PostgreSQL, WITH siempre actuaba como una 'optimization fence'. Desde PG 12, se hace inline automáticamente salvo que se declare explícitamente WITH cte AS MATERIALIZED (...)."
+  },
+  {
+    "id": "pg_021",
+    "difficulty": "medium",
+    "question": "En el uso de Funciones de Ventana (Window Functions), ¿cuál es la diferencia entre ROW_NUMBER(), RANK() y DENSE_RANK() ante filas con valores idénticos en el ORDER BY?",
+    "options": [
+      "ROW_NUMBER asigna números secuenciales únicos sin empates; RANK asigna el mismo rango a los empates y salta posiciones posteriores (ej. 1, 2, 2, 4); DENSE_RANK asigna el mismo rango sin saltar posiciones (ej. 1, 2, 2, 3).",
+      "DENSE_RANK solo admite números enteros positivos menores a 10.",
+      "RANK multiplica los valores de la ventana por la cantidad de filas en la partición.",
+      "ROW_NUMBER solo puede utilizarse si la consulta contiene una cláusula GROUP BY obligatoria."
+    ],
+    "correct_index": 0,
+    "hint": "Si hay empates en el puesto 2: ROW_NUMBER da 1,2,3,4. RANK da 1,2,2,4 (salta el 3). DENSE_RANK da 1,2,2,3 (no deja huecos en la numeración)."
+  },
+  {
+    "id": "pg_022",
+    "difficulty": "medium",
+    "question": "¿Qué ventaja operativa y de almacenamiento ofrece un 'Índice Parcial' (Partial Index) creado con una cláusula WHERE en PostgreSQL?",
+    "options": [
+      "Permite indexar tablas que se encuentran en otros servidores de red remotos.",
+      "Indexa únicamente el subconjunto de filas que cumplen el predicado WHERE, resultando en un índice mucho más pequeño, que cabe más fácilmente en memoria RAM y acelera las inserciones al no actualizarse para filas que no cumplen la condición.",
+      "Convierte la tabla entera en una tabla de solo lectura.",
+      "Aumenta la memoria work_mem de todos los usuarios conectados."
+    ],
+    "correct_index": 1,
+    "hint": "Un ejemplo clásico: CREATE INDEX ON pedidos(fecha) WHERE estado = 'pendiente'. Si solo el 2% de los pedidos están pendientes, el índice ocupa el 2% del espacio de un índice completo y se mantiene ultra veloz."
+  },
+  {
+    "id": "pg_023",
+    "difficulty": "medium",
+    "question": "Si se tiene una consulta frecuente 'WHERE lower(email) = ?', ¿por qué un índice tradicional en 'email' NO se utiliza y qué tipo de índice debe crearse?",
+    "options": [
+      "Porque los índices B-Tree no soportan caracteres alfanuméricos.",
+      "Porque el índice estándar está ordenado por los valores originales de 'email'; aplicar la función lower() sobre la columna impide la búsqueda binaria directa. Se debe crear un 'Índice Basado en Expresiones' con 'CREATE INDEX ON usuarios (lower(email))'.",
+      "Porque PostgreSQL exige que los correos electrónicos siempre se almacenen en mayúsculas.",
+      "Porque la función lower() está obsoleta en motores de bases de datos relacionales."
+    ],
+    "correct_index": 1,
+    "hint": "Los índices ordinarios guardan el valor original. Al aplicar una función a la columna en el WHERE (f(col) = x), el optimizador no puede usar el índice en col a menos que exista un índice sobre la expresión f(col)."
+  },
+  {
+    "id": "pg_024",
+    "difficulty": "medium",
+    "question": "¿Cómo previene la cláusula 'INSERT INTO ... ON CONFLICT (...) DO UPDATE' (Upsert) las condiciones de carrera (Race Conditions) frente a una verificación previa con SELECT?",
+    "options": [
+      "Apaga las conexiones de otros clientes durante 5 segundos para asegurar la escritura.",
+      "Gestiona la inserción y el conflicto de clave de manera atómica a nivel de motor de almacenamiento con bloqueos de índice internos, eliminando la ventana de tiempo entre verificar si existe y realizar la inserción.",
+      "Convierte la tabla en un archivo SQLite temporal.",
+      "Genera una copia duplicada de la base de datos antes de escribir."
+    ],
+    "correct_index": 1,
+    "hint": "El patrón clásico 'SELECT para ver si existe y luego INSERT o UPDATE' tiene una condición de carrera inherente en alta concurrencia. ON CONFLICT resuelve el dilema atómicamente en una sola operación."
+  },
+  {
+    "id": "pg_025",
+    "difficulty": "medium",
+    "question": "En PostgreSQL 13 en adelante, ¿cuál es la mejor práctica recomendada para generar identificadores UUID v4 de forma nativa sin instalar extensiones externas?",
+    "options": [
+      "Instalar obligatoriamente la extensión externa 'uuid-ossp' y usar uuid_generate_v4().",
+      "Utilizar la función nativa del núcleo 'gen_random_uuid()', la cual genera UUIDs v4 criptográficamente seguros sin depender de módulos adicionales.",
+      "Crear un script en Python con la extensión plpython3u.",
+      "Utilizar la función MD5(NOW()::text)."
+    ],
+    "correct_index": 1,
+    "hint": "Desde PostgreSQL 13, gen_random_uuid() está disponible en el núcleo de PostgreSQL sin necesidad de ejecutar 'CREATE EXTENSION \"uuid-ossp\"'."
+  },
+  {
+    "id": "pg_026",
+    "difficulty": "advanced",
+    "question": "En el subsistema de almacenamiento de PostgreSQL, ¿en qué consiste la optimización 'HOT' (Heap-Only Tuples) durante una operación de UPDATE?",
+    "options": [
+      "En guardar las filas actualizadas en la memoria caché L3 de la CPU del servidor.",
+      "Permite colocar la nueva versión de la fila (tuple) en la misma página de datos de 8KB si hay espacio disponible y ninguna columna indexada ha cambiado de valor, evitando crear nuevas entradas en todos los índices de la tabla y enlazando la tupla antigua con la nueva mediante punteros internos.",
+      "En comprimir las filas con gzip si la temperatura del servidor supera los 40 grados.",
+      "En eliminar los registros históricos de auditoría para acelerar el disco."
+    ],
+    "correct_index": 1,
+    "hint": "HOT reduce enormemente el mantenimiento de índices y la necesidad de autovacuum. Si el UPDATE no modifica columnas con índices y la página tiene espacio libre, los índices siguen apuntando a la misma entrada de la raíz (root tuple)."
+  },
+  {
+    "id": "pg_027",
+    "difficulty": "advanced",
+    "question": "En la configuración de memoria de PostgreSQL, ¿cuál es la diferencia crítica en la asignación entre 'shared_buffers' y 'work_mem'?",
+    "options": [
+      "shared_buffers solo se utiliza para consultas de texto y work_mem para números.",
+      "shared_buffers es un bloque de memoria compartida global asignado al iniciar el servidor para almacenar en caché páginas de datos; work_mem es asignado localmente por cada nodo u operación de ordenamiento (sort), hash table o join en una consulta, por lo que una sola consulta compleja puede consumir múltiples veces el valor de work_mem.",
+      "work_mem se comparte entre todos los clientes y nunca puede superar 4 Megabytes en total.",
+      "No existe diferencia; son sinónimos para el tamaño del pool de conexiones."
+    ],
+    "correct_index": 1,
+    "hint": "¡Cuidado al configurar work_mem! Si lo fijas en 64MB y tienes 100 conexiones ejecutando consultas complejas con 4 operaciones de sort/hash cada una, el consumo potencial de RAM es 100 * 4 * 64MB = 25.6 GB."
+  },
+  {
+    "id": "pg_028",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la diferencia entre las funciones administrativas 'pg_cancel_backend(pid)' y 'pg_terminate_backend(pid)' al gestionar consultas problemáticas?",
+    "options": [
+      "pg_cancel_backend solicita interrumpir únicamente la consulta SQL que se está ejecutando actualmente en esa sesión; pg_terminate_backend cierra de forma forzosa y abrupta toda la conexión del cliente con el servidor.",
+      "pg_terminate_backend apaga el sistema operativo del servidor.",
+      "pg_cancel_backend borra los datos que la consulta ya había modificado en el disco.",
+      "Son comandos idénticos sin ninguna diferencia funcional."
+    ],
+    "correct_index": 0,
+    "hint": "pg_cancel_backend envía una señal SIGINT para cancelar la consulta actual manteniendo la sesión del cliente viva; pg_terminate_backend envía SIGTERM matando la conexión de red por completo."
+  },
+  {
+    "id": "pg_029",
+    "difficulty": "advanced",
+    "question": "En la replicación por transmisión (Streaming Replication) de PostgreSQL, ¿qué garantiza la configuración de replicación Sincrónica (Synchronous Replication) frente a la Asincrónica?",
+    "options": [
+      "Que el servidor primario nunca sufra caídas de hardware.",
+      "Que una transacción en el primario no devuelva 'COMMIT exitoso' al cliente hasta que al menos una o más réplicas en espera (standby) hayan confirmado que los registros WAL correspondientes han sido escritos en su almacenamiento local.",
+      "Que los datos se envíen mediante fibra óptica dedicada sin utilizar TCP/IP.",
+      "Que las réplicas ejecuten las consultas SELECT dos veces más rápido que el primario."
+    ],
+    "correct_index": 1,
+    "hint": "En replicación sincrónica (synchronous_commit = on / remote_apply), se garantiza RPO = 0 (cero pérdida de datos ante una caída del primario), a costa de incurrir en la latencia de red de confirmación de la réplica en cada commit."
+  },
+  {
+    "id": "pg_030",
+    "difficulty": "advanced",
+    "question": "Al implementar Particionamiento Declarativo en PostgreSQL para series temporales masivas (Time-Series), ¿por qué es indispensable que las consultas incluyan la clave de particionamiento en sus filtros WHERE?",
+    "options": [
+      "Porque sin ella PostgreSQL lanza un error de sintaxis y rechaza la ejecución.",
+      "Para permitir la 'Poda de Particiones' (Partition Pruning): el optimizador descarta de inmediato el escaneo de todas las particiones que no contienen el rango de fechas solicitado, evitando escanear decenas o cientos de tablas secundarias innecesariamente.",
+      "Porque las particiones secundarias no tienen nombres de columnas compatibles.",
+      "Para que el motor pueda convertir las tablas a formato NoSQL en memoria."
+    ],
+    "correct_index": 1,
+    "hint": "Partition Pruning es la clave del particionamiento: si particionas por mes y consultas 'WHERE fecha BETWEEN ...', PostgreSQL excluye todas las demás particiones mensuales en tiempo de planificación o ejecución."
   }
 ]

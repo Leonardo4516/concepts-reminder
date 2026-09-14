@@ -193,5 +193,200 @@
     ],
     "correct_index": 1,
     "hint": "WiredTiger implementa control de concurrencia optimista a nivel de documento (document-level concurrency). Si dos escrituras concurrentes intentan actualizar el mismo registro al mismo tiempo, la segunda detecta un conflicto de escritura y MongoDB reintenta la mutación sin bloquear al resto de la colección."
+  },
+  {
+    "id": "mongo_016",
+    "difficulty": "basic",
+    "question": "En una consulta 'db.coleccion.find().sort().limit().skip()' en MongoDB, ¿en qué orden ejecuta el motor estas operaciones internamente?",
+    "options": [
+      "Las ejecuta estrictamente en el orden en que fueron encadenadas en el código JavaScript del cliente.",
+      "El motor siempre aplica primero el ordenamiento (sort), luego el salto de documentos (skip) y finalmente el límite (limit), sin importar en qué orden se hayan encadenado en el cliente.",
+      "Aplica primero limit, luego sort y por último skip.",
+      "No existe un orden fijo; se ejecutan al azar según el hilo de CPU disponible."
+    ],
+    "correct_index": 1,
+    "hint": "El orden de la interfaz fluida del cursor es declarativo: el servidor de MongoDB siempre ejecuta internamente sort -> skip -> limit para garantizar un subconjunto consistente y ordenado."
+  },
+  {
+    "id": "mongo_017",
+    "difficulty": "basic",
+    "question": "¿Para qué se utiliza el operador '$elemMatch' al consultar arrays de documentos embebidos en MongoDB?",
+    "options": [
+      "Para fusionar dos arrays de diferentes colecciones.",
+      "Para exigir que al menos un único elemento del array cumpla simultáneamente todas las condiciones especificadas dentro del operador.",
+      "Para eliminar elementos duplicados de un array.",
+      "Para ordenar los arrays en orden alfabético ascendente."
+    ],
+    "correct_index": 1,
+    "hint": "Sin $elemMatch, una consulta sobre múltiples campos de un array puede cumplirse con un elemento que satisfaga el primer criterio y otro elemento diferente que satisfaga el segundo. $elemMatch fuerza a que un mismo elemento cumpla ambos."
+  },
+  {
+    "id": "mongo_018",
+    "difficulty": "basic",
+    "question": "¿Cuál es la diferencia de rendimiento entre el operador '$in' y '$nin' con respecto al uso de índices en MongoDB?",
+    "options": [
+      "Ninguno de los dos operadores puede utilizar índices B-Tree.",
+      "$in puede utilizar eficientemente un índice B-Tree realizando saltos a los valores específicos de la lista; mientras que $nin (negación) suele requerir un escaneo mucho más amplio de la colección ya que los índices no están optimizados para buscar 'todo lo que no coincide'.",
+      "$nin es diez veces más rápido que $in porque filtra la memoria RAM directamente.",
+      "Solo funcionan en colecciones con menos de 1000 documentos."
+    ],
+    "correct_index": 1,
+    "hint": "Los operadores de desigualdad y negación ($ne, $nin) casi siempre degradan el rendimiento porque obligan al motor a escanear grandes porciones de la colección en lugar de hacer búsquedas puntuales en el árbol."
+  },
+  {
+    "id": "mongo_019",
+    "difficulty": "basic",
+    "question": "¿Cómo se implementa la validación de esquemas (Schema Validation) en colecciones de MongoDB sin perder su flexibilidad NoSQL?",
+    "options": [
+      "Obligando a compilar un archivo .proto de Protocol Buffers en el servidor.",
+      "Definiendo un 'validator' con la sintaxis de 'JSON Schema' ($jsonSchema) al crear o modificar la colección, especificando campos obligatorios (required), tipos de datos BSON y rangos.",
+      "Instalando un plugin de PostgreSQL en el daemon mongod.",
+      "No es posible validar esquemas en MongoDB de ninguna forma."
+    ],
+    "correct_index": 1,
+    "hint": "A través de $jsonSchema en el validador de la colección, puedes combinar lo mejor de ambos mundos: flexibilidad en ciertos campos y rigor estricto en campos críticos como IDs, emails o estados."
+  },
+  {
+    "id": "mongo_020",
+    "difficulty": "medium",
+    "question": "En el Aggregation Pipeline de MongoDB, ¿para qué se utiliza la etapa '$facet'?",
+    "options": [
+      "Para aplicar reconocimiento facial en fotos guardadas en GridFS.",
+      "Para ejecutar múltiples pipelines de agregación paralelos e independientes dentro de una sola etapa sobre el mismo conjunto de documentos de entrada, ideal para generar navegación por facetas y conteos categorizados simultáneos.",
+      "Para dividir la base de datos en múltiples shards físicos.",
+      "Para reiniciar los índices de texto de la colección."
+    ],
+    "correct_index": 1,
+    "hint": "$facet permite en una sola consulta obtener, por ejemplo, los 10 productos más vendidos, el desglose por rango de precios y la distribución por marcas al mismo tiempo."
+  },
+  {
+    "id": "mongo_021",
+    "difficulty": "medium",
+    "question": "En una etapa '$lookup' de agregación, ¿qué ventaja ofrece utilizar la sintaxis con 'let' y 'pipeline' interno en lugar de 'localField' y 'foreignField'?",
+    "options": [
+      "Reduce el consumo de disco a la mitad.",
+      "Permite realizar joins correlacionados complejos, aplicando condiciones de filtrado avanzadas ($match), operadores lógicos ($expr) o etapas intermedias antes de unir los documentos resultantes.",
+      "Obliga a que la tabla externa sea una base de datos MySQL relacional.",
+      "Desactiva las restricciones de seguridad de red en el cluster."
+    ],
+    "correct_index": 1,
+    "hint": "Con 'let' puedes definir variables del documento de origen y usarlas dentro de un sub-pipeline completo con $match, $project, etc., ofreciendo la potencia de una subconsulta correlacionada de SQL."
+  },
+  {
+    "id": "mongo_022",
+    "difficulty": "medium",
+    "question": "¿Cómo se calcula y utiliza la relevancia textual al consultar colecciones con índices de texto ('text') en MongoDB?",
+    "options": [
+      "Contando la cantidad de vocales presentes en cada documento.",
+      "Utilizando la proyección '{$meta: \"textScore\"}' para asignar una puntuación estadística de relevancia basada en la frecuencia de las palabras encontradas, permitiendo ordenar los resultados con 'sort({score: {$meta: \"textScore\"}})'.",
+      "Calculando la distancia de Levenshtein mediante un script Python externo.",
+      "Comparando el hash MD5 de la consulta con el del documento."
+    ],
+    "correct_index": 1,
+    "hint": "$meta: 'textScore' evalúa la frecuencia y ponderación de los términos de búsqueda en relación con la longitud del documento, ordenando los resultados de mayor a menor coincidencia."
+  },
+  {
+    "id": "mongo_023",
+    "difficulty": "medium",
+    "question": "Para almacenar e indexar datos de geolocalización esférica (latitud y longitud en la Tierra) en MongoDB, ¿qué formato e índice son obligatorios?",
+    "options": [
+      "Formato XML y un índice B-Tree ordinario.",
+      "Objetos con especificación GeoJSON (ej. {type: 'Point', coordinates: [longitud, latitud]}) y un índice de tipo '2dsphere'.",
+      "Dos números enteros separados por comas y un índice Hash.",
+      "Imágenes de satélite en formato TIFF con un índice de texto."
+    ],
+    "correct_index": 1,
+    "hint": "¡Cuidado con el orden de coordenadas en GeoJSON! Es siempre [Longitud, Latitud] y requiere un índice '2dsphere' para consultar distancias geodésicas en metros con $near o $geoWithin."
+  },
+  {
+    "id": "mongo_024",
+    "difficulty": "medium",
+    "question": "En el Aggregation Pipeline de MongoDB, ¿por qué es necesario en ocasiones habilitar la opción '{allowDiskUse: true}'?",
+    "options": [
+      "Para permitir que MongoDB cree archivos de log de auditoría en disco.",
+      "Porque por defecto cada etapa del pipeline de agregación tiene un límite estricto de 100 Megabytes de memoria RAM; si una etapa (como $sort o $group) supera este límite, la consulta fallará a menos que se autorice el desbordamiento temporal a disco.",
+      "Para activar la persistencia del motor WiredTiger.",
+      "Para exportar los datos a formato Microsoft Excel automáticamente."
+    ],
+    "correct_index": 1,
+    "hint": "Si un $group o $sort sobre millones de documentos no puede utilizar un índice para resolver el orden, acumulará datos en RAM; si excede 100MB arroja error a menos que se active allowDiskUse: true."
+  },
+  {
+    "id": "mongo_025",
+    "difficulty": "medium",
+    "question": "¿Cuál es la garantía que ofrece el nivel de 'Read Concern: majority' en un Replica Set de MongoDB?",
+    "options": [
+      "Devuelve únicamente documentos que hayan sido creados por más de 50 usuarios diferentes.",
+      "Garantiza que la consulta devuelva datos que ya han sido confirmados por una mayoría de nodos del Replica Set, asegurando que los datos leídos no podrán ser revertidos (rollbacked) si el nodo primario sufre una caída repentina.",
+      "Fuerza a que todos los nodos del cluster respondan antes de entregar el resultado al cliente.",
+      "Permite leer datos directamente del archivo de swap del sistema operativo."
+    ],
+    "correct_index": 1,
+    "hint": "Read Concern 'majority' previene lecturas sucias en escenarios de partición de red: si el primario aceptó una escritura pero aún no la replicó a la mayoría antes de caer, los datos leídos con 'majority' nunca sufrirán rollback."
+  },
+  {
+    "id": "mongo_026",
+    "difficulty": "advanced",
+    "question": "¿Cómo operan los 'Change Streams' en MongoDB y qué requisito de infraestructura exigen?",
+    "options": [
+      "Requieren instalar un servidor Apache Kafka en la misma máquina física.",
+      "Permiten a las aplicaciones suscribirse en tiempo real a cambios en colecciones, bases de datos o clusters completos utilizando el Oplog subyacente; exigen obligatoriamente que la base de datos opere como un Replica Set o un Cluster Shardeado.",
+      "Solo funcionan en bases de datos independientes sin replicación (standalone).",
+      "Convierten los documentos modificados en paquetes UDP sin acuse de recibo."
+    ],
+    "correct_index": 1,
+    "hint": "Change Streams aprovechan el oplog.rs para emitir notificaciones reactivas de inserción, actualización o eliminación con soporte para resume tokens (recuperación tras caídas)."
+  },
+  {
+    "id": "mongo_027",
+    "difficulty": "advanced",
+    "question": "En la arquitectura interna de un Replica Set de MongoDB, ¿qué es y cómo funciona la colección 'local.oplog.rs'?",
+    "options": [
+      "Es una tabla donde se guardan los nombres de usuario y contraseñas de la aplicación.",
+      "Es una colección limitada especial (Capped Collection) de tamaño fijo que registra de forma secuencial e idempotente todas las operaciones que modifican datos en el primario, la cual es leída continuamente por los secundarios para replicar el estado.",
+      "Es un archivo de texto plano temporal que se borra en cada medianoche.",
+      "Es una base de datos relacional auxiliar basada en SQLite para almacenar metadatos."
+    ],
+    "correct_index": 1,
+    "hint": "El Oplog convierte cada mutación en una operación idempotente (aplicarla múltiples veces produce el mismo resultado). Si un nodo secundario se desconecta por un tiempo superior a la ventana del oplog, requerirá una resincronización inicial completa."
+  },
+  {
+    "id": "mongo_028",
+    "difficulty": "advanced",
+    "question": "En un Cluster Shardeado de MongoDB, ¿qué es un 'Jumbo Chunk' y por qué suele ser consecuencia de una mala elección de Shard Key?",
+    "options": [
+      "Un archivo de log que supera los 10 Terabytes de texto.",
+      "Un fragmento de datos que excede el tamaño máximo configurado (ej. 64MB) pero que el balanceador no puede dividir (split) porque todos sus documentos comparten exactamente el mismo valor de la Shard Key (baja cardinalidad).",
+      "Un servidor físico con más de 128 núcleos de procesamiento.",
+      "Una colección que solo admite documentos con imágenes en alta resolución."
+    ],
+    "correct_index": 1,
+    "hint": "Si eliges una Shard Key con baja cardinalidad (ej. 'pais'), millones de documentos tendrán el mismo valor. Al no poder dividirse un chunk con claves idénticas, se convierte en un 'Jumbo Chunk' que no puede migrarse entre shards, provocando desbalance severo."
+  },
+  {
+    "id": "mongo_029",
+    "difficulty": "advanced",
+    "question": "¿Para qué se utilizan los 'Read Preference Tags' (Etiquetas de Preferencia de Lectura) en un cluster distribuido de MongoDB?",
+    "options": [
+      "Para clasificar documentos según su nivel de confidencialidad según el estándar ISO 27001.",
+      "Para dirigir consultas específicas de lectura a miembros del Replica Set que tengan asignadas etiquetas personalizadas (ej. aislar lecturas de reportería analítica pesada a un nodo secundario dedicado o dirigir lecturas a réplicas geográficamente cercanas).",
+      "Para traducir automáticamente los textos de la base de datos a otros idiomas.",
+      "Para forzar que las consultas se ejecuten únicamente en servidores con discos mecánicos HDD."
+    ],
+    "correct_index": 1,
+    "hint": "Con Read Preference Tags puedes etiquetar un secundario con { use: 'analytics' } y hacer que tus dashboards de BI lean exclusivamente de ese nodo sin quitarle capacidad de CPU al nodo primario que atiende transacciones de usuarios."
+  },
+  {
+    "id": "mongo_030",
+    "difficulty": "advanced",
+    "question": "En MongoDB, ¿cómo influye la configuración de 'Collation' en el comportamiento y rendimiento de los índices sobre campos de texto?",
+    "options": [
+      "Desactiva la compresión del motor WiredTiger en todos los documentos.",
+      "Define reglas específicas del idioma para la comparación y ordenamiento de cadenas (ej. sensibilidad a mayúsculas o acentos mediante 'strength'); una consulta solo podrá utilizar un índice si especifica exactamente la misma Collation con la que dicho índice fue creado.",
+      "Fuerza a que todos los documentos se codifiquen en ASCII de 7 bits.",
+      "Impide la ejecución de transacciones multi-documento en esa colección."
+    ],
+    "correct_index": 1,
+    "hint": "Si creas un índice con Collation { locale: 'es', strength: 1 } (insensible a mayúsculas y acentos), las consultas con find() deben declarar explícitamente esa misma Collation para que el optimizador pueda usar el índice."
   }
 ]

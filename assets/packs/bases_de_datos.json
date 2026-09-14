@@ -154,5 +154,135 @@
     ],
     "correct_index": 1,
     "hint": "El bloqueo optimista es ideal para sistemas con baja contención (muchas lecturas, pocas colisiones), mientras que el pesimista es necesario en alta contención financiera para evitar sobreventa."
+  },
+  {
+    "id": "db_013",
+    "difficulty": "basic",
+    "question": "En el modelado relacional de bases de datos, ¿cómo se representa formalmente una relación de muchos a muchos (N:M) entre dos entidades?",
+    "options": [
+      "Agregando un campo de texto con valores separados por comas en una de las tablas.",
+      "Creando una tabla intermedia de asociación (Junction Table / Pivot Table) que contiene al menos las dos claves foráneas correspondientes a las claves primarias de ambas entidades involucradas.",
+      "Duplicando toda la base de datos en dos servidores separados.",
+      "Creando una clave primaria que contenga números flotantes negativos."
+    ],
+    "correct_index": 1,
+    "hint": "La Primera Forma Normal prohíbe atributos multivaluados (listas separadas por comas). Una relación N:M (ej. Estudiantes y Cursos) se normaliza siempre en dos relaciones 1:N mediante una tabla intermedia (Inscripciones)."
+  },
+  {
+    "id": "db_014",
+    "difficulty": "basic",
+    "question": "¿Cuál es la diferencia en el ciclo de ejecución de una consulta SQL entre las cláusulas 'WHERE' y 'HAVING'?",
+    "options": [
+      "WHERE filtra los datos antes de que se realice cualquier operación de agrupamiento (GROUP BY); HAVING filtra las filas resultantes después de haber aplicado el agrupamiento y permite evaluar funciones de agregación (como COUNT, SUM, AVG).",
+      "HAVING solo puede usarse con bases de datos MySQL y WHERE con PostgreSQL.",
+      "WHERE solo admite comparaciones numéricas y HAVING comparaciones de texto.",
+      "No existe diferencia; son intercambiables en cualquier posición de la consulta."
+    ],
+    "correct_index": 0,
+    "hint": "Regla mnemotécnica en el orden lógico de SQL: FROM -> WHERE (filtra filas individuales) -> GROUP BY -> HAVING (filtra grupos ya agregados) -> SELECT -> ORDER BY."
+  },
+  {
+    "id": "db_015",
+    "difficulty": "basic",
+    "question": "En SQL estándar, ¿cuál es la diferencia crítica de rendimiento y resultado entre los operadores 'UNION' y 'UNION ALL'?",
+    "options": [
+      "UNION solo funciona en bases de datos NoSQL.",
+      "UNION combina los resultados y realiza un ordenamiento o hash interno para eliminar todas las filas duplicadas; UNION ALL simplemente concatena los conjuntos de resultados directamente sin comprobar duplicados, siendo significativamente más rápido en ejecución.",
+      "UNION ALL borra las filas que no coincidan de la base de datos.",
+      "UNION suma los valores numéricos de las columnas de ambas tablas."
+    ],
+    "correct_index": 1,
+    "hint": "A menos que necesites explícitamente erradicar duplicados, usa siempre UNION ALL: evita el enorme costo computacional del operador de sort/unique en memoria o disco."
+  },
+  {
+    "id": "db_016",
+    "difficulty": "medium",
+    "question": "En sistemas distribuidos, ¿cómo opera el protocolo de 'Dos Fases' (Two-Phase Commit - 2PC) para garantizar atomicidad transaccional entre múltiples bases de datos?",
+    "options": [
+      "Escribe los datos dos veces en el mismo disco duro en horarios diferentes.",
+      "Fase 1 (Prepare): El coordinador pregunta a todos los nodos si están listos para confirmar y cada nodo vota 'YES' o 'NO' reservando bloqueos; Fase 2 (Commit): Si todos votaron afirmativamente, el coordinador envía la orden de confirmar (Commit); si alguno votó negativo o no responde, envía la orden de abortar (Rollback) a todos.",
+      "Convierte los datos a formato JSON y luego a XML.",
+      "Desconecta los servidores secundarios de internet para evitar lecturas concurrentes."
+    ],
+    "correct_index": 1,
+    "hint": "2PC garantiza consistencia fuerte en transacciones distribuidas, pero sufre del problema de bloqueo si el coordinador colapsa durante la fase intermedia dejando a los participantes con recursos bloqueados."
+  },
+  {
+    "id": "db_017",
+    "difficulty": "medium",
+    "question": "¿En qué consiste el patrón de diseño 'CQRS' (Command Query Responsibility Segregation) en la arquitectura de datos?",
+    "options": [
+      "En utilizar dos contraseñas distintas para administradores y usuarios comunes.",
+      "En separar formalmente el modelo que gestiona las escrituras, comandos y mutaciones de estado (Command Model) del modelo optimizado exclusivamente para lecturas y consultas de alto rendimiento (Query Model), permitiendo escalar y optimizar cada base de datos de manera independiente.",
+      "En ejecutar todas las consultas en la memoria del navegador cliente.",
+      "En prohibir el uso de sentencias UPDATE en toda la aplicación."
+    ],
+    "correct_index": 1,
+    "hint": "En CQRS, las escrituras pueden ir a una base de datos relacional altamente consistente (ACID) y las lecturas sincronizarse hacia una base NoSQL o Elasticsearch optimizada para búsquedas instantáneas denormalizadas."
+  },
+  {
+    "id": "db_018",
+    "difficulty": "medium",
+    "question": "¿Qué principio define al patrón 'Event Sourcing' en el almacenamiento de información?",
+    "options": [
+      "Guardar únicamente el estado final sobreescribiendo el registro existente en cada UPDATE.",
+      "En lugar de almacenar únicamente el estado actual de una entidad, persistir una secuencia inmutable de eventos de dominio ordenados cronológicamente que representan todo lo que ha sucedido; el estado actual se reconstruye acumulando la historia de eventos.",
+      "Guardar las consultas SQL en archivos de texto en la raíz del servidor.",
+      "Borrar la base de datos automáticamente cada vez que ocurre un error 500."
+    ],
+    "correct_index": 1,
+    "hint": "Un ejemplo del mundo real es un extracto bancario: tu saldo no es un número sobrescrito, sino la suma matemática de todos los eventos históricos de depósitos y retiros."
+  },
+  {
+    "id": "db_019",
+    "difficulty": "medium",
+    "question": "¿Por qué los 'Índices Bitmap' son sumamente eficientes en sistemas de Data Warehouse (OLAP) pero muy desaconsejados en sistemas transaccionales (OLTP)?",
+    "options": [
+      "Porque los índices Bitmap solo pueden crearse en computadoras con pantallas táctiles.",
+      "Porque son ultra compactos y permiten operaciones booleanas lógicas (AND/OR) a nivel de bits muy rápidas sobre columnas de baja cardinalidad (ej. estado civil, género, país); pero en OLTP, modificar una sola fila requiere bloquear todo el vector de bits, congelando a todas las demás transacciones concurrentes.",
+      "Porque los índices Bitmap se borran cuando se reinicia el servidor.",
+      "Porque no admiten consultas con cláusulas WHERE."
+    ],
+    "correct_index": 1,
+    "hint": "En OLAP (solo lecturas masivas), los índices bitmap son imbatibles para filtros multidimensionales. En OLTP (altas escrituras), un UPDATE bloquea a cientos o miles de filas asociadas al mismo bloque de bits."
+  },
+  {
+    "id": "db_020",
+    "difficulty": "advanced",
+    "question": "En bases de datos NoSQL de alta tasa de escritura (como Cassandra, RocksDB o ScyllaDB), ¿cómo opera la estructura de almacenamiento 'LSM-Tree' (Log-Structured Merge-tree)?",
+    "options": [
+      "Convierte todas las tablas en árboles binarios invertidos en la memoria caché del navegador.",
+      "Las escrituras se registran secuencialmente en un Commit Log (para durabilidad) y se agregan a una estructura en memoria RAM ('MemTable'); cuando la MemTable se llena, se vuelca a disco como una tabla ordenada e inmutable ('SSTable'), las cuales se fusionan periódicamente en segundo plano mediante un proceso de compactación (Compaction).",
+      "Escribe cada registro en 100 archivos temporales diferentes para evitar bloqueos.",
+      "Obliga a que el disco duro nunca almacene más de 1000 filas por partición."
+    ],
+    "correct_index": 1,
+    "hint": "Los LSM-Trees convierten escrituras aleatorias en escrituras secuenciales continuas de alta velocidad (aprovechando al máximo el ancho de banda del disco), delegando la consolidación a procesos de compactación de fondo."
+  },
+  {
+    "id": "db_021",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la diferencia fundamental en el almacenamiento físico entre una base de datos orientada a Filas (Row-oriented / OLTP) y una orientada a Columnas (Columnar / OLAP)?",
+    "options": [
+      "Las bases de datos columnares solo funcionan en servidores en la nube de Amazon Web Services.",
+      "En Row-oriented, todos los valores de una fila completa se almacenan contiguos en disco (ideal para leer o escribir registros enteros con PK); en Columnar (ej. ClickHouse, Parquet), todos los valores de una misma columna se almacenan contiguos, permitiendo lecturas agregadas (SUM, AVG) leyendo solo las columnas necesarias con altísima compresión.",
+      "Las bases orientadas a filas no admiten claves primarias numéricas.",
+      "No existe ninguna diferencia en la disposición física de los bloques de disco."
+    ],
+    "correct_index": 1,
+    "hint": "En analítica (SELECT AVG(edad) FROM 100M_usuarios): una BD por filas debe leer de disco todos los nombres, emails y direcciones para llegar a la edad. Una columnar lee solo el bloque contiguo de edades con compresión extrema."
+  },
+  {
+    "id": "db_022",
+    "difficulty": "advanced",
+    "question": "En sistemas distribuidos con replicación asincrónica, ¿qué anomalía previene el nivel de consistencia 'Read-Your-Writes' (Consistencia de Lectura tras Escritura)?",
+    "options": [
+      "Que el servidor de base de datos se quede sin espacio de almacenamiento.",
+      "Previene que un usuario inserte o modifique un registro (ej. publique un comentario) y que al recargar la página inmediatamente no vea su propio cambio porque la consulta de lectura fue atendida por una réplica que aún sufre de retraso de replicación (Replication Lag).",
+      "Que dos usuarios inicien sesión con la misma contraseña.",
+      "Que el sistema operativo modifique el formato de fechas automáticamente."
+    ],
+    "correct_index": 1,
+    "hint": "Read-Your-Writes garantiza que una sesión siempre observará sus propias mutaciones, redirigiendo temporalmente las lecturas del usuario al maestro (o forzando sincronización de offset) durante los primeros segundos tras una escritura."
   }
 ]
