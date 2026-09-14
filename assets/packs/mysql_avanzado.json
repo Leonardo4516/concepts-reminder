@@ -2,514 +2,384 @@
   {
     "id": "mysql_001",
     "difficulty": "basic",
-    "question": "En MySQL, ¿cuál es la diferencia arquitectónica fundamental entre los motores de almacenamiento InnoDB y MyISAM respecto a transacciones, concurrencia y recuperación ante fallos?",
+    "question": "¿Cuál es la diferencia arquitectónica principal entre los motores InnoDB y MyISAM en MySQL?",
     "options": [
-      "MyISAM soporta transacciones distribuidas ACID y bloqueos a nivel de fila (row-level locking), mientras que InnoDB solo admite bloqueos a nivel de tabla (table-level locking).",
-      "MyISAM almacena los datos únicamente en memoria volátil RAM, mientras que InnoDB requiere una base de datos NoSQL externa para materializar la persistencia en disco.",
-      "InnoDB es un motor transaccional que cumple con ACID, utiliza bloqueos finos a nivel de fila y se recupera automáticamente tras una caída abrupta mediante su Redo Log; en contraste, MyISAM no es transaccional, bloquea la tabla completa en cualquier operación DML de escritura y requiere reparaciones manuales de índices (REPAIR TABLE) tras un fallo.",
-      "InnoDB carece de soporte para claves foráneas (FOREIGN KEY), mientras que MyISAM fue diseñado específicamente para garantizar integridad referencial estricta."
+      "InnoDB soporta transacciones ACID y bloqueos por fila; MyISAM carece de soporte ACID y bloquea la tabla completa.",
+      "InnoDB almacena datos en archivos de texto plano; MyISAM utiliza árboles binarios en memoria volátil sin persistencia.",
+      "InnoDB opera exclusivamente en memoria RAM volátil; MyISAM garantiza persistencia duradera en discos magnéticos.",
+      "InnoDB no admite claves foráneas ni índices B-Tree; MyISAM implementa integridad referencial automática completa."
     ],
-    "correct_index": 2,
-    "hint": "InnoDB (motor por defecto en MySQL) ofrece transaccionalidad ACID completa, control de concurrencia multiversión (MVCC), bloqueos por fila y recuperación automática de caídas (crash recovery) usando el Redo Log. MyISAM bloquea tablas completas durante escrituras, no tiene soporte de transacciones ni claves foráneas, y es propenso a corrupción de índices ante apagones repentinos."
+    "correct_index": 0,
+    "hint": "InnoDB es transaccional ACID con bloqueos por fila y crash recovery con redo log; MyISAM es no transaccional con bloqueos a nivel de tabla."
   },
   {
     "id": "mysql_002",
     "difficulty": "basic",
-    "question": "¿Cómo gestiona InnoDB la generación de identificadores con el atributo AUTO_INCREMENT y qué impacto tiene la configuración del parámetro 'innodb_autoinc_lock_mode'?",
+    "question": "¿Por qué se recomienda utilizar el juego de caracteres 'utf8mb4' en lugar del 'utf8' histórico en MySQL?",
     "options": [
-      "El parámetro controla el algoritmo de bloqueo: con el valor 2 ('interleaved mode', por defecto en MySQL 8.0) no utiliza bloqueos de tabla para inserciones masivas, mejorando sustancialmente la concurrencia pero pudiendo dejar huecos y secuencias no deterministas en inserciones simultáneas.",
-      "InnoDB genera números aleatorios no secuenciales usando una función de hash criptográfico SHA-256 para prevenir colisiones en clústeres distribuidos.",
-      "Si se reinicia el servidor MySQL, los valores de AUTO_INCREMENT en InnoDB se resetean siempre al valor mínimo disponible, reutilizando los IDs eliminados.",
-      "Los identificadores se guardan en un archivo de texto plano en /tmp para permitir que clientes externos los consulten sin pasar por el motor de almacenamiento."
+      "utf8mb4 comprime las columnas de texto a la mitad del tamaño físico consumiendo menos memoria en el buffer pool.",
+      "utf8mb4 almacena hasta 4 bytes por carácter soportando emojis y caracteres especiales; utf8 en MySQL solo usa 3 bytes.",
+      "utf8mb4 desactiva la sensibilidad a mayúsculas y minúsculas acelerando las operaciones de filtrado con LIKE.",
+      "utf8mb4 es obligatorio para permitir la creación de claves primarias compuestas en tablas particionadas por hash."
     ],
-    "correct_index": 0,
-    "hint": "innodb_autoinc_lock_mode define cómo se asignan los cerrojos de auto-incremento: 0 (traditional, con cerrojo de tabla AUTO-INC), 1 (consecutive, mutex ligero para inserts simples), y 2 (interleaved, concurrencia máxima sin bloqueos a nivel de tabla, seguro con replicación basada en filas pero riesgoso con replicación basada en sentencias porque múltiples inserts concurrentes pueden intercalar IDs)."
+    "correct_index": 1,
+    "hint": "El antiguo 'utf8' de MySQL (alias de utf8mb3) solo soportaba hasta 3 bytes, truncando emojis o símbolos de 4 bytes del estándar Unicode UTF-8."
   },
   {
     "id": "mysql_003",
     "difficulty": "basic",
-    "question": "¿Por qué se considera obligatorio utilizar el juego de caracteres 'utf8mb4' en lugar de 'utf8' (utf8mb3) en MySQL, y qué distingue a la colación 'utf8mb4_0900_ai_ci' de 'utf8mb4_unicode_ci'?",
+    "question": "¿Qué ocurre si se omite el valor de una columna declarada como 'AUTO_INCREMENT' en un INSERT en MySQL?",
     "options": [
-      "utf8mb3 solo admite caracteres del alfabeto inglés ASCII; utf8mb4 permite almacenar imágenes binarias directamente dentro de columnas VARCHAR.",
-      "utf8mb4_unicode_ci consume exactamente el triple de memoria RAM en el Buffer Pool que utf8mb4_0900_ai_ci para cualquier valor numérico.",
-      "utf8 cifra los datos en disco usando algoritmos AES, mientras que utf8mb4 los almacena en texto plano sin saneamiento.",
-      "El 'utf8' legacy en MySQL solo reserva un máximo de 3 bytes por carácter, truncando o fallando ante caracteres suplementarios de 4 bytes (como emojis o ideogramas); utf8mb4_0900_ai_ci implementa el estándar Unicode Collation Algorithm 9.0, ofreciendo mayor velocidad, insensibilidad a acentos (ai) e insensibilidad a mayúsculas/minúsculas (ci)."
+      "La sentencia INSERT falla arrojando un error fatal de restricción NOT NULL sobre la clave primaria.",
+      "Se inserta un valor nulo temporal que debe resolverse obligatoriamente mediante un trigger posterior.",
+      "El motor genera automáticamente el siguiente valor entero secuencial sumando uno al máximo existente.",
+      "El registro se asigna con un identificador negativo para indicar que requiere confirmación manual."
     ],
-    "correct_index": 3,
-    "hint": "En MySQL, la denominación histórica 'utf8' era un alias de 'utf8mb3' (3 bytes por carácter), incapaz de codificar símbolos Unicode que ocupan 4 bytes (como emojis o ciertos caracteres matemáticos/orientales), arrojando el error 'Incorrect string value'. utf8mb4 soporta los 4 bytes completos. MySQL 8.0 introdujo como default utf8mb4_0900_ai_ci (basada en Unicode 9.0, ai = accent-insensitive, ci = case-insensitive), mucho más rápida y precisa que la antigua utf8mb4_unicode_ci (basada en Unicode 5.2)."
+    "correct_index": 2,
+    "hint": "Al omitir o pasar NULL/0 a una columna AUTO_INCREMENT, MySQL genera el siguiente número entero de la secuencia."
   },
   {
     "id": "mysql_004",
-    "difficulty": "basic",
-    "question": "En una tabla con un índice compuesto B+Tree definido como 'CREATE INDEX idx_cliente ON clientes (apellido, nombre, edad);', ¿cuál de las siguientes consultas NO puede beneficiarse del índice según la regla del prefijo más a la izquierda (Leftmost Prefix Rule)?",
+    "difficulty": "medium",
+    "question": "En MySQL, ¿cuál es la diferencia entre un 'Clustered Index' y un 'Secondary Index' en InnoDB?",
     "options": [
-      "SELECT * FROM clientes WHERE apellido = 'Pérez';",
-      "SELECT * FROM clientes WHERE nombre = 'Carlos' AND edad = 28;",
-      "SELECT * FROM clientes WHERE apellido = 'Pérez' AND nombre = 'Carlos';",
-      "SELECT * FROM clientes WHERE apellido = 'Pérez' AND edad = 28;"
+      "El Clustered Index reside exclusivamente en memoria RAM; el Secondary Index se persiste permanentemente en disco.",
+      "El Clustered Index permite duplicados en sus hojas; el Secondary Index impone unicidad estricta sin admitir nulos.",
+      "El Clustered Index solo admite tipos numéricos enteros; el Secondary Index está restringido a cadenas de caracteres.",
+      "El Clustered Index contiene la fila completa en las hojas; el Secondary Index solo guarda la clave y puntero a la PK."
     ],
-    "correct_index": 1,
-    "hint": "Los índices compuestos en B+Tree se ordenan estrictamente de izquierda a derecha. Para que el índice pueda utilizarse en una búsqueda directa (range o ref), la consulta debe filtrar obligatoriamente por la primera columna ('apellido'). Filtrar únicamente por 'nombre' y 'edad' omite la columna guía, impidiendo al optimizador navegar la raíz del árbol B+Tree y forzando un escaneo completo (Full Table Scan)."
+    "correct_index": 3,
+    "hint": "En InnoDB, el Clustered Index (la PK) organiza físicamente las filas; un índice secundario apunta a la clave primaria (requiriendo bookmark lookup si no cubre)."
   },
   {
     "id": "mysql_005",
     "difficulty": "medium",
-    "question": "En la arquitectura clásica de replicación asíncrona de MySQL, ¿cuál es el rol exacto que desempeñan el 'I/O Thread' y el 'SQL Thread' en la instancia réplica?",
+    "question": "¿Qué indica el valor 'Using filesort' en la columna Extra de un plan EXPLAIN en MySQL?",
     "options": [
-      "El I/O Thread ejecuta las sentencias SQL sobre InnoDB en la réplica, mientras que el SQL Thread atiende las conexiones de red de los clientes de solo lectura.",
-      "Ambos hilos residen exclusivamente en el servidor Master para distribuir los paquetes binarios mediante broadcast UDP a todas las réplicas en red local.",
-      "El I/O Thread se conecta al servidor primario (Master), lee los eventos del Binary Log y los escribe en los Relay Logs locales de la réplica; el SQL Thread lee de los Relay Logs locales y aplica secuencialmente los cambios en los datos de la réplica.",
-      "El I/O Thread comprime los archivos de base de datos en formato tar.gz y el SQL Thread sincroniza las transacciones mediante el protocolo Paxos bidireccional."
+      "Que MySQL debe realizar una fase de ordenación en memoria o disco porque no pudo usar un índice para resolver ORDER BY.",
+      "Que la consulta lee datos directamente de archivos de texto plano sin pasar por la memoria del buffer pool de InnoDB.",
+      "Que el optimizador divide la tabla en particiones físicas independientes antes de iniciar el escaneo de registros.",
+      "Que la sentencia fue guardada en el archivo de registro de consultas lentas (slow query log) para posterior auditoría."
     ],
-    "correct_index": 2,
-    "hint": "La réplica ejecuta dos hilos independientes: el hilo de recepción de I/O (que se autentica en el master, descarga las transacciones del Binary Log y las vuelca en los Relay Logs de almacenamiento local) y el hilo SQL (que interpreta los eventos de los Relay Logs y ejecuta los cambios en el motor de almacenamiento de la réplica). Si el hilo SQL se retrasa respecto al I/O Thread, se produce el 'Replication Lag'."
+    "correct_index": 0,
+    "hint": "'Using filesort' significa que el optimizador debe ordenar las filas en memoria (sort_buffer_size) o en archivos temporales en disco."
   },
   {
     "id": "mysql_006",
     "difficulty": "medium",
-    "question": "¿Cómo se configura y explota el registro de consultas lentas ('Slow Query Log') en MySQL para diagnosticar cuellos de botella en producción?",
+    "question": "¿Qué valor en la columna 'type' de EXPLAIN indica el peor rendimiento posible en una consulta MySQL?",
     "options": [
-      "Se activa mediante 'slow_query_log = 1', estableciendo el límite de tiempo con 'long_query_time' (con precisión de microsegundos) y opcionalmente 'log_queries_not_using_indexes = 1'; las consultas se agrupan y analizan típicamente con la utilidad CLI 'mysqldumpslow'.",
-      "Se habilita mediante 'innodb_buffer_pool_dump_now = ON' y captura exclusivamente sentencias DROP TABLE y ALTER TABLE ejecutadas por root.",
-      "Requiere instalar obligatoriamente el motor Apache Spark en el host de la base de datos para parsear los volcados binarios en tiempo real.",
-      "Se activa mediante 'general_log = 1' e interrumpe de forma forzada cualquier consulta que supere los 500 milisegundos de ejecución."
+      "const (búsqueda instantánea de clave única evaluada como constante).",
+      "ALL (escaneo secuencial completo de la tabla sin utilizar ningún índice).",
+      "ref (escaneo indexado no único que retorna varias filas coincidentes).",
+      "range (escaneo acotado a un rango de valores mediante un índice B-Tree)."
     ],
-    "correct_index": 0,
-    "hint": "El Slow Query Log se habilita con slow_query_log = 1. El parámetro long_query_time define el umbral (por ejemplo 0.5 para 500 ms). log_queries_not_using_indexes permite registrar además consultas que realizan escaneos completos de tabla aunque tarden poco tiempo. La herramienta mysqldumpslow resume el archivo consolidando consultas idénticas (sustituyendo literales por N o 'S') y ordenándolas por tiempo total o promedio."
+    "correct_index": 1,
+    "hint": "type: ALL significa Full Table Scan, leyendo cada página de datos en disco/memoria, siendo la opción más lenta."
   },
   {
     "id": "mysql_007",
     "difficulty": "medium",
-    "question": "Al analizar la salida de una sentencia EXPLAIN en MySQL, ¿qué combinación de valores en las columnas 'type' y 'Extra' indica el plan de acceso MÁS eficiente?",
+    "question": "¿Cuál es la función del 'Binary Log' (binlog) en la arquitectura de MySQL?",
     "options": [
-      "type: ALL con Extra: Using filesort; Using temporary",
-      "type: range con Extra: Using where",
-      "type: index con Extra: Using join buffer (Block Nested Loop)",
-      "type: const (o eq_ref / ref) con Extra: Using index"
+      "Almacenar el código compilado de procedimientos almacenados y triggers para acelerar su ejecución en caliente.",
+      "Guardar copias temporales de tablas durante la ejecución de sentencias ALTER TABLE para evitar bloqueos en disco.",
+      "Registrar eventos que describen modificaciones en la BD para replicación a réplicas y recuperación Point-in-Time.",
+      "Auditar las contraseñas de red y tokens criptográficos de los clientes que inician sesiones remotas por TCP."
     ],
-    "correct_index": 3,
-    "hint": "En la columna 'type', el orden de eficiencia es: system > const > eq_ref > ref > range > index > ALL (donde const lee solo una fila única y ALL es un Full Table Scan). En la columna 'Extra', 'Using index' significa que la consulta se resuelve enteramente en el índice (Covering Index), sin necesidad de acceder a las páginas de datos físicas de la tabla. En contraste, 'Using filesort' y 'Using temporary' con 'type: ALL' representan el peor escenario posible."
+    "correct_index": 2,
+    "hint": "El binlog es el registro de cambios lógicos a nivel de servidor usado para replicar datos y restaurar backups a un punto en el tiempo (PITR)."
   },
   {
     "id": "mysql_008",
     "difficulty": "medium",
-    "question": "En el motor InnoDB, ¿cómo se estructura el 'Clustered Index' frente a un 'Secondary Index' y por qué se produce el efecto 'Bookmark Lookup'?",
+    "question": "¿Qué diferencia existe entre los formatos de replicación binlog 'STATEMENT' y 'ROW' en MySQL?",
     "options": [
-      "InnoDB organiza las filas de manera desordenada en un montículo (Heap); los índices secundarios contienen punteros directos a memoria RAM virtual.",
-      "El Clustered Index almacena las filas físicas completas en los nodos hoja de un B+Tree ordenado por la Clave Primaria (PK); los Secondary Indexes almacenan en sus hojas solo las columnas indexadas junto con el valor de la PK, requiriendo una segunda búsqueda en el Clustered Index para recuperar columnas no indexadas (Bookmark Lookup).",
-      "Los Secondary Indexes replican de forma redundante todas las columnas de la tabla en sus hojas para evitar segundas búsquedas, multiplicando el uso de almacenamiento por diez.",
-      "Si una tabla no posee clave primaria explícita, InnoDB no crea ningún índice y desactiva las búsquedas B+Tree, pasando a escaneos lineales."
+      "STATEMENT opera en memoria RAM volátil; ROW persiste los datos directamente en el almacenamiento permanente en disco.",
+      "STATEMENT solo admite operaciones de lectura; ROW procesa exclusivamente transacciones de modificación INSERT y UPDATE.",
+      "STATEMENT cifra las consultas antes de enviarlas; ROW transmite los datos en texto plano a través de la red local.",
+      "STATEMENT registra las sentencias SQL literales ejecutadas; ROW registra los cambios exactos fila por fila en bytes."
     ],
-    "correct_index": 1,
-    "hint": "En InnoDB, la tabla es físicamente el Clustered Index (organizado por la PK, o el primer UNIQUE NOT NULL, o un ID oculto autogenerado de 6 bytes). Cada índice secundario almacena la clave secundaria y el valor de la Clave Primaria. Cuando un SELECT solicita columnas adicionales no presentes en el índice secundario, el motor debe hacer un 'doble salto': ubica la PK en el índice secundario y luego navega el árbol clusterizado para traer el resto de columnas (Bookmark Lookup)."
+    "correct_index": 3,
+    "hint": "STATEMENT puede provocar desincronizaciones con funciones no deterministas (NOW, UUID); ROW es determinista porque registra las imágenes de tupla."
   },
   {
     "id": "mysql_009",
     "difficulty": "medium",
-    "question": "En la gestión transaccional de InnoDB, ¿cuáles son los roles diferenciados del 'Undo Log' y del 'Redo Log' para garantizar las propiedades ACID?",
+    "question": "¿Qué es el 'Slow Query Log' en MySQL y qué utilidad diagnóstica ofrece?",
     "options": [
-      "El Undo Log garantiza la Durabilidad física en disco; el Redo Log almacena permisos de usuarios y logs de auditoría de seguridad.",
-      "El Redo Log se borra inmediatamente tras cada COMMIT; el Undo Log solo se conserva en memoria RAM y nunca se escribe en disco.",
-      "El Undo Log permite revertir modificaciones durante un ROLLBACK y soporta el aislamiento multiversión (MVCC construyendo versiones históricas); el Redo Log garantiza la Durabilidad (D) registrando cambios de páginas a nivel de byte antes de volcarlas a disco, permitiendo la recuperación ante caídas (crash recovery).",
-      "Ambos logs son idénticos y se alternan en modo round-robin para nivelar el desgaste de unidades SSD de estado sólido."
+      "Un registro que guarda consultas cuyo tiempo de ejecución superó 'long_query_time', ayudando a detectar cuellos de botella.",
+      "Un archivo temporal que almacena transacciones bloqueadas por interbloqueos antes de seleccionar una víctima de rollback.",
+      "Un módulo de seguridad que bloquea automáticamente las direcciones IP de clientes que ejecutan consultas maliciosas.",
+      "Un subsistema que ralentiza intencionalmente consultas pesadas para proteger la temperatura física de los procesadores."
     ],
-    "correct_index": 2,
-    "hint": "El Undo Log guarda las instrucciones inversas para deshacer cambios si una transacción hace ROLLBACK y proporciona 'lecturas consistentes' en MVCC para que lectores concurrentes vean el estado anterior sin bloqueos. El Redo Log (WAL) es un búfer circular en disco que registra los cambios físicos aplicados a las páginas de datos en memoria (Buffer Pool), permitiendo que tras un apagón inesperado el motor repita las transacciones confirmadas pendientes de escribir en los archivos .ibd."
+    "correct_index": 0,
+    "hint": "Permite auditar consultas deficientes o sin índices para optimizarlas analizando tiempos de bloqueo, filas enviadas y examinadas."
   },
   {
     "id": "mysql_010",
-    "difficulty": "advanced",
-    "question": "¿Cómo opera la variante adaptativa del algoritmo LRU en el 'InnoDB Buffer Pool' y cuál es la función técnica del parámetro 'innodb_old_blocks_time'?",
+    "difficulty": "medium",
+    "question": "¿Qué impacto tiene configurar 'innodb_flush_log_at_trx_commit = 1' en MySQL?",
     "options": [
-      "Divide la lista LRU en dos secciones: la sublista 'young' (reciente, ~63%) y la 'old' (~37%); las páginas nuevas ingresan en la cabecera de la sublista old y solo son promovidas a young si reciben un nuevo acceso tras permanecer al menos 'innodb_old_blocks_time' milisegundos en old, evitando que escaneos masivos de tablas contaminen el Buffer Pool (Buffer Pool Pollution).",
-      "Utiliza una cola FIFO simple donde las páginas más frecuentemente accedidas se descartan de inmediato para liberar canales de transferencia PCI Express.",
-      "innodb_old_blocks_time define el intervalo en el cual la memoria RAM se vuelca íntegramente al archivo de swap del sistema operativo.",
-      "La lista LRU clasifica las páginas según la longitud de sus columnas de texto y descarta páginas que no contengan números enteros válidos."
+      "Desactiva las escrituras en disco acumulando transacciones en memoria RAM hasta que el buffer pool se llene por completo.",
+      "Garantiza durabilidad estricta ACID forzando un flush físico a disco del redo log en cada transacción confirmada.",
+      "Sincroniza el log de transacciones exclusivamente una vez por minuto para maximizar el throughput de escrituras masivas.",
+      "Obliga a que todas las transacciones se repliquen síncronamente en al menos tres servidores secundarios antes de retornar."
     ],
-    "correct_index": 0,
-    "hint": "En un algoritmo LRU puro, una consulta masiva (como un mysqldump o un batch analítico con Full Table Scan) expulsaría de la memoria RAM todas las páginas críticas de uso frecuente. InnoDB mitiga esto dividiendo la lista LRU (por defecto 3/8 en la sublista old). Al leer una página nueva, entra en 'old'. Solo si se vuelve a consultar después de que hayan transcurrido al menos innodb_old_blocks_time milisegundos (por defecto 1000 ms), se transfiere a la sublista 'young'."
+    "correct_index": 1,
+    "hint": "Valor 1 es ACID estricto: no se pierden datos confirmados tras una caída eléctrica. Valor 2 escribe al OS buffer sin fsync inmediato."
   },
   {
     "id": "mysql_011",
     "difficulty": "advanced",
-    "question": "En el nivel de aislamiento predeterminado de MySQL (REPEATABLE READ), ¿cómo previene InnoDB las lecturas fantasma (Phantom Reads) durante lecturas de bloqueo (FOR UPDATE) o sentencias de modificación DML?",
+    "question": "¿Qué componentes componen la arquitectura del 'InnoDB Buffer Pool' y cómo gestiona su memoria?",
     "options": [
-      "Bloquea la tabla completa en modo exclusivo impidiendo cualquier lectura concurrente hasta que finalice la transacción.",
-      "Fuerza a que todas las transacciones concurrentes se ejecuten en orden cronológico en un solo hilo de CPU.",
-      "Aplica bloqueos de página fijos de 64 KB que invalidan el Query Cache de MySQL Server.",
-      "Utiliza 'Next-Key Locks', que combinan un 'Record Lock' sobre el registro del índice con un 'Gap Lock' sobre el espacio abierto que precede a ese registro en el B+Tree, impidiendo que transacciones concurrentes inserten nuevas filas en los intervalos evaluados por la consulta."
+      "Mantiene un array estático lineal de registros que se vacía completamente en disco cada vez que se emite un commit.",
+      "Asigna un búfer de memoria volátil independiente para cada usuario conectado destruyéndolo al cerrar la conexión TCP.",
+      "Divide la memoria en páginas gestionadas por un algoritmo LRU modificado con listas 'young' (hot) y 'old' (cold).",
+      "Almacena exclusivamente índices secundarios delegando el almacenamiento de páginas de datos a la memoria swap del SO."
     ],
-    "correct_index": 3,
-    "hint": "En REPEATABLE READ, las lecturas consistentes ordinarias previenen fantasmas mediante snapshots MVCC. Sin embargo, para lecturas bloqueantes (SELECT ... FOR UPDATE) o escrituras (UPDATE/DELETE), InnoDB recurre a Next-Key Locks: bloquea tanto el registro en el índice (Record Lock) como el hueco previo entre registros (Gap Lock), incluyendo el hueco hasta el registro 'supremum'. Así, ninguna otra transacción puede insertar un registro que caiga en dicho rango, evitando lecturas fantasma."
+    "correct_index": 2,
+    "hint": "El LRU modificado de InnoDB separa la lista en zona caliente y fría (sub-lista old), evitando que escaneos masivos accidentales expulsen páginas comunes."
   },
   {
     "id": "mysql_012",
     "difficulty": "advanced",
-    "question": "Al configurar 'innodb_flush_log_at_trx_commit' en MySQL, ¿cuáles son las implicaciones de durabilidad y rendimiento para los valores 0, 1 y 2?",
+    "question": "¿En qué consiste un 'Record Lock' frente a un 'Gap Lock' en el motor InnoDB de MySQL?",
     "options": [
-      "Con 0 se garantiza cumplimiento estricto de ACID; con 1 se desconectan las escrituras de disco; con 2 se utiliza almacenamiento RAID de red.",
-      "Con 1 se escribe y sincroniza (fsync) el Redo Log a disco en cada COMMIT, garantizando ACID estricto; con 2 se escribe en el page cache del SO en cada COMMIT y se sincroniza a disco cada segundo (resistente a caídas de MySQL pero no del OS); con 0 se retiene en el búfer de InnoDB y se escribe/sincroniza una vez por segundo (máximo riesgo de perder hasta 1 segundo de transacciones).",
-      "El valor 1 solo es compatible con discos mecánicos HDD y genera corrupción inmediata en discos SSD NVMe modernos.",
-      "El valor 2 deshabilita el Undo Log y ejecuta todas las transacciones directamente en la memoria volátil del procesador sin persistencia."
+      "Record Lock se aplica a nivel de tabla completa; Gap Lock bloquea exclusivamente la columna declarada como clave primaria.",
+      "Record Lock opera únicamente sobre memoria RAM; Gap Lock adquiere cerrojos físicos exclusivos en el sistema de ficheros.",
+      "Record Lock bloquea consultas de selección simples; Gap Lock suspende la ejecución de procedimientos almacenados en segundo plano.",
+      "Record Lock bloquea un registro en el índice; Gap Lock bloquea el espacio hueco entre registros o antes del primero."
     ],
-    "correct_index": 1,
-    "hint": "innodb_flush_log_at_trx_commit = 1 es el estándar ACID: cada commit ejecuta un fsync() al disco en el Redo Log. El valor 2 escribe en el búfer del kernel del sistema operativo en cada commit, pero solo ejecuta fsync una vez por segundo; si MySQL colapsa repentinamente, el SO escribe los datos a disco sin pérdida (solo se pierde ante un corte de energía o crash del kernel). El valor 0 deja los logs en memoria de InnoDB y flushea cada segundo, ofreciendo la menor latencia a costa del mayor riesgo."
+    "correct_index": 3,
+    "hint": "Record Lock bloquea la entrada del índice; Gap Lock bloquea el intervalo entre claves para evitar que otros inserten ahí."
   },
   {
     "id": "mysql_013",
     "difficulty": "advanced",
-    "question": "En el contexto de Point-in-Time Recovery (PITR) y replicación, ¿cuál es la diferencia técnica entre los formatos del Binary Log ('STATEMENT', 'ROW', 'MIXED') y cómo se aplica la recuperación?",
+    "question": "¿Qué es un 'Next-Key Lock' en InnoDB y qué anomalía transaccional previene en REPEATABLE READ?",
     "options": [
-      "STATEMENT guarda capturas binarias de la memoria RAM del servidor; ROW solo guarda sentencias SELECT; MIXED cifra los registros con clave pública.",
-      "ROW convierte las tablas al formato MyISAM antes de transferir los eventos a los Relay Logs de las réplicas secundarias.",
-      "STATEMENT registra las sentencias SQL literales (propenso a desincronización con funciones no deterministas como NOW(), UUID() o RAND()); ROW registra el estado antes y después de cada fila modificada individualmente, garantizando consistencia absoluta; en PITR se restaura el último backup consistente y se reproducen los eventos binarios con 'mysqlbinlog' usando --start-position y --stop-position (o fechas).",
-      "El formato ROW no es compatible con el motor InnoDB y requiere que las tablas carezcan de claves primarias autoincrementales."
+      "Es la unión de un Record Lock y un Gap Lock sobre el hueco anterior, previniendo lecturas fantasmas en escaneos de rango.",
+      "Un bloqueo exclusivo sobre la siguiente clave primaria autoincremental que previene duplicados en inserciones masivas.",
+      "Un cerrojo temporal adquirido sobre el log binario que evita desincronizaciones entre el hilo de I/O y el hilo SQL.",
+      "Un algoritmo que bloquea la siguiente página de disco en el árbol B antes de realizar una operación de división de nodo."
     ],
-    "correct_index": 2,
-    "hint": "El formato STATEMENT registra el texto SQL de la sentencia; si la consulta invoca UUID() o depende del orden no determinista de un UPDATE sin ORDER BY, la réplica o la restauración obtendrá datos distintos. El formato ROW registra imágenes binarias de las filas cambiadas (antes y después), siendo totalmente determinista y seguro para PITR. La recuperación en el tiempo combina la restauración de una copia de seguridad base seguida de la aplicación de transacciones del binlog hasta la coordenada previa al desastre."
+    "correct_index": 0,
+    "hint": "Next-Key Locking bloquea el registro y el hueco precedente, impidiendo que otra transacción inserte filas fantasma en ese rango."
   },
   {
     "id": "mysql_014",
     "difficulty": "advanced",
-    "question": "¿Cómo interviene la directiva 'FORCE INDEX' en el optimizador basado en costos (CBO) de MySQL y qué consecuencia interna tiene exceder el valor de 'sort_buffer_size' en consultas con ORDER BY?",
+    "question": "¿Cómo maneja InnoDB los 'Deadlocks' de forma automática y qué criterio utiliza para resolverlos?",
     "options": [
-      "FORCE INDEX otorga un costo prácticamente infinito al escaneo de tabla (Table Scan), forzando al optimizador a elegir el índice indicado siempre que sea técnicamente aplicable; si los registros a ordenar superan sort_buffer_size, MySQL particiona el ordenamiento en disco creando archivos temporales y ejecutando un merge sort externo en múltiples pasadas, degradando severamente la latencia.",
-      "FORCE INDEX reescribe el binario de la tabla en disco de inmediato; superar sort_buffer_size cancela la transacción con el error 1064 de sintaxis.",
-      "sort_buffer_size es una memoria global compartida; si se supera, el servidor MySQL detiene las conexiones de red y entra en modo de solo lectura.",
-      "FORCE INDEX convierte el índice B+Tree en un árbol AVL binario en memoria volátil descartando las claves primarias existentes."
+      "Pausa todas las conexiones activas durante cinco segundos hasta que la transacción más antigua termine su ejecución.",
+      "Detecta ciclos en el grafo de espera de bloqueos y aborta la transacción más pequeña (menor número de filas modificadas).",
+      "Reinicia el proceso demonio mysqld en caliente recargando las páginas de datos desde el archivo de inicialización ibdata1.",
+      "Convierte automáticamente los bloqueos exclusivos en compartidos permitiendo que ambas transacciones confirmen a la vez."
     ],
-    "correct_index": 0,
-    "hint": "USE INDEX solo recomienda el índice (el optimizador puede ignorarlo si calcula que un escaneo de tabla es más barato). FORCE INDEX incrementa artificialmente el costo del Full Table Scan para asegurar que el optimizador utilice el índice sugerido si es viable. Por su parte, sort_buffer_size se reserva por hilo al ejecutar ORDER BY o GROUP BY; si la cantidad de datos a ordenar excede esta capacidad en memoria, MySQL crea archivos temporales en disco y realiza un 'filesort' con ordenamiento externo por mezclas (merge sort)."
+    "correct_index": 1,
+    "hint": "Recorre el wait-for graph y hace rollback a la transacción con menor peso (menor costo de reversión) retornando error 1213."
   },
   {
     "id": "mysql_015",
     "difficulty": "advanced",
-    "question": "¿Cómo detecta y resuelve el motor InnoDB los interbloqueos ('deadlocks') entre transacciones concurrentes, y qué criterio emplea para seleccionar a la transacción víctima?",
+    "question": "¿Cuál es la función del 'Doublewrite Buffer' en InnoDB y contra qué problema físico protege?",
     "options": [
-      "InnoDB carece de detector de deadlocks; las conexiones bloqueadas esperan indefinidamente hasta que expira el tiempo de arrendamiento DHCP de la red.",
-      "Utiliza un algoritmo de detección de ciclos sobre un grafo de esperas en memoria (wait-for graph); al detectar un ciclo cerrado, selecciona como víctima y revierte (ROLLBACK) la transacción de menor peso o costo de deshacer (trx_weight, la que modificó menos filas), arrojando a la aplicación el error 1213 (ER_LOCK_DEADLOCK).",
-      "Selecciona siempre como víctima a la transacción más antigua en el sistema para evitar saturar el espacio del Undo Log.",
-      "Convierte en caliente una de las tablas involucradas al motor MyISAM para suprimir los bloqueos de fila de forma instantánea."
+      "Mantiene dos copias idénticas del archivo de log binario en discos físicos diferentes para prevenir fallos mecánicos.",
+      "Duplica el tamaño del buffer pool en memoria RAM permitiendo procesar el doble de consultas simultáneas sin contención.",
+      "Escribe páginas en un área contigua antes de escribirlas en los archivos .ibd, protegiendo contra páginas rotas por apagones.",
+      "Permite que dos transacciones diferentes modifiquen la misma fila al mismo tiempo sin requerir bloqueos de exclusión mutua."
     ],
-    "correct_index": 1,
-    "hint": "El detector de interbloqueos de InnoDB construye y analiza un grafo dirigido de esperas ('wait-for graph'). Cuando se produce una dependencia circular (A espera a B y B espera a A), se genera un ciclo. InnoDB identifica la transacción con menor número de inserciones, actualizaciones o eliminaciones ('trx_weight') y le aplica un ROLLBACK forzado, liberando sus bloqueos para que la otra transacción prospere. La aplicación recibe el error 1213 y debe estar diseñada para reintentar la operación."
+    "correct_index": 2,
+    "hint": "Evita torn pages (páginas escritas a medias tras un corte eléctrico) asegurando que InnoDB pueda restaurar la página original y aplicar el redo log."
   },
   {
     "id": "mysql_016",
-    "difficulty": "basic",
-    "question": "En MySQL, ¿cuál es la ventaja y el riesgo de utilizar el tipo de dato 'ENUM('opcion1', 'opcion2', ...)' en una columna?",
+    "difficulty": "advanced",
+    "question": "¿Qué representa el 'Log Sequence Number' (LSN) en el motor InnoDB?",
     "options": [
-      "No tiene ninguna ventaja y fue eliminado en MySQL 8.0.",
-      "Almacena internamente cada valor como un entero compacto de 1 o 2 bytes optimizando el espacio en disco; sin embargo, modificar la lista de valores o cambiar su orden en tablas grandes con ALTER TABLE históricamente requería reconstruir la tabla o podía introducir inconsistencias de ordenamiento numérico.",
-      "Permite guardar imágenes GIF directamente en formato binario.",
-      "Impide que los administradores de sistemas accedan a la tabla."
+      "El identificador numérico de la sesión TCP del cliente asignado por el hilo despachador de conexiones del servidor.",
+      "El número de versión de compilación del código fuente de MySQL utilizado para validar la compatibilidad de los plugins.",
+      "El contador de consultas lentas registradas en la tabla de estadísticas del diccionario de datos transaccional.",
+      "Un entero de 64 bits monotónico creciente que contabiliza el volumen total de bytes escritos en el log de transacciones."
     ],
-    "correct_index": 1,
-    "hint": "ENUM ahorra memoria porque guarda enteros indexados a un catálogo de cadenas (1 byte para hasta 255 elementos). El riesgo es que ordenar por un ENUM ordena por su índice interno y no alfabéticamente a menos que se use CAST."
+    "correct_index": 3,
+    "hint": "El LSN es el reloj lógico de InnoDB: cada página guarda el LSN de su última modificación para guiar el crash recovery."
   },
   {
     "id": "mysql_017",
-    "difficulty": "basic",
-    "question": "¿Cuál es la diferencia crítica de comportamiento y almacenamiento entre los tipos 'DATETIME' y 'TIMESTAMP' en MySQL?",
+    "difficulty": "advanced",
+    "question": "¿Cómo opera el 'Change Buffer' en InnoDB para optimizar operaciones de escritura?",
     "options": [
-      "TIMESTAMP ocupa 4 bytes, se almacena internamente en UTC convirtiéndose a la zona horaria de la sesión en lectura/escritura y tiene el límite del año 2038; DATETIME ocupa 5 u 8 bytes, almacena el valor literal tal cual sin conversión de zona horaria y soporta hasta el año 9999.",
-      "DATETIME solo guarda horas y minutos; TIMESTAMP guarda únicamente el año y el mes.",
-      "TIMESTAMP no permite indexación mediante árboles B+Tree.",
-      "Son tipos idénticos introducidos para compatibilidad con Oracle."
+      "Retiene modificaciones de índices secundarios no únicos cuyas páginas no están en RAM, retrasando la E/S hasta que se carguen.",
+      "Almacena las sentencias SQL ejecutadas por los clientes antes de enviarlas a través del canal de red a los esclavos.",
+      "Guarda copias de seguridad incrementales de los esquemas DDL para permitir reversión de sentencias ALTER TABLE fallidas.",
+      "Comprime los datos de columnas de texto antes de escribirlos en el tablespace compartido del sistema de ficheros."
     ],
     "correct_index": 0,
-    "hint": "TIMESTAMP sufre del problema del año 2038 (número entero de 32 bits desde epoch) y cambia según la zona horaria de la conexión. DATETIME es inmutable respecto a la zona horaria del servidor."
+    "hint": "Evita I/O aleatorio costoso aplazando inserciones en páginas de índices secundarios en disco hasta que la página es leída al buffer pool."
   },
   {
     "id": "mysql_018",
-    "difficulty": "basic",
-    "question": "En MySQL, ¿cómo opera la sentencia 'INSERT INTO ... ON DUPLICATE KEY UPDATE' cuando se produce una colisión de clave primaria o índice único?",
+    "difficulty": "advanced",
+    "question": "¿Qué ventaja clave aporta la replicación basada en GTID (Global Transaction Identifier) en MySQL?",
     "options": [
-      "Cancela la consulta y revierte toda la base de datos a un backup previo.",
-      "Si la fila no existe, se inserta normalmente; si se viola una restricción de clave primaria o índice UNIQUE, el motor ejecuta en su lugar la actualización (UPDATE) especificada sobre la fila existente.",
-      "Crea una segunda tabla con el prefijo '_duplicate' y guarda allí el registro colisionado.",
-      "Borra la fila existente y deja la clave primaria con valor nulo."
+      "Duplica la velocidad de transferencia de paquetes en la tarjeta de red mediante compresión binaria sin pérdidas.",
+      "Permite failover y reconexión de réplicas sin calcular manualmente coordenadas de archivo y posición en el binlog.",
+      "Garantiza transacciones síncronas instantáneas en tiempo cero eliminando por completo cualquier latencia de replicación.",
+      "Elimina la necesidad de almacenar el registro binario en disco manteniendo todos los eventos en memoria volátil."
     ],
     "correct_index": 1,
-    "hint": "Es la sintaxis nativa de Upsert en MySQL (equivalente al ON CONFLICT DO UPDATE de PostgreSQL y SQL estándar)."
+    "hint": "Con GTID (source_id:transaction_id) y MASTER_AUTO_POSITION = 1, la réplica solicita automáticamente solo los eventos faltantes."
   },
   {
     "id": "mysql_019",
-    "difficulty": "basic",
-    "question": "¿Para qué se utiliza la función de agregación 'GROUP_CONCAT()' en MySQL?",
+    "difficulty": "advanced",
+    "question": "¿Cómo funciona la replicación semi-síncrona (Semisynchronous Replication) en MySQL?",
     "options": [
-      "Para concatenar las contraseñas de todos los usuarios del servidor en una sola fila.",
-      "Para unir en una sola cadena de texto los valores de múltiples filas pertenecientes a un mismo grupo, permitiendo definir un separador personalizado (ej. SEPARATOR ', ').",
-      "Para fusionar dos tablas diferentes sin necesidad de claves foráneas.",
-      "Para agrupar archivos binarios en un archivo comprimido .tar.gz."
+      "El primario escribe en su disco y confirma de inmediato sin esperar ninguna confirmación de los servidores esclavos.",
+      "Todas las réplicas del cluster deben confirmar que han aplicado los cambios antes de que el primario confirme la transacción.",
+      "El primario espera a que al menos una réplica escriba el evento en su Relay Log y envíe un ACK antes de confirmar el COMMIT.",
+      "Las réplicas aplican los cambios únicamente una vez al día mediante un trabajo de sincronización programado en frío."
     ],
-    "correct_index": 1,
-    "hint": "GROUP_CONCAT(nombre SEPARATOR ', ') concatena todos los elementos de un grupo (ej. todos los tags de un artículo) en un solo string en el resultado de la consulta."
+    "correct_index": 2,
+    "hint": "Equilibra rendimiento y durabilidad: asegura que al menos un esclavo posee copia del evento en su relay log antes de confirmar al cliente."
   },
   {
     "id": "mysql_020",
-    "difficulty": "medium",
-    "question": "En MySQL 8.0, ¿qué utilidad ofrece marcar un índice como 'INVISIBLE' (Invisible Index)?",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Multi-Threaded Slave' (MTS / Replica Parallel Workers) en MySQL?",
     "options": [
-      "Oculta el índice para que no sea visible a usuarios sin permisos de superadministrador.",
-      "Hace que el optimizador de consultas ignore el índice durante la generación de planes de ejecución, pero el motor continúa manteniéndolo actualizado en inserciones y actualizaciones, permitiendo evaluar el impacto en rendimiento antes de eliminarlo de forma definitiva.",
-      "Cifra el contenido del índice utilizando claves SSH de 4096 bits.",
-      "Reduce el consumo de memoria RAM del índice a 0 bytes."
+      "Ejecuta cada sentencia de selección en dieciséis núcleos de procesamiento en paralelo dentro del servidor primario.",
+      "Abre múltiples conexiones de red redundantes entre el maestro y la réplica para prevenir desconexiones por timeout.",
+      "Distribuye las consultas de lectura entre varios servidores secundarios utilizando un algoritmo de turnos rotativos.",
+      "Permite que múltiples hilos apliquen transacciones concurrentes en la réplica basándose en dependencias o WRITESET."
     ],
-    "correct_index": 1,
-    "hint": "Los índices invisibles son una excelente práctica de DevOps/DBA: si quieres borrar un índice sospechoso de ser inútil, primero lo haces INVISIBLE; si ninguna consulta se vuelve lenta, puedes hacer DROP INDEX con total seguridad."
+    "correct_index": 3,
+    "hint": "MTS reduce drásticamente el retardo de replicación (slave lag) aplicando transacciones que no colisionan en paralelo en la réplica."
   },
   {
     "id": "mysql_021",
-    "difficulty": "medium",
-    "question": "En MySQL, ¿cuál es la diferencia entre una Columna Generada (Generated Column) de tipo 'VIRTUAL' frente a una 'STORED'?",
+    "difficulty": "advanced",
+    "question": "¿Qué es la optimización 'Index Condition Pushdown' (ICP) en MySQL?",
     "options": [
-      "VIRTUAL solo admite operaciones matemáticas básicas; STORED admite funciones de inteligencia artificial.",
-      "VIRTUAL se calcula sobre la marcha cada vez que se lee la fila y no consume espacio en disco; STORED se calcula y guarda físicamente en disco cuando la fila se inserta o actualiza.",
-      "VIRTUAL solo existe mientras la sesión SSH del usuario esté conectada.",
-      "No existe diferencia de almacenamiento; son términos promocionales de MySQL Workbench."
+      "El motor evalúa partes del WHERE que usan columnas indexadas en el nivel de almacenamiento, reduciendo accesos a la tabla.",
+      "Descarga los índices secundarios a un servidor de caché Redis externo para acelerar consultas de agregación analítica.",
+      "Reordena físicamente las columnas de la clave primaria en disco para alinear los bloques con la memoria caché de la CPU.",
+      "Convierte automáticamente las cláusulas LIKE con comodines iniciales en búsquedas exactas utilizando tablas hash."
     ],
-    "correct_index": 1,
-    "hint": "VIRTUAL: costo de CPU al leer, 0 espacio en disco adicional (aunque en InnoDB se puede indexar). STORED: costo de almacenamiento en disco, 0 costo de CPU en lectura."
+    "correct_index": 0,
+    "hint": "En EXPLAIN aparece como 'Using index condition': InnoDB filtra por predicados del índice antes de leer las filas completas del clustered index."
   },
   {
     "id": "mysql_022",
-    "difficulty": "medium",
-    "question": "¿Qué causa el clásico error 'ERROR 1040: Too many connections' en MySQL y cuál es la solución arquitectónica recomendada en alta concurrencia?",
+    "difficulty": "advanced",
+    "question": "¿En qué consiste la optimización 'Multi-Range Read' (MRR) en InnoDB?",
     "options": [
-      "La base de datos tiene demasiadas tablas relacionales creadas.",
-      "La cantidad de clientes concurrentes superó el valor configurado en la variable 'max_connections'; la solución recomendada es implementar un Connection Pooler (como ProxySQL o pool a nivel de aplicación) para reutilizar conexiones persistentes en lugar de abrir y cerrar conexiones efímeras continuas.",
-      "El cable Ethernet del servidor tiene ruido electromagnético.",
-      "El usuario root ha olvidado la contraseña de inicio de sesión."
+      "Permite leer simultáneamente de múltiples discos duros distribuidos en una matriz RAID mediante instrucciones asíncronas.",
+      "Ordena por clave primaria los punteros obtenidos de un índice secundario antes de leer en disco, convirtiendo E/S aleatoria en secuencial.",
+      "Ejecuta múltiples consultas de rango en paralelo asignando un hilo independiente del procesador a cada partición lógica.",
+      "Duplica los rangos de memoria asignados al sort buffer para evitar volcar resultados temporales al almacenamiento en disco."
     ],
     "correct_index": 1,
-    "hint": "Abrir una conexión en MySQL reserva hilos y memoria (sort_buffer, join_buffer). Elevar max_connections indefinidamente agota la RAM del servidor. La solución correcta es un pool de conexiones."
+    "hint": "MRR acumula las claves primarias en un buffer, las ordena secuencialmente por posición física en disco y accede en orden secuencial eficiente."
   },
   {
     "id": "mysql_023",
-    "difficulty": "medium",
-    "question": "Al ejecutar 'OPTIMIZE TABLE tabla' en una tabla InnoDB de MySQL, ¿qué sucede internamente?",
+    "difficulty": "basic",
+    "question": "¿Cuál es la función principal de la cláusula LIMIT en sentencias SELECT de MySQL?",
     "options": [
-      "El motor borra automáticamente el 10% de los datos más antiguos.",
-      "InnoDB reconstruye la tabla completa creando una copia temporal desfragmentada de los datos y de los índices B+Tree, liberando el espacio no contiguo dejado por eliminaciones masivas anteriores.",
-      "Se actualiza el sistema operativo Linux con los parches de seguridad más recientes.",
-      "La tabla se convierte permanentemente en una tabla de solo lectura."
+      "Limitar la cantidad de memoria RAM asignada al hilo de ejecución para prevenir saturación del servidor.",
+      "Establecer un tiempo máximo de espera en segundos antes de abortar la consulta con un error de timeout.",
+      "Restringir el número máximo de filas devueltas por la consulta para paginación o control de resultados.",
+      "Restringir el número de columnas devueltas por la consulta ocultando los campos que contengan valores nulos."
     ],
-    "correct_index": 1,
-    "hint": "En InnoDB, OPTIMIZE TABLE equivale a ejecutar 'ALTER TABLE tabla ENGINE=InnoDB;'. Reconstruye el clustered index y los índices secundarios, reduciendo la fragmentación de páginas y devolviendo espacio libre al archivo .ibd."
+    "correct_index": 2,
+    "hint": "LIMIT N OFFSET M acota el volumen de filas retornadas por el conjunto resultado."
   },
   {
     "id": "mysql_024",
-    "difficulty": "medium",
-    "question": "En MySQL 8.0, ¿cuál es la función del motor de almacenamiento interno 'TempTable' en la ejecución de consultas complejas?",
+    "difficulty": "basic",
+    "question": "En MySQL, ¿cuál es el operador estándar adecuado para comparar si una columna contiene el valor NULL?",
     "options": [
-      "Guarda los logs de auditoría de los usuarios que han iniciado sesión.",
-      "Gestiona tablas temporales internas en memoria RAM generadas por el optimizador para agrupamientos y subconsultas complejas, optimizando el uso de memoria frente al antiguo motor 'MEMORY' antes de desbordar a disco mediante InnoDB o MMAP.",
-      "Crea copias de seguridad cada 5 minutos en formato CSV.",
-      "Es un motor exclusivo para almacenar archivos temporales en memoria swap."
+      "= NULL (o el operador ==, comp-safe)",
+      "== NULL (o el operador ===, type-safe)",
+      "EQUALS NULL (o el operador EQ, ansi)",
+      "IS NULL (o el operador <=>, null-safe)"
     ],
-    "correct_index": 1,
-    "hint": "TempTable reemplazó al motor MEMORY en MySQL 8.0: soporta tipos VARCHAR y BLOB/TEXT en memoria sin necesidad de convertirlos a campos de longitud fija de memoria desperdiciada."
+    "correct_index": 3,
+    "hint": "En SQL estándar, la comparación con '= NULL' siempre devuelve NULL (desconocido); se debe usar 'IS NULL' o '<=>'."
   },
   {
     "id": "mysql_025",
-    "difficulty": "medium",
-    "question": "¿En qué consiste la 'Replicación Multi-Fuente' (Multi-Source Replication) soportada en MySQL?",
+    "difficulty": "basic",
+    "question": "¿Qué comando en la consola interactiva de MySQL permite seleccionar la base de datos de trabajo por defecto?",
     "options": [
-      "En conectar una misma réplica a múltiples servidores maestros independientes de manera simultánea, recibiendo cambios de diferentes bases de datos a través de canales de replicación nombrados separados.",
-      "En transmitir datos a través de múltiples tarjetas de red físicas en el mismo servidor.",
-      "En duplicar las consultas en bases de datos relacionales y NoSQL al mismo tiempo.",
-      "En sincronizar la base de datos con un repositorio Git en la nube."
+      "USE nombre_bd;",
+      "SELECT nombre_bd;",
+      "SWITCH nombre_bd;",
+      "OPEN nombre_bd;"
     ],
     "correct_index": 0,
-    "hint": "Multi-Source Replication permite consolidar múltiples bases de datos shardeadas o de diferentes microservicios en un único servidor réplica centralizado para analítica y reportería."
+    "hint": "'USE nombre_bd;' establece el catálogo o esquema activo para las sentencias posteriores."
   },
   {
     "id": "mysql_026",
-    "difficulty": "advanced",
-    "question": "En la arquitectura de almacenamiento de InnoDB, ¿qué problema crítico de hardware resuelve el 'Doublewrite Buffer'?",
+    "difficulty": "basic",
+    "question": "¿Qué tipo de dato en MySQL almacena fecha y hora convirtiéndola internamente a UTC según la zona horaria de la sesión?",
     "options": [
-      "Evita que se borren registros si dos administradores ejecutan UPDATE a la vez.",
-      "Previene la corrupción de datos por 'Escrituras Parciales de Página' (Torn Pages) cuando ocurre una caída de energía mientras el sistema operativo escribe una página de 16KB de InnoDB en bloques de disco de menor tamaño (ej. 4KB o 512 bytes).",
-      "Duplica la velocidad de cálculo de las funciones trigonométricas.",
-      "Guarda los archivos binlog en dos discos duros físicos en modo RAID 1 sin controladora."
+      "DATETIME ",
+      "TIMESTAMP",
+      "TIME_ZONE",
+      "DATE_TIME"
     ],
     "correct_index": 1,
-    "hint": "Si una página de 16KB de InnoDB se escribe a medias (torn page) por corte de luz, el redo log no puede recuperarla porque requiere una página base intacta. El Doublewrite Buffer guarda una copia continua previa de la página completa para restaurarla si falla la escritura principal."
+    "hint": "TIMESTAMP convierte de la zona horaria de la sesión a UTC al almacenar y reconvierte al leer; DATETIME almacena el valor literal sin conversión."
   },
   {
     "id": "mysql_027",
-    "difficulty": "advanced",
-    "question": "¿Por qué la introducción del algoritmo 'Hash Join' en MySQL 8.0 supuso una mejora radical frente al tradicional 'Block Nested-Loop' (BNL) en consultas sin índices?",
+    "difficulty": "basic",
+    "question": "¿Cuál es la diferencia de almacenamiento entre los tipos CHAR(50) y VARCHAR(50) en MySQL?",
     "options": [
-      "Porque Hash Join solo funciona si la base de datos está conectada a internet.",
-      "Porque en lugar de comparar cada fila del bloque externo contra todas las filas de la tabla interna repetidamente (O(N*M)), Hash Join crea una tabla hash en memoria de la tabla menor y escanea la tabla mayor en una sola pasada (O(N+M)), reduciendo drásticamente el tiempo de ejecución.",
-      "Porque Hash Join comprime los datos de las tablas antes de combinarlas.",
-      "Porque elimina la necesidad de usar memoria RAM para los joins."
+      "CHAR permite almacenar cadenas de hasta 65535 caracteres; VARCHAR está restringido exclusivamente a un máximo de 255 bytes.",
+      "CHAR almacena datos en formato binario no legible; VARCHAR guarda texto plano legible compatible con codificaciones ASCII.",
+      "CHAR reserva siempre 50 caracteres fijos rellenando con espacios; VARCHAR solo almacena la longitud real más prefijo de longitud.",
+      "CHAR no admite la creación de índices secundarios; VARCHAR permite indexar tanto prefijos como la totalidad de la columna."
     ],
-    "correct_index": 1,
-    "hint": "Block Nested-Loop hacía escaneos cuadráticos de la tabla interna. Con Hash Join en MySQL 8.0.18+, las uniones por igualdad (equi-joins) sin índices se resuelven en tiempo lineal construyendo una tabla hash en memoria."
+    "correct_index": 2,
+    "hint": "CHAR es de longitud fija (rellena con espacios hasta N); VARCHAR es dinámico según la longitud real de la cadena."
   },
   {
     "id": "mysql_028",
-    "difficulty": "advanced",
-    "question": "En servidores MySQL con decenas de gigabytes de RAM y alta concurrencia multihilo, ¿por qué es crítico configurar 'innodb_buffer_pool_instances > 1'?",
+    "difficulty": "basic",
+    "question": "¿Qué sentencia SQL permite ver los nombres, tipos y restricciones de las columnas de una tabla en MySQL?",
     "options": [
-      "Para que MySQL pueda instalarse en diferentes discos duros a la vez.",
-      "Para dividir el Buffer Pool en múltiples regiones independientes con sus propios mutexes de bloqueo y listas LRU, reduciendo la contención de cerraduras (lock contention) entre los múltiples hilos de la CPU que leen y escriben páginas en memoria simultáneamente.",
-      "Para que el motor pueda almacenar datos en memoria caché de red remota.",
-      "Para permitir que MySQL soporte más de un juego de caracteres a la vez."
+      "SHOW TABLE STRUCTURE tabla;",
+      "INSPECT COLUMNS FROM tabla;",
+      "PRINT SCHEMA OF tabla;",
+      "DESCRIBE tabla; (o DESC tabla;)"
     ],
-    "correct_index": 1,
-    "hint": "Un único Buffer Pool se convierte en un cuello de botella por contención de mutex cuando decenas de cores intentan acceder a la misma estructura. Dividirlo en 8 o 16 instancias paraleliza el acceso a la RAM."
+    "correct_index": 3,
+    "hint": "DESCRIBE tabla (o SHOW COLUMNS FROM tabla) muestra los campos, tipos, nulabilidad, claves y valores por defecto."
   },
   {
     "id": "mysql_029",
-    "difficulty": "advanced",
-    "question": "Para garantizar Durabilidad ACID estricta y Cero Pérdida de Datos en MySQL ante una caída del sistema operativo, ¿cuál es la combinación obligatoria de parámetros del sistema?",
-    "options": [
-      "innodb_flush_log_at_trx_commit = 0 y sync_binlog = 0.",
-      "innodb_flush_log_at_trx_commit = 1 y sync_binlog = 1 (garantizando fsync a disco en cada transacción tanto en el Redo Log como en el Binary Log).",
-      "autocommit = 0 y max_connections = 1.",
-      "skip-grant-tables activado en el archivo my.cnf."
-    ],
-    "correct_index": 1,
-    "hint": "La combinación 'doble 1' (innodb_flush_log_at_trx_commit = 1 y sync_binlog = 1) es el estándar oro de integridad transaccional en MySQL/MariaDB: garantiza que ni una sola transacción confirmada se pierda si colapsa la máquina."
-  },
-  {
-    "id": "mysql_030",
-    "difficulty": "advanced",
-    "question": "En MySQL InnoDB, ¿cuál es la diferencia entre ejecutar una operación DDL con 'ALGORITHM=INPLACE' frente a 'ALGORITHM=COPY' en tablas masivas en producción?",
-    "options": [
-      "COPY solo modifica el archivo de log; INPLACE apaga el servicio de base de datos.",
-      "COPY crea una tabla temporal completa nueva, copia cada fila una por una y adquiere un bloqueo exclusivo que prohíbe escrituras durante horas; INPLACE modifica la estructura de la tabla directamente en el motor sin reconstruir la tabla entera cuando es posible, permitiendo lecturas y escrituras concurrentes (LOCK=NONE).",
-      "INPLACE borra todos los índices secundarios para acelerar la operación.",
-      "No existe diferencia; son sinónimos sintácticos admitidos en MariaDB."
-    ],
-    "correct_index": 1,
-    "hint": "Online DDL con ALGORITHM=INPLACE, LOCK=NONE permite crear índices, renombrar columnas y alterar restricciones sin bloquear la actividad de los usuarios ni degradar el servicio en producción."
-  },
-  {
-    "id": "mysql_031",
-    "difficulty": "basic",
-    "question": "¿Cuál es la función principal de la cláusula LIMIT en MySQL?",
-    "options": [
-      "Restringir el número máximo de filas devueltas por una consulta",
-      "Limitar la memoria asignada a la consulta",
-      "Limitar el número de columnas devueltas",
-      "Establecer un tiempo límite de ejecución para la consulta"
-    ],
-    "correct_index": 0,
-    "hint": "LIMIT especifica el número máximo de tuplas a retornar, comúnmente usado junto a OFFSET para paginación."
-  },
-  {
-    "id": "mysql_032",
-    "difficulty": "basic",
-    "question": "En MySQL, ¿cuál es el operador adecuado para comparar si una columna contiene NULL?",
-    "options": [
-      "= NULL",
-      "IS NULL",
-      "== NULL",
-      "EQUALS NULL"
-    ],
-    "correct_index": 1,
-    "hint": "En SQL estándar y MySQL, NULL no es comparable con el operador de igualdad (=); se debe utilizar IS NULL o IS NOT NULL (o el operador <=>, null-safe equal)."
-  },
-  {
-    "id": "mysql_033",
-    "difficulty": "basic",
-    "question": "¿Qué efecto tiene la sentencia TRUNCATE TABLE comparada con DELETE FROM tabla sin WHERE?",
-    "options": [
-      "TRUNCATE es DDL, vacía la tabla reiniciando el contador AUTO_INCREMENT y es mucho más rápida",
-      "TRUNCATE es DML y borra fila por fila activando todos los triggers",
-      "DELETE sin WHERE no se puede deshacer con ROLLBACK en InnoDB",
-      "Son completamente idénticas a nivel de motor y rendimiento"
-    ],
-    "correct_index": 0,
-    "hint": "TRUNCATE recrea internamente la tabla (DDL), libera páginas inmediatamente, reinicia contadores autoincrementables y no activa triggers DELETE."
-  },
-  {
-    "id": "mysql_034",
-    "difficulty": "basic",
-    "question": "¿Qué comando en la consola de MySQL permite cambiar de base de datos activa?",
-    "options": [
-      "SELECT DATABASE nombre_bd;",
-      "USE nombre_bd;",
-      "SWITCH nombre_bd;",
-      "CONNECT nombre_bd;"
-    ],
-    "correct_index": 1,
-    "hint": "'USE nombre_bd;' es la instrucción SQL/cliente para seleccionar la base de datos de trabajo por defecto."
-  },
-  {
-    "id": "mysql_035",
-    "difficulty": "basic",
-    "question": "¿Qué tipo de dato en MySQL se utiliza para almacenar fechas y horas en UTC convirtiéndolo automáticamente según la zona horaria del cliente?",
-    "options": [
-      "DATETIME",
-      "TIMESTAMP",
-      "TIME",
-      "DATE"
-    ],
-    "correct_index": 1,
-    "hint": "TIMESTAMP convierte el valor recibido de la zona horaria de la sesión a UTC para almacenamiento y lo reconvierte al leer. DATETIME almacena el valor literal sin conversión."
-  },
-  {
-    "id": "mysql_036",
-    "difficulty": "basic",
-    "question": "¿Cuál es la diferencia entre CHAR(50) y VARCHAR(50) en MySQL?",
-    "options": [
-      "CHAR es de longitud fija rellenando con espacios hasta 50 caracteres; VARCHAR almacena sólo la longitud real más 1-2 bytes de prefijo",
-      "CHAR permite hasta 65,535 caracteres y VARCHAR solo 255",
-      "VARCHAR no admite índices B-Tree",
-      "CHAR almacena en formato binario y VARCHAR en UTF-8"
-    ],
-    "correct_index": 0,
-    "hint": "CHAR(N) reserva exactamente N caracteres en almacenamiento de longitud fija, mientras que VARCHAR(N) es dinámico según la longitud real de la cadena."
-  },
-  {
-    "id": "mysql_037",
-    "difficulty": "basic",
-    "question": "¿Qué sentencia permite ver la estructura exacta y tipos de columnas de una tabla en MySQL?",
-    "options": [
-      "SHOW TABLE tabla;",
-      "DESCRIBE tabla; (o DESC tabla;)",
-      "INSPECT tabla;",
-      "PRINT STRUCTURE tabla;"
-    ],
-    "correct_index": 1,
-    "hint": "DESCRIBE o DESC tabla (o SHOW COLUMNS FROM tabla) muestra los nombres de campos, tipos, nulabilidad, claves y valores por defecto."
-  },
-  {
-    "id": "mysql_038",
     "difficulty": "basic",
     "question": "¿Qué función de agregación cuenta el número total de filas independientemente de si contienen valores NULL?",
     "options": [
       "COUNT(*)",
-      "COUNT(columna)",
-      "COUNT(DISTINCT)",
-      "SUM(*)"
+      "COUNT(1)",
+      "COUNT(0)",
+      "SUM(all)"
     ],
     "correct_index": 0,
-    "hint": "COUNT(*) cuenta todas las filas del conjunto resultado, mientras que COUNT(columna) ignora las filas donde dicha columna sea NULL."
+    "hint": "COUNT(*) cuenta todas las filas devueltas; COUNT(columna) ignora aquellas filas donde la columna indicada es NULL."
   },
   {
-    "id": "mysql_039",
+    "id": "mysql_030",
     "difficulty": "basic",
-    "question": "¿Cómo se define un comentario de una sola línea en scripts de MySQL?",
-    "options": [
-      "-- comentario (con espacio tras los guiones) o # comentario",
-      "// comentario",
-      "/* comentario",
-      "% comentario"
-    ],
-    "correct_index": 0,
-    "hint": "MySQL soporta '-- ' (requiere al menos un espacio o carácter de control después del doble guion), '#' y comentarios multilínea '/* ... */'."
-  },
-  {
-    "id": "mysql_040",
-    "difficulty": "basic",
-    "question": "¿Qué cláusula se utiliza en MySQL para filtrar resultados tras una agrupación GROUP BY?",
+    "question": "¿Qué cláusula se utiliza en MySQL para filtrar resultados agrupados calculados mediante GROUP BY?",
     "options": [
       "WHERE",
       "HAVING",
@@ -517,786 +387,916 @@
       "QUALIFY"
     ],
     "correct_index": 1,
-    "hint": "WHERE filtra filas antes de la agregación, mientras que HAVING filtra los grupos resultantes tras aplicar GROUP BY."
+    "hint": "WHERE filtra filas antes de la agregación; HAVING filtra los grupos resultantes tras la agregación de GROUP BY."
+  },
+  {
+    "id": "mysql_031",
+    "difficulty": "medium",
+    "question": "¿Para qué sirve la cláusula ON DUPLICATE KEY UPDATE en una sentencia INSERT de MySQL?",
+    "options": [
+      "Evita que se creen índices duplicados en una tabla comprobando la cardinalidad de los campos antes de insertar.",
+      "Reemplaza automáticamente la clave primaria conflictiva asignando un identificador aleatorio de sesenta y cuatro bits.",
+      "Permite hacer un Upsert: si la fila viola una restricción UNIQUE o PRIMARY KEY, actualiza las columnas indicadas.",
+      "Elimina físicamente la fila antigua y crea una nueva reiniciando el contador autoincremental de la secuencia."
+    ],
+    "correct_index": 2,
+    "hint": "INSERT INTO ... ON DUPLICATE KEY UPDATE es el mecanismo nativo de MySQL para realizar upserts atómicos."
+  },
+  {
+    "id": "mysql_032",
+    "difficulty": "medium",
+    "question": "¿Qué diferencia existe entre REPLACE INTO e INSERT INTO ... ON DUPLICATE KEY UPDATE en MySQL?",
+    "options": [
+      "REPLACE INTO opera únicamente en memoria RAM volátil; ON DUPLICATE KEY UPDATE persiste cambios directamente en disco.",
+      "REPLACE INTO no dispara triggers asociados a la tabla; ON DUPLICATE KEY UPDATE ejecuta disparadores de auditoría.",
+      "REPLACE INTO está restringido a tablas con menos de diez columnas; ON DUPLICATE KEY UPDATE funciona en cualquier esquema.",
+      "REPLACE INTO borra físicamente la fila conflictiva (DELETE) e inserta una nueva; ON DUPLICATE KEY UPDATE solo muta campos."
+    ],
+    "correct_index": 3,
+    "hint": "REPLACE ejecuta internamente un DELETE seguido de un INSERT si hay colisión única, afectando claves foráneas y contadores autoincrementales."
+  },
+  {
+    "id": "mysql_033",
+    "difficulty": "medium",
+    "question": "En MySQL 8.0, ¿qué funcionalidad ofrecen las Common Table Expressions (CTEs) con 'WITH RECURSIVE'?",
+    "options": [
+      "Permiten recorrer estructuras jerárquicas como árboles de categorías y grafos evaluando miembros ancla y recursivos.",
+      "Crean tablas temporales permanentes en el buffer pool que sobreviven al reinicio forzoso del servicio mysqld.",
+      "Ejecutan procedimientos almacenados en paralelo dividiendo la carga computacional entre múltiples hilos de CPU.",
+      "Habilitan llamadas a servicios web externos mediante peticiones HTTP REST asíncronas desde el motor de base de datos."
+    ],
+    "correct_index": 0,
+    "hint": "WITH RECURSIVE es el estándar ANSI para consultas recursivas que recorren jerarquías y grafos en SQL."
+  },
+  {
+    "id": "mysql_034",
+    "difficulty": "medium",
+    "question": "¿Cuál es la función del comando 'ANALYZE TABLE' en tablas gestionadas por InnoDB?",
+    "options": [
+      "Reconstruye físicamente la tabla compactando el espacio fragmentado y liberando páginas vacías en el sistema de archivos.",
+      "Muestrea páginas de índices y actualiza las estadísticas de cardinalidad en mysql.innodb_index_stats para el CBO.",
+      "Verifica la integridad de los checksums de cada página de datos detectando posibles fallos de hardware en almacenamiento.",
+      "Exporta la estructura del esquema y los primeros mil registros a un archivo JSON en el directorio de copias de seguridad."
+    ],
+    "correct_index": 1,
+    "hint": "ANALYZE TABLE actualiza las estadísticas de distribución de claves para que el optimizador elija los mejores planes de consulta."
+  },
+  {
+    "id": "mysql_035",
+    "difficulty": "medium",
+    "question": "¿Qué hace la sentencia 'OPTIMIZE TABLE' en una tabla InnoDB con innodb_file_per_table habilitado?",
+    "options": [
+      "Aumenta dinámicamente la memoria RAM asignada al buffer pool duplicando la capacidad de páginas calientes en memoria.",
+      "Convierte automáticamente todas las columnas VARCHAR a CHAR para optimizar la alineación física en bloques de almacenamiento.",
+      "Ejecuta una reconstrucción en línea de la tabla (ALTER TABLE ... FORCE) reorganizando páginas y recuperando espacio en disco.",
+      "Elimina registros duplicados en columnas no indexadas sin necesidad de especificar sentencias DELETE explícitas."
+    ],
+    "correct_index": 2,
+    "hint": "En InnoDB, OPTIMIZE TABLE realiza un rebuild online desfragmentando el archivo .ibd y devolviendo espacio libre al sistema operativo."
+  },
+  {
+    "id": "mysql_036",
+    "difficulty": "medium",
+    "question": "¿Cuál es el propósito del parámetro 'innodb_file_per_table' en MySQL?",
+    "options": [
+      "Crear una copia de seguridad automática de cada tabla en un archivo comprimido gzip cada vez que se emite un commit.",
+      "Limitar a un único archivo de log de transacciones por base de datos para simplificar la gestión de puntos de restauración.",
+      "Impedir que se creen más de diez tablas por base de datos para garantizar que el rendimiento del catálogo sea constante.",
+      "Almacenar los datos e índices de cada tabla en su propio archivo .ibd independiente en lugar del tablespace compartido ibdata1."
+    ],
+    "correct_index": 3,
+    "hint": "Permite recuperar espacio en disco con DROP o TRUNCATE TABLE y mejora la administración física por tabla."
+  },
+  {
+    "id": "mysql_037",
+    "difficulty": "medium",
+    "question": "En MySQL 8.0, ¿qué son las 'Window Functions' (funciones de ventana como ROW_NUMBER, RANK)?",
+    "options": [
+      "Funciones que realizan cálculos analíticos sobre conjuntos de filas relacionadas sin colapsar el resultado en un solo registro.",
+      "Procedimientos diseñados para renderizar interfaces gráficas de usuario en sistemas operativos Microsoft Windows.",
+      "Sentencias que se ejecutan automáticamente en una ventana de tiempo fija de cinco minutos durante periodos de inactividad.",
+      "Módulos para optimizar la transferencia de datos entre instancias de MySQL desplegadas en la nube de Microsoft Azure."
+    ],
+    "correct_index": 0,
+    "hint": "Las funciones de ventana (OVER(PARTITION BY ... ORDER BY ...)) calculan rankings y acumulados conservando todas las tuplas."
+  },
+  {
+    "id": "mysql_038",
+    "difficulty": "medium",
+    "question": "¿Qué característica distingue a un índice FULLTEXT en MySQL?",
+    "options": [
+      "Indexa exclusivamente documentos binarios en formato PDF almacenados en columnas de tipo BLOB de gran tamaño.",
+      "Crea un índice invertido para búsquedas lingüísticas por relevancia utilizando la sintaxis MATCH(...) AGAINST(...).",
+      "Garantiza que la columna indexada no contenga abreviaturas ni caracteres especiales no definidos en el diccionario.",
+      "Convierte automáticamente todas las cadenas de texto a mayúsculas antes de calcular los hashes de almacenamiento."
+    ],
+    "correct_index": 1,
+    "hint": "Los índices FULLTEXT tokenizan palabras y calculan relevancia en búsquedas de texto en lenguaje natural o modo booleano."
+  },
+  {
+    "id": "mysql_039",
+    "difficulty": "medium",
+    "question": "En MySQL, ¿cuál es la diferencia entre una columna generada de tipo STORED frente a VIRTUAL?",
+    "options": [
+      "STORED solo puede contener valores numéricos enteros; VIRTUAL está restringida exclusivamente a cadenas de caracteres UTF-8.",
+      "STORED no admite índices secundarios asociados; VIRTUAL exige obligatoriamente la creación de un índice B-Tree en disco.",
+      "STORED se calcula y guarda en disco al escribir; VIRTUAL se calcula al vuelo en cada lectura sin ocupar espacio en disco.",
+      "STORED se destruye al cerrar la sesión activa; VIRTUAL persiste permanentemente en el archivo de catálogo del esquema."
+    ],
+    "correct_index": 2,
+    "hint": "STORED consume almacenamiento en disco; VIRTUAL no ocupa bytes en disco y ambas pueden indexarse en InnoDB."
+  },
+  {
+    "id": "mysql_040",
+    "difficulty": "medium",
+    "question": "¿Cuál es la función del comando 'SHOW PROCESSLIST' en MySQL?",
+    "options": [
+      "Mostrar los procesos del sistema operativo Linux que consumen más del cincuenta por ciento de tiempo de procesador.",
+      "Listar los procedimientos almacenados compilados en memoria RAM que están listos para ser invocados por las aplicaciones.",
+      "Mostrar el historial de confirmaciones de Git registradas en el repositorio donde reside el código fuente del servidor.",
+      "Listar los hilos y conexiones activas de clientes, las consultas que están ejecutando, su estado y tiempo transcurrido."
+    ],
+    "correct_index": 3,
+    "hint": "SHOW PROCESSLIST (o INFORMATION_SCHEMA.PROCESSLIST) muestra las conexiones activas, el estado del hilo y la consulta en curso."
   },
   {
     "id": "mysql_041",
     "difficulty": "medium",
-    "question": "En MySQL, ¿cuál es la diferencia entre los tipos de datos TINYINT, SMALLINT, MEDIUMINT, INT y BIGINT?",
+    "question": "¿Cómo se termina una consulta o conexión bloqueada identificada con su ID en SHOW PROCESSLIST?",
     "options": [
-      "Ocupan respectivamente 1, 2, 3, 4 y 8 bytes de almacenamiento con sus correspondientes rangos numéricos",
-      "Representan tipos de punto flotante de diferente precisión",
-      "Indican la cantidad de caracteres alfanuméricos permitidos",
-      "Son sinónimos con distintos nombres por compatibilidad ANSI"
+      "KILL CONNECTION <id>; o KILL QUERY <id>;",
+      "STOP PROCESS <id>; o HALT QUERY <id>;",
+      "TERMINATE SESSION <id>; o DROP <id>;",
+      "ABORT CLIENT <id>; o CANCEL <id>;"
     ],
     "correct_index": 0,
-    "hint": "Cada tipo entero en MySQL tiene un tamaño en bytes predeterminado: TINYINT (1 byte: -128 a 127), SMALLINT (2 bytes), MEDIUMINT (3 bytes), INT (4 bytes) y BIGINT (8 bytes)."
+    "hint": "'KILL QUERY id' interrumpe la sentencia en ejecución manteniendo el socket abierto; 'KILL id' cierra la conexión del cliente."
   },
   {
     "id": "mysql_042",
     "difficulty": "medium",
-    "question": "¿Qué significa el modificador UNSIGNED en una columna numérica de MySQL?",
+    "question": "¿Cuál es el propósito del esquema INFORMATION_SCHEMA en MySQL?",
     "options": [
-      "Impide valores negativos duplicando el rango positivo utilizable",
-      "Hace que la columna sea inmutable",
-      "Indica que el valor no requiere comprobación de integridad criptográfica",
-      "Deshabilita el auto-incremento"
+      "Almacenar el código fuente de los microservicios que interactúan con la base de datos a través de peticiones HTTP.",
+      "Proveer vistas de solo lectura con metadatos sobre bases de datos, tablas, columnas, índices y privilegios del servidor.",
+      "Guardar copias de seguridad de las contraseñas de los usuarios cifradas mediante algoritmos de hash asimétricos.",
+      "Configurar las reglas del firewall del sistema operativo para restringir las conexiones entrantes en el puerto TCP."
     ],
-    "correct_index": 0,
-    "hint": "UNSIGNED desplaza el rango para que comience en 0 (ej. TINYINT UNSIGNED va de 0 a 255 en lugar de -128 a 127)."
+    "correct_index": 1,
+    "hint": "Es una base de datos virtual ANSI que expone metadatos del catálogo del servidor en forma de tablas consultables por SELECT."
   },
   {
     "id": "mysql_043",
     "difficulty": "medium",
-    "question": "¿Para qué sirve la directiva ON DUPLICATE KEY UPDATE en MySQL?",
+    "question": "¿Qué utilidad ofrece el esquema PERFORMANCE_SCHEMA en MySQL?",
     "options": [
-      "Permite hacer un 'Upsert': si una fila viola una restricción UNIQUE o PRIMARY KEY, actualiza las columnas especificadas en lugar de lanzar error",
-      "Evita que se creen índices duplicados en una tabla",
-      "Reemplaza la clave primaria por otra aleatoria",
-      "Elimina la fila vieja y crea una nueva con un nuevo ID"
+      "Incrementar automáticamente la velocidad de reloj del procesador cuando la carga de consultas concurrentes aumenta.",
+      "Eliminar automáticamente índices secundarios no utilizados para reducir la fragmentación de páginas en el disco.",
+      "Monitorear a bajo nivel eventos de espera, contención de mutex, latencia de E/S y consumo de memoria en tiempo real.",
+      "Compilar consultas SQL directamente a código máquina nativo para ejecutarlas en la tarjeta gráfica del servidor."
     ],
-    "correct_index": 0,
-    "hint": "INSERT INTO ... ON DUPLICATE KEY UPDATE actualiza la fila existente si se detecta colisión de clave única, siendo la forma nativa de MySQL de realizar upserts."
+    "correct_index": 2,
+    "hint": "Instrumenta el motor internamente para análisis de rendimiento y cuellos de botella con mínimo overhead."
   },
   {
     "id": "mysql_044",
     "difficulty": "medium",
-    "question": "¿Qué diferencia existe entre REPLACE INTO e INSERT INTO ... ON DUPLICATE KEY UPDATE?",
+    "question": "¿Qué es el 'General Query Log' en MySQL y por qué se suele mantener desactivado en entornos de producción?",
     "options": [
-      "REPLACE INTO borra físicamente la fila conflictiva (DELETE) y luego inserta la nueva (INSERT), lo que incrementa AUTO_INCREMENT y dispara triggers de DELETE",
-      "REPLACE INTO nunca cambia el PRIMARY KEY",
-      "ON DUPLICATE KEY UPDATE siempre recrea la tabla en disco",
-      "Son exactamente sinónimos sintácticos"
+      "Registra únicamente los errores críticos de memoria RAM que provocan la terminación abrupta del proceso mysqld.",
+      "Optimiza las consultas analíticas mediante algoritmos predictivos de inteligencia artificial en segundo plano.",
+      "Es el registro binario indispensable que transmite las mutaciones de datos hacia los servidores réplica secundarios.",
+      "Registra cada conexión y sentencia recibida por el servidor; produce un alto impacto en I/O y llena rápidamente el disco."
     ],
-    "correct_index": 0,
-    "hint": "REPLACE INTO ejecuta internamente un DELETE seguido de un INSERT si hay conflicto de unicidad, afectando foreign keys en cascada y triggers."
+    "correct_index": 3,
+    "hint": "Audita absolutamente toda la actividad recibida. En producción de alta concurrencia satura el almacenamiento y penaliza el rendimiento."
   },
   {
     "id": "mysql_045",
     "difficulty": "medium",
-    "question": "En MySQL 8.0, ¿qué funcionalidad ofrecen las Common Table Expressions (CTEs) recursivas?",
+    "question": "En MySQL, ¿cuál es la diferencia entre UNION y UNION ALL al combinar resultados de dos consultas?",
     "options": [
-      "Permiten recorrer estructuras jerárquicas como árboles de categorías y grafos dentro de una consulta SQL mediante WITH RECURSIVE",
-      "Crean tablas temporales permanentes en el buffer pool",
-      "Ejecutan procedimientos almacenados en paralelo",
-      "Permiten realizar llamadas HTTP recursivas desde MySQL"
+      "UNION deduplica filas realizando una ordenación interna; UNION ALL concatena directamente los resultados sin filtrar.",
+      "UNION opera exclusivamente sobre tablas InnoDB; UNION ALL se aplica únicamente en tablas gestionadas por el motor MyISAM.",
+      "UNION ALL no permite ordenar el resultado final mediante cláusulas ORDER BY; UNION impone ordenación obligatoria.",
+      "Son sinónimos idénticos y el optimizador de consultas las procesa exactamente con el mismo plan de ejecución en RAM."
     ],
     "correct_index": 0,
-    "hint": "WITH RECURSIVE permite consultas recursivas estándar, evaluando un miembro ancla y uniéndolo iterativamente con el miembro recursivo."
+    "hint": "UNION ALL es sustancialmente más rápido porque no requiere crear tablas temporales ni ordenar para eliminar duplicados."
   },
   {
     "id": "mysql_046",
     "difficulty": "medium",
-    "question": "¿Cuál es la utilidad del comando ANALYZE TABLE en MySQL InnoDB?",
+    "question": "¿Qué es un 'Covering Index' (índice de cobertura) en MySQL?",
     "options": [
-      "Actualiza las estadísticas de distribución de claves e índices para ayudar al optimizador de consultas a elegir el mejor plan",
-      "Reconstruye la tabla compactando el espacio fragmentado",
-      "Verifica la integridad de los checksums de cada página de datos",
-      "Exporta el esquema en formato JSON"
+      "Un índice primario que cubre el cien por ciento de las tablas que componen el catálogo de la base de datos activa.",
+      "Un índice secundario que contiene todas las columnas consultadas, evitando acceder al Clustered Index en disco.",
+      "Un índice criptográfico que oculta los valores almacenados para prevenir accesos no autorizados a nivel de archivo.",
+      "Un índice especial que valida la sintaxis de las consultas entrantes para proteger el servidor contra inyecciones SQL."
     ],
-    "correct_index": 0,
-    "hint": "ANALYZE TABLE muestrea las páginas de índice y actualiza las estadísticas de cardinalidad almacenadas en mysql.innodb_index_stats."
+    "correct_index": 1,
+    "hint": "En EXPLAIN aparece como 'Using index': la consulta se resuelve íntegramente leyendo el índice B-Tree secundario sin acudir a la tabla."
   },
   {
     "id": "mysql_047",
     "difficulty": "medium",
-    "question": "¿Qué hace la directiva OPTIMIZE TABLE en una tabla InnoDB?",
+    "question": "¿Cuál es la función del comando 'SET TRANSACTION ISOLATION LEVEL' en MySQL?",
     "options": [
-      "Reconstruye la tabla para desfragmentar el espacio y recuperar páginas vacías (equivalente a ALTER TABLE ... FORCE)",
-      "Aumenta la memoria RAM asignada al servidor",
-      "Convierte todos los tipos VARCHAR a CHAR",
-      "Elimina automáticamente filas duplicadas"
+      "Habilitar el cifrado simétrico de datos en tránsito a través de la interfaz de red local entre cliente y servidor.",
+      "Modificar el nivel de detalle de los mensajes de advertencia que se escriben en el archivo de log de errores de MySQL.",
+      "Definir el grado de aislamiento de concurrencia (READ COMMITTED, REPEATABLE READ, etc.) para la sesión o transacción.",
+      "Limitar la cantidad máxima de memoria RAM que una transacción individual puede consumir antes de ser abortada."
     ],
-    "correct_index": 0,
-    "hint": "En InnoDB, OPTIMIZE TABLE realiza un rebuild online de la tabla (ALTER TABLE ... FORCE), reorganizando el almacenamiento físico y liberando espacio no utilizado en tablespaces per-table."
+    "correct_index": 2,
+    "hint": "Ajusta las garantías ACID de aislamiento de concurrencia y visibilidad de cambios para la siguiente transacción o la sesión."
   },
   {
     "id": "mysql_048",
-    "difficulty": "medium",
-    "question": "¿Cuál es el propósito del parámetro 'innodb_file_per_table' en MySQL?",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Adaptive Hash Index' (AHI) en el motor InnoDB de MySQL?",
     "options": [
-      "Almacenar los datos e índices de cada tabla en su propio archivo .ibd individual en lugar del tablespace compartido ibdata1",
-      "Crear una copia de seguridad automática de cada tabla en JSON",
-      "Limitar a un solo archivo de log por base de datos",
-      "Impedir que se usen más de 10 tablas por esquema"
+      "Un algoritmo criptográfico que cifra las contraseñas de los administradores utilizando funciones hash SHA-256.",
+      "Un índice secundario permanente que particiona los datos en múltiples servidores distribuidos mediante hashing.",
+      "Un subsistema que traduce automáticamente las tablas relacionales de MySQL al formato de clave-valor de Redis.",
+      "Una estructura en memoria que InnoDB construye dinámicamente sobre páginas B-Tree muy leídas para accesos O(1)."
     ],
-    "correct_index": 0,
-    "hint": "Cuando innodb_file_per_table está habilitado (por defecto desde 5.6), cada tabla InnoDB tiene su propio archivo .ibd, permitiendo recuperar espacio en disco con DROP u OPTIMIZE TABLE."
+    "correct_index": 3,
+    "hint": "El AHI monitorea patrones de búsqueda en B-Trees; si detecta consultas frecuentes por clave, crea una tabla hash en RAM para acceso casi instantáneo."
   },
   {
     "id": "mysql_049",
-    "difficulty": "medium",
-    "question": "En MySQL 8.0, ¿qué son las 'Window Functions' (funciones de ventana)?",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Multi-Source Replication' en MySQL?",
     "options": [
-      "Funciones como ROW_NUMBER(), RANK() y LEAD() que realizan cálculos sobre un conjunto de filas relacionadas sin colapsar el resultado en un solo registro",
-      "Funciones para crear interfaces gráficas de usuario en Windows",
-      "Procedimientos que se ejecutan únicamente en una ventana temporal de 5 minutos",
-      "Funciones especiales para optimizar consultas en Microsoft Azure"
+      "Una topología donde una única réplica recibe y procesa eventos de múltiples servidores maestros mediante canales independientes.",
+      "Un servidor maestro que transmite sus logs de transacciones hacia múltiples nubes públicas simultáneamente por seguridad.",
+      "Un sistema de balanceo de carga DNS que distribuye peticiones de clientes web entre diferentes instancias de base de datos.",
+      "La capacidad de un cliente de ejecutar consultas unificadas combinando datos de MySQL y PostgreSQL en una sola sesión."
     ],
     "correct_index": 0,
-    "hint": "Las funciones de ventana operan con la cláusula OVER(PARTITION BY ... ORDER BY ...) permitiendo rankings, acumulados y desplazamientos conservando todas las filas."
+    "hint": "Permite consolidar bases de datos de varios servidores principales en un único almacén analítico mediante canales de replicación separados."
   },
   {
     "id": "mysql_050",
-    "difficulty": "medium",
-    "question": "¿Qué característica distingue a un índice FULLTEXT en MySQL?",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la función del 'Relay Log' en un servidor réplica de MySQL?",
     "options": [
-      "Permite búsquedas lingüísticas por palabras y relevancia utilizando MATCH(...) AGAINST(...) sobre tipos de texto",
-      "Indexa únicamente archivos PDF guardados en disco",
-      "Garantiza que la columna no contenga abreviaturas",
-      "Convierte automáticamente el texto en mayúsculas"
+      "Guardar los registros de auditoría de conexiones de red para detectar intentos de acceso no autorizados al servidor.",
+      "Almacenar los eventos binarios recibidos del maestro por el hilo I/O antes de que los hilos SQL los apliquen localmente.",
+      "Servir como memoria swap temporal en disco para evitar que el proceso de la réplica colapse por falta de memoria RAM.",
+      "Reenviar automáticamente los paquetes TCP corruptos solicitando su retransmisión al servidor maestro de origen."
     ],
-    "correct_index": 0,
-    "hint": "Los índices FULLTEXT crean índices invertidos para búsquedas de texto complejas en modo natural o booleano con MATCH(...) AGAINST(...)."
+    "correct_index": 1,
+    "hint": "En la réplica, el hilo I/O escribe en los relay logs, desacoplando la recepción de red de la ejecución local por los hilos applier."
   },
   {
     "id": "mysql_051",
-    "difficulty": "medium",
-    "question": "En MySQL, ¿qué es una columna generada (Generated / Computed Column) de tipo STORED frente a VIRTUAL?",
+    "difficulty": "advanced",
+    "question": "¿Cómo se comporta InnoDB con respecto al fenómeno de 'Lock Escalation'?",
     "options": [
-      "STORED se calcula y almacena físicamente en disco al insertar/actualizar, mientras que VIRTUAL se evalúa al vuelo en cada lectura sin ocupar espacio",
-      "VIRTUAL solo existe en la memoria del cliente",
-      "STORED no permite la creación de índices secundarios",
-      "Son exactamente lo mismo sin impacto en almacenamiento ni CPU"
+      "InnoDB escala automáticamente bloqueos de fila a bloqueos de tabla cada vez que se modifican más de cien registros.",
+      "InnoDB escala los bloqueos de fila a bloqueos de base de datos completa cuando el consumo de memoria RAM supera el 80%.",
+      "InnoDB NO escala bloqueos de fila a tabla: gestiona millones de bloqueos de registro en memoria fija eficientemente.",
+      "InnoDB suspende las transacciones concurrentes forzando un reinicio del buffer pool si se acumulan demasiados locks."
     ],
-    "correct_index": 0,
-    "hint": "Las columnas virtuales no consumen espacio en disco y se evalúan al leer. Ambas pueden indexarse en InnoDB (con VIRTUAL generando índices secundarios en el árbol B)."
+    "correct_index": 2,
+    "hint": "A diferencia de SQL Server, InnoDB almacena bloqueos en mapas de bits por página, lo que permite millones de bloqueos de fila sin escalar a tabla."
   },
   {
     "id": "mysql_052",
-    "difficulty": "medium",
-    "question": "¿Cuál es la función del comando SHOW PROCESSLIST en MySQL?",
+    "difficulty": "advanced",
+    "question": "¿Qué diferencia existe entre un bloqueo INTENTION SHARED (IS) e INTENTION EXCLUSIVE (IX) en InnoDB?",
     "options": [
-      "Mostrar los hilos y conexiones activas de los clientes, las consultas que están ejecutando, su estado y tiempo transcurrido",
-      "Listar los procesos del sistema operativo Linux que usan MySQL",
-      "Listar los procedimientos almacenados compilados en memoria",
-      "Mostrar el historial de commits de Git en el servidor"
+      "Son candados de hardware que apagan los buses de datos del disco duro para evitar corrupciones electromagnéticas.",
+      "Son índices temporales que aceleran búsquedas sobre columnas numéricas mientras dura una transacción de lectura.",
+      "Son directivas de red que impiden que los clientes cierren sus sesiones TCP antes de confirmar una sentencia DDL.",
+      "Son bloqueos a nivel de tabla que señalan la intención de adquirir bloqueos S o X en filas individuales más adelante."
     ],
-    "correct_index": 0,
-    "hint": "SHOW PROCESSLIST (o consultar INFORMATION_SCHEMA.PROCESSLIST) muestra qué hilos están conectados y qué query están procesando, vital para diagnosticar bloqueos y consultas lentas."
+    "correct_index": 3,
+    "hint": "Los Intention Locks permiten al motor verificar si una tabla puede bloquearse en modo exclusivo (LOCK TABLES) en O(1) sin escanear millones de filas."
   },
   {
     "id": "mysql_053",
-    "difficulty": "medium",
-    "question": "¿Cómo se termina una consulta o conexión bloqueada identificada con su ID en SHOW PROCESSLIST?",
+    "difficulty": "advanced",
+    "question": "¿Qué efecto tiene el parámetro 'innodb_lock_wait_timeout' en MySQL?",
     "options": [
-      "KILL CONNECTION <id>; o KILL QUERY <id>;",
-      "STOP PROCESS <id>;",
-      "TERMINATE <id>;",
-      "ABORT <id>;"
+      "Define el tiempo máximo en segundos que una transacción espera para adquirir un bloqueo de fila antes de arrojar error.",
+      "Establece el intervalo en segundos para desconectar clientes que permanecen inactivos sin enviar consultas al servidor.",
+      "Determina el tiempo en microsegundos que el motor espera antes de vaciar la memoria caché de consultas preparadas.",
+      "Configura el tiempo máximo de respuesta permitido para las resoluciones de nombres de dominio en conexiones remotas."
     ],
     "correct_index": 0,
-    "hint": "'KILL QUERY id' interrumpe la consulta en ejecución manteniendo la conexión abierta, mientras que 'KILL id' o 'KILL CONNECTION id' cierra la conexión del cliente."
+    "hint": "Por defecto son 50 segundos: si una transacción no puede obtener un lock en ese tiempo, la sentencia actual falla con lock wait timeout."
   },
   {
     "id": "mysql_054",
-    "difficulty": "medium",
-    "question": "En MySQL, ¿cuál es el propósito de la tabla INFORMATION_SCHEMA?",
+    "difficulty": "advanced",
+    "question": "¿Para qué sirven las cláusulas FOR UPDATE NOWAIT y FOR UPDATE SKIP LOCKED introducidas en MySQL 8.0?",
     "options": [
-      "Proveer vistas de sólo lectura con metadatos sobre esquemas, tablas, columnas, privilegios e índices del servidor",
-      "Guardar el código fuente de los microservicios",
-      "Almacenar copias de seguridad de datos de usuarios",
-      "Configurar las contraseñas de red del firewall"
+      "NOWAIT desactiva las transacciones ACID; SKIP LOCKED fuerza al motor a escribir directamente en la memoria swap del SO.",
+      "NOWAIT falla de inmediato si hay filas bloqueadas; SKIP LOCKED omite las filas bloqueadas, ideal para colas de trabajo.",
+      "NOWAIT ignora restricciones de clave foránea; SKIP LOCKED bloquea la tabla completa en modo exclusivo sin esperas.",
+      "NOWAIT permite lecturas sucias en REPEATABLE READ; SKIP LOCKED elimina automáticamente los registros que presentan conflictos."
     ],
-    "correct_index": 0,
-    "hint": "INFORMATION_SCHEMA es una base de datos virtual ANSI que expone los metadatos de los objetos gestionados por MySQL."
+    "correct_index": 1,
+    "hint": "SKIP LOCKED es el estándar para implementar colas concurrentes de trabajo sin contención entre workers en bases de datos relacionales."
   },
   {
     "id": "mysql_055",
-    "difficulty": "medium",
-    "question": "¿Qué utilidad ofrece el esquema PERFORMANCE_SCHEMA en MySQL?",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la estructura interna de una página estándar de 16KB en el motor InnoDB?",
     "options": [
-      "Monitorear a bajo nivel el rendimiento del servidor, eventos de espera (waits), contención de mutex, latencia de E/S y consumo de memoria",
-      "Mejorar automáticamente la velocidad del procesador",
-      "Eliminar índices no utilizados automáticamente",
-      "Compilar consultas a código máquina nativo C++"
+      "Un array plano de cadenas delimitadas por comas finalizado con una suma de verificación criptográfica MD5 de 128 bits.",
+      "Un árbol binario completo de cinco niveles fijos con punteros de sesenta y cuatro bits alineados con la memoria flash.",
+      "File Header/Page Header, registros Infimum y Supremum, User Records, Page Directory (slots binarios) y File Trailer.",
+      "Un contenedor comprimido tar gzip con cabeceras de metadatos que se descomprimen en cada llamada de lectura del SO."
     ],
-    "correct_index": 0,
-    "hint": "PERFORMANCE_SCHEMA instrumenta llamadas internas del motor en tiempo real para análisis diagnóstico profundo sin bloquear el servidor."
+    "correct_index": 2,
+    "hint": "Los registros se enlazan lógicamente y el Page Directory divide los registros en slots para permitir búsqueda binaria eficiente en RAM."
   },
   {
     "id": "mysql_056",
-    "difficulty": "medium",
-    "question": "¿Qué es el 'General Query Log' en MySQL y por qué se suele mantener desactivado en producción?",
+    "difficulty": "advanced",
+    "question": "¿Qué ocurre cuando una fila de InnoDB supera el tamaño máximo permitido en una página física (Row Overflow)?",
     "options": [
-      "Registra cada conexión y cada sentencia SQL recibida por el servidor; produce un alto impacto en I/O y llena rápidamente el disco",
-      "Registra únicamente los errores fatales del motor",
-      "Optimiza las consultas generales mediante inteligencia artificial",
-      "Es el registro que replica datos a los esclavos"
+      "La transacción falla arrojando un error fatal de desbordamiento de búfer y desconecta de inmediato la sesión del cliente.",
+      "El motor trunca automáticamente los caracteres sobrantes ajustando la fila al límite exacto de la página en disco.",
+      "La fila completa se convierte en una tabla temporal en el directorio /tmp del sistema de archivos sin indexación.",
+      "InnoDB almacena un puntero de 20 bytes en la página del B-Tree y mueve el contenido excedente a páginas Off-page."
     ],
-    "correct_index": 0,
-    "hint": "El General Query Log audita absolutamente todo lo que llega a MySQL. En alta concurrencia genera un overhead masivo de escritura en disco."
+    "correct_index": 3,
+    "hint": "En formatos DYNAMIC y COMPRESSED, columnas TEXT/BLOB largas se derivan a páginas overflow contiguas preservando la densidad del árbol B."
   },
   {
     "id": "mysql_057",
-    "difficulty": "medium",
-    "question": "En MySQL, ¿cuál es la diferencia entre UNION y UNION ALL?",
+    "difficulty": "advanced",
+    "question": "¿Qué diferencia existe entre los formatos de fila Antelope (COMPACT) y Barracuda (DYNAMIC) en InnoDB?",
     "options": [
-      "UNION elimina filas duplicadas realizando una ordenación/agrupación interna, mientras que UNION ALL concatena directamente los resultados sin filtrar duplicados",
-      "UNION solo funciona con tablas InnoDB y UNION ALL con MyISAM",
-      "UNION ALL no permite ordenar con ORDER BY",
-      "Son equivalentes y el optimizador siempre las procesa igual"
+      "Barracuda almacena solo un puntero de 20 bytes para datos off-page; Antelope guardaba los primeros 768 bytes del prefijo.",
+      "Barracuda es el motor de replicación en la nube; Antelope opera exclusivamente sobre sistemas de archivos locales.",
+      "Barracuda no permite la creación de índices secundarios; Antelope admite cualquier cantidad de claves candidatas.",
+      "Barracuda está restringido a tablas de menos de un gigabyte; Antelope soporta particiones de hasta sesenta y cuatro terabytes."
     ],
     "correct_index": 0,
-    "hint": "UNION ALL es sustancialmente más rápido porque no realiza la fase de deduplicación que requiere crear una tabla temporal y ordenar los registros."
+    "hint": "DYNAMIC (predeterminado en MySQL 5.7+) evita guardar el prefijo de 768 bytes en la página del índice, mejorando la compresión y la densidad del B-Tree."
   },
   {
     "id": "mysql_058",
-    "difficulty": "medium",
-    "question": "¿Qué es un 'Covering Index' (índice de cobertura) en MySQL?",
+    "difficulty": "advanced",
+    "question": "¿Qué función cumple el 'Undo Tablespace' en InnoDB y cómo opera su purga (Purge Threads)?",
     "options": [
-      "Un índice secundario que contiene todas las columnas requeridas por una consulta SELECT, evitando acceder al Clustered Index en disco",
-      "Un índice que cubre el 100% de las tablas de la base de datos",
-      "Un índice criptográfico que oculta los datos de usuarios no autorizados",
-      "Un índice especial que protege contra inyecciones SQL"
+      "Guarda las contraseñas históricas de los usuarios para verificar que no se reutilicen credenciales en nuevas sesiones.",
+      "Almacena versiones previas de filas (MVCC) y logs de rollback; los hilos de purga liberan páginas obsoletas no requeridas.",
+      "Contiene copias de seguridad de las claves primarias para reconstruir índices B-Tree corruptos tras una caída del sistema.",
+      "Es un espacio temporal en disco donde se alojan tablas eliminadas mediante sentencias DROP DATABASE accidentales."
     ],
-    "correct_index": 0,
-    "hint": "Si un índice contiene todos los campos consultados, en EXPLAIN aparece 'Using index', lo que ahorra la búsqueda secundaria en el árbol clustered de la clave primaria."
+    "correct_index": 1,
+    "hint": "Los Undo Logs permiten lecturas consistentes MVCC; cuando las transacciones antiguas terminan, los hilos de purga liberan el espacio."
   },
   {
     "id": "mysql_059",
-    "difficulty": "medium",
-    "question": "¿Cómo se define una vista (VIEW) en MySQL y qué implicación de rendimiento tiene?",
+    "difficulty": "advanced",
+    "question": "En MySQL 8.0, ¿qué significa que el Data Dictionary sea completamente transaccional?",
     "options": [
-      "Es una consulta almacenada con CREATE VIEW que por defecto se evalúa en cada invocación (algoritmo MERGE o TEMPTABLE)",
-      "Es una copia física de la tabla que se sincroniza cada medianoche",
-      "Es un índice especial de solo lectura en memoria",
-      "Es una función externa escrita en Python"
+      "Las consultas SELECT se transforman automáticamente en estructuras de diccionario de Python en tiempo de ejecución.",
+      "Los datos de todas las columnas de texto se cifran utilizando un diccionario secreto gestionado por el administrador.",
+      "Los metadatos de tablas y esquemas se almacenan en tablas internas de InnoDB con soporte ACID, eliminando los ficheros .frm.",
+      "Se requiere ejecutar una sentencia COMMIT explícita para poder observar los cambios estructurales de SHOW TABLES."
     ],
-    "correct_index": 0,
-    "hint": "En MySQL, las vistas estándar son consultas guardadas; no materializan datos en disco salvo que el optimizador deba usar TEMPTABLE por agregaciones o GROUP BY."
+    "correct_index": 2,
+    "hint": "Antes de MySQL 8.0, un crash durante un ALTER TABLE podía corromper los archivos .frm; el nuevo catálogo es atómico y transaccional."
   },
   {
     "id": "mysql_060",
-    "difficulty": "medium",
-    "question": "¿Cuál es la función del comando SET TRANSACTION ISOLATION LEVEL en MySQL?",
+    "difficulty": "advanced",
+    "question": "¿Por qué los Hash Joins reemplazaron al algoritmo Block Nested-Loop en MySQL 8.0.20+?",
     "options": [
-      "Definir el grado de aislamiento de concurrencia (READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ, SERIALIZABLE) para la siguiente transacción o sesión",
-      "Activar la encriptación de datos en tránsito",
-      "Cambiar el nivel de logs en el archivo de errores",
-      "Limitar la cantidad de memoria que una transacción puede usar"
+      "Hash Join requiere que todas las columnas de unión estén cifradas mediante algoritmos de clave pública SHA-256.",
+      "Block Nested-Loop consumía el doble de ancho de banda de red al transmitir datos sin procesar hacia los clientes web.",
+      "Hash Join solo funciona en tablas particionadas por rango garantizando que no existan lecturas fantasma en memoria.",
+      "Hash Join construye una tabla hash en RAM del conjunto menor ofreciendo O(N) frente al costo cuadrático de nested loops."
     ],
-    "correct_index": 0,
-    "hint": "Permite ajustar las garantías ACID de concurrencia y visibilidad de cambios entre transacciones concurrentes."
+    "correct_index": 3,
+    "hint": "Hash Join es O(N) lineal: construye una tabla hash del conjunto pequeño y escanea el grande una sola vez, sustituyendo al ineficiente BNL."
   },
   {
     "id": "mysql_061",
     "difficulty": "advanced",
-    "question": "¿Cómo funciona el mecanismo de 'Doublewrite Buffer' en InnoDB y qué problema resuelve?",
+    "question": "¿Cuál es la función del parámetro 'innodb_buffer_pool_instances' en servidores con alta concurrencia?",
     "options": [
-      "Escribe las páginas de datos en un área contigua antes de escribirlas en los archivos .ibd para proteger contra escrituras parciales de página (torn pages) ante un corte eléctrico",
-      "Duplica cada transacción en dos servidores simultáneos",
-      "Mantiene dos copias idénticas del Binary Log en discos separados",
-      "Permite que dos usuarios escriban en la misma fila al mismo tiempo sin conflicto"
-    ],
-    "correct_index": 0,
-    "hint": "El SO escribe en bloques de 4KB y las páginas de InnoDB son de 16KB. Un corte de energía a mitad de escritura corrompe la página. Con Doublewrite Buffer, InnoDB puede restaurar la página original y re-aplicar el redo log."
-  },
-  {
-    "id": "mysql_062",
-    "difficulty": "advanced",
-    "question": "¿Qué es el 'Adaptive Hash Index' (AHI) en el motor InnoDB?",
-    "options": [
-      "Una estructura en memoria que InnoDB construye dinámicamente sobre páginas de índices B-Tree muy frecuentadas para búsquedas O(1) de clave exacta",
-      "Un algoritmo para encriptar claves de usuario con hashing SHA-256",
-      "Un índice para tablas de particionamiento distribuido",
-      "Un mecanismo que convierte tablas MySQL a tablas de Redis"
-    ],
-    "correct_index": 0,
-    "hint": "AHI monitorea los patrones de búsqueda en los árboles B-Tree; si detecta lecturas recurrentes por clave, indexa los punteros en una tabla hash en RAM para acceso casi instantáneo."
-  },
-  {
-    "id": "mysql_063",
-    "difficulty": "advanced",
-    "question": "¿Qué representa el 'Log Sequence Number' (LSN) en el Redo Log de InnoDB?",
-    "options": [
-      "Un entero de 64 bits que contabiliza de forma monotónica creciente el volumen total de bytes escritos en el log de transacciones",
-      "El número identificador de la sesión TCP del cliente",
-      "La versión del código binario compilado de MySQL",
-      "El número de errores detectados en la última verificación"
-    ],
-    "correct_index": 0,
-    "hint": "El LSN es el reloj lógico de InnoDB. Cada página de datos almacena el LSN de la última modificación; durante el crash recovery, InnoDB sabe exactamente qué operaciones del redo log debe re-aplicar."
-  },
-  {
-    "id": "mysql_064",
-    "difficulty": "advanced",
-    "question": "¿Cómo funciona el 'Change Buffer' (antiguamente Insert Buffer) en InnoDB?",
-    "options": [
-      "Almacena temporalmente en memoria las modificaciones de índices secundarios no únicos cuyas páginas no están en el Buffer Pool, retrasando I/O aleatorio hasta que la página se carga",
-      "Guarda las consultas SQL pendientes de ejecutar por los clientes",
-      "Es un log temporal para registrar cambios en los esquemas DDL",
-      "Un buffer para convertir tipos de datos automáticamente"
-    ],
-    "correct_index": 0,
-    "hint": "Evita lecturas aleatorias costosas en disco al actualizar índices secundarios no únicos, fusionando (merging) los cambios diferidos cuando la página entra al Buffer Pool."
-  },
-  {
-    "id": "mysql_065",
-    "difficulty": "advanced",
-    "question": "En la replicación de MySQL basada en GTID (Global Transaction Identifier), ¿cuál es la estructura de un GTID?",
-    "options": [
-      "UUID_del_servidor:Número_de_transacción (ej. 3E11FA47-71CA-11E1-9E33-C80AA9E29563:23)",
-      "IP_puerto:timestamp_unix",
-      "Nombre_tabla:checksum_md5",
-      "ID_esclavo:secuencia_binlog"
-    ],
-    "correct_index": 0,
-    "hint": "El GTID identifica unívocamente cada transacción confirmada en un cluster MySQL combinando el server_uuid y una secuencia incremental entera."
-  },
-  {
-    "id": "mysql_066",
-    "difficulty": "advanced",
-    "question": "¿Qué ventaja crucial ofrece la replicación basada en GTID frente a la replicación tradicional por coordenadas de archivo y posición binlog?",
-    "options": [
-      "Permite failover automático y reconexión transparente de réplicas sin necesidad de calcular manualmente coordenadas del binlog en el nuevo primario",
-      "Duplica el ancho de banda disponible en la tarjeta de red",
-      "Garantiza transacciones síncronas en tiempo cero sin latencia",
-      "Permite prescindir totalmente del almacenamiento en disco"
-    ],
-    "correct_index": 0,
-    "hint": "Con GTID, un réplica sabe exactamente qué transacciones ha ejecutado y solicita al nuevo master sólo aquellas faltantes usando Auto-Positioning (MASTER_AUTO_POSITION = 1)."
-  },
-  {
-    "id": "mysql_067",
-    "difficulty": "advanced",
-    "question": "¿Cómo opera la replicación semi-síncrona (Semisynchronous Replication) en MySQL?",
-    "options": [
-      "El nodo primario espera a que al menos una réplica escriba la transacción en su Relay Log y envíe un ACK antes de confirmar el COMMIT al cliente",
-      "El nodo primario escribe inmediatamente a todas las réplicas sin confirmación de retorno",
-      "Las réplicas confirman la transacción antes de que el primario la escriba en su propio disco",
-      "Se sincronizan los datos únicamente una vez cada 24 horas"
-    ],
-    "correct_index": 0,
-    "hint": "A diferencia de la replicación asíncrona pura, la semi-síncrona previene la pérdida de datos ante un crash del master asegurando que al menos un nodo esclavo tiene copia del evento."
-  },
-  {
-    "id": "mysql_068",
-    "difficulty": "advanced",
-    "question": "¿Qué es el 'Multi-Source Replication' en MySQL?",
-    "options": [
-      "Una arquitectura donde una única réplica recibe y procesa datos provenientes de múltiples servidores maestros a través de canales independientes",
-      "Un servidor que replica datos hacia múltiples nubes públicas simultáneamente",
-      "Un sistema de balanceo de carga DNS para clientes web",
-      "La capacidad de leer datos desde MySQL y PostgreSQL al mismo tiempo"
-    ],
-    "correct_index": 0,
-    "hint": "Permite consolidar bases de datos de varios servidores principales en un único almacén analítico o de backup utilizando canales de replicación independientes."
-  },
-  {
-    "id": "mysql_069",
-    "difficulty": "advanced",
-    "question": "¿Cuál es la función del 'Relay Log' en un servidor esclavo / réplica de MySQL?",
-    "options": [
-      "Almacenar los eventos binarios recibidos desde el nodo primario por el hilo de I/O antes de que el hilo de SQL los aplique localmente",
-      "Guardar los registros de auditoría de conexiones de red",
-      "Servir de memoria swap temporal en Linux",
-      "Reenviar paquetes TCP corruptos"
-    ],
-    "correct_index": 0,
-    "hint": "En la réplica, el hilo I/O escribe en los archivos relay log, desacoplando la recepción de red de la ejecución local por los hilos applier de SQL."
-  },
-  {
-    "id": "mysql_070",
-    "difficulty": "advanced",
-    "question": "¿Cómo implementa MySQL la 'MTS' (Multi-Threaded Slave / Multi-Threaded Applier)?",
-    "options": [
-      "Permite aplicar transacciones en paralelo en la réplica basándose en dependencias lógicas o 'WRITESET' generados en el primario",
-      "Ejecuta cada consulta SELECT en 16 hilos del CPU",
-      "Crea múltiples conexiones simultáneas a internet",
-      "Utiliza sockets POSIX asíncronos para el log general"
-    ],
-    "correct_index": 0,
-    "hint": "Con replica_parallel_workers > 0 y replica_parallel_type = LOGICAL_CLOCK (o WRITESET), la réplica ejecuta transacciones concurrentes que no colisionan, reduciendo el lag de replicación."
-  },
-  {
-    "id": "mysql_071",
-    "difficulty": "advanced",
-    "question": "¿Qué es un 'Lock Escalation' y cómo se comporta InnoDB al respecto?",
-    "options": [
-      "InnoDB NO escala bloqueos de fila a bloqueo de tabla: maneja eficientemente millones de bloqueos de registro en memoria fija sin degradar a nivel de tabla",
-      "InnoDB siempre convierte bloqueos de fila en bloqueos de tabla si superan 100 filas",
-      "Escala automáticamente los bloqueos a nivel de base de datos completa",
-      "InnoDB bloquea el servidor completo ante cualquier transacción pesada"
-    ],
-    "correct_index": 0,
-    "hint": "A diferencia de SQL Server u otros motores, InnoDB no realiza lock escalation; las estructuras de bloqueo por bit en mapas de página permiten mantener bloqueos finos sin agotar la memoria."
-  },
-  {
-    "id": "mysql_072",
-    "difficulty": "advanced",
-    "question": "En el aislamiento REPEATABLE READ de InnoDB, ¿qué es un 'Phantom Read' y cómo lo evita el motor?",
-    "options": [
-      "Es la aparición de nuevas filas que coinciden con un predicado ejecutado dos veces; InnoDB lo previene mediante Next-Key Locks (bloqueo de registro más Gap lock)",
-      "Es la lectura de datos de transacciones que luego hicieron ROLLBACK; se evita con autocommit = 1",
-      "Es una corrupción física de memoria RAM",
-      "Es una lectura sucia solucionada con READ UNCOMMITTED"
-    ],
-    "correct_index": 0,
-    "hint": "Next-Key Locking bloquea tanto el registro índice como el hueco (gap) anterior, impidiendo que otra transacción inserte nuevos registros en el rango evaluado."
-  },
-  {
-    "id": "mysql_073",
-    "difficulty": "advanced",
-    "question": "¿Qué diferencia existe entre un bloqueo INTENTION SHARED (IS) e INTENTION EXCLUSIVE (IX) en InnoDB?",
-    "options": [
-      "Son bloqueos a nivel de tabla que señalan la intención de una transacción de adquirir bloqueos S o X en filas individuales más adelante, agilizando la detección de conflictos de tabla",
-      "Son bloqueos de hardware que apagan los discos SSD",
-      "Son índices especiales para columnas numéricas",
-      "Evitan que el usuario cierre la sesión de consola"
-    ],
-    "correct_index": 0,
-    "hint": "Los Intention Locks permiten al motor verificar si una tabla puede bloquearse en modo exclusivo (LOCK TABLES) en O(1) sin tener que escanear millones de bloqueos de fila."
-  },
-  {
-    "id": "mysql_074",
-    "difficulty": "advanced",
-    "question": "¿Qué algoritmo utiliza InnoDB para detectar 'Deadlocks' entre transacciones concurrentes?",
-    "options": [
-      "Mantiene un grafo de espera de recursos (wait-for graph) y ante ciclos elige como víctima la transacción de menor costo (menor volumen de filas modificadas) para hacer ROLLBACK",
-      "Reinicia el servidor MySQL si dos consultas tardan más de 1 segundo",
-      "Pausa todas las transacciones hasta que termine la primera",
-      "Utiliza un timeout fijo sin inspección de grafos"
-    ],
-    "correct_index": 0,
-    "hint": "InnoDB recorre activamente el grafo de dependencias de bloqueos; al detectar un ciclo cerrado, aborta la transacción más pequeña para liberar los locks."
-  },
-  {
-    "id": "mysql_075",
-    "difficulty": "advanced",
-    "question": "¿Qué efecto tiene el parámetro 'innodb_lock_wait_timeout' en MySQL?",
-    "options": [
-      "Define el tiempo máximo en segundos que una transacción InnoDB espera para adquirir un bloqueo de fila antes de abortar la sentencia con error",
-      "El tiempo para desconectar clientes inactivos",
-      "El intervalo de sincronización de la caché de consultas",
-      "El tiempo máximo de respuesta del protocolo DNS"
-    ],
-    "correct_index": 0,
-    "hint": "Por defecto es 50 segundos. Si una transacción no puede obtener el lock en ese tiempo, la sentencia actual lanza un error de lock wait timeout."
-  },
-  {
-    "id": "mysql_076",
-    "difficulty": "advanced",
-    "question": "¿Para qué sirve la cláusula FOR UPDATE NOWAIT y FOR UPDATE SKIP LOCKED introducida en MySQL 8.0?",
-    "options": [
-      "NOWAIT falla inmediatamente si las filas están bloqueadas; SKIP LOCKED omite las filas bloqueadas, ideal para colas de trabajo concurrentes",
-      "Ambas desactivan las transacciones ACID",
-      "Obligan al motor a escribir en memoria swap",
-      "Permiten ignorar restricciones de clave foránea"
-    ],
-    "correct_index": 0,
-    "hint": "SKIP LOCKED es el estándar de oro para implementar patrones de colas en bases de datos relacionales sin contención entre workers."
-  },
-  {
-    "id": "mysql_077",
-    "difficulty": "advanced",
-    "question": "¿Cuál es la estructura interna de una página de InnoDB estándar de 16KB?",
-    "options": [
-      "Page Header/Fil Header, Infimum y Supremum records, User Records (registros reales), Page Directory (slots de búsqueda binaria) y Fil Trailer",
-      "Un array plano de strings delimitados por comas",
-      "Un árbol binario completo de 5 niveles fijos",
-      "Un archivo comprimido gzip con cabecera tar"
-    ],
-    "correct_index": 0,
-    "hint": "Dentro de la página, los registros están ordenados lógicamente en una lista enlazada simple, y el Page Directory divide los registros en slots para permitir búsqueda binaria en memoria."
-  },
-  {
-    "id": "mysql_078",
-    "difficulty": "advanced",
-    "question": "¿Qué ocurre cuando una fila de InnoDB excede el tamaño máximo permitido en una página física (Row Overflow)?",
-    "options": [
-      "InnoDB almacena un puntero de 20 bytes en la página principal y mueve el contenido excedente a páginas 'Off-page' desbordadas",
-      "La transacción falla con un error de memoria insuficiente",
-      "Se truncan los datos automáticamente a 8KB",
-      "La fila se convierte en una tabla temporal en /tmp"
-    ],
-    "correct_index": 0,
-    "hint": "Bajo los formatos DYNAMIC y COMPRESSED, columnas TEXT/BLOB largas se almacenan completamente off-page manteniendo solo un puntero de 20 bytes en la página B-Tree."
-  },
-  {
-    "id": "mysql_079",
-    "difficulty": "advanced",
-    "question": "¿Qué diferencia existe entre los formatos de fila Antelope (COMPACT/REDUNDANT) y Barracuda (DYNAMIC/COMPRESSED) en InnoDB?",
-    "options": [
-      "Barracuda optimiza el almacenamiento de datos off-page almacenando solo el puntero en la página B-Tree y soporta compresión de tablas nativa",
-      "Antelope es el motor de replicación en la nube",
-      "Barracuda solo soporta MyISAM",
-      "Antelope permite tablas de más de 64TB mientras Barracuda no"
-    ],
-    "correct_index": 0,
-    "hint": "DYNAMIC (el predeterminado en MySQL 5.7 y 8.0) evita almacenar los primeros 768 bytes del prefijo de columnas largas en la página de índice como hacía COMPACT."
-  },
-  {
-    "id": "mysql_080",
-    "difficulty": "advanced",
-    "question": "¿Qué función cumple el 'Undo Tablespace' en InnoDB y cómo opera su purga (Purge Threads)?",
-    "options": [
-      "Almacena las versiones anteriores de filas (MVCC) y los logs de rollback; los hilos de purga reclaman y eliminan páginas de undo obsoletas que ninguna transacción activa requiere",
-      "Guarda las contraseñas anteriores de los usuarios",
-      "Contiene las copias de seguridad de las claves primarias",
-      "Es un espacio para restaurar tablas eliminadas por DROP DATABASE"
-    ],
-    "correct_index": 0,
-    "hint": "Los Undo Logs garantizan lecturas consistentes MVCC. Cuando las transacciones más antiguas concluyen, el Undo Purge libera el espacio para evitar crecimiento indefinido."
-  },
-  {
-    "id": "mysql_081",
-    "difficulty": "advanced",
-    "question": "En MySQL 8.0, ¿qué significa que el Data Dictionary sea transaccional?",
-    "options": [
-      "Los metadatos del catálogo de esquemas y tablas se almacenan en tablas internas de InnoDB con soporte ACID, eliminando los antiguos archivos .frm",
-      "Las consultas SELECT se convierten en diccionarios de Python",
-      "Los datos de las tablas se encriptan con un diccionario secreto",
-      "Se requiere un commit manual para ver los cambios de SHOW TABLES"
-    ],
-    "correct_index": 0,
-    "hint": "Antes de MySQL 8.0, un crash durante un ALTER o DDL podía corromper los archivos .frm. El Data Dictionary transaccional garantiza DDL atómico."
-  },
-  {
-    "id": "mysql_082",
-    "difficulty": "advanced",
-    "question": "¿Qué es la optimización 'Index Condition Pushdown' (ICP) en MySQL?",
-    "options": [
-      "El motor evalúa partes del predicado WHERE que involucren columnas del índice directamente en el nivel de almacenamiento (InnoDB), evitando enviar filas no coincidentes al servidor",
-      "Obliga a que todos los índices se almacenen en memoria caché L2 del procesador",
-      "Descarga los índices a un servidor secundario de caché",
-      "Reordena las columnas de la clave primaria automáticamente"
-    ],
-    "correct_index": 0,
-    "hint": "En EXPLAIN aparece como 'Using index condition'. Reduce drásticamente la cantidad de lecturas de registros completos del clustered index transferidos al engine de MySQL."
-  },
-  {
-    "id": "mysql_083",
-    "difficulty": "advanced",
-    "question": "¿En qué consiste la optimización 'Multi-Range Read' (MRR) en InnoDB?",
-    "options": [
-      "Ordena por clave primaria las direcciones de filas obtenidas de un índice secundario antes de acceder al clustered index en disco, convirtiendo E/S aleatoria en secuencial",
-      "Permite leer de varios discos duros a la vez",
-      "Ejecuta múltiples rangos de WHERE en particiones distribuidas",
-      "Crea copias espejo de rangos numéricos"
-    ],
-    "correct_index": 0,
-    "hint": "MRR almacena las claves primarias en un buffer, las ordena secuencialmente por posición en disco y realiza las lecturas en orden físico para minimizar movimientos de cabezal o lecturas SSD no continuas."
-  },
-  {
-    "id": "mysql_084",
-    "difficulty": "advanced",
-    "question": "¿Qué es el 'Block Nested-Loop' y cómo fue reemplazado por 'Hash Join' en MySQL 8.0.20+?",
-    "options": [
-      "Hash Join construye una tabla hash en memoria del conjunto pequeño y escanea el grande, ofreciendo rendimiento O(N) frente al costo cuadrático de nested loops sin índices",
-      "Hash Join requiere que todas las columnas tengan claves SHA-256",
-      "Block Nested-Loop es 10 veces más rápido que Hash Join en tablas masivas",
-      "Hash Join solo funciona si las tablas tienen claves foráneas explícitas"
-    ],
-    "correct_index": 0,
-    "hint": "Desde MySQL 8.0.18+, los Hash Joins sustituyeron a Block Nested Loop para uniones sin índices disponibles, mejorando exponencialmente los tiempos de ejecución."
-  },
-  {
-    "id": "mysql_085",
-    "difficulty": "advanced",
-    "question": "¿Cuál es la función del parámetro 'innodb_buffer_pool_instances'?",
-    "options": [
-      "Dividir el buffer pool en múltiples particiones independientes para reducir la contención de mutex/latches entre hilos concurrentes en servidores multi-núcleo",
-      "Crear réplicas del buffer pool en otros servidores de la red local",
-      "Configurar instancias de respaldo en caliente en la nube",
-      "Multiplicar el tamaño de la memoria RAM instalada"
+      "Dividir el buffer pool en particiones independientes para reducir la contención de mutex entre hilos concurrentes.",
+      "Crear réplicas del buffer pool en otros servidores de la red local para permitir conmutación por error en tiempo cero.",
+      "Configurar instancias de respaldo en caliente en la nube que sincronizan las páginas de datos cada diez segundos.",
+      "Multiplicar artificialmente la memoria RAM del servidor mediante compresión binaria en tiempo real en la memoria swap."
     ],
     "correct_index": 0,
     "hint": "Permite que diferentes hilos lean y modifiquen páginas en cachés separadas sin competir por un único latch global del buffer pool."
   },
   {
-    "id": "mysql_086",
+    "id": "mysql_062",
     "difficulty": "advanced",
-    "question": "¿Qué problema resuelve la técnica de 'Buffer Pool Warmup' (innodb_buffer_pool_dump_at_shutdown y load_at_startup)?",
+    "question": "¿Qué problema resuelve la técnica de 'Buffer Pool Warmup' al reiniciar el servidor MySQL?",
     "options": [
-      "Guarda las direcciones de las páginas calientes en disco al apagar y las precarga al iniciar, evitando degradación de rendimiento post-reinicio",
-      "Calienta los circuitos del disco antes de arrancar",
-      "Ejecuta pruebas de estrés de memoria al encender",
-      "Verifica la consistencia de los certificados SSL del servidor"
+      "Calienta los circuitos electrónicos de los discos de estado sólido antes de permitir conexiones de red entrantes.",
+      "Guarda punteros de páginas calientes al apagar y las precarga al iniciar, evitando degradación post-reinicio por caché fría.",
+      "Ejecuta pruebas de esfuerzo de memoria RAM al encender el sistema para descartar módulos de memoria defectuosos.",
+      "Verifica la validez de los certificados SSL antes de aceptar peticiones de autenticación desde clientes remotos."
     ],
-    "correct_index": 0,
-    "hint": "Evita el periodo de 'cold cache' tras reiniciar MySQL, donde todas las consultas sufren latencias altas hasta que el buffer pool se puebla de datos comunes."
+    "correct_index": 1,
+    "hint": "innodb_buffer_pool_dump_at_shutdown y load_at_startup evitan el periodo de latencia alta tras reiniciar precargando las páginas frecuentes."
   },
   {
-    "id": "mysql_087",
+    "id": "mysql_063",
     "difficulty": "advanced",
-    "question": "¿Qué impacto tiene la variable 'sync_binlog = 1' en MySQL?",
+    "question": "¿Qué impacto tiene configurar 'sync_binlog = 1' en conjunto con innodb_flush_log_at_trx_commit = 1?",
     "options": [
-      "Fuerza a sincronizar (fdatasync) el Binary Log en disco en cada transacción confirmada, garantizando máxima durabilidad ante fallos eléctricos a costa de mayor latencia de I/O",
-      "Desactiva completamente el log binario para ganar velocidad",
-      "Sincroniza el binlog únicamente una vez por hora",
-      "Descarga el log a una unidad flash USB externa"
+      "Desactiva por completo el log binario permitiendo alcanzar millones de transacciones por segundo sin tocar el disco.",
+      "Sincroniza el registro binario exclusivamente una vez por hora acumulando los eventos en un búfer circular en memoria.",
+      "Garantiza máxima durabilidad sincronizando a disco el binlog y redo log en cada commit, a costa de mayor latencia de I/O.",
+      "Descarga automáticamente los archivos de log a un dispositivo de almacenamiento flash conectado al puerto USB del servidor."
     ],
-    "correct_index": 0,
-    "hint": "sync_binlog=1 combinado con innodb_flush_log_at_trx_commit=1 es la configuración estándar 'ACID Compliant' para entornos financieros y de misión crítica."
+    "correct_index": 2,
+    "hint": "Es la configuración estándar de máxima durabilidad ACID: previene pérdida de eventos ante cortes de energía a costa de mayor I/O."
   },
   {
-    "id": "mysql_088",
+    "id": "mysql_064",
     "difficulty": "advanced",
-    "question": "¿Qué es el 'Binary Log Group Commit' (BGC) en MySQL?",
+    "question": "¿Qué es el 'Binary Log Group Commit' (BGC) en MySQL y cómo optimiza el rendimiento?",
     "options": [
-      "Una optimización donde el motor agrupa las confirmaciones de múltiples transacciones concurrentes en un único flush físico a disco del binlog y redo log",
-      "Un protocolo para enviar logs a múltiples clusters en grupo",
-      "La compresión de logs usando algoritmos de compresión por bloques",
-      "Un comando para borrar logs binarios antiguos en bloque"
+      "Un protocolo de red para enviar eventos binarios a múltiples clusters distribuidos de forma simultánea en grupo.",
+      "Un algoritmo de compresión que compacta los logs binarios utilizando diccionarios compartidos entre tablas relacionadas.",
+      "Una utilidad administrativa para eliminar ficheros de registro binario antiguos en lotes programados por medianoche.",
+      "Agrupa las confirmaciones de múltiples transacciones en un único flush físico a disco del binlog y redo log."
     ],
-    "correct_index": 0,
-    "hint": "Mitiga el cuello de botella de sync_binlog=1 agrupando transacciones listas para fsync, logrando miles de TPS concurrentes sin saturar el almacenamiento."
+    "correct_index": 3,
+    "hint": "Mitiga el cuello de botella de sync_binlog=1 realizando un único fsync para un lote de transacciones listas para confirmar."
   },
   {
-    "id": "mysql_089",
+    "id": "mysql_065",
     "difficulty": "advanced",
-    "question": "¿Qué herramienta nativa se utiliza para realizar copias de seguridad físicas en caliente (sin bloquear escrituras) en MySQL?",
+    "question": "¿Qué herramienta nativa o estándar se utiliza para realizar copias de seguridad físicas en caliente en MySQL sin bloquear?",
     "options": [
-      "Percona XtraBackup o MySQL Enterprise Backup",
-      "mysqldump",
-      "mysqlpump",
-      "SELECT INTO OUTFILE"
+      "Percona XtraBackup (o MySQL Enterprise Backup)",
+      "mysqldump (con la opción --single-transaction)",
+      "mysqlpump (con procesamiento en paralelo)",
+      "SELECT INTO OUTFILE (con formato binario)"
     ],
     "correct_index": 0,
-    "hint": "A diferencia de mysqldump (lógico y lento para bases de datos grandes), XtraBackup copia directamente páginas de datos y el redo log en tiempo real sin bloquear la producción."
+    "hint": "XtraBackup copia páginas de datos directamente y aplica el redo log en tiempo real sin bloquear lecturas ni escrituras en producción."
   },
   {
-    "id": "mysql_090",
+    "id": "mysql_066",
     "difficulty": "advanced",
     "question": "¿En qué consiste una copia de seguridad lógica realizada con 'mysqldump --single-transaction'?",
     "options": [
-      "Inicia una transacción con nivel REPEATABLE READ para exportar una instantánea consistente de tablas InnoDB sin bloquear lecturas ni escrituras",
-      "Bloquea todas las tablas con FLUSH TABLES WITH READ LOCK durante horas",
-      "Realiza un volcado físico de memoria RAM",
-      "Genera un archivo binario no legible por humanos"
+      "Aplica un bloqueo global de lectura sobre todas las tablas con FLUSH TABLES WITH READ LOCK durante todo el proceso de volcado.",
+      "Inicia una transacción REPEATABLE READ para exportar un snapshot consistente de InnoDB sin bloquear operaciones concurrentes.",
+      "Realiza una copia binaria directa de los módulos de memoria RAM asignados al buffer pool de la base de datos.",
+      "Genera un archivo ejecutable que contiene instrucciones en código máquina para recrear las tablas sin pasar por el parser."
+    ],
+    "correct_index": 1,
+    "hint": "Aprovecha el MVCC de InnoDB para leer un snapshot consistente en el instante inicial sin bloquear la actividad de producción."
+  },
+  {
+    "id": "mysql_067",
+    "difficulty": "advanced",
+    "question": "¿Qué componentes componen la solución de alta disponibilidad 'MySQL InnoDB Cluster'?",
+    "options": [
+      "Un conjunto de servidores web Apache que balancean conexiones hacia una única instancia de MySQL mediante HTTP.",
+      "Un plugin de conexión directa que sincroniza esquemas relacionales de MySQL con almacenes masivos en Apache Hadoop.",
+      "MySQL Group Replication, MySQL Router (enrutamiento de clientes) y MySQL Shell (administración y orquestación).",
+      "Un gestor de colas de mensajes Kafka encargado de almacenar transacciones pendientes antes de escribirlas en disco."
+    ],
+    "correct_index": 2,
+    "hint": "Ofrece failover automático, consenso Paxos mediante Group Replication y enrutamiento transparente de aplicaciones con MySQL Router."
+  },
+  {
+    "id": "mysql_068",
+    "difficulty": "advanced",
+    "question": "¿Cómo maneja MySQL Group Replication la resolución de colisiones en escrituras concurrentes (Certification)?",
+    "options": [
+      "Pausa el tráfico de la red local hasta que todas las transacciones concurrentes finalicen su ejecución secuencial.",
+      "Combina las mutaciones concurrentes promediando los valores numéricos de las columnas afectadas por los updates.",
+      "Selecciona aleatoriamente qué transacción sobrevive descartando la otra sin emitir mensajes de error al cliente.",
+      "Usa un servicio de certificación Paxos: la primera transacción en orden global confirma y la contradictoria se aborta."
+    ],
+    "correct_index": 3,
+    "hint": "En modo Multi-Master, si dos nodos modifican la misma fila a la vez, el proceso de certificación por orden de consenso aborta la transacción que llegó después."
+  },
+  {
+    "id": "mysql_069",
+    "difficulty": "advanced",
+    "question": "¿Qué ventaja aporta el algoritmo Online DDL en InnoDB (ALGORITHM=INPLACE, LOCK=NONE)?",
+    "options": [
+      "Permite crear o modificar índices y columnas sin bloquear consultas de lectura ni de escritura en la tabla durante la operación.",
+      "Exige reiniciar el servidor en modo de mantenimiento para aplicar cambios estructurales en el catálogo de esquemas.",
+      "Bloquea todas las tablas de la base de datos impidiendo cualquier acceso hasta que la reconstrucción concluya con éxito.",
+      "Duplica la memoria RAM asignada al proceso mysqld liberando los recursos sobrantes al finalizar la sentencia DDL."
     ],
     "correct_index": 0,
-    "hint": "Aprovecha el MVCC de InnoDB para leer un snapshot consistente del estado de la base de datos en el instante del inicio del volcado."
+    "hint": "Online DDL registra modificaciones concurrentes en un log temporal y las aplica al final, evitando tiempos de inactividad durante mantenimientos."
+  },
+  {
+    "id": "mysql_070",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la función del parámetro 'innodb_io_capacity' y cuándo se debe incrementar?",
+    "options": [
+      "Limita el ancho de banda en megabits por segundo asignado a la tarjeta de red para conexiones remotas de clientes.",
+      "Establece el límite de IOPS para tareas de fondo (flushing de páginas sucias); debe incrementarse en discos SSD rápidos.",
+      "Define el número máximo de columnas permitidas por tabla para evitar fragmentación en el catálogo del esquema.",
+      "Controla la cantidad de memoria asignada a la caché de sentencias preparadas en el hilo despachador de consultas."
+    ],
+    "correct_index": 1,
+    "hint": "El valor por defecto (200) era para discos HDD lentos. En SSDs/NVMe modernos se eleva a 2000-20000 para purgar páginas sucias velozmente."
+  },
+  {
+    "id": "mysql_071",
+    "difficulty": "advanced",
+    "question": "¿En qué consiste el 'Fuzzy Checkpoint' en el motor InnoDB?",
+    "options": [
+      "Elimina todas las tablas temporales de disco cuando el espacio libre en el sistema de archivos desciende del diez por ciento.",
+      "Bloquea el servidor completo durante diez segundos para forzar un reinicio ordenado de los hilos de procesamiento en segundo plano.",
+      "Escribe progresivamente páginas sucias del Buffer Pool a disco en pequeños lotes continuos, mitigando picos bruscos de latencia.",
+      "Comprime la base de datos completa en un único archivo comprimido tar gzip para facilitar la gestión de copias de seguridad."
+    ],
+    "correct_index": 2,
+    "hint": "Los checkpoints difusos aseguran que el redo log no se llene y que la recuperación ante fallos sea rápida sin congelar la base de datos."
+  },
+  {
+    "id": "mysql_072",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Invisible Index' en MySQL 8.0 y cuál es su caso de uso recomendado?",
+    "options": [
+      "Un índice oculto para usuarios sin privilegios de administrador que protege datos confidenciales contra consultas no autorizadas.",
+      "Un índice temporal que se descarta automáticamente de la memoria RAM cuando finaliza la conexión TCP activa del cliente.",
+      "Un índice cifrado mediante claves simétricas AES que almacena contraseñas de red en el catálogo del esquema principal.",
+      "Un índice que el optimizador ignora para consultas pero que el motor mantiene al día, ideal para probar su impacto antes de borrarlo."
+    ],
+    "correct_index": 3,
+    "hint": "Marcar un índice como INVISIBLE permite probar si su ausencia perjudica consultas antes de ejecutar DROP INDEX, pudiendo revertirse en segundos."
+  },
+  {
+    "id": "mysql_073",
+    "difficulty": "advanced",
+    "question": "¿Qué son los 'Histogramas de Columnas' introducidos en MySQL 8.0?",
+    "options": [
+      "Estadísticas de distribución de datos generadas con ANALYZE TABLE para columnas sin índice, ayudando al CBO a calcular selectividad.",
+      "Gráficos visuales exportados en formato PNG por el servidor para monitorizar el crecimiento histórico de las tablas del esquema.",
+      "Tablas especiales en memoria que registran el histórico de versiones de filas para cumplir con normativas legales de auditoría.",
+      "Registros cronológicos de conexiones de clientes que almacenan las direcciones IP y puertos utilizados en cada sesión de red."
+    ],
+    "correct_index": 0,
+    "hint": "Permiten estimar selectividades en campos no indexados (como estados o categorías) sin la sobrecarga de mantener un árbol B-Tree."
+  },
+  {
+    "id": "mysql_074",
+    "difficulty": "advanced",
+    "question": "¿Cómo impacta la fragmentación en árboles B-Tree en el rendimiento de consultas por rango en InnoDB?",
+    "options": [
+      "Acelera las consultas por rango al dejar espacio libre en disco para almacenar resultados temporales en memoria caché.",
+      "Páginas semivacías por divisiones aleatorias aumentan la E/S y el uso de memoria al requerir leer más páginas para los mismos datos.",
+      "Desactiva automáticamente los índices secundarios forzando al optimizador a utilizar escaneos secuenciales de tabla completa.",
+      "No tiene ningún impacto medible en el rendimiento cuando la base de datos se aloja en unidades de estado sólido NVMe."
+    ],
+    "correct_index": 1,
+    "hint": "Las divisiones aleatorias de página reducen la densidad de datos al 50-70%, incrementando el tamaño del working set y la latencia."
+  },
+  {
+    "id": "mysql_075",
+    "difficulty": "advanced",
+    "question": "¿Por qué usar UUIDs v4 aleatorios como clave primaria Clustered en InnoDB degrada el rendimiento de escritura?",
+    "options": [
+      "Porque InnoDB solo permite claves primarias de tipo entero de treinta y dos bits rechazando cualquier tipo de dato alfanumérico.",
+      "Porque los UUIDs ocupan exactamente el mismo espacio que un entero pero impiden la creación de índices secundarios asociados.",
+      "Provoca inserciones aleatorias en el árbol B-Tree, causando masivas divisiones de página (page splits) y alta fragmentación de E/S.",
+      "Porque los identificadores UUID v4 no cumplen con las especificaciones formales del estándar de sintaxis de ANSI SQL."
+    ],
+    "correct_index": 2,
+    "hint": "Un Clustered Index ordena físicamente las filas por clave; UUIDs aleatorios fuerzan inserciones en páginas arbitrarias que provocan page splits continuos."
+  },
+  {
+    "id": "mysql_076",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la recomendación técnica para mitigar la degradación de B-Tree al usar UUIDs como clave primaria en MySQL 8.0?",
+    "options": [
+      "Desactivar el Clustered Index de InnoDB delegando el ordenamiento físico de los registros al sistema de ficheros del kernel.",
+      "Cambiar el motor de almacenamiento a MyISAM para permitir que los registros se escriban en orden cronológico en disco.",
+      "Crear un índice hash sobre la columna UUID para forzar que el optimizador ignore la clave primaria en las operaciones de escritura.",
+      "Usar UUIDs secuenciales (v7) o la función binaria UUID_TO_BIN(uuid, 1) para intercambiar campos temporales y lograr inserción secuencial."
+    ],
+    "correct_index": 3,
+    "hint": "UUID_TO_BIN(uuid, 1) reordena los bits temporales al inicio y guarda en 16 bytes, convirtiendo las inserciones en secuenciales en el B-Tree."
+  },
+  {
+    "id": "mysql_077",
+    "difficulty": "basic",
+    "question": "¿Qué comando SQL se utiliza para eliminar una base de datos completa junto con todas sus tablas en MySQL?",
+    "options": [
+      "DROP DATABASE IF EXISTS nombre_bd;",
+      "DELETE DATABASE nombre_bd;",
+      "REMOVE DATABASE nombre_bd;",
+      "PURGE DATABASE nombre_bd;"
+    ],
+    "correct_index": 0,
+    "hint": "'DROP DATABASE nombre_bd;' elimina el directorio físico del esquema y todos los ficheros .ibd asociados."
+  },
+  {
+    "id": "mysql_078",
+    "difficulty": "basic",
+    "question": "¿Qué comando se utiliza en MySQL para otorgar privilegios de acceso a un usuario sobre una base de datos?",
+    "options": [
+      "ALLOW ACCESS TO bd.* FOR 'usuario'@'host';",
+      "GRANT ALL PRIVILEGES ON bd.* TO 'usuario'@'host';",
+      "SET PERMISSIONS ON bd.* USER 'usuario'@'host';",
+      "PERMIT ALL ON bd.* WITH 'usuario'@'host';"
+    ],
+    "correct_index": 1,
+    "hint": "GRANT es la sentencia estándar DCL para asignar permisos en MySQL."
+  },
+  {
+    "id": "mysql_079",
+    "difficulty": "basic",
+    "question": "¿Qué comando en MySQL revoca privilegios previamente asignados a un usuario sobre una base de datos?",
+    "options": [
+      "DENY ACCESS ON bd.* TO 'usuario'@'host';",
+      "REMOVE PERMISSIONS FROM 'usuario'@'host';",
+      "REVOKE ALL PRIVILEGES ON bd.* FROM 'usuario'@'host';",
+      "DISALLOW ALL ON bd.* FOR 'usuario'@'host';"
+    ],
+    "correct_index": 2,
+    "hint": "REVOKE es la contraparte de GRANT para retirar permisos concedidos a una cuenta de usuario."
+  },
+  {
+    "id": "mysql_080",
+    "difficulty": "basic",
+    "question": "¿Qué comando recarga las tablas de privilegios en memoria tras modificarlas directamente en MySQL?",
+    "options": [
+      "RELOAD USERS_DB;",
+      "REFRESH ROLES_DB;",
+      "SYNC PERMISSIONS;",
+      "FLUSH PRIVILEGES;"
+    ],
+    "correct_index": 3,
+    "hint": "FLUSH PRIVILEGES fuerza al servidor a releer las tablas de permisos del catálogo mysql."
+  },
+  {
+    "id": "mysql_081",
+    "difficulty": "basic",
+    "question": "¿Cuál es el puerto TCP predeterminado en el que escucha el servicio mysqld de MySQL?",
+    "options": [
+      "3306",
+      "5432",
+      "27017",
+      "6379"
+    ],
+    "correct_index": 0,
+    "hint": "El puerto estándar de MySQL es el 3306."
+  },
+  {
+    "id": "mysql_082",
+    "difficulty": "basic",
+    "question": "¿Qué función devuelve la versión textual exacta del servidor MySQL actualmente en ejecución?",
+    "options": [
+      "SERVER_ID()",
+      "VERSION()",
+      "RELEASE_V()",
+      "EDITION_V()"
+    ],
+    "correct_index": 1,
+    "hint": "SELECT VERSION(); devuelve el string con el número de versión (ej. '8.0.35')."
+  },
+  {
+    "id": "mysql_083",
+    "difficulty": "basic",
+    "question": "¿Qué función devuelve el nombre de la base de datos actualmente seleccionada en la sesión activa de MySQL?",
+    "options": [
+      "CURRENT_DB()",
+      "ACTIVE_DB()",
+      "DATABASE()",
+      "SCHEMA_NOW()"
+    ],
+    "correct_index": 2,
+    "hint": "SELECT DATABASE(); retorna el nombre del esquema activo o NULL si no se ha ejecutado USE."
+  },
+  {
+    "id": "mysql_084",
+    "difficulty": "basic",
+    "question": "¿Qué función devuelve el identificador de usuario y host autenticado en la sesión de MySQL?",
+    "options": [
+      "SESSION_USER()",
+      "ACTIVE_USER ()",
+      "AUTHENTICATED()",
+      "CURRENT_USER()"
+    ],
+    "correct_index": 3,
+    "hint": "SELECT CURRENT_USER(); devuelve la cuenta utilizada para autenticar al cliente (ej. 'app'@'localhost')."
+  },
+  {
+    "id": "mysql_085",
+    "difficulty": "medium",
+    "question": "¿Qué función de MySQL concatena múltiples valores de fila de un grupo en una sola cadena de texto?",
+    "options": [
+      "GROUP_CONCAT(columna SEPARATOR ', ')",
+      "STRING_AGG(columna, ', ')",
+      "ARRAY_TO_STRING(columna, ', ')",
+      "CONCAT_ROWS(columna, ', ')"
+    ],
+    "correct_index": 0,
+    "hint": "GROUP_CONCAT une valores de un grupo en un solo string delimitado por el separador indicado."
+  },
+  {
+    "id": "mysql_086",
+    "difficulty": "medium",
+    "question": "¿Qué variable del sistema controla el tamaño máximo en bytes que puede devolver la función GROUP_CONCAT?",
+    "options": [
+      "max_allowed_packet",
+      "group_concat_max_len",
+      "sort_buffer_size",
+      "string_buffer_limit"
+    ],
+    "correct_index": 1,
+    "hint": "Por defecto son 1024 bytes; si el resultado supera ese límite, GROUP_CONCAT trunca el texto silenciosamente."
+  },
+  {
+    "id": "mysql_087",
+    "difficulty": "medium",
+    "question": "¿Qué función permite calcular la diferencia en días entre dos fechas dadas en MySQL?",
+    "options": [
+      "DATE_SUB_DAYS(fecha1, fecha2)",
+      "DIFF_DAYS(fecha1, fecha2)",
+      "DATEDIFF(fecha1, fecha2)",
+      "SUBDATE(fecha1, fecha2)"
+    ],
+    "correct_index": 2,
+    "hint": "DATEDIFF(expr1, expr2) devuelve expr1 - expr2 expresado en número de días."
+  },
+  {
+    "id": "mysql_088",
+    "difficulty": "medium",
+    "question": "¿Qué operador en MySQL permite extraer un valor escalar o fragmento de un documento JSON por ruta JSONPath?",
+    "options": [
+      "#>> (o #> en sintaxis binaria)",
+      "==> (o ===> para escalares)",
+      "/-> (o /=> en sintaxis de objeto)",
+      "-> (o ->> para extraer sin comillas)"
+    ],
+    "correct_index": 3,
+    "hint": "col->'$.campo' devuelve el valor JSON con comillas; col->>'$.campo' lo devuelve como texto sin comillas."
+  },
+  {
+    "id": "mysql_089",
+    "difficulty": "medium",
+    "question": "¿Qué función nativa de MySQL valida si una cadena de texto contiene un JSON sintácticamente válido?",
+    "options": [
+      "JSON_VALID(cadena)",
+      "IS_JSON(cadena)",
+      "CHECK_JSON(cadena)",
+      "VALIDATE_JSON(cadena)"
+    ],
+    "correct_index": 0,
+    "hint": "JSON_VALID(str) retorna 1 si la cadena es un JSON válido y 0 en caso contrario."
+  },
+  {
+    "id": "mysql_090",
+    "difficulty": "medium",
+    "question": "¿Qué función permite transformar un conjunto de resultados relacionales en un array JSON agregado en MySQL?",
+    "options": [
+      "JSON_AGGREGATE(columna)",
+      "JSON_ARRAYAGG(columna)",
+      "TO_JSON_ARRAY(columna)",
+      "ARRAY_JSON_BUILD(columna)"
+    ],
+    "correct_index": 1,
+    "hint": "JSON_ARRAYAGG agrega filas en un array JSON y JSON_OBJECTAGG construye un mapa clave-valor."
   },
   {
     "id": "mysql_091",
-    "difficulty": "advanced",
-    "question": "¿Qué es MySQL InnoDB Cluster y qué componentes lo forman?",
+    "difficulty": "medium",
+    "question": "¿Cómo se define un índice sobre una clave interna de un documento JSON en MySQL 8.0?",
     "options": [
-      "Una solución de alta disponibilidad basada en Group Replication, MySQL Router y MySQL Shell",
-      "Un conjunto de servidores Apache conectados a un solo MySQL",
-      "Un plugin para conectar MySQL con bases de datos Hadoop",
-      "Un gestor de colas de mensajes Kafka"
+      "Añadiendo el modificador INDEXED directamente dentro de la clave en la definición del esquema DDL de la tabla.",
+      "Declarando un índice espacial de tipo R*Tree sobre la totalidad del campo JSON en el comando CREATE TABLE.",
+      "Creando una columna generada virtual sobre la ruta JSON y definiendo un índice secundario B-Tree sobre ella.",
+      "MySQL no permite bajo ninguna circunstancia indexar propiedades internas de documentos JSON en tablas InnoDB."
     ],
-    "correct_index": 0,
-    "hint": "Proporciona failover automático, replicación multimaster o single-master basada en consenso Paxos nativo y enrutamiento transparente para clientes."
+    "correct_index": 2,
+    "hint": "Se crea una columna virtual con `col->>'$.prop'` y se indexa esa columna virtual con un índice secundario B-Tree."
   },
   {
     "id": "mysql_092",
-    "difficulty": "advanced",
-    "question": "¿Cómo maneja MySQL Group Replication la resolución de conflictos de escritura concurrentes (Certification)?",
+    "difficulty": "medium",
+    "question": "¿Qué función cumple el comando 'SHOW ENGINE INNODB STATUS' en MySQL?",
     "options": [
-      "Utiliza un servicio de certificación atómico basado en Paxos que valida si los write-sets colisionan; la primera transacción en orden global se confirma y la otra se rechaza (rollback)",
-      "Bloquea la red local hasta que todas las transacciones finalicen",
-      "Combina las dos modificaciones promediando los valores numéricos",
-      "Elige aleatoriamente qué transacción sobrevive"
+      "Reinicia el motor InnoDB recargando las páginas de datos en memoria desde el archivo de configuración my.cnf.",
+      "Exporta las métricas de rendimiento térmico del hardware a un archivo binario en el directorio de registros.",
+      "Calcula la suma de verificación de todos los bloques de almacenamiento para detectar sectores defectuosos en SSD.",
+      "Muestra información diagnóstica de transacciones activas, semáforos, bloqueos, deadlocks recientes y buffer pool."
     ],
-    "correct_index": 0,
-    "hint": "En modo Multi-Master, si dos nodos intentan modificar la misma clave primaria al mismo tiempo, el proceso de certificación en orden de consenso Paxos aborta la colisión."
+    "correct_index": 3,
+    "hint": "Es la herramienta diagnóstica por excelencia de InnoDB: detalla el último deadlock, locks en espera, I/O threads y memoria."
   },
   {
     "id": "mysql_093",
     "difficulty": "advanced",
-    "question": "¿Qué función cumple el algoritmo Online DDL en InnoDB (ALGORITHM=INPLACE, LOCK=NONE)?",
+    "question": "¿Qué información crítica expone la sección 'LATEST DETECTED DEADLOCK' en SHOW ENGINE INNODB STATUS?",
     "options": [
-      "Permite crear o modificar índices y columnas sin bloquear consultas de lectura ni de escritura (INSERT, UPDATE, DELETE) en la tabla durante la operación",
-      "Requiere apagar el servidor para aplicar el cambio",
-      "Bloquea en modo exclusivo todas las tablas del esquema",
-      "Duplica la memoria RAM del servidor"
+      "Las dos transacciones involucradas, las sentencias SQL ejecutadas, los locks que retenían y cuál fue la víctima de ROLLBACK.",
+      "La dirección IP del cliente que ejecutó la consulta que provocó la saturación del ancho de banda de red en el servidor.",
+      "El identificador del proceso en el sistema operativo Linux que fue terminado forzosamente por falta de memoria swap.",
+      "La lista de tablas secundarias cuyas restricciones de clave foránea fueron desactivadas automáticamente por seguridad."
     ],
     "correct_index": 0,
-    "hint": "Online DDL registra los cambios concurrentes en un log temporal de modificaciones y los aplica al final, evitando tiempos de inactividad durante mantenimientos de esquema."
+    "hint": "Detalla las sentencias exactas, locks pedidos y retenidos, y la razón por la que InnoDB abortó a una de las transacciones."
   },
   {
     "id": "mysql_094",
     "difficulty": "advanced",
-    "question": "¿Cuál es la función del parámetro 'innodb_io_capacity' y cuándo debe incrementarse?",
+    "question": "¿Qué es un 'Deadlock de Insert' por claves foráneas concurrentes en MySQL?",
     "options": [
-      "Establece el límite de IOPS para tareas en segundo plano (flushing de páginas sucias, merge de change buffer); debe aumentarse al usar discos SSD o NVMe rápidos",
-      "Limita la velocidad de descarga en la tarjeta de red",
-      "Define el número máximo de columnas permitidas por tabla",
-      "Controla la cantidad de memoria asignada a la caché de consultas"
+      "Se produce cuando dos clientes intentan insertar el mismo valor en una columna entera sin clave primaria definida.",
+      "Ocurre cuando dos transacciones insertan tuplas hijas y ambas adquieren bloqueos S en la fila padre antes de pedir locks X.",
+      "Ocurre cuando el motor agota las páginas disponibles en el segmento de memoria asignado al diccionario de datos.",
+      "Se manifiesta cuando dos transacciones intentan crear simultáneamente tablas temporales con el mismo nombre en /tmp."
     ],
-    "correct_index": 0,
-    "hint": "Un valor por defecto de 200 fue diseñado para discos magnéticos viejos (HDD). En SSDs modernos se configura en 2000-20000 para evitar acumulación de páginas sucias."
+    "correct_index": 1,
+    "hint": "Validar la clave foránea pide un Shared Lock (S) en el padre; si luego intentan actualizar o insertar registros dependientes, colisionan."
   },
   {
     "id": "mysql_095",
     "difficulty": "advanced",
-    "question": "¿Qué ocurre cuando se alcanza la condición de 'Fuzzy Checkpoint' en InnoDB?",
+    "question": "¿Qué problema resuelve la configuración 'innodb_print_all_deadlocks = 1' en MySQL?",
     "options": [
-      "InnoDB escribe progresivamente páginas sucias del Buffer Pool a disco en pequeños lotes continuos, reduciendo picos bruscos de latencia en comparación con un checkpoint síncrono",
-      "Se borran todas las tablas temporales de disco",
-      "Se bloquea el servidor para forzar un reinicio ordenado",
-      "Se comprime la base de datos completa en formato zip"
+      "Imprime en la salida estándar de la consola del cliente una alerta sonora cada vez que se aborta una transacción activa.",
+      "Evita que se produzcan deadlocks suspendiendo temporalmente las transacciones concurrentes que modifican la misma tabla.",
+      "Escribe en el archivo de log de errores del servidor la descripción completa de cada deadlock ocurrido en el sistema.",
+      "Genera un informe semanal en formato HTML con las estadísticas de bloqueos para los administradores de la base de datos."
     ],
-    "correct_index": 0,
-    "hint": "Los checkpoints difusos aseguran que el redo log no se llene y que el tiempo de recuperación ante fallos se mantenga acotado sin congelar la base de datos."
+    "correct_index": 2,
+    "hint": "SHOW ENGINE INNODB STATUS solo guarda el último deadlock; innodb_print_all_deadlocks registra todos en el error log para análisis post-mortem."
   },
   {
     "id": "mysql_096",
     "difficulty": "advanced",
-    "question": "¿Qué es un 'Invisible Index' en MySQL 8.0 y cuál es su caso de uso?",
+    "question": "¿Qué es la variable 'max_connections' en MySQL y qué error arroja el servidor cuando se supera?",
     "options": [
-      "Un índice que el optimizador ignora para la ejecución de consultas pero que el motor sigue manteniendo actualizado, ideal para probar el impacto de eliminarlo sin riesgo",
-      "Un índice oculto para usuarios que no son administradores",
-      "Un índice temporal que desaparece al cerrar la conexión",
-      "Un índice encriptado para almacenar credenciales"
+      "El límite máximo de claves foráneas permitidas por tabla; si se supera, arroja el error 'Foreign key limit exceeded'.",
+      "La cantidad máxima de consultas de selección concurrentes; si se supera, las consultas se redirigen a un archivo en disco.",
+      "El número de servidores réplica secundarios que pueden conectarse al primario antes de rechazar nuevos handshakes TCP.",
+      "El número máximo de clientes simultáneos permitidos; si se supera, el servidor retorna el error 'Too many connections'."
     ],
-    "correct_index": 0,
-    "hint": "Permite marcar un índice como INVISIBLE antes de ejecutar DROP INDEX; si el rendimiento decae, se puede volver a hacer VISIBLE inmediatamente sin el costo de reconstruirlo."
+    "correct_index": 3,
+    "hint": "Limita las conexiones concurrentes. MySQL reserva una conexión extra para usuarios con privilegio CONNECTION_ADMIN para emergencias."
   },
   {
     "id": "mysql_097",
     "difficulty": "advanced",
-    "question": "¿Qué son los 'Histogramas de Columnas' introducidos en MySQL 8.0?",
+    "question": "¿Qué función cumple el puerto administrativo 'admin_port' (por defecto 33062) introducido en MySQL 8.0?",
     "options": [
-      "Estadísticas de distribución de datos generadas con ANALYZE TABLE UPDATE HISTOGRAM para columnas sin índice, ayudando al optimizador a calcular selectividades precisas",
-      "Gráficos visuales generados en formato PNG por el servidor",
-      "Tablas especiales para registrar el histórico de versiones de filas",
-      "Registros cronológicos de conexiones de clientes"
+      "Proveer una interfaz de red dedicada para conexiones de administración que responde incluso si max_connections se agotó.",
+      "Transmitir eventos de replicación hacia clusters secundarios mediante protocolos de comunicación de alta velocidad.",
+      "Permitir la descarga de copias de seguridad físicas en caliente sin pasar por el analizador sintáctico del motor SQL.",
+      "Habilitar una consola web gráfica interactiva para monitorizar el consumo de procesador desde cualquier navegador."
     ],
     "correct_index": 0,
-    "hint": "Permiten al optimizador estimar la selectividad de predicados en campos no indexados (como estados o categorías de baja cardinalidad) sin el overhead de crear un índice B-Tree."
+    "hint": "admin_port permite a los DBAs iniciar sesión en el servidor para diagnosticar y liberar conexiones cuando max_connections está saturado."
   },
   {
     "id": "mysql_098",
     "difficulty": "advanced",
-    "question": "¿Cómo afecta la fragmentación de páginas en árboles B-Tree a las lecturas por rango en MySQL?",
+    "question": "¿Qué es el 'Optimizer Trace' en MySQL y para qué se utiliza en diagnóstico avanzado?",
     "options": [
-      "Páginas semivacías resultantes de divisiones (page splits) aumentan el consumo de I/O y memoria al requerir leer más páginas para la misma cantidad de registros",
-      "Acelera las lecturas porque deja espacio para nuevos datos",
-      "Desactiva los índices secundarios automáticamente",
-      "No tiene ningún efecto en el rendimiento en discos modernos"
+      "Un módulo de depuración que graba las instrucciones de ensamblador ejecutadas por la CPU durante una consulta SQL.",
+      "Una utilidad que expone en JSON cómo el optimizador evaluó costos, podó alternativas y eligió el plan final.",
+      "Un registro de auditoría que almacena las consultas preparadas ejecutadas por cada hilo para detectar inyecciones de código.",
+      "Un subsistema que predice el tiempo de ejecución futuro de consultas recurrentes utilizando redes neuronales artificiales."
     ],
-    "correct_index": 0,
-    "hint": "Las divisiones aleatorias de página por inserción desordenada reducen la densidad de datos al 50-70%, aumentando el working set y la latencia de escaneos."
+    "correct_index": 1,
+    "hint": "INFORMATION_SCHEMA.OPTIMIZER_TRACE revela en formato JSON el razonamiento interno del CBO, costos calculados y transformaciones de query."
   },
   {
     "id": "mysql_099",
     "difficulty": "advanced",
-    "question": "En MySQL, ¿por qué el uso de UUIDs v4 aleatorios como clave primaria Clustered en InnoDB degrada severamente el rendimiento de escritura?",
+    "question": "¿Qué ventaja aporta el uso de 'Prepared Statements' en MySQL frente a consultas dinámicas de texto plano?",
     "options": [
-      "Provoca inserciones aleatorias en el árbol B-Tree, causando masivas divisiones de página (page splits), alta fragmentación y lecturas de E/S descontroladas",
-      "Porque InnoDB solo permite claves primarias de tipo entero de 32 bits",
-      "Los UUIDs ocupan exactamente el mismo espacio que un INT pero sin permitir índices",
-      "Porque los UUIDs v4 no son compatibles con el estándar ANSI SQL"
+      "Permite almacenar el resultado de la consulta permanentemente en la memoria caché L1 de la tarjeta aceleradora.",
+      "Ejecuta las consultas en un hilo independiente del kernel que no consume tiempo de procesador del servidor central.",
+      "Separa el análisis sintáctico y compilación del paso de parámetros, previene inyecciones SQL y reduce sobrecarga.",
+      "Convierte automáticamente las sentencias relacionales en llamadas a procedimientos de bases de datos orientadas a grafos."
     ],
-    "correct_index": 0,
-    "hint": "Un Clustered Index ordena físicamente las filas por clave. Claves aleatorias fuerzan escrituras en páginas arbitrarias que deben cargarse y rebalancearse constantemente en disco."
+    "correct_index": 2,
+    "hint": "PREPARE y EXECUTE precompilan el AST una sola vez, transfiriendo parámetros como escalares en protocolo binario sin riesgo de SQL injection."
   },
   {
     "id": "mysql_0100",
     "difficulty": "advanced",
-    "question": "¿Cuál es la recomendación técnica para mitigar la degradación de B-Tree al usar UUIDs como clave primaria en MySQL 8.0?",
+    "question": "¿Cuál es la recomendación fundamental para diseñar esquemas de alto rendimiento en MySQL InnoDB?",
     "options": [
-      "Utilizar UUIDs secuenciales (UUID v1 o v7 ordenados por tiempo) o la función binaria UUID_TO_BIN(uuid, 1) para intercambiar los campos temporales y lograr inserción secuencial",
-      "Desactivar el Clustered Index de InnoDB",
-      "Cambiar el motor a MyISAM",
-      "Crear un índice hash sobre la columna UUID"
+      "Almacenar todos los datos en columnas VARCHAR de longitud máxima para evitar tener que ejecutar sentencias ALTER TABLE.",
+      "Desactivar el log de transacciones y el buffer pool para que todas las lecturas y escrituras accedan directamente al SSD.",
+      "Crear índices secundarios sobre todas las columnas de la tabla para garantizar que el optimizador nunca use escaneos completos.",
+      "Usar claves primarias enteras cortas y secuenciales, evitar SELECT *, indexar por selectividad y sintonizar el buffer pool."
     ],
-    "correct_index": 0,
-    "hint": "UUID_TO_BIN(uuid, 1) reordena los bits del timestamp al principio y almacena el UUID en 16 bytes binarios, convirtiendo las inserciones en secuenciales casi al final del árbol B-Tree."
+    "correct_index": 3,
+    "hint": "Claves primarias compactas y secuenciales optimizan el Clustered Index y los índices secundarios; SELECT específico ahorra memoria y red."
   }
 ]
