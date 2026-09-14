@@ -1,0 +1,74 @@
+[
+  {
+    "id": "py_001",
+    "question": "¿Qué hace el decorador @staticmethod en Python?",
+    "options": [
+      "Modifica el estado de la instancia.",
+      "Permite llamar al método sin instanciar la clase y no recibe 'self' ni 'cls'.",
+      "Requiere pasar 'self' obligatoriamente como primer argumento.",
+      "Convierte la función en un método de clase que recibe 'cls'."
+    ],
+    "correct_index": 1,
+    "hint": "No depende ni de la instancia ni de la clase en sí."
+  },
+  {
+    "id": "py_002",
+    "question": "¿Cuál es la principal diferencia entre una lista y una tupla en Python?",
+    "options": [
+      "Las listas son inmutables y las tuplas son mutables.",
+      "Las listas usan paréntesis () y las tuplas corchetes [].",
+      "Las listas son mutables y las tuplas son inmutables.",
+      "Las tuplas solo pueden contener datos de tipo numérico."
+    ],
+    "correct_index": 2,
+    "hint": "Una vez creada, no puedes modificar los elementos de una tupla."
+  },
+  {
+    "id": "py_003",
+    "question": "¿Qué estructura de palabras clave se usa para manejar excepciones en Python?",
+    "options": [
+      "try ... catch",
+      "try ... except",
+      "begin ... rescue",
+      "try ... handle"
+    ],
+    "correct_index": 1,
+    "hint": "En Python la cláusula que captura el error se llama 'except'."
+  },
+  {
+    "id": "py_004",
+    "question": "¿Cuál es el propósito del método especial __init__ en una clase de Python?",
+    "options": [
+      "Destruir la instancia cuando ya no se usa.",
+      "Inicializar los atributos del objeto al crearse una nueva instancia.",
+      "Importar módulos necesarios dentro de la clase.",
+      "Declarar variables globales compartidas por todas las clases."
+    ],
+    "correct_index": 1,
+    "hint": "Funciona como el constructor de la clase."
+  },
+  {
+    "id": "py_005",
+    "question": "¿Cómo se define una función anónima de una sola línea en Python?",
+    "options": [
+      "def anon() -> None",
+      "func() => expression",
+      "lambda x: expression",
+      "anonymous(x) { return expression; }"
+    ],
+    "correct_index": 2,
+    "hint": "Se utiliza la palabra reservada 'lambda'."
+  },
+  {
+    "id": "py_006",
+    "question": "¿Qué método se utiliza para obtener el valor de una clave en un diccionario sin lanzar KeyError si no existe?",
+    "options": [
+      "dict.fetch(key, default)",
+      "dict.get(key, default)",
+      "dict.find(key, default)",
+      "dict.value(key, default)"
+    ],
+    "correct_index": 1,
+    "hint": "El método estándar es .get() que devuelve un valor por defecto o None."
+  }
+]

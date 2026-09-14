@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
 import '../models/question.dart';
 import '../core/content_manager.dart';
+import '../core/storage_service.dart';
 
 class QuizScreen extends StatefulWidget {
   final Question question;
-  const QuizScreen({super.key, required this.question});
+  final bool fullScreenLock;
+  const QuizScreen({super.key, required this.question, this.fullScreenLock = true});
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -20,7 +22,9 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     super.initState();
-    _enterKioskMode();
+    if (widget.fullScreenLock) {
+      _enterKioskMode();
+    }
   }
 
   Future<void> _enterKioskMode() async {
@@ -29,8 +33,10 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   Future<void> _exitKioskMode() async {
-    await windowManager.setFullScreen(false);
-    await windowManager.setAlwaysOnTop(false);
+    if (widget.fullScreenLock) {
+      await windowManager.setFullScreen(false);
+      await windowManager.setAlwaysOnTop(false);
+    }
   }
 
   void _checkAnswer(int index) {
@@ -44,6 +50,7 @@ class _QuizScreenState extends State<QuizScreen> {
     });
 
     ContentManager().recordAnswer(widget.question.id, _isCorrect);
+    StorageService().saveProgressMap(ContentManager().progressMap);
 
     if (_isCorrect) {
       Future.delayed(const Duration(seconds: 2), () {

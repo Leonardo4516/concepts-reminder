@@ -1,0 +1,74 @@
+[
+  {
+    "id": "java_001",
+    "question": "¿Cuál es la clase raíz de toda la jerarquía de clases en Java?",
+    "options": [
+      "java.lang.Class",
+      "java.lang.Object",
+      "java.lang.Root",
+      "java.lang.Base"
+    ],
+    "correct_index": 1,
+    "hint": "Todas las clases en Java heredan implícitamente de Object si no extienden de otra clase."
+  },
+  {
+    "id": "java_002",
+    "question": "¿Cuál es la diferencia entre el operador '==' y el método '.equals()' para objetos en Java?",
+    "options": [
+      "'==' compara contenido y .equals() compara direcciones de memoria.",
+      "'==' compara referencias de memoria y .equals() compara igualdad lógica o de contenido.",
+      "Ambos operadores son equivalentes e intercambiables en cualquier caso.",
+      "'==' solo funciona con cadenas String y primitivos."
+    ],
+    "correct_index": 1,
+    "hint": "'==' verifica si ambas referencias apuntan exactamente al mismo objeto en la memoria heap."
+  },
+  {
+    "id": "java_003",
+    "question": "¿Qué palabra clave impide que una clase sea extendida o que un método sea sobrescrito en Java?",
+    "options": [
+      "static",
+      "const",
+      "final",
+      "sealed"
+    ],
+    "correct_index": 2,
+    "hint": "Esta misma palabra reservada se usa para definir constantes o variables inmutables."
+  },
+  {
+    "id": "java_004",
+    "question": "¿Cuál es la firma canónica del método principal de entrada (entry point) en Java?",
+    "options": [
+      "public void main(String[] args)",
+      "public static void main(String[] args)",
+      "static public int main(String[] args)",
+      "void main(String args)"
+    ],
+    "correct_index": 1,
+    "hint": "La JVM necesita que sea público, estático y sin valor de retorno (void)."
+  },
+  {
+    "id": "java_005",
+    "question": "¿Cuál de las siguientes interfaces de Java Collections Framework NO permite elementos duplicados?",
+    "options": [
+      "List",
+      "Queue",
+      "Set",
+      "Vector"
+    ],
+    "correct_index": 2,
+    "hint": "HashSet y TreeSet son ejemplos comunes de implementaciones de esta interfaz."
+  },
+  {
+    "id": "java_006",
+    "question": "¿Qué excepción en tiempo de ejecución se lanza si se intenta invocar un método sobre una referencia nula?",
+    "options": [
+      "IllegalArgumentException",
+      "NullPointerException",
+      "IllegalStateException",
+      "ClassCastException"
+    ],
+    "correct_index": 1,
+    "hint": "Es la famosa excepción comúnmente abreviada como NPE."
+  }
+]
