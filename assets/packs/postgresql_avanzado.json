@@ -388,5 +388,915 @@
     ],
     "correct_index": 1,
     "hint": "Partition Pruning es la clave del particionamiento: si particionas por mes y consultas 'WHERE fecha BETWEEN ...', PostgreSQL excluye todas las demás particiones mensuales en tiempo de planificación o ejecución."
+  },
+  {
+    "id": "pg_031",
+    "difficulty": "basic",
+    "question": "¿Para qué sirve el comando 'ANALYZE' en PostgreSQL?",
+    "options": [
+      "Para comprobar si el disco duro tiene sectores defectuosos.",
+      "Para recolectar estadísticas sobre el contenido de las tablas y almacenarlas en 'pg_statistic', permitiendo al planificador de consultas elegir los planes de ejecución más eficientes.",
+      "Para cifrar las contraseñas de los usuarios de la base de datos.",
+      "Para convertir todas las tablas a formato relacional estricto."
+    ],
+    "correct_index": 1,
+    "hint": "ANALYZE examina una muestra de las filas de cada tabla para calcular la distribución de valores (frecuencia, valores más comunes, valores nulos), datos clave para que el optimizador estime costos de joins e índices."
+  },
+  {
+    "id": "pg_032",
+    "difficulty": "basic",
+    "question": "En PostgreSQL, ¿cuál es el operador para concatenar cadenas de texto en sentencias SQL estándar?",
+    "options": [
+      "El operador '+' (mas).",
+      "El operador '||' (doble barra vertical).",
+      "El operador '&' (ampersand).",
+      "El operador 'CONCAT_WS'."
+    ],
+    "correct_index": 1,
+    "hint": "En SQL estándar y PostgreSQL, la concatenación se realiza con '||' (ej. 'nombre' || ' ' || 'apellido') o mediante la función 'concat()'."
+  },
+  {
+    "id": "pg_033",
+    "difficulty": "basic",
+    "question": "¿Qué efecto tiene definir una restricción de columna como 'CHECK (edad >= 18)' en una tabla de PostgreSQL?",
+    "options": [
+      "Calcula automáticamente la edad del usuario basándose en su fecha de nacimiento.",
+      "Rechaza cualquier inserción o actualización donde el valor de la columna 'edad' no cumpla la expresión booleana especificada, arrojando una violación de restricción (check constraint violation).",
+      "Oculta la columna 'edad' para usuarios menores de edad.",
+      "Convierte la columna en un número flotante de 64 bits."
+    ],
+    "correct_index": 1,
+    "hint": "Las restricciones CHECK validan que cada fila individual cumpla una condición lógica antes de permitir que la operación de escritura tenga éxito."
+  },
+  {
+    "id": "pg_034",
+    "difficulty": "basic",
+    "question": "¿Cuál es la utilidad del tipo de dato 'BOOLEAN' en PostgreSQL y qué valores literales admite además de TRUE y FALSE?",
+    "options": [
+      "Solo admite números enteros 0 y 1.",
+      "Es un tipo booleano nativo que admite literales como 'true'/'false', 't'/'f', 'yes'/'no', 'y'/'n', '1'/'0' y el estado desconocido 'NULL'.",
+      "Es un alias de tipo VARCHAR(5).",
+      "Solo puede utilizarse en procedimientos almacenados PL/pgSQL."
+    ],
+    "correct_index": 1,
+    "hint": "PostgreSQL implementa lógica trivaluada pura (TRUE, FALSE, NULL) y su parser admite una amplia variedad de literales amigables que se convierten a bool nativo."
+  },
+  {
+    "id": "pg_035",
+    "difficulty": "basic",
+    "question": "En psql (la interfaz de línea de comandos de PostgreSQL), ¿qué metacomando permite listar todas las tablas del esquema actual?",
+    "options": [
+      "SHOW TABLES;",
+      "\\dt",
+      "SELECT * FROM tables;",
+      "\\list"
+    ],
+    "correct_index": 1,
+    "hint": "En la consola psql, '\\dt' lista las tablas del esquema activo, '\\l' lista las bases de datos y '\\d nombre_tabla' describe la estructura de una tabla específica."
+  },
+  {
+    "id": "pg_036",
+    "difficulty": "basic",
+    "question": "¿Qué comando SQL se utiliza en PostgreSQL para renombrar una tabla existente sin perder sus datos?",
+    "options": [
+      "RENAME TABLE tabla TO nueva_tabla;",
+      "ALTER TABLE tabla RENAME TO nueva_tabla;",
+      "MODIFY TABLE tabla SET NAME = nueva_tabla;",
+      "UPDATE pg_class SET relname = nueva_tabla;"
+    ],
+    "correct_index": 1,
+    "hint": "La sintaxis estándar en PostgreSQL es 'ALTER TABLE nombre_actual RENAME TO nuevo_nombre;'."
+  },
+  {
+    "id": "pg_037",
+    "difficulty": "basic",
+    "question": "En PostgreSQL, ¿cuál es la diferencia entre los tipos numéricos 'NUMERIC' (o DECIMAL) y 'DOUBLE PRECISION'?",
+    "options": [
+      "NUMERIC es un tipo de punto exacto con precisión arbitraria configurable (ideal para dinero), mientras que DOUBLE PRECISION es un tipo de punto flotante de 64 bits según IEEE 754 con posibles errores de redondeo.",
+      "NUMERIC solo guarda enteros y DOUBLE PRECISION solo decimales.",
+      "DOUBLE PRECISION ocupa menos de 1 byte de memoria.",
+      "Son tipos idénticos con nombres diferentes."
+    ],
+    "correct_index": 0,
+    "hint": "Para valores monetarios o contables nunca uses FLOAT ni DOUBLE PRECISION debido a la imprecisión binaria inherente; siempre debes usar NUMERIC(p, s)."
+  },
+  {
+    "id": "pg_038",
+    "difficulty": "basic",
+    "question": "¿Qué cláusula SQL permite ordenar los resultados colocando los valores nulos (NULL) estrictamente al principio o al final en PostgreSQL?",
+    "options": [
+      "ORDER BY columna NULLS FIRST / NULLS LAST",
+      "ORDER BY NULL(columna)",
+      "SORT BY columna WITH NULLS",
+      "FILTER BY NULLS ON TOP"
+    ],
+    "correct_index": 0,
+    "hint": "PostgreSQL permite controlar la posición de los nulos explícitamente con 'ORDER BY fecha DESC NULLS LAST', evitando comportamientos inesperados."
+  },
+  {
+    "id": "pg_039",
+    "difficulty": "basic",
+    "question": "¿Para qué sirve el tipo de dato 'INTERVAL' en PostgreSQL?",
+    "options": [
+      "Para almacenar rangos de direcciones IP en formato CIDR.",
+      "Para representar periodos de tiempo transcurridos o duraciones (ej. '3 days 4 hours', '1 month'), permitiendo aritmética directa de fechas.",
+      "Para definir intervalos de tiempo en los que la base de datos se apaga automáticamente.",
+      "Para numerar las filas de una tabla de 10 en 10."
+    ],
+    "correct_index": 1,
+    "hint": "Con INTERVAL puedes hacer operaciones intuitivas como 'NOW() - INTERVAL '7 days'' o sumar duraciones con total precisión horaria y de calendario."
+  },
+  {
+    "id": "pg_040",
+    "difficulty": "basic",
+    "question": "¿Cuál es la función de la sentencia 'SAVEPOINT' dentro de una transacción en PostgreSQL?",
+    "options": [
+      "Crea un respaldo comprimido de la base de datos en Google Drive.",
+      "Define un punto de control intermedio dentro de una transacción al cual se puede retroceder selectivamente (ROLLBACK TO SAVEPOINT) sin abortar toda la transacción.",
+      "Guarda las contraseñas de las conexiones activas.",
+      "Fuerza una escritura física inmediata de todas las páginas de memoria a disco."
+    ],
+    "correct_index": 1,
+    "hint": "Los savepoints permiten manejo de errores anidado: si una operación intermedia falla, haces 'ROLLBACK TO SAVEPOINT punto1' y continúas con el resto de la transacción."
+  },
+  {
+    "id": "pg_041",
+    "difficulty": "basic",
+    "question": "En PostgreSQL, ¿qué sucede si intentas insertar una fila que viola una restricción de clave primaria (PRIMARY KEY)?",
+    "options": [
+      "El motor sobrescribe silenciosamente la fila existente con los nuevos datos.",
+      "La transacción actual entra en estado de error y la inserción es rechazada arrojando una excepción de violación de unicidad.",
+      "La base de datos se reinicia en modo seguro.",
+      "El nuevo registro se guarda con un ID negativo."
+    ],
+    "correct_index": 1,
+    "hint": "Toda violación de restricción aborta la sentencia y deja la transacción en estado 'aborted transaction' hasta que se emita un ROLLBACK o ROLLBACK TO SAVEPOINT."
+  },
+  {
+    "id": "pg_042",
+    "difficulty": "basic",
+    "question": "¿Qué comando administrativo se utiliza para otorgar permisos de lectura (SELECT) sobre una tabla a un rol o usuario en PostgreSQL?",
+    "options": [
+      "ALLOW USER usuario READ ON tabla;",
+      "GRANT SELECT ON tabla TO usuario;",
+      "SET PERMISSION SELECT ON tabla FOR usuario;",
+      "PERMIT usuario TO SELECT tabla;"
+    ],
+    "correct_index": 1,
+    "hint": "El comando estándar SQL de control de accesos (DCL) es 'GRANT privilegio ON objeto TO rol;'."
+  },
+  {
+    "id": "pg_043",
+    "difficulty": "basic",
+    "question": "¿Cuál es la función del archivo de configuración 'pg_hba.conf' en un clúster de PostgreSQL?",
+    "options": [
+      "Contiene los logs de consultas lentas de los últimos 30 días.",
+      "Controla la autenticación de clientes (Host-Based Authentication), definiendo qué hosts, IPs y usuarios pueden conectarse a qué bases de datos y mediante qué método de autenticación (scram-sha-256, md5, trust, etc.).",
+      "Almacena los índices espaciales de la extensión PostGIS.",
+      "Define los nombres de las tablas del esquema público."
+    ],
+    "correct_index": 1,
+    "hint": "pg_hba.conf es la primera línea de defensa de PostgreSQL: cada intento de conexión TCP o socket UNIX se valida línea por línea contra las reglas de este archivo."
+  },
+  {
+    "id": "pg_044",
+    "difficulty": "basic",
+    "question": "En PostgreSQL, ¿qué representa la pseudocolumna oculta 'ctid' presente en todas las tablas?",
+    "options": [
+      "El código de país del servidor de base de datos.",
+      "La ubicación física directa de la versión de la fila (tuple) en disco, expresada como un par (número de página, índice de tupla dentro de la página).",
+      "El número de veces que la fila ha sido leída por un cliente.",
+      "La clave de cifrado SSL de la fila."
+    ],
+    "correct_index": 1,
+    "hint": "El ctid (ej. (0, 1)) indica la página física de 8KB y el offset de la tupla. Como los UPDATEs crean nuevas tuplas por MVCC, el ctid de una fila cambia en cada modificación."
+  },
+  {
+    "id": "pg_045",
+    "difficulty": "basic",
+    "question": "¿Qué diferencia existe entre las funciones 'CURRENT_DATE' y 'CURRENT_TIMESTAMP' en PostgreSQL?",
+    "options": [
+      "CURRENT_DATE devuelve únicamente la fecha actual (tipo DATE sin hora); CURRENT_TIMESTAMP devuelve la fecha, hora, minutos, segundos y zona horaria (TIMESTAMP WITH TIME ZONE).",
+      "CURRENT_DATE está obsoleta y no debe usarse.",
+      "CURRENT_TIMESTAMP solo funciona en servidores con procesadores de 64 bits.",
+      "No existe diferencia; son alias intercambiables."
+    ],
+    "correct_index": 0,
+    "hint": "CURRENT_DATE devuelve 'YYYY-MM-DD' y CURRENT_TIMESTAMP (o NOW()) devuelve la marca temporal completa con huso horario."
+  },
+  {
+    "id": "pg_046",
+    "difficulty": "basic",
+    "question": "En PostgreSQL, ¿qué cláusula permite descartar el resultado de una subconsulta y solo comprobar si existe al menos una fila coincidente?",
+    "options": [
+      "WHERE EXISTS (SELECT 1 FROM ...)",
+      "WHERE CHECK (SELECT ...)",
+      "WHERE CONTAINS (SELECT ...)",
+      "WHERE IN_ROW (SELECT ...)"
+    ],
+    "correct_index": 0,
+    "hint": "'EXISTS' aplica evaluación de cortocircuito: en cuanto el motor encuentra la primera fila que coincide con la subconsulta, devuelve TRUE de inmediato sin escanear el resto."
+  },
+  {
+    "id": "pg_047",
+    "difficulty": "basic",
+    "question": "¿Qué efecto tiene la sentencia 'CREATE TABLE t2 AS SELECT * FROM t1;' en PostgreSQL con respecto a los índices y restricciones de t1?",
+    "options": [
+      "Copia las filas y replica automáticamente todos los índices, claves primarias y claves foráneas de t1.",
+      "Copia los datos de las columnas resultantes, pero NO copia índices, claves primarias, valores por defecto ni restricciones de clave foránea de la tabla original.",
+      "Crea un enlace simbólico en disco sin duplicar los datos.",
+      "Bloquea la tabla t1 en modo exclusivo permanente."
+    ],
+    "correct_index": 1,
+    "hint": "CREATE TABLE AS SELECT solo crea una tabla con los tipos de datos inferidos y los datos actuales. Debes recrear manualmente PKs, índices y constraints si los necesitas."
+  },
+  {
+    "id": "pg_048",
+    "difficulty": "basic",
+    "question": "En PostgreSQL, ¿para qué se utiliza la función 'GENERATE_SERIES(inicio, fin, paso)'?",
+    "options": [
+      "Para generar números de serie comerciales con códigos de barras.",
+      "Para generar conjuntos de filas al vuelo con secuencias numéricas, de fechas o marcas temporales, muy útil para pruebas, reportes continuos y relleno de datos.",
+      "Para enumerar las tablas del sistema operativo.",
+      "Para calcular números aleatorios para contraseñas seguras."
+    ],
+    "correct_index": 1,
+    "hint": "generate_series(1, 100) o generate_series('2026-01-01'::date, '2026-01-31'::date, '1 day'::interval) es una de las herramientas más potentes para generar datos continuos en SQL."
+  },
+  {
+    "id": "pg_049",
+    "difficulty": "basic",
+    "question": "¿Qué tipo de dato nativo de PostgreSQL permite almacenar direcciones de red IPv4 e IPv6 con su máscara de subred y valida automáticamente el formato?",
+    "options": [
+      "VARCHAR(45)",
+      "inet (o cidr)",
+      "macaddr",
+      "network_string"
+    ],
+    "correct_index": 1,
+    "hint": "PostgreSQL tiene tipos nativos para redes: 'inet' para hosts o redes (IPv4/IPv6) y 'cidr' para bloques de subred estrictos, con operadores especializados de pertenencia (ej. <<=)."
+  },
+  {
+    "id": "pg_050",
+    "difficulty": "basic",
+    "question": "¿Cómo se elimina de forma segura una tabla en PostgreSQL solo en caso de que dicha tabla realmente exista?",
+    "options": [
+      "DROP TABLE IF EXISTS nombre_tabla;",
+      "DELETE TABLE WHEN EXISTS nombre_tabla;",
+      "REMOVE TABLE nombre_tabla SAFE;",
+      "TRY DROP TABLE nombre_tabla;"
+    ],
+    "correct_index": 0,
+    "hint": "Añadir 'IF EXISTS' previene que los scripts de migración o despliegue fallen con error si la tabla ya había sido eliminada previamente."
+  },
+  {
+    "id": "pg_051",
+    "difficulty": "medium",
+    "question": "En PostgreSQL, ¿qué operador se utiliza para extraer un campo de un objeto JSON o JSONB como tipo 'TEXT' en lugar de otro subobjeto JSON?",
+    "options": [
+      "El operador '->'",
+      "El operador '->>'",
+      "El operador '#>'",
+      "El operador '@>'"
+    ],
+    "correct_index": 1,
+    "hint": "'->' extrae el valor conservando el tipo JSON; '->>' extrae el valor des-serializado como texto puro (TEXT), lo que permite compararlo directamente con strings en cláusulas WHERE."
+  },
+  {
+    "id": "pg_052",
+    "difficulty": "medium",
+    "question": "¿Qué diferencia existe entre crear un índice con 'CREATE INDEX' y 'CREATE INDEX CONCURRENTLY' en PostgreSQL?",
+    "options": [
+      "CONCURRENTLY comprime el índice un 50% más que el índice normal.",
+      "CREATE INDEX adquiere un bloqueo SHARE que impide todas las escrituras (INSERT, UPDATE, DELETE) en la tabla durante la construcción; CONCURRENTLY construye el índice realizando dos pasadas a la tabla sin bloquear escrituras concurrentes.",
+      "CONCURRENTLY solo funciona si la base de datos corre en Kubernetes.",
+      "CREATE INDEX CONCURRENTLY no escribe los datos en disco."
+    ],
+    "correct_index": 1,
+    "hint": "En producción, NUNCA ejecutes CREATE INDEX en tablas activas sin CONCURRENTLY, ya que bloqueará las escrituras de los usuarios hasta que termine de construirse el árbol."
+  },
+  {
+    "id": "pg_053",
+    "difficulty": "medium",
+    "question": "En PostgreSQL, ¿para qué se utiliza la cláusula 'INCLUDE' al crear un índice B-Tree (Covering Index)?",
+    "options": [
+      "Para incluir archivos PDF adjuntos en la búsqueda del índice.",
+      "Para agregar columnas de datos únicamente en las páginas hoja del índice (sin que formen parte de la clave de búsqueda del árbol), permitiendo resolver consultas mediante 'Index-Only Scan' sin aumentar la profundidad del árbol.",
+      "Para obligar a que el índice incluya filas eliminadas.",
+      "Para vincular el índice con una clave foránea remota."
+    ],
+    "correct_index": 1,
+    "hint": "CREATE INDEX ON t (id) INCLUDE (nombre, email); permite que consultas que piden 'id, nombre, email' lean todo desde el índice sin tocar el Heap (Index-Only Scan)."
+  },
+  {
+    "id": "pg_054",
+    "difficulty": "medium",
+    "question": "¿Qué función cumple el comando 'VACUUM FULL' y por qué debe evitarse en entornos de producción de alta disponibilidad?",
+    "options": [
+      "Vacía la papelera de reciclaje del sistema operativo.",
+      "Reescribe físicamente toda la tabla en un nuevo archivo de disco para devolver el 100% del espacio al sistema operativo; sin embargo, adquiere un bloqueo ACCESS EXCLUSIVE que congela tanto lecturas como escrituras durante horas en tablas grandes.",
+      "Elimina todos los usuarios inactivos de la base de datos.",
+      "Desactiva las conexiones SSL de los clientes."
+    ],
+    "correct_index": 1,
+    "hint": "VACUUM estándar no devuelve espacio al SO (solo marca espacio libre para futuras inserciones en la Free Space Map) y no bloquea. VACUUM FULL compacta todo pero bloquea la tabla entera."
+  },
+  {
+    "id": "pg_055",
+    "difficulty": "medium",
+    "question": "En PostgreSQL, ¿para qué sirve la extensión 'pg_stat_statements'?",
+    "options": [
+      "Para convertir consultas SQL a diagramas de flujo UML.",
+      "Para registrar estadísticas de ejecución agregadas de todas las consultas SQL procesadas por el servidor (tiempo total, llamadas, consumo de buffers, filas afectadas), siendo indispensable para identificar cuellos de botella.",
+      "Para traducir los mensajes de error a diferentes idiomas.",
+      "Para limitar la cantidad de sentencias SELECT por usuario."
+    ],
+    "correct_index": 1,
+    "hint": "pg_stat_statements normaliza las consultas (agrupando constantes con parámetros) y revela de inmediato cuáles son las consultas más lentas o que consumen más CPU en el sistema."
+  },
+  {
+    "id": "pg_056",
+    "difficulty": "medium",
+    "question": "¿Cómo se define un tipo de dato 'ARRAY' en una columna de PostgreSQL y cómo se busca si contiene un elemento específico?",
+    "options": [
+      "Declarando 'columna TIPO[]' y consultando con 'WHERE valor = ANY(columna)' o el operador de contención '@>'.",
+      "Declarando 'columna LIST<TIPO>' y usando la función in_list().",
+      "PostgreSQL no soporta arrays de forma nativa.",
+      "Guardando cadenas separadas por punto y coma."
+    ],
+    "correct_index": 0,
+    "hint": "PostgreSQL tiene soporte de arrays nativo de primera clase (ej. tags text[]). Puedes consultar con 'WHERE 'postgres' = ANY(tags)' o 'WHERE tags @> ARRAY['postgres']'."
+  },
+  {
+    "id": "pg_057",
+    "difficulty": "medium",
+    "question": "¿Cuál es la diferencia entre un 'Index Scan' y un 'Bitmap Index Scan' en la salida de EXPLAIN en PostgreSQL?",
+    "options": [
+      "Index Scan solo funciona con imágenes y Bitmap Index Scan con texto.",
+      "Index Scan recorre el índice y salta al Heap tupla por tupla en orden; Bitmap Index Scan recopila todas las referencias a páginas en un mapa de bits en memoria, las ordena físicamente por ubicación de página y luego lee el Heap en accesos secuenciales continuos.",
+      "Bitmap Index Scan es siempre más lento y señala un error en la consulta.",
+      "No existe diferencia operativa en el hardware."
+    ],
+    "correct_index": 1,
+    "hint": "Cuando una consulta coincide con muchas filas, Index Scan genera saltos aleatorios lentos en disco. Bitmap Index Scan ordena los punteros en un bitmap y lee las páginas en orden físico secuencial."
+  },
+  {
+    "id": "pg_058",
+    "difficulty": "medium",
+    "question": "En PostgreSQL, ¿qué son los 'Advisory Locks' (Bloqueos Consultivos) y cuándo son útiles?",
+    "options": [
+      "Son consejos que el motor muestra en los logs cuando una consulta es ineficiente.",
+      "Son bloqueos a nivel de aplicación controlados explícitamente por el desarrollador mediante enteros arbitrarios de 64 bits (pg_advisory_lock), independientes de las tablas o filas físicas, ideales para coordinar tareas distribuidas o cronjobs.",
+      "Son bloqueos que impiden la modificación de la contraseña del usuario postgres.",
+      "Son bloqueos que se activan solo en servidores de prueba."
+    ],
+    "correct_index": 1,
+    "hint": "Con pg_advisory_lock(12345), tu aplicación puede implementar exclusión mutua para procesos batch o migraciones sin necesidad de crear tablas de bloqueos en disco."
+  },
+  {
+    "id": "pg_059",
+    "difficulty": "medium",
+    "question": "Al utilizar la cláusula 'SELECT ... FOR UPDATE' en PostgreSQL, ¿qué opción permite procesar filas omitiendo aquellas que ya están bloqueadas por otras transacciones concurrentes?",
+    "options": [
+      "SKIP LOCKED",
+      "IGNORE LOCKED",
+      "NO WAIT ON LOCK",
+      "BYPASS BLOCKED"
+    ],
+    "correct_index": 0,
+    "hint": "'SELECT ... FOR UPDATE SKIP LOCKED' es el pilar para construir colas de mensajería o tareas de alta concurrencia en PostgreSQL: múltiples workers toman tareas distintas sin bloquearse mutuamente."
+  },
+  {
+    "id": "pg_060",
+    "difficulty": "medium",
+    "question": "¿Cuál es la función del catálogo 'pg_class' en PostgreSQL?",
+    "options": [
+      "Almacena el código fuente de los cursos dictados en universidades asociadas.",
+      "Es la tabla central del catálogo del sistema que contiene metadatos sobre todas las tablas, índices, secuencias, vistas y tipos compuestos del clúster.",
+      "Guarda las claves públicas de cifrado de red.",
+      "Registra los errores de sintaxis cometidos por los desarrolladores."
+    ],
+    "correct_index": 1,
+    "hint": "En pg_class cada objeto con almacenamiento relacional tiene una fila que describe su OID, nombre (relname), tipo (relkind), cantidad de páginas (relpages) y estimación de filas (reltuples)."
+  },
+  {
+    "id": "pg_061",
+    "difficulty": "medium",
+    "question": "En PostgreSQL, ¿para qué se utiliza la cláusula 'FILTER (WHERE condicion)' en funciones de agregación?",
+    "options": [
+      "Para apagar los registros de log del servidor.",
+      "Para aplicar una condición de filtrado selectiva a una función de agregación individual sin afectar a las demás agregaciones de la misma consulta (ej. COUNT(*) FILTER (WHERE activo)).",
+      "Para convertir las filas en archivos JSON.",
+      "Para impedir que usuarios externos vean el resultado de la función."
+    ],
+    "correct_index": 1,
+    "hint": "Permite cálculos elegantes como 'COUNT(*) FILTER (WHERE estado = 'aprobado'), COUNT(*) FILTER (WHERE estado = 'rechazado')' en un solo SELECT sin usar CASE WHEN engorrosos."
+  },
+  {
+    "id": "pg_062",
+    "difficulty": "medium",
+    "question": "En PostgreSQL, ¿cuál es la diferencia entre los tipos de vistas 'VIEW' y 'MATERIALIZED VIEW'?",
+    "options": [
+      "Una VIEW es una consulta guardada que se ejecuta cada vez que se referencia; una MATERIALIZED VIEW almacena físicamente el resultado de la consulta en disco como una tabla, requiriendo REFRESH para actualizarse.",
+      "Una MATERIALIZED VIEW solo existe en memoria RAM volátil.",
+      "Una VIEW ordinaria no admite la cláusula WHERE.",
+      "Las MATERIALIZED VIEWS solo pueden contener datos numéricos enteros."
+    ],
+    "correct_index": 0,
+    "hint": "Las vistas estándar son virtuales y no ocupan espacio. Las vistas materializadas son tablas reales en disco con el resultado precalculado, permitiendo indexación propia para analítica de alta velocidad."
+  },
+  {
+    "id": "pg_063",
+    "difficulty": "medium",
+    "question": "¿Qué extensión nativa de PostgreSQL proporciona tipos de datos de texto insensibles a mayúsculas y minúsculas sin necesidad de llamar a lower()?",
+    "options": [
+      "pg_trgm",
+      "citext",
+      "uuid-ossp",
+      "unaccent"
+    ],
+    "correct_index": 1,
+    "hint": "El tipo 'citext' (case-insensitive text) llama a lower() internamente al comparar cadenas, permitiendo que 'Email = 'Test@Dominio.com'' coincida automáticamente con 'test@dominio.com'."
+  },
+  {
+    "id": "pg_064",
+    "difficulty": "medium",
+    "question": "En PostgreSQL, ¿para qué sirve la cláusula 'RETURNING' en sentencias INSERT, UPDATE o DELETE?",
+    "options": [
+      "Para revertir los cambios si la consulta tarda más de 10 segundos.",
+      "Para devolver inmediatamente las columnas deseadas de las filas que acaban de ser insertadas, modificadas o eliminadas, eliminando la necesidad de emitir un SELECT secundario.",
+      "Para reiniciar la conexión del cliente con el servidor.",
+      "Para imprimir el plan de ejecución en la consola."
+    ],
+    "correct_index": 1,
+    "hint": "'INSERT INTO usuarios (nombre) VALUES ('Leo') RETURNING id;' devuelve el ID generado por la secuencia en el mismo comando, ahorrando viajes de red."
+  },
+  {
+    "id": "pg_065",
+    "difficulty": "medium",
+    "question": "Al modelar datos jerárquicos o de árboles en PostgreSQL, ¿qué extensión especializada proporciona un tipo de dato optimizado para rutas de etiquetas jerárquicas (ej. 'Top.Ciencia.Fisica')?",
+    "options": [
+      "ltree",
+      "hstore",
+      "btree_gist",
+      "cube"
+    ],
+    "correct_index": 0,
+    "hint": "ltree implementa estructuras en árbol en texto plano con operadores de herencia, ancestros (@>), descendientes (<@) y soporte para índices GiST y B-Tree."
+  },
+  {
+    "id": "pg_066",
+    "difficulty": "medium",
+    "question": "En PostgreSQL, ¿qué tipo de join ejecuta el optimizador cuando ambas entradas de datos ya se encuentran previamente ordenadas por las claves de unión?",
+    "options": [
+      "Nested Loop Join",
+      "Merge Join",
+      "Hash Join",
+      "Cartesian Product"
+    ],
+    "correct_index": 1,
+    "hint": "El Merge Join es ultra eficiente: al estar ordenados ambos flujos de datos, el motor avanza en paralelo por ambas listas como una cremallera en tiempo lineal O(N+M)."
+  },
+  {
+    "id": "pg_067",
+    "difficulty": "medium",
+    "question": "¿Para qué se utiliza la cláusula 'COLLATE \"es_ES\"' en una columna o consulta de PostgreSQL?",
+    "options": [
+      "Para traducir el nombre de las columnas al español.",
+      "Para definir las reglas culturales y lingüísticas específicas de ordenamiento alfabético y comparación de cadenas (manejo de tildes, virgulillas en la ñ, etc.).",
+      "Para convertir los números a moneda euro (€).",
+      "Para cifrar los textos con el estándar del gobierno español."
+    ],
+    "correct_index": 1,
+    "hint": "Collate define el orden lexicográfico: si la 'ch' o 'll' se consideran letras individuales, si la 'ñ' va después de la 'n', y si las mayúsculas preceden a las minúsculas."
+  },
+  {
+    "id": "pg_068",
+    "difficulty": "medium",
+    "question": "En PostgreSQL, ¿qué herramienta de línea de comandos oficial se utiliza para realizar copias de seguridad lógicas en formatos custom comprimidos (.dump) o SQL plano?",
+    "options": [
+      "pg_dump",
+      "pg_basebackup",
+      "mysqldump",
+      "pg_backup_mgr"
+    ],
+    "correct_index": 0,
+    "hint": "pg_dump exporta esquemas y datos en una transacción consistente (SNAPSHOT ISOLATION) sin bloquear las lecturas o escrituras de los usuarios."
+  },
+  {
+    "id": "pg_069",
+    "difficulty": "medium",
+    "question": "¿Qué utilidad ofrece el comando 'pg_restore' en PostgreSQL?",
+    "options": [
+      "Restaura una base de datos a partir de archivos de respaldo generados por pg_dump en formatos no planos (tar, custom o directory), permitiendo restauración paralela multihilo.",
+      "Recupera archivos borrados del disco duro de la computadora.",
+      "Reinicia la contraseña del usuario root de Linux.",
+      "Desfragmenta la memoria RAM del servidor."
+    ],
+    "correct_index": 0,
+    "hint": "Con 'pg_restore -j 4 -d mi_bd backup.dump', puedes restaurar una base de datos utilizando 4 núcleos de CPU en paralelo, acelerando la recuperación."
+  },
+  {
+    "id": "pg_070",
+    "difficulty": "medium",
+    "question": "En PostgreSQL, ¿qué estructura física representa una 'tabla TOAST' (The Oversized-Attribute Storage Technique)?",
+    "options": [
+      "Una tabla donde se almacenan recetas de cocina del personal de IT.",
+      "Una tabla auxiliar oculta del sistema donde PostgreSQL comprime y almacena en trozos (chunks) los valores de columnas que superan el tamaño umbral de página (habitualmente ~2KB), evitando que filas grandes saturen las páginas normales de 8KB.",
+      "Una memoria intermedia donde se calientan los índices antes de usarlos.",
+      "Una tabla en memoria RAM volátil para pruebas temporales."
+    ],
+    "correct_index": 1,
+    "hint": "TOAST mantiene las páginas de tabla compactas: si un campo de texto o JSON mide 50KB, se comprime y se guarda en trozos en la tabla TOAST asociada, dejando un puntero en la fila principal."
+  },
+  {
+    "id": "pg_071",
+    "difficulty": "medium",
+    "question": "¿Cómo se configura una conexión en PostgreSQL para que cancele automáticamente cualquier consulta que exceda un tiempo límite de ejecución?",
+    "options": [
+      "SET statement_timeout = '5s';",
+      "SET query_kill_time = 5000;",
+      "CANCEL AFTER 5 SECONDS;",
+      "LIMIT EXECUTION TIME 5;"
+    ],
+    "correct_index": 0,
+    "hint": "'statement_timeout' protege a la base de datos de consultas descontroladas que consumen CPU o retienen bloqueos por descuidos del cliente."
+  },
+  {
+    "id": "pg_072",
+    "difficulty": "medium",
+    "question": "En PostgreSQL, ¿para qué sirve la cláusula 'FOREIGN KEY ... ON UPDATE CASCADE'?",
+    "options": [
+      "Para impedir que se actualicen las tablas hijas.",
+      "Para que, si se modifica el valor de la clave primaria en la tabla padre, dicho cambio se propague y actualice automáticamente en todas las filas de las tablas hijas asociadas.",
+      "Para eliminar la tabla padre si se borra una tabla hija.",
+      "Para sincronizar los datos con una base de datos en la nube."
+    ],
+    "correct_index": 1,
+    "hint": "ON UPDATE CASCADE mantiene la integridad referencial actualizando las claves foráneas cuando la clave primaria padre muta de valor."
+  },
+  {
+    "id": "pg_073",
+    "difficulty": "medium",
+    "question": "En PostgreSQL, ¿qué función cumple el parámetro 'lock_timeout'?",
+    "options": [
+      "Bloquea la pantalla de la computadora si el desarrollador se ausenta.",
+      "Establece el tiempo máximo que una sentencia esperará para adquirir un bloqueo sobre una tabla o fila antes de abortar con un error, previniendo que bloqueos acumulados formen cuellos de botella en cascada.",
+      "Apaga el servidor si hay más de 10 usuarios conectados.",
+      "Cifra los bloqueos con certificados X.509."
+    ],
+    "correct_index": 1,
+    "hint": "Fijar 'SET lock_timeout = '2s';' antes de ejecutar una migración DDL evita que tu alter table se quede esperando bloqueos indefinidamente y paralice todo el tráfico de producción."
+  },
+  {
+    "id": "pg_074",
+    "difficulty": "medium",
+    "question": "¿Cuál es la función del proceso demonio 'Background Writer' (bgwriter) en la arquitectura de PostgreSQL?",
+    "options": [
+      "Escribe los correos electrónicos de alerta del sistema.",
+      "Examina periódicamente la memoria shared_buffers y escribe páginas de datos modificadas ('dirty pages') a disco en segundo plano, asegurando que los procesos clientes encuentren páginas limpias disponibles sin tener que escribir a disco ellos mismos.",
+      "Genera los backups nocturnos en formato zip.",
+      "Reescribe el código SQL para hacerlo compatible con MySQL."
+    ],
+    "correct_index": 1,
+    "hint": "El bgwriter desacopla a los procesos de clientes: un worker de cliente no debe sufrir la latencia de hacer flush de páginas sucias a disco cuando necesita leer una nueva página en memoria."
+  },
+  {
+    "id": "pg_075",
+    "difficulty": "medium",
+    "question": "En PostgreSQL, ¿qué permite hacer la extensión 'postgres_fdw' (Foreign Data Wrapper)?",
+    "options": [
+      "Instalar una versión de prueba de Windows Server en un contenedor.",
+      "Consultar, insertar y manipular tablas que residen físicamente en otros servidores de PostgreSQL externos de forma transparente mediante SQL estándar como si fueran tablas locales.",
+      "Traducir las consultas a sentencias GraphQL.",
+      "Impedir conexiones que provengan de países extranjeros."
+    ],
+    "correct_index": 1,
+    "hint": "postgres_fdw implementa el estándar SQL/MED (Management of External Data), permitiendo arquitecturas federadas donde un PostgreSQL consulta datos de otro clúster remoto vía red."
+  },
+  {
+    "id": "pg_076",
+    "difficulty": "advanced",
+    "question": "En el motor MVCC de PostgreSQL, ¿qué información crítica almacenan los encabezados de tupla 'xmin' y 'xmax'?",
+    "options": [
+      "Las coordenadas mínimas y máximas de los píxeles de la pantalla.",
+      "'xmin' almacena el Transaction ID (XID) que insertó la tupla; 'xmax' almacena el XID que la eliminó o actualizó (o 0 si la tupla sigue viva), permitiendo a cada transacción calcular la visibilidad de la tupla según su snapshot.",
+      "Las fechas de caducidad de la sesión del usuario.",
+      "El tamaño mínimo y máximo en kilobytes que la fila puede ocupar en memoria."
+    ],
+    "correct_index": 1,
+    "hint": "Cada tupla en el disco tiene xmin y xmax. Una transacción compara estos XIDs con su propia lista de transacciones activas (snapshot) para saber si la fila es visible o invisible para ella."
+  },
+  {
+    "id": "pg_077",
+    "difficulty": "advanced",
+    "question": "¿Por qué ocurre el fenómeno catastrófico de 'Transaction ID Wraparound' si 'autovacuum' se desactiva en PostgreSQL y cómo lo previene el proceso de 'Freezing'?",
+    "options": [
+      "Porque el disco se llena de archivos binarios temporales.",
+      "Los Transaction IDs son enteros sin signo de 32 bits (~4 mil millones); debido a la aritmética modular, tras 2 mil millones de transacciones los XIDs antiguos parecerían estar 'en el futuro' y los datos desaparecerían. El 'freeze' marca las tuplas antiguas con una bandera especial (FROZEN) indicando que son visibles para todas las transacciones pasadas y futuras.",
+      "Porque los índices B-Tree se invierten al llegar a 1 millón de registros.",
+      "Porque el sistema operativo Linux reinicia el contador de procesos."
+    ],
+    "correct_index": 1,
+    "hint": "Para evitar que la BD se vuelva inaccesible por wraparound, PostgreSQL tiene autovacuum agresivo de freeze y, en caso extremo, se pone en modo solo lectura para forzar un vacuum manual."
+  },
+  {
+    "id": "pg_078",
+    "difficulty": "advanced",
+    "question": "En PostgreSQL, ¿cuál es la diferencia técnica entre los tipos de índices de vectores 'HNSW' e 'IVFFlat' en la extensión 'pgvector'?",
+    "options": [
+      "HNSW es para texto y IVFFlat es para imágenes en formato RAW.",
+      "HNSW (Hierarchical Navigable Small World) construye un grafo multicapa navegable con altísimo recall y consultas rápidas en memoria a costa de mayor tiempo de construcción y RAM; IVFFlat divide el espacio en listas invertidas mediante clusters k-means, requiriendo menos memoria pero ofreciendo menor recall y necesitando entrenamiento previo.",
+      "IVFFlat solo funciona en discos duros mecánicos.",
+      "HNSW fue desarrollado por Microsoft para SQL Server y no corre en Linux."
+    ],
+    "correct_index": 1,
+    "hint": "HNSW es el estándar moderno en bases de datos vectoriales para embeddings de IA: ofrece una búsqueda por similitud de vecinos más cercanos (ANN) significativamente superior a IVFFlat."
+  },
+  {
+    "id": "pg_079",
+    "difficulty": "advanced",
+    "question": "¿En qué consiste la anomalía de concurrencia 'Write Skew' y qué nivel de aislamiento en PostgreSQL es el ÚNICO capaz de prevenirla sin bloqueos explícitos?",
+    "options": [
+      "Ocurre cuando se escribe en un archivo corrupto; se previene con READ UNCOMMITTED.",
+      "Ocurre cuando dos transacciones concurrentes leen datos solapados, evalúan una restricción de negocio global (ej. 'al menos un médico debe estar de guardia') y actualizan filas disjuntas violando la regla; el único nivel que lo previene automáticamente es 'SERIALIZABLE' mediante SSI.",
+      "Ocurre cuando una clave foránea apunta a dos tablas al mismo tiempo.",
+      "Se soluciona activando el nivel READ COMMITTED con autocommit."
+    ],
+    "correct_index": 1,
+    "hint": "En Write Skew, ni la transacción A ni la B modifican la misma fila (por lo que Repeatable Read no detecta conflicto), pero juntas violan la invariante. Serializable Snapshot Isolation (SSI) detecta la dependencia rw y aborta una con error 40001."
+  },
+  {
+    "id": "pg_080",
+    "difficulty": "advanced",
+    "question": "Al utilizar 'PgBouncer' en modo 'Transaction Pooling', ¿cuál de las siguientes funcionalidades de PostgreSQL queda PROHIBIDA o deja de funcionar de forma segura?",
+    "options": [
+      "Las sentencias SELECT estándar.",
+      "Las sentencias preparadas a nivel de protocolo (prepared statements), variables de sesión con 'SET local_var', tablas temporales y bloqueos consultivos a nivel de sesión (session-level advisory locks), ya que conexiones físicas de backend son compartidas entre diferentes transacciones de distintos clientes.",
+      "Las transacciones que utilicen claves primarias compuestas.",
+      "El uso de índices B-Tree en cláusulas WHERE."
+    ],
+    "correct_index": 1,
+    "hint": "En Transaction Pooling, la conexión con PostgreSQL se devuelve al pool en cuanto termina la transacción. Todo estado de sesión (SET timezone, PREPARE, temporary tables) se pierde o contamina a otro cliente."
+  },
+  {
+    "id": "pg_081",
+    "difficulty": "advanced",
+    "question": "¿Cómo opera la estructura de un índice 'BRIN' (Block Range Index) en PostgreSQL y en qué circunstancias supera ampliamente a un B-Tree?",
+    "options": [
+      "Comprime las palabras clave con el algoritmo Brotli en cada bloque.",
+      "Almacena únicamente el valor mínimo y máximo de la columna para rangos continuos de páginas de disco (por defecto 128 páginas); es sumamente compacto y supera a B-Tree en tablas masivas (cientos de millones de filas) donde los datos se insertan ordenados físicamente (ej. timestamps o IDs autoincrementales).",
+      "Solo funciona en tablas con menos de 100 registros.",
+      "Requiere que el servidor tenga tarjetas gráficas dedicadas de Nvidia."
+    ],
+    "correct_index": 1,
+    "hint": "Un índice B-Tree para mil millones de filas de logs puede pesar 30 GB de RAM. Un índice BRIN para la misma columna puede pesar apenas unos pocos Megabytes y ofrecer búsquedas por rango casi igual de veloces."
+  },
+  {
+    "id": "pg_082",
+    "difficulty": "advanced",
+    "question": "En PostgreSQL, ¿qué es un 'Lock de tipo ACCESS EXCLUSIVE' y qué operaciones concurrentes bloquea?",
+    "options": [
+      "Bloquea únicamente las conexiones que provengan de redes inalámbricas Wi-Fi.",
+      "Es el nivel de bloqueo más restrictivo: prohíbe cualquier operación concurrente sobre la tabla, bloqueando tanto a todas las lecturas (SELECT) como a todas las escrituras (INSERT, UPDATE, DELETE); es adquirido por comandos como DROP TABLE, TRUNCATE y ALTER TABLE (reconstrucciones de tipo de columna).",
+      "Permite lecturas con SELECT pero bloquea escrituras.",
+      "Solo se aplica a tablas temporales en memoria."
+    ],
+    "correct_index": 1,
+    "hint": "AccessExclusiveLock entra en conflicto con todos los demás modos de bloqueo (incluso con AccessShareLock que usa SELECT). Si una consulta tiene este bloqueo, nadie puede leer la tabla."
+  },
+  {
+    "id": "pg_083",
+    "difficulty": "advanced",
+    "question": "¿Qué problema resuelve la técnica de 'Logical Decoding' y la 'Replicación Lógica' en PostgreSQL frente a la Replicación Física tradicional?",
+    "options": [
+      "Permite replicar bases de datos sin necesidad de tener cables de red conectados.",
+      "Permite decodificar las escrituras del WAL en eventos lógicos (INSERT, UPDATE, DELETE) y replicar tablas individuales de forma selectiva hacia diferentes bases de datos, incluso entre distintas versiones mayores de PostgreSQL o hacia sistemas externos como Apache Kafka.",
+      "Elimina la necesidad de escribir transacciones en el archivo WAL.",
+      "Impide que los usuarios vean el código fuente de los procedimientos almacenados."
+    ],
+    "correct_index": 1,
+    "hint": "La replicación física (Streaming) es todo o nada (clona el cluster binario idéntico). La replicación lógica (PUBLICATION/SUBSCRIPTION) permite replicar solo ciertas tablas y admite escrituras locales en la réplica."
+  },
+  {
+    "id": "pg_084",
+    "difficulty": "advanced",
+    "question": "En el planificador de consultas de PostgreSQL, ¿qué impacto tiene el parámetro 'random_page_cost' y por qué debe reducirse de 4.0 a ~1.1 en servidores con almacenamiento SSD/NVMe?",
+    "options": [
+      "Porque los discos SSD no tienen cabezales mecánicos de lectura; el valor por defecto de 4.0 penalizaba el acceso aleatorio asumiendo discos duros mecánicos (HDD), haciendo que el planificador evitara índices B-Tree en favor de escaneos secuenciales innecesarios.",
+      "Porque los discos SSD se desgastan si se ejecutan consultas con joins.",
+      "Porque reduce el costo de la electricidad consumida por la CPU.",
+      "Porque fuerza a PostgreSQL a cifrar los bloques aleatorios con SHA-256."
+    ],
+    "correct_index": 0,
+    "hint": "En HDDs, un salto aleatorio era 4 veces más lento que una lectura secuencial (seq_page_cost = 1.0). En NVMe modernos, el acceso aleatorio es casi tan rápido como el secuencial, por lo que random_page_cost = 1.1 incentiva el uso óptimo de índices."
+  },
+  {
+    "id": "pg_085",
+    "difficulty": "advanced",
+    "question": "¿Para qué sirve el proceso de 'JIT Compilation' (Just-In-Time) introducido en PostgreSQL 11 y cuándo puede ser contraproducente?",
+    "options": [
+      "Compila la base de datos a código ensamblador de Android.",
+      "Utiliza LLVM para compilar expresiones complejas y proyecciones SQL a código máquina nativo durante la ejecución de consultas analíticas pesadas; puede ser contraproducente en consultas transaccionales (OLTP) ultra cortas si el tiempo de compilación supera al tiempo real de ejecución de la consulta.",
+      "Compila los archivos JSON a tablas relacionales.",
+      "Es un sistema para acelerar la instalación de paquetes con apt o pacman."
+    ],
+    "correct_index": 1,
+    "hint": "En OLAP (consultas que procesan millones de tuplas durante minutos), JIT acelera notablemente la evaluación. En OLTP con queries de 1 milisegundo, el overhead de compilar con LLVM (~10ms) puede ralentizar el sistema."
+  },
+  {
+    "id": "pg_086",
+    "difficulty": "advanced",
+    "question": "En PostgreSQL, ¿qué estructura es la 'Visibility Map' (VM) y cómo acelera las consultas 'Index-Only Scan'?",
+    "options": [
+      "Un mapa geográfico de la ubicación de los datacenters de la empresa.",
+      "Un archivo bitmap que registra para cada página del Heap si todas las tuplas contenidas en ella son completamente visibles para todas las transacciones actuales (all-visible); permite que un Index-Only Scan no tenga que visitar el Heap para verificar visibilidad MVCC.",
+      "Una interfaz gráfica para monitorizar procesos con Qt6.",
+      "Un registro de los usuarios que tienen permisos de administrador."
+    ],
+    "correct_index": 1,
+    "hint": "Como los índices no tienen xmin/xmax, un Index-Only Scan debe confirmar visibilidad. Si la Visibility Map marca la página como 'all-visible' (gracias a autovacuum), el motor lee directo del índice sin tocar la tabla."
+  },
+  {
+    "id": "pg_087",
+    "difficulty": "advanced",
+    "question": "¿Qué garantiza el ajuste 'synchronous_commit = off' en PostgreSQL y qué riesgo asume la aplicación?",
+    "options": [
+      "Garantiza que los datos nunca se guarden en disco duro.",
+      "Devuelve éxito inmediato al cliente tras escribir la transacción en el buffer WAL en memoria sin esperar el fsync a disco; la base de datos no se corrompe ante una caída pero se pueden perder transacciones confirmadas de los últimos ~200-500 milisegundos (pierde durabilidad estricta a cambio de un aumento masivo en throughput de inserción).",
+      "Desactiva las claves foráneas de la base de datos.",
+      "Apaga las copias de seguridad automáticas en la nube."
+    ],
+    "correct_index": 1,
+    "hint": "synchronous_commit = off no arriesga la consistencia del clúster (el WAL sigue siendo consistente al recuperarse), pero relaja la 'D' de ACID: puedes perder los últimos cientos de milisegundos de actividad ante corte eléctrico."
+  },
+  {
+    "id": "pg_088",
+    "difficulty": "advanced",
+    "question": "En el mecanismo de particionamiento declarativo, ¿qué sucede si se intenta insertar una fila cuya clave de partición no encaja en ninguno de los rangos definidos y no existe una partición 'DEFAULT'?",
+    "options": [
+      "La fila se guarda en la primera partición alfabética.",
+      "PostgreSQL rechaza la inserción arrojando un error fatal 'no partition of relation found for row'.",
+      "Se crea una partición automática en la nube de AWS.",
+      "La fila se convierte en un archivo de texto en el directorio /tmp."
+    ],
+    "correct_index": 1,
+    "hint": "Siempre es una buena práctica crear una partición 'DEFAULT' (PARTITION OF tabla DEFAULT) para capturar registros fuera de rango y evitar caídas en producción."
+  },
+  {
+    "id": "pg_089",
+    "difficulty": "advanced",
+    "question": "En PostgreSQL, ¿qué diferencia existe entre una función creada con 'VOLATILE', 'STABLE' o 'IMMUTABLE'?",
+    "options": [
+      "VOLATILE se borra al reiniciar; STABLE dura 1 año; IMMUTABLE nunca puede eliminarse.",
+      "IMMUTABLE siempre devuelve el mismo resultado para los mismos argumentos sin tocar la BD (permite preevaluación e índices por expresión); STABLE no puede modificar la BD y devuelve resultados consistentes dentro de una sola consulta (ej. NOW()); VOLATILE puede cambiar en cada llamada y tener efectos secundarios.",
+      "IMMUTABLE solo funciona con variables numéricas.",
+      "No existe diferencia de optimización; son etiquetas documentales."
+    ],
+    "correct_index": 1,
+    "hint": "El optimizador utiliza estas etiquetas para optimizar: funciones IMMUTABLE se reducen a constantes durante la planificación de la consulta. Si etiquetas como IMMUTABLE una función con efectos, generarás bugs severos."
+  },
+  {
+    "id": "pg_090",
+    "difficulty": "advanced",
+    "question": "¿Cómo opera la extensión 'pg_repack' para resolver el problema del bloat (hinchazón de tablas e índices) en PostgreSQL?",
+    "options": [
+      "Borra las tablas y las crea vacías nuevamente.",
+      "Reorganiza y compacta tablas e índices en vivo creando una tabla paralela, capturando cambios concurrentes con triggers de registro y aplicando un rápido intercambio de archivos (swap de catálogos) con un bloqueo mínimo de milisegundos, sin el bloqueo ACCESS EXCLUSIVE masivo de VACUUM FULL.",
+      "Comprime los datos usando el algoritmo WinRAR.",
+      "Mueve los datos a una base de datos NoSQL externa."
+    ],
+    "correct_index": 1,
+    "hint": "pg_repack es la herramienta de facto para combatir bloat severo en producción 24/7 sin detener el servicio ni bloquear a los usuarios."
+  },
+  {
+    "id": "pg_091",
+    "difficulty": "advanced",
+    "question": "En PostgreSQL, ¿qué es un 'Replication Slot' y qué riesgo severo de espacio en disco puede ocasionar si una réplica se desconecta indefinidamente?",
+    "options": [
+      "Una ranura física PCIe para tarjetas de red dedicadas.",
+      "Es un mecanismo que garantiza que el servidor primario retendrá en disco todos los segmentos de WAL necesarios hasta que la réplica confirme su recepción; si la réplica se desconecta y el slot permanece activo, el primario acumulará archivos WAL sin purgar hasta llenar por completo el disco duro (disk full).",
+      "Un espacio de memoria RAM reservado para usuarios VIP.",
+      "Un script de Python que reinicia las conexiones caídas."
+    ],
+    "correct_index": 1,
+    "hint": "Los replication slots previenen que las réplicas queden desfasadas por purgas prematuras del WAL, pero deben monitorizarse estrechamente con alertas para eliminar slots huérfanos antes de que agoten el almacenamiento."
+  },
+  {
+    "id": "pg_092",
+    "difficulty": "advanced",
+    "question": "¿Qué representa la columna 'heap_blks_hit' en la vista 'pg_statio_user_tables' y cómo se calcula el Cache Hit Ratio de una tabla?",
+    "options": [
+      "El número de veces que se ha modificado la tabla por consola.",
+      "El número de accesos a bloques de datos encontrados directamente en la memoria caché (shared_buffers o cache del SO); el Cache Hit Ratio se calcula como: heap_blks_hit / (heap_blks_hit + heap_blks_read), donde valores > 0.99 indican que las consultas se resuelven casi al 100% en RAM.",
+      "La cantidad de veces que el disco duro ha fallado.",
+      "El porcentaje de fragmentación de los índices de texto."
+    ],
+    "correct_index": 1,
+    "hint": "Un Cache Hit Ratio inferior a 0.95 en un sistema OLTP indica que el servidor está haciendo lecturas físicas a disco continuamente y necesita mayor memoria shared_buffers o mejores índices."
+  },
+  {
+    "id": "pg_093",
+    "difficulty": "advanced",
+    "question": "En PostgreSQL, ¿cómo afecta el parámetro 'max_connections' al uso de recursos del sistema operativo a nivel de kernel?",
+    "options": [
+      "Cada conexión en PostgreSQL es atendida por un proceso del sistema operativo independiente ('forked process') y no por un hilo ligero; elevar max_connections a miles satura la CPU por cambios de contexto del planificador del kernel y fragmenta la memoria RAM.",
+      "PostgreSQL es un único proceso monohilo como Node.js y no le afectan las conexiones.",
+      "Solo afecta a los usuarios que utilicen sistemas operativos Windows.",
+      "Reduce automáticamente la velocidad de la tarjeta de red."
+    ],
+    "correct_index": 0,
+    "hint": "La arquitectura 'process-per-connection' de PostgreSQL hace que tener 2000 conexiones concurrentes degrade el rendimiento drásticamente. Lo óptimo es tener max_connections bajo (ej. 100-200) detrás de PgBouncer."
+  },
+  {
+    "id": "pg_094",
+    "difficulty": "advanced",
+    "question": "En PostgreSQL, ¿qué diferencia técnica existe entre una clave foránea validada normalmente y una agregada con 'NOT VALID' seguida de 'VALIDATE CONSTRAINT'?",
+    "options": [
+      "NOT VALID solo se permite en tablas vacías.",
+      "Añadir la constraint con 'NOT VALID' adquiere solo un bloqueo breve para registrar la regla sobre nuevas filas sin escanear los datos existentes; posteriormente, 'VALIDATE CONSTRAINT' escanea la tabla adquiriendo solo un bloqueo SHARE UPDATE EXCLUSIVE que no prohíbe lecturas ni escrituras concurrentes.",
+      "NOT VALID desactiva la clave foránea para siempre.",
+      "VALIDATE CONSTRAINT borra las filas que no cumplan la condición."
+    ],
+    "correct_index": 1,
+    "hint": "Esta es la técnica obligatoria de DevOps para agregar claves foráneas en tablas de producción con cientos de millones de filas sin bloquear el tráfico transaccional."
+  },
+  {
+    "id": "pg_095",
+    "difficulty": "advanced",
+    "question": "¿Para qué se utiliza el parámetro 'maintenance_work_mem' en PostgreSQL?",
+    "options": [
+      "Define la memoria RAM máxima asignada a operaciones de mantenimiento como creación de índices (CREATE INDEX), operaciones de VACUUM masivo y adición de claves foráneas.",
+      "Controla la velocidad del ventilador de refrigeración de la CPU.",
+      "Determina la cantidad de espacio en disco asignada a logs de auditoría.",
+      "Es la memoria reservada exclusivamente para el usuario root del sistema."
+    ],
+    "correct_index": 0,
+    "hint": "maintenance_work_mem suele configurarse mucho más alto que work_mem (ej. 1GB o 2GB) porque pocas operaciones de mantenimiento ocurren simultáneamente y acelera enormemente la construcción de índices y el vacuum."
+  },
+  {
+    "id": "pg_096",
+    "difficulty": "advanced",
+    "question": "En PostgreSQL, ¿qué garantiza la regla de visibilidad de transacciones en el nivel de aislamiento 'REPEATABLE READ' frente a caídas de lecturas no repetibles?",
+    "options": [
+      "Que todas las transacciones se ejecuten en un solo núcleo de CPU.",
+      "El snapshot de la transacción se toma al inicio de la primera consulta no-transaccional de la transacción y se mantiene estático durante toda la duración de la transacción, viendo siempre la misma versión de los datos sin importar los commits de otros clientes posteriores a ese momento.",
+      "Que los datos se dupliquen en un clúster de respaldo en tiempo real.",
+      "Que las conexiones del cliente no puedan ser cerradas por timeout."
+    ],
+    "correct_index": 1,
+    "hint": "En Read Committed, cada consulta individual dentro de una transacción toma un nuevo snapshot fresco. En Repeatable Read, el snapshot se congela al inicio de la transacción."
+  },
+  {
+    "id": "pg_097",
+    "difficulty": "advanced",
+    "question": "En PostgreSQL, ¿qué optimización realiza la técnica 'Index-Only Scan' cuando se encuentra una página con 'all-frozen' en la Visibility Map?",
+    "options": [
+      "Convierte la tabla entera en una vista de solo lectura permanente.",
+      "Sabe que todas las tuplas de esa página son congeladas y universales, omitiendo por completo cualquier verificación de transacción y resolviendo la consulta íntegramente desde la memoria caché del índice con costo mínimo de CPU y E/S.",
+      "Borra los índices del disco para ahorrar espacio.",
+      "Envía una señal de reinicio a las réplicas de streaming."
+    ],
+    "correct_index": 1,
+    "hint": "El estado all-frozen en la Visibility Map permite que autovacuum no vuelva a escanear esa página y que los Index-Only Scans operen con la máxima velocidad teórica posible."
+  },
+  {
+    "id": "pg_098",
+    "difficulty": "advanced",
+    "question": "¿Qué función cumple el proceso 'Checkpointer' en PostgreSQL y qué ocurre durante un checkpoint?",
+    "options": [
+      "Verifica la ortografía de los nombres de las columnas.",
+      "Escribe físicamente en disco todas las páginas de datos sucias ('dirty pages') acumuladas en shared_buffers, genera un registro especial de checkpoint en el WAL y garantiza que los archivos WAL anteriores a ese punto puedan ser reciclados o archivados.",
+      "Reinicia las contraseñas de las cuentas de servicio.",
+      "Comprueba la conectividad de red con los servidores DNS."
+    ],
+    "correct_index": 1,
+    "hint": "El checkpoint delimita el punto de recuperación: tras una caída, PostgreSQL solo necesita reproducir el WAL desde el último checkpoint confirmado en disco."
+  },
+  {
+    "id": "pg_099",
+    "difficulty": "advanced",
+    "question": "En PostgreSQL, ¿por qué es peligroso tener transacciones abiertas de muy larga duración (Idle in Transaction)?",
+    "options": [
+      "Porque consumen el 100% del ancho de banda de la red local.",
+      "Porque retienen su 'xmin' antiguo, impidiendo que el proceso de autovacuum limpie tuplas muertas (dead tuples) generadas después de ese XID en todo el clúster, provocando bloat masivo de tablas e índices y riesgo acelerado de Transaction ID Wraparound.",
+      "Porque borran las claves foráneas de los esquemas secundarios.",
+      "Porque convierten las sentencias SELECT en sentencias DROP TABLE."
+    ],
+    "correct_index": 1,
+    "hint": "Una sola transacción olvidada con 'BEGIN;' retiene el horizonte de XIDs del sistema, congelando el avance de autovacuum en todas las tablas. Para mitigarlo se usa 'idle_in_transaction_session_timeout'."
+  },
+  {
+    "id": "pg_100",
+    "difficulty": "advanced",
+    "question": "¿Qué arquitectura de alta disponibilidad para PostgreSQL implementa 'Patroni'?",
+    "options": [
+      "Un plugin para conectar PostgreSQL con bases de datos Microsoft Access.",
+      "Un gestor de alta disponibilidad basado en un almacén de configuración distribuida (DCS como etcd o Consul) que automatiza la elección de líder mediante consenso, supervisa el streaming replication y ejecuta failovers automáticos a prueba de Split-Brain.",
+      "Un script de cron que copia la carpeta /data a un pendrive USB.",
+      "Un motor de búsqueda de vectores alternativo a pgvector."
+    ],
+    "correct_index": 1,
+    "hint": "Patroni es el estándar de la industria para PostgreSQL HA en producción y Kubernetes: utiliza etcd para asegurar que nunca existan dos nodos primarios escribiendo al mismo tiempo (Split-Brain prevention)."
   }
 ]

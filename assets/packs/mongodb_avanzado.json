@@ -388,5 +388,915 @@
     ],
     "correct_index": 1,
     "hint": "Si creas un índice con Collation { locale: 'es', strength: 1 } (insensible a mayúsculas y acentos), las consultas con find() deben declarar explícitamente esa misma Collation para que el optimizador pueda usar el índice."
+  },
+  {
+    "id": "mongo_031",
+    "difficulty": "basic",
+    "question": "¿Cuál es la función del comando db.collection.find() sin argumentos en MongoDB?",
+    "options": [
+      "Devolver todos los documentos de la colección mediante un cursor",
+      "Eliminar todos los documentos de la colección",
+      "Devolver únicamente el primer documento insertado",
+      "Mostrar las estadísticas de uso de disco de la colección"
+    ],
+    "correct_index": 0,
+    "hint": "find() sin predicado selecciona todos los documentos de una colección y devuelve un cursor para iterar sobre ellos."
+  },
+  {
+    "id": "mongo_032",
+    "difficulty": "basic",
+    "question": "¿Qué método se utiliza para limitar el número de documentos devueltos por una consulta find() en MongoDB?",
+    "options": [
+      ".limit(n)",
+      ".max(n)",
+      ".top(n)",
+      ".take(n)"
+    ],
+    "correct_index": 0,
+    "hint": ".limit(n) especifica el tamaño máximo del conjunto de resultados devuelto por el cursor."
+  },
+  {
+    "id": "mongo_033",
+    "difficulty": "basic",
+    "question": "¿Cómo se ordenan los resultados de una consulta de forma descendente por el campo 'fecha' en MongoDB?",
+    "options": [
+      "db.col.find().sort({ fecha: -1 })",
+      "db.col.find().sort({ fecha: 1 })",
+      "db.col.find().order('fecha DESC')",
+      "db.col.find().reverse('fecha')"
+    ],
+    "correct_index": 0,
+    "hint": "En el método sort(), 1 indica orden ascendente y -1 indica orden descendente."
+  },
+  {
+    "id": "mongo_034",
+    "difficulty": "basic",
+    "question": "¿Qué operador de actualización en MongoDB permite agregar un elemento al final de un array si no existe duplicado?",
+    "options": [
+      "$addToSet",
+      "$push",
+      "$append",
+      "$concat"
+    ],
+    "correct_index": 0,
+    "hint": "$addToSet agrega un elemento a un array sólo si no se encuentra ya presente, tratando el array como un conjunto sin duplicados."
+  },
+  {
+    "id": "mongo_035",
+    "difficulty": "basic",
+    "question": "¿Qué operador de consulta permite comprobar si un campo existe o no en un documento?",
+    "options": [
+      "$exists",
+      "$hasField",
+      "$type",
+      "$defined"
+    ],
+    "correct_index": 0,
+    "hint": "{ campo: { $exists: true } } evalúa la presencia del campo independientemente de si su valor es null o no."
+  },
+  {
+    "id": "mongo_036",
+    "difficulty": "basic",
+    "question": "¿Qué operador lógico en MongoDB realiza una conjunción lógica 'O' (OR) entre varias condiciones?",
+    "options": [
+      "$or",
+      "$either",
+      "$any",
+      "$union"
+    ],
+    "correct_index": 0,
+    "hint": "$or toma un array de dos o más expresiones y selecciona documentos que satisfagan al menos una de ellas."
+  },
+  {
+    "id": "mongo_037",
+    "difficulty": "basic",
+    "question": "¿Qué método se utiliza para contar de forma precisa los documentos que cumplen un filtro en MongoDB?",
+    "options": [
+      "countDocuments(filter)",
+      "length(filter)",
+      "size(filter)",
+      "total(filter)"
+    ],
+    "correct_index": 0,
+    "hint": "countDocuments() es el método estándar recomendado para obtener el conteo exacto según el filtro provisto."
+  },
+  {
+    "id": "mongo_038",
+    "difficulty": "basic",
+    "question": "¿Qué comando permite borrar una base de datos completa junto con todas sus colecciones en MongoDB?",
+    "options": [
+      "db.dropDatabase()",
+      "db.delete()",
+      "DROP DATABASE;",
+      "db.purgeAll()"
+    ],
+    "correct_index": 0,
+    "hint": "db.dropDatabase() elimina la base de datos seleccionada actualmente y libera los archivos asociados en el motor de almacenamiento."
+  },
+  {
+    "id": "mongo_039",
+    "difficulty": "basic",
+    "question": "¿Cuál es el puerto de red por defecto en el que escucha el demonio mongod de MongoDB?",
+    "options": [
+      "27017",
+      "3306",
+      "5432",
+      "6379"
+    ],
+    "correct_index": 0,
+    "hint": "El puerto TCP estándar predeterminado de MongoDB es 27017."
+  },
+  {
+    "id": "mongo_040",
+    "difficulty": "basic",
+    "question": "¿Qué método permite eliminar un solo documento que coincida con el criterio de búsqueda?",
+    "options": [
+      "deleteOne(filter)",
+      "removeOne(filter)",
+      "drop(filter)",
+      "pop(filter)"
+    ],
+    "correct_index": 0,
+    "hint": "deleteOne() elimina como máximo un documento que cumpla el filtro provisto, incluso si hay múltiples coincidencias."
+  },
+  {
+    "id": "mongo_041",
+    "difficulty": "medium",
+    "question": "¿Qué operador de actualización permite incrementar o decrementar un valor numérico de forma atómica en un documento?",
+    "options": [
+      "$inc",
+      "$add",
+      "$plus",
+      "$step"
+    ],
+    "correct_index": 0,
+    "hint": "{ $inc: { visitas: 1 } } incrementa atómicamente el campo sin necesidad de leer y reescribir el documento completo."
+  },
+  {
+    "id": "mongo_042",
+    "difficulty": "medium",
+    "question": "¿Qué operador de array permite eliminar el último o primer elemento de una lista en MongoDB?",
+    "options": [
+      "$pop",
+      "$shift",
+      "$pull",
+      "$slice"
+    ],
+    "correct_index": 0,
+    "hint": "{ $pop: { items: 1 } } elimina el último elemento del array, y { $pop: { items: -1 } } elimina el primero."
+  },
+  {
+    "id": "mongo_043",
+    "difficulty": "medium",
+    "question": "¿Qué operador en MongoDB permite eliminar todos los elementos de un array que coincidan con un valor o condición especificada?",
+    "options": [
+      "$pull",
+      "$removeElement",
+      "$filter",
+      "$deleteFromArray"
+    ],
+    "correct_index": 0,
+    "hint": "$pull remueve todas las instancias de valores o elementos que cumplan una condición especificada de un array existente."
+  },
+  {
+    "id": "mongo_044",
+    "difficulty": "medium",
+    "question": "¿Cuál es la utilidad del operador de posición posicional '$' en actualizaciones de arrays en MongoDB?",
+    "options": [
+      "Identifica el primer elemento del array que coincidió con la condición del query para actualizar sólo ese elemento",
+      "Agrega un elemento al final del array",
+      "Representa el tamaño total del array",
+      "Multiplica todos los elementos numéricos del array"
+    ],
+    "correct_index": 0,
+    "hint": "El operador posicional $ actúa como un marcador de posición para el primer elemento que coincidió con la cláusula de búsqueda (ej. 'items.$.precio')."
+  },
+  {
+    "id": "mongo_045",
+    "difficulty": "medium",
+    "question": "¿Qué diferencia existe entre el operador posicional '$' y el operador '$[]' (all positional) introducido en MongoDB 3.6?",
+    "options": [
+      "'$' actualiza sólo el primer elemento coincidente, mientras que '$[]' actualiza todos los elementos del array en el documento",
+      "'$[]' solo funciona en agregaciones",
+      "'$' borra el array y '$[]' lo duplica",
+      "No hay diferencia técnica entre ambos"
+    ],
+    "correct_index": 0,
+    "hint": "El operador all positional ($[]) indica que la modificación debe aplicarse a absolutamente todos los elementos del array de forma masiva."
+  },
+  {
+    "id": "mongo_046",
+    "difficulty": "medium",
+    "question": "En la agregación de MongoDB, ¿cuál es la función de la etapa $lookup?",
+    "options": [
+      "Realizar una unión (left outer join) con otra colección en la misma base de datos para incrustar documentos relacionados",
+      "Buscar palabras clave en índices de texto inverso",
+      "Compilar código JavaScript en el servidor",
+      "Generar un reporte de logs del sistema"
+    ],
+    "correct_index": 0,
+    "hint": "$lookup ejecuta una operación de left outer join trayendo documentos de una colección de destino que coincidan con una clave de enlace."
+  },
+  {
+    "id": "mongo_047",
+    "difficulty": "medium",
+    "question": "¿Para qué se utiliza la etapa $unwind en el Aggregation Pipeline de MongoDB?",
+    "options": [
+      "Descompone un campo de tipo array en múltiples documentos, generando un documento por cada elemento del array",
+      "Revierte las transacciones que hayan fallado",
+      "Comprime los documentos en formato gzip",
+      "Ordena los documentos en reversa"
+    ],
+    "correct_index": 0,
+    "hint": "$unwind deconstruye un campo array desde los documentos de entrada para emitir un documento de salida por cada elemento."
+  },
+  {
+    "id": "mongo_048",
+    "difficulty": "medium",
+    "question": "¿Qué etapa del Aggregation Pipeline se utiliza para renombrar, añadir o calcular nuevos campos preservando o filtrando columnas?",
+    "options": [
+      "$project (o $addFields)",
+      "$select",
+      "$transform",
+      "$map"
+    ],
+    "correct_index": 0,
+    "hint": "$project remoldea el documento especificando qué campos incluir, excluir o calcular; $addFields agrega campos manteniendo los existentes."
+  },
+  {
+    "id": "mongo_049",
+    "difficulty": "medium",
+    "question": "¿Qué es un índice 'Multikey' en MongoDB?",
+    "options": [
+      "Un índice creado sobre un campo cuyo valor es un array, indexando cada elemento individual dentro del árbol B",
+      "Un índice protegido con múltiples claves criptográficas",
+      "Un índice que agrupa más de 50 colecciones",
+      "Un índice temporal que se elimina tras cada consulta"
+    ],
+    "correct_index": 0,
+    "hint": "Cuando se indexa un campo que contiene arrays, MongoDB crea automáticamente un índice multikey que almacena una entrada de índice por cada elemento del array."
+  },
+  {
+    "id": "mongo_050",
+    "difficulty": "medium",
+    "question": "¿Qué restricción fundamental aplica a los índices compuestos Multikey en MongoDB?",
+    "options": [
+      "Un índice compuesto no puede contener más de un campo cuyo valor sea un array en el mismo documento",
+      "No se permiten cadenas de texto en los índices multikey",
+      "Solo pueden existir en colecciones temporales",
+      "Deben tener obligatoriamente un tamaño menor a 1MB"
+    ],
+    "correct_index": 0,
+    "hint": "MongoDB prohíbe que más de un campo indexado en un índice compuesto sea un array para evitar una explosión combinatoria cartesiana de entradas de índice."
+  },
+  {
+    "id": "mongo_051",
+    "difficulty": "medium",
+    "question": "¿Qué es un índice parcial (Partial Index) en MongoDB y qué beneficio aporta?",
+    "options": [
+      "Indexa únicamente los documentos que cumplen un filtro especificado con 'partialFilterExpression', ahorrando memoria y espacio de almacenamiento",
+      "Un índice que solo guarda la mitad de los bytes de cada clave",
+      "Un índice que solo funciona durante ciertas horas del día",
+      "Un índice que indexa los primeros 100 caracteres de un string"
+    ],
+    "correct_index": 0,
+    "hint": "Los índices parciales reducen el tamaño del índice y el costo de escritura indexando solo documentos relevantes (ej. { status: 'activo' })."
+  },
+  {
+    "id": "mongo_052",
+    "difficulty": "medium",
+    "question": "¿Qué es un índice TTL (Time-To-Live) en MongoDB?",
+    "options": [
+      "Un índice de un solo campo sobre una fecha que elimina automáticamente documentos cuando ha transcurrido un número especificado de segundos",
+      "Un índice que limita la velocidad de conexión del cliente",
+      "Un índice que vence y deja de funcionar tras 24 horas",
+      "Un índice de sesión para llamadas API REST"
+    ],
+    "correct_index": 0,
+    "hint": "Los índices TTL son ideales para sesiones de usuario, cachés temporales y logs de expiración automática mediante un hilo en segundo plano de mongod."
+  },
+  {
+    "id": "mongo_053",
+    "difficulty": "medium",
+    "question": "¿Cómo se crea un índice geoespacial 2dsphere en MongoDB?",
+    "options": [
+      "db.col.createIndex({ ubicacion: \"2dsphere\" })",
+      "db.col.createIndex({ ubicacion: \"geo\" })",
+      "db.col.createIndex({ ubicacion: \"earth\" })",
+      "db.col.createIndex({ ubicacion: \"gps\" })"
+    ],
+    "correct_index": 0,
+    "hint": "Los índices 2dsphere soportan consultas geoespaciales basadas en la geometría esférica de la Tierra utilizando objetos estándar GeoJSON."
+  },
+  {
+    "id": "mongo_054",
+    "difficulty": "medium",
+    "question": "¿Qué operador geoespacial permite encontrar documentos que se encuentran dentro de un polígono GeoJSON específico?",
+    "options": [
+      "$geoWithin",
+      "$near",
+      "$geoIntersects",
+      "$box"
+    ],
+    "correct_index": 0,
+    "hint": "$geoWithin selecciona documentos con datos geoespaciales que caen completamente dentro del límite del polígono delimitado."
+  },
+  {
+    "id": "mongo_055",
+    "difficulty": "medium",
+    "question": "¿Qué herramienta oficial de línea de comandos se utiliza para exportar una colección de MongoDB a un archivo BSON binario comprimido?",
+    "options": [
+      "mongodump",
+      "mongoexport",
+      "bsondump",
+      "mongocopy"
+    ],
+    "correct_index": 0,
+    "hint": "mongodump genera un volcado binario BSON con metadatos exactos de tipos, mientras que mongoexport genera archivos JSON o CSV de texto."
+  },
+  {
+    "id": "mongo_056",
+    "difficulty": "medium",
+    "question": "¿Qué comando restaura una base de datos a partir de archivos BSON generados por mongodump?",
+    "options": [
+      "mongorestore",
+      "mongoimport",
+      "bsonload",
+      "mongorecover"
+    ],
+    "correct_index": 0,
+    "hint": "mongorestore es la contraparte de mongodump para restaurar colecciones e índices preservando fidelidad de tipos BSON."
+  },
+  {
+    "id": "mongo_057",
+    "difficulty": "medium",
+    "question": "En MongoDB, ¿cuál es la función de la etapa $facet en el Aggregation Pipeline?",
+    "options": [
+      "Permite procesar múltiples pipelines de agregación en paralelo sobre el mismo conjunto de documentos de entrada dentro de una sola etapa",
+      "Divide la colección en múltiples bases de datos físicas",
+      "Convierte documentos BSON a tablas relacionales SQL",
+      "Encripta los campos seleccionados con diferentes llaves"
+    ],
+    "correct_index": 0,
+    "hint": "$facet es esencial para implementar navegación facetada y búsquedas complejas con múltiples categorizaciones y conteos en una sola consulta."
+  },
+  {
+    "id": "mongo_058",
+    "difficulty": "medium",
+    "question": "¿Qué ocurre si una etapa $group en MongoDB excede el límite de 100 MB de memoria RAM?",
+    "options": [
+      "La consulta falla por exceso de memoria a menos que se especifique la opción { allowDiskUse: true }",
+      "MongoDB descarta automáticamente los documentos sobrantes",
+      "El servidor reinicia el proceso mongod",
+      "Se transfieren los datos a una base de datos SQLite en disco"
+    ],
+    "correct_index": 0,
+    "hint": "Las etapas de agregación tienen un límite de RAM de 100MB; allowDiskUse: true permite volcar resultados intermedios a archivos temporales en disco."
+  },
+  {
+    "id": "mongo_059",
+    "difficulty": "medium",
+    "question": "¿Qué método permite inspeccionar el plan de ejecución y las etapas de búsqueda de una consulta en MongoDB?",
+    "options": [
+      "db.col.find(...).explain(\"executionStats\")",
+      "db.col.find(...).profile()",
+      "db.col.find(...).debug()",
+      "db.col.find(...).inspectPlan()"
+    ],
+    "correct_index": 0,
+    "hint": ".explain('executionStats') detalla si la búsqueda usó COLLSCAN o IXSCAN, documentos examinados vs devueltos y tiempos de ejecución."
+  },
+  {
+    "id": "mongo_060",
+    "difficulty": "medium",
+    "question": "En la salida de explain() de MongoDB, ¿cuál es la diferencia crucial entre 'COLLSCAN' e 'IXSCAN'?",
+    "options": [
+      "COLLSCAN realiza un escaneo secuencial de toda la colección (sin índice); IXSCAN utiliza un índice de forma eficiente",
+      "COLLSCAN es más rápido porque lee en paralelo",
+      "IXSCAN solo funciona en colecciones sharded",
+      "Son sinónimos de lectura secuencial"
+    ],
+    "correct_index": 0,
+    "hint": "COLLSCAN (Collection Scan) lee cada documento en disco/RAM; IXSCAN (Index Scan) recorre el árbol B del índice buscando claves específicas."
+  },
+  {
+    "id": "mongo_061",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Oplog' (operations log) en un Replica Set de MongoDB y en qué colección especial reside?",
+    "options": [
+      "Una Capped Collection especial en la base de datos 'local' (local.oplog.rs) que registra de forma idempotente todas las escrituras para replicación continua",
+      "Un archivo de texto en el directorio /var/log/mongodb/",
+      "Una tabla de SQLite incrustada en el binario mongod",
+      "Un stream de eventos almacenado en Apache Kafka"
+    ],
+    "correct_index": 0,
+    "hint": "El Oplog registra operaciones en formato idempotente. Si un secundario se cae, al reconectarse lee desde su último timestamp aplicado en el oplog para ponerse al día."
+  },
+  {
+    "id": "mongo_062",
+    "difficulty": "advanced",
+    "question": "¿Qué sucede en un Replica Set si el nodo secundario acumula un retraso (replication lag) mayor a la ventana temporal cubierta por el Oplog del primario?",
+    "options": [
+      "El secundario entra en estado RECOVERING y se vuelve STALE, requiriendo una resincronización inicial completa (Initial Sync) para recuperarse",
+      "El nodo primario deja de aceptar escrituras hasta que el secundario alcance la paridad",
+      "El secundario se promueve automáticamente a primario",
+      "Se borran los datos del nodo primario para igualar al secundario"
+    ],
+    "correct_index": 0,
+    "hint": "Si el puntero del secundario queda fuera del rango disponible en el oplog circular (capped), no puede continuar replicando por stream y debe hacer initial sync."
+  },
+  {
+    "id": "mongo_063",
+    "difficulty": "advanced",
+    "question": "En MongoDB, ¿qué garantiza el Write Concern { w: \"majority\", j: true }?",
+    "options": [
+      "La confirmación de escritura sólo se retorna al cliente cuando la mayoría de los nodos votantes han escrito el cambio en su journal en disco",
+      "La escritura se envía a todos los nodos pero no espera confirmación",
+      "La escritura se descarta si hay más de 3 réplicas",
+      "El documento se encripta con AES-256 antes de guardarse en RAM"
+    ],
+    "correct_index": 0,
+    "hint": "{ w: 'majority', j: true } ofrece la máxima durabilidad contra pérdida de datos ante caídas de nodos o cortes de energía concurrentes."
+  },
+  {
+    "id": "mongo_064",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Read Concern: linearizable' en MongoDB y qué costo de latencia introduce?",
+    "options": [
+      "Garantiza que la lectura refleje los datos confirmados por una mayoría concurrente confirmando en tiempo real con los nodos que el primario no ha sufrido una partición de red",
+      "Lee los datos en orden alfabético de clave primaria",
+      "Elimina la necesidad de usar réplicas",
+      "Convierte las consultas en streams de WebSocket"
+    ],
+    "correct_index": 0,
+    "hint": "linearizable evita lecturas de un nodo primario aislado (stale primary) validando con una ronda de quórum en tiempo de lectura, lo que incrementa la latencia."
+  },
+  {
+    "id": "mongo_065",
+    "difficulty": "advanced",
+    "question": "¿Cómo opera el Read Concern 'majority' con el motor WiredTiger?",
+    "options": [
+      "Lee desde una instantánea (snapshot) en memoria garantizando que los datos han sido confirmados por una mayoría de nodos y son inmunes a un rollback",
+      "Fuerza a consultar físicamente a la mitad más uno de los nodos en cada lectura",
+      "Lee únicamente de nodos secundarios",
+      "Bloquea la colección entera para lecturas concurrentes"
+    ],
+    "correct_index": 0,
+    "hint": "WiredTiger mantiene snapshots basados en timestamps globales de consenso, permitiendo que readConcern majority lea localmente sin consultar a otros nodos en cada query."
+  },
+  {
+    "id": "mongo_066",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Read Preference: nearest' en MongoDB?",
+    "options": [
+      "Enruta las lecturas al miembro del Replica Set con menor latencia de red de ping desde el cliente, sin importar si es primario o secundario",
+      "Lee siempre del nodo con menor espacio en disco",
+      "Enruta al nodo con el identificador de IP numéricamente más bajo",
+      "Fuerza lecturas solo desde localhost"
+    ],
+    "correct_index": 0,
+    "hint": "nearest minimiza la latencia de red en despliegues distribuidos geográficamente (multi-región) a costa de posible eventual consistency si lee de un secundario retrasado."
+  },
+  {
+    "id": "mongo_067",
+    "difficulty": "advanced",
+    "question": "¿Qué componentes componen la arquitectura de un cluster Sharded (horizontalmente particionado) en MongoDB?",
+    "options": [
+      "Enrutadores mongos (query routers), Config Server Replica Set (metadatos de particiones) y Shards (replica sets que almacenan los fragmentos de datos)",
+      "Nodos Master, Slave y Árbitros en un único servidor",
+      "Instancias de Apache Spark y bases de datos Cassandra",
+      "Servidores DNS y balanceadores NGINX"
+    ],
+    "correct_index": 0,
+    "hint": "Los mongos son procesos sin estado que enrutan consultas usando los metadatos de rangos alojados en los Config Servers hacia los shards correspondientes."
+  },
+  {
+    "id": "mongo_068",
+    "difficulty": "advanced",
+    "question": "¿Por qué elegir una Shard Key con valores monótonamente crecientes (como auto-increment o ObjectId) produce el problema de 'Jumbo Chunks' o 'Hotspotting'?",
+    "options": [
+      "Todas las inserciones se dirigen exclusivamente al shard que contiene el rango superior [MaxKey], saturando un único nodo y volviendo inútil el balanceo",
+      "Porque MongoDB no permite índices en campos numéricos en shards",
+      "Porque se sobrepasa el límite de memoria del router mongos",
+      "Porque las claves crecientes provocan corrupción en WiredTiger"
+    ],
+    "correct_index": 0,
+    "hint": "Las claves monotónicas concentran todas las escrituras en un único shard (hotspot). Se mitiga usando Hashed Sharding o shard keys compuestas con alta cardinalidad."
+  },
+  {
+    "id": "mongo_069",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Hashed Sharding' en MongoDB y qué desventaja técnica presenta frente a Range-Based Sharding?",
+    "options": [
+      "Distribuye documentos uniformemente usando un hash MD5 de la clave; sin embargo, las consultas por rango deben dispersarse a todos los shards (scatter-gather)",
+      "Encripta los datos pero impide realizar consultas find()",
+      "Aumenta la velocidad de range queries a expensas de la memoria",
+      "No permite tener réplicas secundarias"
+    ],
+    "correct_index": 0,
+    "hint": "Hashed sharding garantiza distribución perfecta de escrituras, pero obliga a mongos a consultar a todos los shards (scatter-gather) para consultas con operadores $gt, $lt."
+  },
+  {
+    "id": "mongo_070",
+    "difficulty": "advanced",
+    "question": "¿Cómo maneja el 'Balancer' de MongoDB la migración de Chunks entre Shards?",
+    "options": [
+      "Detecta desequilibrios en el número de chunks, copia documentos en segundo plano al shard receptor, sincroniza cambios pendientes y actualiza el Config Server de forma atómica",
+      "Apaga los shards durante 5 minutos para mover los archivos en frío",
+      "Borra los datos del nodo emisor antes de enviarlos por la red",
+      "Utiliza el protocolo BitTorrent entre nodos"
+    ],
+    "correct_index": 0,
+    "hint": "La migración es online: el shard origen transmite documentos al destino, procesa deltas del oplog ocurridos durante la transferencia y adquiere un lock de metadatos para el switch final."
+  },
+  {
+    "id": "mongo_071",
+    "difficulty": "advanced",
+    "question": "En transacciones multi-documento de MongoDB (disponibles desde 4.0/4.2), ¿cuál es el límite temporal por defecto de una transacción antes de expirar?",
+    "options": [
+      "60 segundos (transactionLifetimeLimitSeconds)",
+      "5 minutos",
+      "1 segundo",
+      "No existe límite de tiempo"
+    ],
+    "correct_index": 0,
+    "hint": "transactionLifetimeLimitSeconds (60s por defecto) previene que transacciones largas retengan snapshots de WiredTiger y causen acumulación crítica de memoria y espacio en disco."
+  },
+  {
+    "id": "mongo_072",
+    "difficulty": "advanced",
+    "question": "¿Cómo gestiona el motor WiredTiger la concurrencia a nivel de documento (Document-Level Concurrency)?",
+    "options": [
+      "Implementa control de concurrencia optimista (OCC) y MVCC sin bloqueos de lectura, verificando colisiones de escritura sólo al momento del commit",
+      "Aplica un bloqueo exclusivo a nivel de colección para cada escritura",
+      "Utiliza semáforos del kernel de Linux por cada byte modificado",
+      "Serializa todas las operaciones a través de un único hilo central"
+    ],
+    "correct_index": 0,
+    "hint": "WiredTiger ofrece bloqueos a nivel de documento mediante OCC y multiversioning, permitiendo escrituras concurrentes en distintos documentos de la misma colección sin contención."
+  },
+  {
+    "id": "mongo_073",
+    "difficulty": "advanced",
+    "question": "¿Qué algoritmo de compresión utiliza WiredTiger por defecto para las colecciones de datos?",
+    "options": [
+      "Snappy (con opción de configurar zlib o zstd)",
+      "GZIP con nivel 9 obligatorio",
+      "LZMA",
+      "No comprime los datos por defecto"
+    ],
+    "correct_index": 0,
+    "hint": "Snappy balancea alta velocidad de descompresión con uso moderado de CPU; zlib o zstd ofrecen ratios de compresión más altos pero mayor costo de CPU."
+  },
+  {
+    "id": "mongo_074",
+    "difficulty": "advanced",
+    "question": "¿Qué algoritmo de compresión utiliza WiredTiger por defecto para los índices B-Tree?",
+    "options": [
+      "Compresión de prefijos (Prefix Compression)",
+      "Snappy",
+      "Zstandard",
+      "Brotli"
+    ],
+    "correct_index": 0,
+    "hint": "Los índices usan prefix compression para truncar prefijos idénticos en claves consecutivas dentro de una página B-Tree, maximizando la densidad de memoria en RAM."
+  },
+  {
+    "id": "mongo_075",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la regla de asignación de memoria RAM que utiliza WiredTiger por defecto para su caché interna?",
+    "options": [
+      "50% de (RAM total del sistema - 1 GB), con un mínimo de 256 MB",
+      "90% de la RAM total disponible",
+      "Un tamaño fijo de 2 GB en cualquier sistema",
+      "100% de la memoria swap del sistema operativo"
+    ],
+    "correct_index": 0,
+    "hint": "WiredTiger reserva aproximadamente el 50% de la RAM libre (menos 1GB) para su caché de páginas sin comprimir, dejando el resto al OS para filesystem page cache."
+  },
+  {
+    "id": "mongo_076",
+    "difficulty": "advanced",
+    "question": "¿Qué función cumple el 'Journal' de WiredTiger en MongoDB y con qué frecuencia se sincroniza en disco por defecto?",
+    "options": [
+      "Registra operaciones de escritura entre checkpoints para garantizar durabilidad; se sincroniza a disco cada 100 ms (o al dispararse un Write Concern j: true)",
+      "Almacena las sesiones de red cada 1 hora",
+      "Guarda copias de seguridad cada medianoche",
+      "Guarda únicamente consultas fallidas"
+    ],
+    "correct_index": 0,
+    "hint": "El journal permite recuperar transacciones entre checkpoints (que ocurren cada 60s o 2GB de datos). Con j: true, la confirmación espera al flush físico del journal."
+  },
+  {
+    "id": "mongo_077",
+    "difficulty": "advanced",
+    "question": "¿Qué es la regla de diseño ESR (Equality, Sort, Range) para crear índices compuestos óptimos en MongoDB?",
+    "options": [
+      "Ubicar en el índice primero los campos de igualdad (Exact match), luego los campos de ordenación (Sort), y finalmente los campos de rango (Range)",
+      "Ordenar campos por Encriptación, Seguridad y Redundancia",
+      "Indexar strings primero, luego números y por último booleanos",
+      "Crear tres índices separados para cada tipo de cláusula"
+    ],
+    "correct_index": 0,
+    "hint": "La regla ESR garantiza que el índice filtre primero por valores exactos, proporcione el orden requerido sin 'sort in-memory', y aplique el escaneo de rango acotado."
+  },
+  {
+    "id": "mongo_078",
+    "difficulty": "advanced",
+    "question": "¿Qué ocurre si una consulta con sort() en MongoDB no puede utilizar un índice para ordenar y excede el límite de memoria?",
+    "options": [
+      "Falla con error de memoria (límite de 100 MB para sort en RAM a menos que allowDiskUse esté activado)",
+      "Ordena aleatoriamente los registros sin advertencia",
+      "Crea automáticamente un índice en segundo plano",
+      "Convierte la consulta en una tabla temporal MySQL"
+    ],
+    "correct_index": 0,
+    "hint": "El bloqueo de memoria para ordenación en RAM sin índice es de 100MB. Si se excede y no se activa allowDiskUse, MongoDB aborta la operación."
+  },
+  {
+    "id": "mongo_079",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Covered Query' en MongoDB y cómo se identifica en executionStats?",
+    "options": [
+      "Una consulta donde todos los campos del filtro y de la proyección están en el índice, mostrando totalDocsExamined: 0",
+      "Una consulta que utiliza encriptación de extremo a extremo",
+      "Una consulta que se ejecuta simultáneamente en todos los shards",
+      "Una consulta que abarca más de 10 colecciones"
+    ],
+    "correct_index": 0,
+    "hint": "Si un índice cubre todos los campos retornados (con _id excluido explícitamente si no está en el índice), el motor no lee ningún documento de disco (totalDocsExamined: 0)."
+  },
+  {
+    "id": "mongo_080",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Client-Side Field Level Encryption' (CSFLE) en MongoDB?",
+    "options": [
+      "Cifrado determinista o aleatorio de campos sensibles en el driver del cliente antes de que los datos viajen por la red o lleguen a la base de datos",
+      "La activación de contraseñas de red en mongod.conf",
+      "El uso de SSL/TLS estándar para conexiones TCP",
+      "Un algoritmo para comprimir documentos JSON"
+    ],
+    "correct_index": 0,
+    "hint": "Con CSFLE, los datos se encriptan con claves gestionadas en KMS (AWS, Vault, Azure) antes de salir de la aplicación; el servidor MongoDB solo almacena texto cifrado ilegible."
+  },
+  {
+    "id": "mongo_081",
+    "difficulty": "advanced",
+    "question": "¿Qué es 'Queryable Encryption' introducido en MongoDB 6.0/7.0?",
+    "options": [
+      "Permite ejecutar consultas de igualdad y rango sobre campos completamente cifrados sin descifrarlos en el servidor ni revelar las llaves de encriptación",
+      "Un motor de búsqueda por texto abierto sin cifrar",
+      "Un protocolo para enviar consultas por SSH",
+      "Un sistema para descifrar contraseñas con GPU"
+    ],
+    "correct_index": 0,
+    "hint": "Queryable Encryption utiliza esquemas criptográficos avanzados que permiten búsquedas ricas sobre datos cifrados sin exponer jamás las claves al servidor de base de datos."
+  },
+  {
+    "id": "mongo_082",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Change Stream' en MongoDB y sobre qué mecanismo interno se apoya?",
+    "options": [
+      "Una API reactiva que permite a las aplicaciones escuchar cambios de datos en tiempo real suscribiéndose al Oplog del Replica Set",
+      "Un log de cambios en el esquema DDL",
+      "Un sistema de migración de datos hacia Redis",
+      "Un comando para cambiar la zona horaria del servidor"
+    ],
+    "correct_index": 0,
+    "hint": "Change Streams aprovechan la infraestructura del Oplog para emitir notificaciones con reanudación por token (resume tokens) garantizando entrega secuencial."
+  },
+  {
+    "id": "mongo_083",
+    "difficulty": "advanced",
+    "question": "¿Qué característica distingue a las 'Time Series Collections' introducidas en MongoDB 5.0?",
+    "options": [
+      "Almacenan automáticamente mediciones temporales secuenciales en un formato columnar optimizado internamente, reduciendo drásticamente el espacio de almacenamiento e IOPS",
+      "Obligan a que los documentos se borren en 60 segundos",
+      "Son colecciones que solo admiten lecturas síncronas",
+      "Solo pueden indexarse por días de la semana"
+    ],
+    "correct_index": 0,
+    "hint": "Las colecciones de series de tiempo agrupan mediciones automáticamente en 'buckets' compactos reduciendo el volumen de metadatos e índices B-Tree."
+  },
+  {
+    "id": "mongo_084",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Clustered Collection' en MongoDB 5.3+?",
+    "options": [
+      "Una colección cuyos documentos se almacenan ordenados físicamente por la clave Clustered Index (normalmente _id), reduciendo I/O en búsquedas y escrituras por rango",
+      "Una colección que solo funciona con más de 10 shards",
+      "Una base de datos montada en memoria compartida",
+      "Una colección distribuida en múltiples nubes"
+    ],
+    "correct_index": 0,
+    "hint": "Al igual que el Clustered Index de MySQL InnoDB, evita una capa de indirección eliminando el índice secundario separado para _id y mejorando el throughput de bulk inserts."
+  },
+  {
+    "id": "mongo_085",
+    "difficulty": "advanced",
+    "question": "¿Qué problema resuelve la técnica de modelado 'Bucket Pattern' en MongoDB para datos IoT o eventos de telemetría?",
+    "options": [
+      "Agrupa múltiples lecturas periódicas en un solo documento por hora o día, evitando crear millones de documentos pequeños y minimizando el tamaño de índices B-Tree",
+      "Guarda los documentos en buckets de Amazon S3 directamente",
+      "Borra documentos viejos mediante hashing",
+      "Convierte lecturas analógicas a digitales"
+    ],
+    "correct_index": 0,
+    "hint": "El Bucket Pattern reduce el footprint de índices y overhead de cabeceras BSON empaquetando arrays de muestras dentro de documentos agregados por periodo."
+  },
+  {
+    "id": "mongo_086",
+    "difficulty": "advanced",
+    "question": "¿En qué consiste el 'Outlier Pattern' en el modelado de datos de MongoDB?",
+    "options": [
+      "Maneja documentos atípicos que superan límites prácticos (ej. un usuario con millones de seguidores) derivando el exceso a una colección de desbordamiento sin penalizar al 99% de casos",
+      "Elimina registros que se desvíen más de 3 desviaciones estándar",
+      "Genera gráficos de dispersión con inteligencia artificial",
+      "Identifica inyecciones de código malicioso"
+    ],
+    "correct_index": 0,
+    "hint": "Permite mantener un esquema embebido óptimo para la gran mayoría de casos normales marcando un flag 'has_overflow: true' para casos extremos que excederían los 16MB."
+  },
+  {
+    "id": "mongo_087",
+    "difficulty": "advanced",
+    "question": "¿Qué impacto tiene la reubicación de documentos en colecciones que no usan WiredTiger o ante un crecimiento desmedido de arrays en esquemas mal diseñados?",
+    "options": [
+      "Provoca fragmentación y copias costosas de documentos cuando exceden el espacio contiguo asignado originalmente",
+      "Elimina el documento automáticamente",
+      "Genera deadlocks irrecuperables en el motor",
+      "Cambia el ObjectId original del documento"
+    ],
+    "correct_index": 0,
+    "hint": "El crecimiento descontrolado de arrays genera constantes reescrituras de páginas enteras y fragmentación de memoria."
+  },
+  {
+    "id": "mongo_088",
+    "difficulty": "advanced",
+    "question": "¿Cómo maneja MongoDB la validación de esquemas (Schema Validation)?",
+    "options": [
+      "Permite definir reglas de validación basadas en JSON Schema estándar mediante la opción 'validator' al crear o modificar colecciones",
+      "Requiere compilar archivos .proto con gRPC",
+      "Solo permite validar tipos mediante código Java externo",
+      "No soporta ninguna validación de esquema por diseño"
+    ],
+    "correct_index": 0,
+    "hint": "Schema Validation usa `$jsonSchema` para imponer tipos de datos, campos requeridos y restricciones regex a nivel de base de datos conservando flexibilidad."
+  },
+  {
+    "id": "mongo_089",
+    "difficulty": "advanced",
+    "question": "¿Qué diferencia existe entre 'validationAction: error' y 'validationAction: warn' en MongoDB?",
+    "options": [
+      "'error' rechaza la inserción o actualización no conforme; 'warn' permite escribir el documento pero registra una advertencia en el log",
+      "'warn' elimina el documento tras 1 hora",
+      "'error' apaga el servidor mongod",
+      "Ambas rechazan la operación pero con diferente código HTTP"
+    ],
+    "correct_index": 0,
+    "hint": "validationAction: 'warn' es ideal para transicionar esquemas legados hacia nuevas reglas estrictas sin romper aplicaciones en producción."
+  },
+  {
+    "id": "mongo_090",
+    "difficulty": "advanced",
+    "question": "¿Qué es la 'Causal Consistency' en sesiones de cliente de MongoDB?",
+    "options": [
+      "Garantiza que una secuencia de operaciones de lectura y escritura respete el orden causal lógico, de modo que una lectura siempre observe escrituras precedentes relacionadas",
+      "Fuerza a que todas las consultas tengan un bloque try-catch",
+      "Verifica la causa física de un error de hardware",
+      "Aplica transacciones ACID a nivel global sin índices"
+    ],
+    "correct_index": 0,
+    "hint": "Las sesiones causalmente consistentes permiten leer de réplicas secundarias garantizando 'Read-Your-Own-Writes' y 'Monotonic Reads' mediante operationTime."
+  },
+  {
+    "id": "mongo_091",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Arbiter' en un Replica Set de MongoDB y por qué su uso moderno está desaconsejado?",
+    "options": [
+      "Un miembro sin datos que solo vota en elecciones; no puede ser usado para lecturas ni ayuda en quórums de Write Concern majority, pudiendo causar bloqueos de balanceo",
+      "Un cortafuegos de red para mongod",
+      "Un hilo interno de compresión de logs",
+      "Un proceso para convertir BSON a JSON"
+    ],
+    "correct_index": 0,
+    "hint": "Los árbitros complican la regla de consenso de mayoría en writeConcern('majority') y pueden llevar a degradaciones graves; la recomendación moderna es usar un nodo de datos real."
+  },
+  {
+    "id": "mongo_092",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Hidden Replica Set Member' en MongoDB?",
+    "options": [
+      "Un miembro secundario con prioridad 0 y hidden: true que replica datos pero es invisible para clientes y nunca se convierte en primario, útil para backups y análisis pesado",
+      "Un nodo encriptado con IP oculta mediante Tor",
+      "Un servidor que solo guarda contraseñas de red",
+      "Un nodo de prueba que se destruye cada hora"
+    ],
+    "correct_index": 0,
+    "hint": "Los nodos ocultos no reciben tráfico de aplicaciones normales ni pueden ser promovidos, protegiendo las copias de seguridad de interferir con la latencia de producción."
+  },
+  {
+    "id": "mongo_093",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Delayed Replica Set Member' (miembro secundario retardado)?",
+    "options": [
+      "Un nodo secundario configurado con 'slaveDelay' / 'secondaryDelaySecs' para reflejar el estado con horas de retraso como defensa contra errores humanos (ej. drops accidentales)",
+      "Un servidor con conexiones de red lentas a propósito",
+      "Un nodo con fallos de hardware en espera de reparación",
+      "Un simulador de latencia para pruebas de integración"
+    ],
+    "correct_index": 0,
+    "hint": "Si alguien ejecuta un DROP DATABASE erróneo, un nodo con 2 horas de retraso permite restaurar los datos antes de que la operación destructiva se replique en él."
+  },
+  {
+    "id": "mongo_094",
+    "difficulty": "advanced",
+    "question": "¿Qué función cumple el comando db.collection.validate({ full: true })?",
+    "options": [
+      "Escanea secuencialmente las estructuras internas de WiredTiger, páginas de índice B-Tree y documentos en disco para detectar corrupciones de almacenamiento",
+      "Verifica la ortografía de los nombres de campos",
+      "Comprueba si las contraseñas de usuarios cumplen requisitos de complejidad",
+      "Valida que todos los tipos de datos sean compatibles con TypeScript"
+    ],
+    "correct_index": 0,
+    "hint": "validate({ full: true }) realiza una verificación exhaustiva de bajo nivel comprobando punteros de página y sumas de verificación en el motor de almacenamiento."
+  },
+  {
+    "id": "mongo_095",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Atlas Search' y qué motor de indexación utiliza internamente?",
+    "options": [
+      "Un motor de búsqueda de texto completo y similitud vectorial basado en Apache Lucene integrado nativamente con MongoDB",
+      "Un algoritmo basado en SQLite FTS3",
+      "Una versión modificada de MySQL MyISAM",
+      "Un crawler web para indexar páginas HTML"
+    ],
+    "correct_index": 0,
+    "hint": "Atlas Search integra Apache Lucene en el mismo proceso/nodo, permitiendo búsquedas fuzzy, facetado, autocompletado y vector search mediante la etapa $search."
+  },
+  {
+    "id": "mongo_096",
+    "difficulty": "advanced",
+    "question": "¿Qué es un índice 'Wildcard' en MongoDB y cuándo se debe usar?",
+    "options": [
+      "Un índice creado con '$**' que indexa automáticamente todos los campos arbitrarios de documentos o subdocumentos con esquemas heterogéneos y dinámicos",
+      "Un índice que coincide con cualquier carácter en expresiones regulares",
+      "Un índice que selecciona documentos al azar",
+      "Un índice temporal para consultas de prueba"
+    ],
+    "correct_index": 0,
+    "hint": "Los índices wildcard ({ 'metadata.$**': 1 }) resuelven el modelado de atributos dinámicos donde los usuarios definen campos personalizados impredecibles."
+  },
+  {
+    "id": "mongo_097",
+    "difficulty": "advanced",
+    "question": "¿Qué diferencia existe entre un cursor tailable estándar y un 'Tailable AwaitData Cursor' en MongoDB?",
+    "options": [
+      "AwaitData bloquea la conexión esperando activamente a que nuevos documentos lleguen a la Capped Collection en lugar de retornar vacío de inmediato",
+      "AwaitData guarda los resultados en una cola de Redis",
+      "AwaitData lee únicamente de shards secundarios",
+      "Son exactamente idénticos en comportamiento de red"
+    ],
+    "correct_index": 0,
+    "hint": "Similar a 'tail -f' en Linux, un cursor tailable awaitData espera datos en el servidor reduciendo el consumo de CPU y polling innecesario de la aplicación."
+  },
+  {
+    "id": "mongo_098",
+    "difficulty": "advanced",
+    "question": "¿Qué ocurre si se intenta actualizar un documento de modo que supere el límite físico BSON de 16 MB?",
+    "options": [
+      "La operación falla inmediatamente arrojando un error de documento demasiado grande (document exceeds maximum size)",
+      "MongoDB comprime automáticamente el documento con Snappy para ajustarlo",
+      "El documento se fragmenta en dos colecciones independientes",
+      "Se trunca el contenido excedente sin advertencia"
+    ],
+    "correct_index": 0,
+    "hint": "El límite de 16MB por documento es estricto en BSON; documentos que requieran mayor capacidad deben utilizar GridFS."
+  },
+  {
+    "id": "mongo_099",
+    "difficulty": "advanced",
+    "question": "¿Cómo almacena GridFS archivos grandes que superan el límite de 16 MB en MongoDB?",
+    "options": [
+      "Divide el archivo en fragmentos continuos de 255 KB (chunks) en la colección 'fs.chunks' y almacena los metadatos en 'fs.files'",
+      "Los guarda como archivos binarios sueltos en la carpeta /tmp del sistema operativo",
+      "Los transmite a un servidor FTP externo",
+      "Utiliza compresión ZIP de 64 bits en un solo documento"
+    ],
+    "correct_index": 0,
+    "hint": "GridFS divide ficheros binarios en chunks de 255KB ordenados por n (secuencia) y files_id, permitiendo streaming y lectura por rangos sin cargar todo en RAM."
+  },
+  {
+    "id": "mongo_0100",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Vector Search' en MongoDB y qué algoritmos de indexación utiliza habitualmente?",
+    "options": [
+      "Indexación y búsqueda aproximada de vecinos cercanos (ANN) sobre embeddings de alta dimensión usando algoritmos como HNSW (Hierarchical Navigable Small World)",
+      "Cálculo de matrices numéricas mediante shaders de OpenGL",
+      "Indexación de imágenes SVG en colecciones temporales",
+      "Un algoritmo para comprimir vectores en arrays BSON"
+    ],
+    "correct_index": 0,
+    "hint": "Permite realizar búsquedas semánticas y aplicaciones RAG (Retrieval-Augmented Generation) directamente en MongoDB calculando similitud de coseno o distancia euclidiana sobre grafos HNSW."
   }
 ]

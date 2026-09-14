@@ -284,5 +284,1019 @@
     ],
     "correct_index": 1,
     "hint": "Read-Your-Writes garantiza que una sesión siempre observará sus propias mutaciones, redirigiendo temporalmente las lecturas del usuario al maestro (o forzando sincronización de offset) durante los primeros segundos tras una escritura."
+  },
+  {
+    "id": "db_023",
+    "difficulty": "basic",
+    "question": "¿Qué representa la 'A' de ACID en el contexto de transacciones en bases de datos relacionales?",
+    "options": [
+      "Atomicidad (Atomicity): Todas las operaciones de la transacción se completan con éxito o ninguna se aplica (todo o nada)",
+      "Accesibilidad (Accessibility): La base de datos siempre responde por HTTP",
+      "Automatización (Automation): Los índices se crean solos",
+      "Alineación (Alignment): Los datos se ordenan alfabéticamente"
+    ],
+    "correct_index": 0,
+    "hint": "Atomicidad garantiza que una transacción no deje la base de datos en un estado parcialmente completado."
+  },
+  {
+    "id": "db_024",
+    "difficulty": "basic",
+    "question": "¿Qué representa la 'C' de ACID?",
+    "options": [
+      "Consistencia (Consistency): La transacción sólo transforma la base de datos de un estado válido a otro según todas las reglas y restricciones del esquema",
+      "Concurrencia (Concurrency): Permite miles de usuarios simultáneos",
+      "Compatibilidad (Compatibility): Funciona en todos los sistemas operativos",
+      "Centralización (Centralization): Todo se aloja en un único nodo"
+    ],
+    "correct_index": 0,
+    "hint": "Consistencia asegura que las claves foráneas, tipos, checks y reglas semánticas nunca se violen tras un commit."
+  },
+  {
+    "id": "db_025",
+    "difficulty": "basic",
+    "question": "¿Qué representa la 'I' de ACID?",
+    "options": [
+      "Aislamiento (Isolation): Las operaciones de una transacción en curso son invisibles para otras transacciones concurrentes hasta que se confirme",
+      "Integridad (Integrity): Los datos no pueden ser manipulados por hackers",
+      "Inmutabilidad (Immutability): Ningún dato puede ser editado una vez escrito",
+      "Indexación (Indexing): Todas las columnas tienen árboles B"
+    ],
+    "correct_index": 0,
+    "hint": "Aislamiento define el grado de protección contra interferencias, lecturas sucias y anomalías entre transacciones paralelas."
+  },
+  {
+    "id": "db_026",
+    "difficulty": "basic",
+    "question": "¿Qué representa la 'D' de ACID?",
+    "options": [
+      "Durabilidad (Durability): Una vez confirmada una transacción (COMMIT), los cambios persistirán incluso ante caídas del sistema o cortes de energía",
+      "Distribución (Distribution): Los datos se reparten en múltiples continentes",
+      "Deduplicación (Deduplication): Se eliminan registros repetidos",
+      "Dinámico (Dynamic): El esquema cambia sin reiniciar el servidor"
+    ],
+    "correct_index": 0,
+    "hint": "Durabilidad garantiza que los datos confirmados queden grabados en almacenamiento no volátil o registros de write-ahead log."
+  },
+  {
+    "id": "db_027",
+    "difficulty": "basic",
+    "question": "¿Qué es una clave primaria (Primary Key) en una tabla relacional?",
+    "options": [
+      "Una columna o conjunto de columnas que identifica de forma unívoca cada fila de una tabla y no permite valores NULL",
+      "La contraseña del usuario administrador de la base de datos",
+      "El nombre de la primera columna definida en el DDL",
+      "Una columna que contiene texto encriptado"
+    ],
+    "correct_index": 0,
+    "hint": "Una clave primaria impone unicidad y no nulabilidad, sirviendo como ancla para relaciones e indexación."
+  },
+  {
+    "id": "db_028",
+    "difficulty": "basic",
+    "question": "¿Qué es una clave foránea (Foreign Key)?",
+    "options": [
+      "Un campo en una tabla que hace referencia a la clave primaria de otra tabla, garantizando integridad referencial",
+      "Una clave importada desde una base de datos en el extranjero",
+      "Un usuario de base de datos con permisos remotos",
+      "Una contraseña compartida entre dos microservicios"
+    ],
+    "correct_index": 0,
+    "hint": "Las foreign keys evitan la existencia de registros huérfanos validando la existencia de la tupla padre enlazada."
+  },
+  {
+    "id": "db_029",
+    "difficulty": "basic",
+    "question": "¿Cuál es la diferencia entre un INNER JOIN y un LEFT JOIN en SQL?",
+    "options": [
+      "INNER JOIN devuelve solo las filas que coinciden en ambas tablas; LEFT JOIN devuelve todas las filas de la izquierda aunque no tengan coincidencia a la derecha",
+      "INNER JOIN es exclusivo para tablas en memoria",
+      "LEFT JOIN no permite usar la cláusula WHERE",
+      "INNER JOIN solo une columnas de tipo entero"
+    ],
+    "correct_index": 0,
+    "hint": "En LEFT JOIN, si no hay correspondencia en la tabla derecha, las columnas de dicha tabla se rellenan con NULL."
+  },
+  {
+    "id": "db_030",
+    "difficulty": "basic",
+    "question": "¿Qué significa la sigla DDL en bases de datos?",
+    "options": [
+      "Data Definition Language (CREATE, ALTER, DROP, TRUNCATE)",
+      "Data Delivery Log",
+      "Dynamic Database Loader",
+      "Distributed Data Layer"
+    ],
+    "correct_index": 0,
+    "hint": "DDL comprende los comandos que definen, modifican o destruyen la estructura y esquemas de los objetos de la base de datos."
+  },
+  {
+    "id": "db_031",
+    "difficulty": "basic",
+    "question": "¿Qué significa la sigla DML en bases de datos?",
+    "options": [
+      "Data Manipulation Language (SELECT, INSERT, UPDATE, DELETE)",
+      "Database Migration Layer",
+      "Direct Memory Lock",
+      "Distributed Multi-node Log"
+    ],
+    "correct_index": 0,
+    "hint": "DML comprende las sentencias que leen o mutan los datos dentro de las tablas existentes sin alterar el esquema."
+  },
+  {
+    "id": "db_032",
+    "difficulty": "basic",
+    "question": "¿Qué significa la sigla DCL en bases de datos?",
+    "options": [
+      "Data Control Language (GRANT, REVOKE para gestión de permisos y roles)",
+      "Database Connection Layer",
+      "Data Cache Limit",
+      "Direct Core Lock"
+    ],
+    "correct_index": 0,
+    "hint": "DCL controla los privilegios de seguridad y acceso a los objetos de la base de datos."
+  },
+  {
+    "id": "db_033",
+    "difficulty": "basic",
+    "question": "¿Qué es la Primera Forma Normal (1NF) en el diseño relacional?",
+    "options": [
+      "Cada columna debe contener solo valores atómicos indivisibles y no debe haber grupos de repetición o arrays dentro de una celda",
+      "Todas las tablas deben tener más de 3 columnas",
+      "Todas las columnas deben ser de tipo VARCHAR",
+      "No puede haber claves foráneas en ninguna tabla"
+    ],
+    "correct_index": 0,
+    "hint": "1NF exige atomicidad: no almacenar listas como 'rojo,verde,azul' en un solo campo."
+  },
+  {
+    "id": "db_034",
+    "difficulty": "basic",
+    "question": "¿Qué exige la Segunda Forma Normal (2NF)?",
+    "options": [
+      "Estar en 1NF y que todas las columnas no clave dependan funcionalmente de la totalidad de la clave primaria (sin dependencia parcial en claves compuestas)",
+      "Tener dos copias de seguridad en servidores separados",
+      "Que cada tabla tenga al menos dos índices",
+      "No utilizar claves foráneas nulas"
+    ],
+    "correct_index": 0,
+    "hint": "2NF elimina la dependencia parcial: ningún atributo puede depender de sólo una parte de una clave primaria compuesta."
+  },
+  {
+    "id": "db_035",
+    "difficulty": "basic",
+    "question": "¿Qué exige la Tercera Forma Normal (3NF)?",
+    "options": [
+      "Estar en 2NF y que ninguna columna no clave dependa transitivamente de la clave primaria a través de otra columna no clave",
+      "Tener un cluster de 3 servidores réplica",
+      "Dividir cada tabla exactamente en 3 particiones",
+      "Tener un máximo de 3 relaciones por tabla"
+    ],
+    "correct_index": 0,
+    "hint": "3NF elimina dependencias transitivas: si A -> B y B -> C, entonces C debe moverse a su propia tabla referenciada por B."
+  },
+  {
+    "id": "db_036",
+    "difficulty": "basic",
+    "question": "¿Qué problema busca resolver la normalización de bases de datos?",
+    "options": [
+      "Reducir la redundancia de datos y prevenir anomalías de inserción, actualización y borrado",
+      "Aumentar el consumo de memoria RAM para mejorar velocidad",
+      "Evitar que los programadores usen claves foráneas",
+      "Comprimir archivos en formato zip"
+    ],
+    "correct_index": 0,
+    "hint": "La normalización evita inconsistencias (ej. actualizar la dirección de un cliente en 10 lugares distintos y olvidar uno)."
+  },
+  {
+    "id": "db_037",
+    "difficulty": "basic",
+    "question": "¿Cuándo se justifica recurrir a la 'Desnormalización' en bases de datos relacionales?",
+    "options": [
+      "Para optimizar el rendimiento de lecturas complejas en sistemas analíticos o de alto tráfico reduciendo el costo de costosos JOINs",
+      "Cuando el disco duro se queda sin espacio",
+      "Cuando la base de datos se migra a la nube",
+      "Cuando se tienen menos de 10 usuarios"
+    ],
+    "correct_index": 0,
+    "hint": "La desnormalización introduce redundancia intencional controlada para evitar uniones de tablas muy costosas en consultas frecuentes."
+  },
+  {
+    "id": "db_038",
+    "difficulty": "basic",
+    "question": "¿Qué es una vista (VIEW) en una base de datos relacional?",
+    "options": [
+      "Una tabla virtual basada en una consulta SQL predefinida que no almacena datos por sí misma",
+      "Una captura de pantalla de la terminal",
+      "Una copia física que se duplica en disco diariamente",
+      "Una interfaz gráfica web generada automáticamente"
+    ],
+    "correct_index": 0,
+    "hint": "Una vista estándar es una consulta guardada con un nombre que se ejecuta dinámicamente cada vez que se referencia."
+  },
+  {
+    "id": "db_039",
+    "difficulty": "basic",
+    "question": "¿Cuál es la diferencia entre un DELETE y un TRUNCATE en SQL relacional?",
+    "options": [
+      "DELETE es DML, puede tener WHERE y borra fila a fila; TRUNCATE es DDL, vacía toda la tabla desasignando páginas rápidamente",
+      "TRUNCATE permite hacer WHERE col = 5",
+      "DELETE recrea la tabla en disco de inmediato",
+      "Son exactamente idénticos"
+    ],
+    "correct_index": 0,
+    "hint": "TRUNCATE desasigna las páginas completas en el almacenamiento, es mucho más veloz y reinicia contadores secuenciales."
+  },
+  {
+    "id": "db_040",
+    "difficulty": "basic",
+    "question": "¿Qué es un 'Trigger' (disparador) en una base de datos?",
+    "options": [
+      "Un procedimiento procedural que se ejecuta automáticamente en respuesta a eventos de INSERT, UPDATE o DELETE sobre una tabla",
+      "Un script bash que arranca el servidor al reiniciar el SO",
+      "Un botón en la interfaz gráfica del cliente de base de datos",
+      "Una alerta enviada por correo electrónico"
+    ],
+    "correct_index": 0,
+    "hint": "Los triggers ejecutan lógica transaccional antes (BEFORE) o después (AFTER) de modificaciones de datos para auditar o forzar integridad."
+  },
+  {
+    "id": "db_041",
+    "difficulty": "medium",
+    "question": "¿Qué establece el Teorema CAP (Teorema de Brewer) para sistemas de bases de datos distribuidas?",
+    "options": [
+      "Un sistema distribuido solo puede garantizar simultáneamente como máximo dos de las siguientes tres propiedades: Consistencia (C), Disponibilidad (A) y Tolerancia a Particiones (P)",
+      "Un cluster no puede tener más de 3 computadoras",
+      "Todas las consultas deben responderse en menos de 3 microsegundos",
+      "La capacidad de almacenamiento se duplica cada 18 meses"
+    ],
+    "correct_index": 0,
+    "hint": "Como las particiones de red son inevitables en sistemas reales distribuidos (P), el sistema debe elegir entre Consistencia estricta (CP) o Disponibilidad continua (AP)."
+  },
+  {
+    "id": "db_042",
+    "difficulty": "medium",
+    "question": "¿Qué amplía el Teorema PACELC sobre el clásico Teorema CAP?",
+    "options": [
+      "Si hay Partición (P) se elige entre Disponibilidad (A) o Consistencia (C); si no la hay (Else - E), se elige entre Latencia (L) o Consistencia (C)",
+      "Añade Criptografía y Elasticidad a la ecuación",
+      "Regula el precio del almacenamiento en la nube",
+      "Determina el consumo de energía eléctrica de los clusters"
+    ],
+    "correct_index": 0,
+    "hint": "PACELC modela el compromiso de la base de datos en tiempos de operación normal sin particiones (balance entre responder ultra rápido con lecturas eventuales o esperar a consenso)."
+  },
+  {
+    "id": "db_043",
+    "difficulty": "medium",
+    "question": "¿Qué describe el acrónimo BASE en bases de datos NoSQL?",
+    "options": [
+      "Basically Available, Soft state, Eventual consistency (Básicamente disponible, estado flexible, consistencia eventual)",
+      "Binary Array Storage Engine",
+      "Basic Asynchronous SQL Execution",
+      "Broadcast All Servers Equally"
+    ],
+    "correct_index": 0,
+    "hint": "BASE es la contraparte pragmática de ACID en sistemas masivamente escalables que priorizan disponibilidad sobre consistencia inmediata."
+  },
+  {
+    "id": "db_044",
+    "difficulty": "medium",
+    "question": "¿Cuál es la diferencia fundamental de propósito entre sistemas OLTP y OLAP?",
+    "options": [
+      "OLTP procesa un gran volumen de transacciones cortas y concurrentes de lectura/escritura (operacional); OLAP ejecuta consultas complejas y pesadas sobre datos históricos para análisis",
+      "OLTP es para almacenar fotos y OLAP para texto",
+      "OLAP solo se usa en smartphones y OLTP en servidores mainframe",
+      "OLTP no soporta SQL y OLAP sí"
+    ],
+    "correct_index": 0,
+    "hint": "OLTP (Online Transaction Processing) prioriza baja latencia por fila; OLAP (Online Analytical Processing) prioriza escaneos masivos de columnas y agregaciones."
+  },
+  {
+    "id": "db_045",
+    "difficulty": "medium",
+    "question": "¿Por qué las bases de datos columnares (como ClickHouse o Amazon Redshift) son mucho más rápidas que las orientadas a filas para consultas OLAP?",
+    "options": [
+      "Almacenan los datos de una misma columna de forma contigua en disco, leyendo únicamente las columnas requeridas por la consulta y logrando tasas de compresión masivas",
+      "Porque no admiten consultas con WHERE",
+      "Porque guardan todo en memoria caché L1 de la CPU",
+      "Porque prescinden totalmente de claves primarias"
+    ],
+    "correct_index": 0,
+    "hint": "Si una tabla tiene 200 columnas y una consulta analítica calcula AVG(ventas), el motor columnar solo lee la columna 'ventas' sin escanear los gigabytes de las otras 199 columnas."
+  },
+  {
+    "id": "db_046",
+    "difficulty": "medium",
+    "question": "¿Qué es un índice B-Tree (o B+ Tree) y por qué es el estándar universal en bases de datos relacionales?",
+    "options": [
+      "Un árbol balanceado multinivel optimizado para lectura y escritura en bloques de disco, garantizando búsquedas, inserciones y escaneos por rango en tiempo O(log N)",
+      "Un árbol binario que se recompila en C++ cada medianoche",
+      "Una lista enlazada simple de punteros en memoria RAM",
+      "Un algoritmo para comprimir strings"
+    ],
+    "correct_index": 0,
+    "hint": "Con un branching factor alto (cientos de claves por nodo de 4KB-16KB), un B-Tree de solo 3-4 niveles puede indexar miles de millones de filas requiriendo sólo 3-4 saltos de I/O."
+  },
+  {
+    "id": "db_047",
+    "difficulty": "medium",
+    "question": "¿En qué se diferencia fundamentalmente un árbol LSM (Log-Structured Merge-tree) de un B-Tree tradicional?",
+    "options": [
+      "LSM escribe secuencialmente en memoria (MemTable) y confirma a un log continuo (WAL) antes de volcar y compactar en disco (SSTables), optimizando masivamente las escrituras frente a la E/S aleatoria de B-Trees",
+      "LSM no permite almacenar números negativos",
+      "B-Trees no soportan índices secundarios",
+      "LSM solo puede usarse en memorias USB"
+    ],
+    "correct_index": 0,
+    "hint": "B-Trees actualizan páginas in-place generando E/S aleatoria; LSM-trees (Cassandra, RocksDB) convierten escrituras en secuenciales continuas, logrando throughput extremo de inserción."
+  },
+  {
+    "id": "db_048",
+    "difficulty": "medium",
+    "question": "En el contexto de almacenamiento de bases de datos, ¿qué significa 'Write Amplification' (amplificación de escritura)?",
+    "options": [
+      "La proporción entre la cantidad real de bytes escritos físicamente en el almacenamiento subyacente (SSD/disco) y la cantidad de bytes lógicos que la aplicación solicitó escribir",
+      "Aumentar el volumen del altavoz del servidor ante un error de disco",
+      "El número de réplicas en una red de alta disponibilidad",
+      "La duplicación de transacciones en la memoria RAM"
+    ],
+    "correct_index": 0,
+    "hint": "Modificar un entero de 4 bytes en una fila puede obligar a escribir una página de 16KB en InnoDB, además de entradas en el redo log, doublewrite buffer y binlog (Write Amplification > 8x)."
+  },
+  {
+    "id": "db_049",
+    "difficulty": "medium",
+    "question": "¿Qué es la 'Read Amplification' en motores basados en LSM-tree?",
+    "options": [
+      "El fenómeno donde para leer una clave se deben consultar múltiples archivos SSTable en disco y filtros de Bloom si la clave no está en la MemTable",
+      "La velocidad de lectura multiplicada por dos",
+      "El tamaño de la tipografía en la interfaz de usuario",
+      "Un amplificador de señal para cables de fibra óptica"
+    ],
+    "correct_index": 0,
+    "hint": "Como una clave puede estar en cualquier nivel del LSM-tree, las lecturas puntuales o de rango deben inspeccionar múltiples SSTables a menos que los Bloom filters descarten su presencia."
+  },
+  {
+    "id": "db_050",
+    "difficulty": "medium",
+    "question": "¿Cuál es la función del 'WAL' (Write-Ahead Logging) en los motores de base de datos modernos?",
+    "options": [
+      "Escribir secuencialmente en disco la descripción de los cambios antes de aplicarlos a las páginas de datos en memoria, garantizando recuperación sin pérdidas ante un crash",
+      "Escribir los logs del firewall antes de abrir puertos",
+      "Guardar un backup de las fotos de los usuarios",
+      "Comprobar las contraseñas antes del inicio de sesión"
+    ],
+    "correct_index": 0,
+    "hint": "Regla de oro de bases de datos: ninguna página sucia de memoria puede escribirse en almacenamiento permanente hasta que el registro de log correspondiente haya sido sincronizado en disco."
+  },
+  {
+    "id": "db_051",
+    "difficulty": "medium",
+    "question": "¿Qué es la cardinalidad de una columna y cómo impacta en la efectividad de un índice B-Tree?",
+    "options": [
+      "Es el número de valores únicos en la columna; a mayor cardinalidad, más selectivo y efectivo es el índice para acotar la búsqueda",
+      "Es la posición física de la columna en la tabla",
+      "Es el número total de bytes ocupados por el esquema",
+      "Indica si la columna admite números enteros o reales"
+    ],
+    "correct_index": 0,
+    "hint": "Un campo con alta cardinalidad (ej. correo electrónico) descarta casi todas las filas; una columna de baja cardinalidad (ej. género o booleano) suele provocar que el optimizador ignore el índice."
+  },
+  {
+    "id": "db_052",
+    "difficulty": "medium",
+    "question": "¿Qué es el 'Cost-Based Optimizer' (CBO) en un motor de base de datos relacional?",
+    "options": [
+      "El componente que evalúa múltiples planes de ejecución equivalentes asignando un costo estimado (basado en estadísticas de páginas I/O y uso de CPU) para elegir el más eficiente",
+      "Un módulo de contabilidad que factura el costo de las consultas en dólares",
+      "Un sistema para reducir el precio de las licencias de software",
+      "Un algoritmo que borra tablas para ahorrar costes de almacenamiento"
+    ],
+    "correct_index": 0,
+    "hint": "El CBO estima el costo de realizar index scans, nested loops o hash joins utilizando histogramas y estadísticas de distribución de claves."
+  },
+  {
+    "id": "db_053",
+    "difficulty": "medium",
+    "question": "¿Cuáles son los 4 niveles de aislamiento de transacciones estándar definidos por ANSI SQL?",
+    "options": [
+      "Read Uncommitted, Read Committed, Repeatable Read y Serializable",
+      "Low, Medium, High y Ultra",
+      "Shared, Exclusive, Optimistic y Pessimistic",
+      "Single, Multi, Distributed y Global"
+    ],
+    "correct_index": 0,
+    "hint": "Van desde el más permisivo (Read Uncommitted, admite lecturas sucias) hasta el más estricto (Serializable, garantiza equivalencia con ejecución secuencial)."
+  },
+  {
+    "id": "db_054",
+    "difficulty": "medium",
+    "question": "¿Qué es una anomalía de 'Lectura Sucia' (Dirty Read)?",
+    "options": [
+      "Una transacción lee datos no confirmados (uncommitted) de otra transacción que posteriormente realiza un ROLLBACK",
+      "Una lectura interrumpida por un virus informático",
+      "Un fallo físico de sectores en el disco duro",
+      "Una lectura que devuelve caracteres especiales corruptos"
+    ],
+    "correct_index": 0,
+    "hint": "Si la transacción 1 modifica el saldo a 500 pero aborta, y la transacción 2 leyó 500 antes del aborto, la transacción 2 operó con datos que jamás existieron oficialmente."
+  },
+  {
+    "id": "db_055",
+    "difficulty": "medium",
+    "question": "¿Qué es una anomalía de 'Lectura No Repetible' (Non-Repeatable Read)?",
+    "options": [
+      "Una transacción lee una fila, otra transacción modifica esa misma fila y hace COMMIT, y al releerla dentro de la primera transacción, los valores han cambiado",
+      "Una consulta que solo se puede ejecutar una vez por sesión",
+      "Un error al presionar la tecla F5 repetidamente",
+      "Una consulta que arroja error si se repite en menos de 10 segundos"
+    ],
+    "correct_index": 0,
+    "hint": "Repeatable Read previene esta anomalía asegurando que lecturas repetidas de la misma tupla vean una foto inmutable."
+  },
+  {
+    "id": "db_056",
+    "difficulty": "medium",
+    "question": "¿Qué es una anomalía de 'Lectura Fantasma' (Phantom Read)?",
+    "options": [
+      "Una transacción ejecuta una consulta por rango; otra transacción inserta o elimina filas que coinciden con dicho rango y hace COMMIT; al repetir la consulta aparecen o desaparecen filas en el resultado",
+      "Una consulta que lee datos borrados hace más de 10 años",
+      "Un fallo de memoria RAM que muestra datos inexistentes",
+      "Una tabla oculta para el usuario administrador"
+    ],
+    "correct_index": 0,
+    "hint": "A diferencia de Non-Repeatable Read (donde una fila existente muta sus valores), Phantom Read implica el surgimiento de tuplas enteramente nuevas que satisfacen el predicado."
+  },
+  {
+    "id": "db_057",
+    "difficulty": "medium",
+    "question": "¿En qué consiste el 'Write Skew' (sesgo de escritura) en el aislamiento Snapshot Isolation?",
+    "options": [
+      "Dos transacciones concurrentes leen datos solapados y toman decisiones mutuamente contradictorias basadas en la foto anterior, violando una restricción de integridad global sin haber modificado la misma fila",
+      "Un error en el disco al escribir bytes sesgados",
+      "La rotación desigual de los platos del disco duro",
+      "Un desbalance en los hash slots de un cluster"
+    ],
+    "correct_index": 0,
+    "hint": "Ejemplo clásico de guardias: debe haber al menos un médico de guardia. Dos médicos ven que el otro está activo y ambos piden baja simultáneamente. Con Snapshot Isolation ambos confirman y el hospital queda sin médicos."
+  },
+  {
+    "id": "db_058",
+    "difficulty": "medium",
+    "question": "¿Qué es el 'Two-Phase Locking' (2PL) y qué propiedad garantiza?",
+    "options": [
+      "Un protocolo de control de concurrencia donde las transacciones tienen una fase de crecimiento (adquieren locks) y una fase de contracción (liberan locks), garantizando serializabilidad",
+      "Bloquear la base de datos con dos contraseñas distintas",
+      "Dividir cada tabla en dos particiones seguras",
+      "Un algoritmo para cifrar datos en dos rondas AES"
+    ],
+    "correct_index": 0,
+    "hint": "2PL estricto (Strict 2PL) mantiene todos los bloqueos exclusivos hasta el final de la transacción (COMMIT/ROLLBACK), previniendo lecturas en cascada."
+  },
+  {
+    "id": "db_059",
+    "difficulty": "medium",
+    "question": "¿Cuál es la diferencia entre un algoritmo de join 'Nested Loop', 'Hash Join' y 'Merge Join'?",
+    "options": [
+      "Nested Loop itera sobre filas de una tabla buscando en la otra (ideal con índices); Hash Join crea una tabla hash en RAM del conjunto menor; Merge Join une conjuntos pre-ordenados de forma lineal O(N+M)",
+      "Hash Join solo funciona en tablas con claves SHA-256",
+      "Merge Join borra las tablas tras unirlas",
+      "Nested Loop solo soporta como máximo 100 filas"
+    ],
+    "correct_index": 0,
+    "hint": "Merge Join es el más rápido cuando las entradas ya están ordenadas por la clave de unión; Hash Join brilla en grandes volúmenes sin índices; Nested Loop es insustituible para lookups indexados selectivos."
+  },
+  {
+    "id": "db_060",
+    "difficulty": "medium",
+    "question": "¿Qué es la 'Forma Normal de Boyce-Codd' (BCNF)?",
+    "options": [
+      "Una versión más estricta de la 3NF que exige que para toda dependencia funcional no trivial X -> Y, el determinante X debe ser una superclave",
+      "Un formato de compresión binario para esquemas SQL",
+      "Una regla para poner nombres en minúsculas a las tablas",
+      "Un estándar para bases de datos gubernamentales de EE.UU."
+    ],
+    "correct_index": 0,
+    "hint": "BCNF resuelve anomalías de redundancia que 3NF tolera cuando una tabla tiene múltiples claves candidatas compuestas y solapadas."
+  },
+  {
+    "id": "db_061",
+    "difficulty": "advanced",
+    "question": "¿Qué es el algoritmo de recuperación ARIES (Algorithms for Recovery and Isolation Exploiting Semantics)?",
+    "options": [
+      "El paradigma de recuperación post-caída estándar en bases de datos que utiliza tres fases: Análisis (Analysis), Rehacer (Redo / Repeating history) y Deshacer (Undo de transacciones no confirmadas)",
+      "Un protocolo de encriptación cuántica para bases de datos espaciales",
+      "Un motor de búsqueda de constelaciones astronómicas en SQL",
+      "Un sistema de compresión de páginas de memoria RAM"
+    ],
+    "correct_index": 0,
+    "hint": "ARIES introdujo el concepto de 'repeating history during Redo' y Compensation Log Records (CLRs) para garantizar que el crash recovery sea a prueba de fallos recurrentes durante la propia recuperación."
+  },
+  {
+    "id": "db_062",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Compensation Log Record' (CLR) en el algoritmo de recuperación ARIES?",
+    "options": [
+      "Un registro de log escrito durante la fase de Undo al revertir una operación, que apunta al UndoNextLSN para evitar deshacer dos veces la misma acción ante caídas repetidas",
+      "Un registro contable de sueldos en la empresa",
+      "Un ticket de soporte generado ante un error de red",
+      "Un comprobante de pago de licencias de base de datos"
+    ],
+    "correct_index": 0,
+    "hint": "Los CLRs son logs de solo rehacer (redo-only) que hacen que el proceso de abort y recuperación sea estrictamente idempotente y acotado en tiempo."
+  },
+  {
+    "id": "db_063",
+    "difficulty": "advanced",
+    "question": "¿Qué diferencia existe entre las estrategias de gestión de buffer 'STEAL vs NO-STEAL' y 'FORCE vs NO-FORCE'?",
+    "options": [
+      "STEAL permite volcar a disco páginas sucias de transacciones activas; NO-FORCE permite confirmar transacciones sin forzar el volcado inmediato de sus páginas de datos a disco",
+      "STEAL roba contraseñas de red y FORCE apaga el servidor",
+      "NO-FORCE obliga a deshabilitar el log WAL",
+      "Son configuraciones exclusivas de discos mecánicos viejos"
+    ],
+    "correct_index": 0,
+    "hint": "Los motores modernos de alto rendimiento (PostgreSQL, MySQL, Oracle) operan bajo la combinación 'STEAL / NO-FORCE': máxima velocidad desacoplada, respaldada por el WAL y checkpoints."
+  },
+  {
+    "id": "db_064",
+    "difficulty": "advanced",
+    "question": "¿Cómo funciona el protocolo 'Two-Phase Commit' (2PC) en transacciones atómicas distribuidas?",
+    "options": [
+      "Un coordinador envía PREPARE a todos los nodos; si todos responden 'READY', el coordinador emite COMMIT; si alguno falla o emite timeout, emite ROLLBACK a todos",
+      "La base de datos se guarda dos veces seguidas en disco",
+      "Se requiere que dos administradores presionen ENTER al mismo tiempo",
+      "Se replican los datos en dos servidores simultáneamente"
+    ],
+    "correct_index": 0,
+    "hint": "2PC garantiza atomicidad en sistemas distribuidos pero es un protocolo bloqueante: si el coordinador cae tras el prepare, los nodos participantes quedan bloqueados en espera de decisión."
+  },
+  {
+    "id": "db_065",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Three-Phase Commit' (3PC) y qué problema de 2PC busca mitigar?",
+    "options": [
+      "Introduce un estado intermedio 'Pre-Commit' con timeouts para evitar que los nodos queden bloqueados indefinidamente ante la caída del coordinador",
+      "Añade una tercera copia de seguridad en cinta magnética",
+      "Valida las transacciones con 3 hashes de seguridad",
+      "Obliga a que las transacciones se ejecuten tres veces para verificar el resultado"
+    ],
+    "correct_index": 0,
+    "hint": "3PC elimina el bloqueo indefinido asumiendo una red con timeouts acotados, aunque falla si la red sufre particiones arbitrarias."
+  },
+  {
+    "id": "db_066",
+    "difficulty": "advanced",
+    "question": "¿En qué consiste el patrón arquitectónico 'Saga' para transacciones en arquitecturas de microservicios?",
+    "options": [
+      "Una secuencia de transacciones locales coordinadas mediante eventos o un orquestador, donde cada paso exitoso tiene una transacción compensatoria (compensating transaction) asociada si un paso posterior falla",
+      "Un cluster monolítico que centraliza todos los microservicios en una sola base de datos relacional",
+      "Un protocolo de consenso idéntico a Paxos para memoria compartida",
+      "Un sistema para almacenar series de televisión en streaming"
+    ],
+    "correct_index": 0,
+    "hint": "El patrón Saga sustituye el 2PC bloqueante en microservicios implementando consistencia eventual mediante acciones compensatorias (ej. si falla el pago, emitir evento para cancelar reserva de stock)."
+  },
+  {
+    "id": "db_067",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la diferencia entre el patrón Saga basado en 'Coreografía' y basado en 'Orquestación'?",
+    "options": [
+      "En Coreografía los servicios reaccionan a eventos de dominio de forma descentralizada; en Orquestación un servicio centralizado coordina explícitamente el flujo y las compensaciones",
+      "En Coreografía los servicios se programan en Python y en Orquestación en Go",
+      "La Coreografía no admite transacciones compensatorias",
+      "Son sinónimos exactos sin diferencias de diseño"
+    ],
+    "correct_index": 0,
+    "hint": "Coreografía evita un punto único de coordinación pero puede dificultar la trazabilidad; Orquestación (ej. con Camunda o Temporal) centraliza la máquina de estados del flujo de negocio."
+  },
+  {
+    "id": "db_068",
+    "difficulty": "advanced",
+    "question": "¿Qué problema resuelve el patrón 'Transactional Outbox' en arquitecturas distribuidas orientadas a eventos?",
+    "options": [
+      "Garantiza que una modificación en la base de datos y la publicación de su evento correspondiente en un broker (como Kafka) ocurran de forma atómica dentro de la misma transacción local",
+      "Envía correos electrónicos directamente desde el motor SQL",
+      "Evita que se llenen los buzones de entrada de los usuarios",
+      "Acelera las conexiones HTTP de salida"
+    ],
+    "correct_index": 0,
+    "hint": "Guarda el evento en una tabla 'outbox' dentro de la misma transacción de negocio; un relay en segundo plano (CDC con Debezium) lee la tabla y publica al message broker de forma fiable (at-least-once)."
+  },
+  {
+    "id": "db_069",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Change Data Capture' (CDC) y qué tecnología suele implementarlo inspeccionando logs de bajo nivel?",
+    "options": [
+      "La detección y extracción en streaming de modificaciones de datos capturándolas directamente del WAL o binlog (herramientas como Debezium)",
+      "Un software de captura de pantalla para diseñadores de interfaces",
+      "Un trigger en cada tabla que envía peticiones HTTP REST",
+      "Un sistema que graba las sesiones de terminal en video"
+    ],
+    "correct_index": 0,
+    "hint": "CDC lee del log de replicación del motor con impacto casi nulo en CPU, transmitiendo deltas de cambio ordenados hacia data lakes, cachés o brokers de mensajería."
+  },
+  {
+    "id": "db_070",
+    "difficulty": "advanced",
+    "question": "¿Qué es el algoritmo de consenso 'Raft' y cómo garantiza consistencia fuerte en bases de datos distribuidas?",
+    "options": [
+      "Elige un líder mediante votación por mayoría de quórum; el líder centraliza las escrituras, las replica secuencialmente en los logs de los seguidores y solo confirma cuando la mayoría ha persistido el cambio",
+      "Permite que todos los nodos escriban a la vez sin coordinarse",
+      "Utiliza un generador de claves aleatorias para ordenar transacciones",
+      "Asigna el liderazgo al nodo con la dirección MAC más alta"
+    ],
+    "correct_index": 0,
+    "hint": "Raft (utilizado en etcd, CockroachDB, TiKV) ofrece la misma seguridad y garantías que Paxos pero con una estructura comprensible dividida en elección de líder y replicación de log."
+  },
+  {
+    "id": "db_071",
+    "difficulty": "advanced",
+    "question": "¿Cómo maneja Google Spanner la consistencia externa (External Consistency / Linearizability) a escala global?",
+    "options": [
+      "Utiliza la API 'TrueTime', combinando receptores GPS y relojes atómicos en cada centro de datos para acotar la incertidumbre temporal [earliest, latest] con esperas estrictas de commit (commit wait)",
+      "Sincroniza todos los servidores mediante llamadas NTP estándar en internet",
+      "Serializa todas las transacciones del mundo a través de un único servidor maestro en California",
+      "Obliga a que todas las consultas sean de sólo lectura"
+    ],
+    "correct_index": 0,
+    "hint": "TrueTime garantiza que si una transacción T2 comienza después de que T1 concluyó, el timestamp asignado a T2 es estrictamente mayor que el de T1 a nivel mundial."
+  },
+  {
+    "id": "db_072",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Vector Clock' (reloj vectorial) en bases de datos distribuidas?",
+    "options": [
+      "Un vector de contadores lógicos donde cada nodo del cluster mantiene su propio reloj y el de los demás nodos, permitiendo determinar causalidad parcial y detectar escrituras concurrentes conflictivas",
+      "Un reloj digital visible en la consola de comandos",
+      "Un temporizador en microsegundos de la tarjeta gráfica",
+      "Un algoritmo para sincronizar servidores NTP"
+    ],
+    "correct_index": 0,
+    "hint": "Bases de datos como Dynamo o Riak utilizan relojes vectoriales para descubrir bifurcaciones causales y requerir resolución de conflictos en la aplicación (siblings)."
+  },
+  {
+    "id": "db_073",
+    "difficulty": "advanced",
+    "question": "¿Qué son los 'CRDTs' (Conflict-free Replicated Data Types)?",
+    "options": [
+      "Estructuras de datos diseñadas matemáticamente para converger siempre de forma determinista hacia el mismo estado final sin necesidad de coordinación síncrona centralizada entre réplicas",
+      "Tipos de datos protegidos contra ataques de denegación de servicio",
+      "Formatos de compresión para tablas SQL",
+      "Controladores de red para fibra óptica"
+    ],
+    "correct_index": 0,
+    "hint": "Los CRDTs (Operation-based o State-based) se emplean en sistemas offline-first y colaborativos, garantizando que el orden y la duplicación de mensajes no rompan la convergencia de estado."
+  },
+  {
+    "id": "db_074",
+    "difficulty": "advanced",
+    "question": "¿Qué es 'Consistent Hashing' (hashing consistente) y qué beneficio ofrece al redimensionar un cluster de bases de datos distribuidas?",
+    "options": [
+      "Distribuye claves a lo largo de un anillo lógico de 360 grados; al agregar o quitar un nodo, sólo K/N claves necesitan reubicarse en lugar de redistribuir la base de datos completa",
+      "Garantiza que todas las contraseñas usen el mismo salt",
+      "Evita que el algoritmo MD5 sufra colisiones",
+      "Comprime los hashes para que ocupen menos de 4 bytes"
+    ],
+    "correct_index": 0,
+    "hint": "Con un hash tradicional (hash(key) % N), cambiar el número de nodos N reubica casi el 100% de los datos; el hashing consistente solo migra las claves adyacentes al nuevo nodo."
+  },
+  {
+    "id": "db_075",
+    "difficulty": "advanced",
+    "question": "¿Qué es la técnica de 'Virtual Nodes' (vnodes) en el hashing consistente?",
+    "options": [
+      "Asigna múltiples puntos virtuales en el anillo a cada nodo físico para lograr una distribución de carga perfectamente homogénea y mitigar la heterogeneidad de hardware",
+      "Máquinas virtuales de VirtualBox para pruebas",
+      "Servidores DNS falsos para pruebas de red",
+      "Hilos de emulación de Linux en Windows"
+    ],
+    "correct_index": 0,
+    "hint": "Los vnodes evitan que por azar estadístico un servidor absorba segmentos desproporcionadamente grandes del anillo hash (hot-spots)."
+  },
+  {
+    "id": "db_076",
+    "difficulty": "advanced",
+    "question": "¿Qué es la 'Compactación Leveled' (Leveled Compaction) en motores basados en SSTables?",
+    "options": [
+      "Organiza las SSTables en niveles jerárquicos exponenciales (L0, L1, L2...); cada nivel superior multiplica por 10 el tamaño y garantiza claves no solapadas dentro del mismo nivel, reduciendo la amplificación de lectura",
+      "Comprime los datos aplicando compresión gzip al 100%",
+      "Borra los niveles impares cada noche",
+      "Nivela la velocidad de escritura de los discos"
+    ],
+    "correct_index": 0,
+    "hint": "Leveled Compaction (usado en RocksDB) asegura que para una clave dada, a lo sumo se debe inspeccionar un archivo por nivel (L1+), mejorando sustancialmente las lecturas frente a Size-Tiered."
+  },
+  {
+    "id": "db_077",
+    "difficulty": "advanced",
+    "question": "¿Qué es la 'Compactación Size-Tiered' (Size-Tiered Compaction) y cuál es su principal inconveniente?",
+    "options": [
+      "Agrupa SSTables de tamaños similares para fusionarlas; produce alta eficiencia de escritura pero requiere hasta un 50% de espacio libre en disco para la compactación y genera alta amplificación de lectura",
+      "Divide las tablas por número de columnas",
+      "Solo compacta archivos menores a 10KB",
+      "Es un algoritmo obsoleto que ya no se utiliza"
+    ],
+    "correct_index": 0,
+    "hint": "En Size-Tiered (popular en Cassandra para cargas de escritura pesadas), las claves pueden estar repartidas en múltiples SSTables al mismo tiempo, lo que encarece las lecturas puntuales."
+  },
+  {
+    "id": "db_078",
+    "difficulty": "advanced",
+    "question": "¿Qué es una base de datos basada en Grafos (Graph Database) y qué significa que posea 'Index-Free Adjacency'?",
+    "options": [
+      "Cada nodo almacena punteros de memoria directos a sus nodos adyacentes conectados por relaciones, recorriendo conexiones complejas en O(1) pasos sin necesidad de búsquedas globales en índices",
+      "Una base de datos que solo muestra diagramas en canvas de HTML5",
+      "Una base de datos relacional que utiliza grafos en lugar de tablas temporales",
+      "Un motor que no permite crear índices B-Tree"
+    ],
+    "correct_index": 0,
+    "hint": "Index-Free Adjacency (propiedad clave de motores como Neo4j) permite navegar millones de conexiones de red social o dependencias de fraude en tiempo proporcional al subgrafo visitado, no al tamaño global de la BD."
+  },
+  {
+    "id": "db_079",
+    "difficulty": "advanced",
+    "question": "¿Qué es el formato de almacenamiento 'Apache Parquet' y por qué domina los Data Lakes modernos?",
+    "options": [
+      "Un formato columnar abierto que implementa el algoritmo Dremel de Google con compresión eficiente, codificación de diccionario y estadísticas (min/max) por página para saltar lecturas innecesarias (predicate pushdown)",
+      "Un sistema de archivos para servidores Windows",
+      "Un gestor de bases de datos relacionales en memoria",
+      "Un protocolo de streaming de audio en tiempo real"
+    ],
+    "correct_index": 0,
+    "hint": "Parquet almacena datos anidados complejos en formato columnar binario; los motores analíticos como Spark, Trino o DuckDB leen sólo los bytes estrictamente necesarios saltando bloques completos."
+  },
+  {
+    "id": "db_080",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Predicate Pushdown' en motores analíticos y de almacenamiento columnar?",
+    "options": [
+      "La evaluación de las condiciones del filtro WHERE en la capa más baja de lectura física de datos para evitar transferir a la CPU tuplas que no coinciden",
+      "Empujar consultas pesadas a la nube pública",
+      "Ordenar las columnas de la tabla en orden inverso",
+      "Eliminar registros antes de insertarlos"
+    ],
+    "correct_index": 0,
+    "hint": "Si un archivo Parquet indica en sus metadatos que el valor máximo de 'edad' en un bloque es 25 y el query pide edad > 50, el motor salta el bloque completo sin descomprimir ni una fila."
+  },
+  {
+    "id": "db_081",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Data Lakehouse' (como Apache Iceberg, Delta Lake o Apache Hudi)?",
+    "options": [
+      "Una capa transaccional abierta sobre archivos Parquet en almacenamiento de objetos (como S3) que aporta transacciones ACID, versionado (time travel) y evolución de esquemas",
+      "Un edificio físico donde se refrigeran servidores de bases de datos",
+      "Una base de datos relacional MySQL gigante montada en Linux",
+      "Un protocolo para descargar bases de datos por torrent"
+    ],
+    "correct_index": 0,
+    "hint": "Los Lakehouses combinan la economía y escalabilidad del almacenamiento de objetos de los Data Lakes con la fiabilidad transaccional ACID de los Data Warehouses tradicionales."
+  },
+  {
+    "id": "db_082",
+    "difficulty": "advanced",
+    "question": "¿Cómo funciona el 'Time Travel' (viaje en el tiempo) en arquitecturas tipo Apache Iceberg o Delta Lake?",
+    "options": [
+      "Mediante un árbol inmutable de manifiestos y snapshots ordenados cronológicamente; consultar el estado histórico de los datos equivale a leer la lista de archivos activos en dicho snapshot anterior",
+      "Rebobinando físicamente los circuitos de almacenamiento de estado sólido",
+      "Simulando consultas con algoritmos predictivos de inteligencia artificial",
+      "Restaurando una copia de seguridad en una máquina virtual temporal"
+    ],
+    "correct_index": 0,
+    "hint": "Los archivos de datos nunca se sobrescriben (inmutabilidad). Cada commit escribe nuevos archivos Parquet y un manifiesto de metadatos apuntando a la instantánea válida."
+  },
+  {
+    "id": "db_083",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Bloom Filter' y qué complejidad computacional ofrece para comprobaciones de membresía?",
+    "options": [
+      "Una estructura de datos probabilística que comprueba si un elemento pertenece a un conjunto en O(k) operaciones hash de tiempo constante, con posibles falsos positivos pero nunca falsos negativos",
+      "Un filtro que limpia registros de spam en tiempo O(N^2)",
+      "Un índice para imágenes fotográficas",
+      "Un algoritmo para ordenar números reales"
+    ],
+    "correct_index": 0,
+    "hint": "Si el Bloom Filter dice 'No está', el motor de base de datos sabe con 100% de certeza que no existe en el archivo SSTable o página, evitando una lectura costosa de disco."
+  },
+  {
+    "id": "db_084",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Phantom Record' o 'Tombstone' en motores de base de datos basados en append-only o LSM-trees?",
+    "options": [
+      "Un marcador especial insertado para señalar que una clave ha sido eliminada lógicamente, suprimiendo la visibilidad de versiones previas hasta que la compactación física la purgue",
+      "Una fila que aparece espontáneamente por un error de hardware",
+      "Un registro de seguridad que guarda contraseñas borradas",
+      "Un virus informático que oculta datos"
+    ],
+    "correct_index": 0,
+    "hint": "En arquitecturas append-only no se borra físicamente de inmediato; se escribe un tombstone en la punta del log para que lecturas posteriores sepan que el dato fue borrado."
+  },
+  {
+    "id": "db_085",
+    "difficulty": "advanced",
+    "question": "¿Qué es la 'Partición de Hash' frente a la 'Partición de Rango' en bases de datos a gran escala?",
+    "options": [
+      "El hash distribuye uniformemente los datos mitigando hot-spots pero degrada consultas por rango; el particionamiento de rango optimiza búsquedas secuenciales pero puede concentrar tráfico en una sola partición",
+      "La partición de hash solo sirve para contraseñas de red",
+      "La partición de rango borra datos que queden fuera del rango",
+      "Son algoritmos idénticos sin impacto en el rendimiento"
+    ],
+    "correct_index": 0,
+    "hint": "Particionar por fecha (rango) permite truncar particiones viejas rápidamente pero concentra todas las escrituras de hoy en la partición activa; hash dispersa las escrituras pero dispersa los rangos."
+  },
+  {
+    "id": "db_086",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Write-Behind' (o Write-Back) Cache frente a un 'Write-Through' Cache?",
+    "options": [
+      "Write-Through escribe síncronamente en la caché y en la base de datos simultáneamente; Write-Behind escribe en la caché y confirma de inmediato, volcando a la base de datos de forma asíncrona en lotes",
+      "Write-Behind solo se utiliza en discos magnéticos antiguos",
+      "Write-Through no garantiza consistencia en la memoria",
+      "Write-Behind borra los datos tras 5 minutos"
+    ],
+    "correct_index": 0,
+    "hint": "Write-Behind ofrece la menor latencia de escritura y absorbe picos brutales de tráfico, pero arriesga pérdida de datos si la memoria caché falla antes de completar el volcado a la base de datos."
+  },
+  {
+    "id": "db_087",
+    "difficulty": "advanced",
+    "question": "¿Qué problema introduce el fenómeno de 'Split-Brain' en clusters de bases de datos distribuidas?",
+    "options": [
+      "Una partición de red divide el cluster en subgrupos aislados que creen ser el cluster principal, aceptando escrituras conflictivas divergentes de forma independiente",
+      "El microprocesador se divide en dos núcleos lógicos",
+      "La memoria swap entra en conflicto con la memoria caché",
+      "El servidor ejecuta dos versiones de Linux simultáneamente"
+    ],
+    "correct_index": 0,
+    "hint": "Se previene exigiendo quórum de mayoría estricta (N/2 + 1) para cualquier elección o confirmación de escritura; la partición minoritaria se desactiva a sí misma."
+  },
+  {
+    "id": "db_088",
+    "difficulty": "advanced",
+    "question": "¿Qué es el aislamiento 'Snapshot Isolation' y qué garantía clave lo diferencia de SERIALIZABLE estricto?",
+    "options": [
+      "Cada transacción lee de una instantánea estática tomada al inicio de la transacción; previene lecturas sucias, no repetibles y fantasmas, pero es vulnerable al 'Write Skew'",
+      "Snapshot Isolation es exactamente idéntico a Serializable en todos los aspectos formales",
+      "Snapshot Isolation solo permite transacciones de 1 segundo",
+      "No permite realizar operaciones de escritura"
+    ],
+    "correct_index": 0,
+    "hint": "Muchos motores comerciales afirman ser serializables pero en realidad implementan Snapshot Isolation por defecto, admitiendo anomalías de Write Skew a menos que se fuerce SSI."
+  },
+  {
+    "id": "db_089",
+    "difficulty": "advanced",
+    "question": "¿Cómo previene 'Serializable Snapshot Isolation' (SSI) el Write Skew sin utilizar bloqueos pesados de lectura?",
+    "options": [
+      "Rastrea dependencias de lectura y escritura (conflictos rw-antidependencies) en tiempo de ejecución para detectar ciclos en el grafo de serialización, abortando transacciones conflictivas al hacer commit",
+      "Bloquea la tabla completa con LOCK TABLES",
+      "Ejecuta todas las transacciones una detrás de otra en un solo hilo",
+      "Reinicia la base de datos ante cualquier colisión"
+    ],
+    "correct_index": 0,
+    "hint": "SSI (utilizado en PostgreSQL Serializable) combina el rendimiento de lecturas sin bloqueos de MVCC con detección matemática precisa de anomalías de serialización."
+  },
+  {
+    "id": "db_090",
+    "difficulty": "advanced",
+    "question": "¿Qué es la 'Linearizability' (linearizabilidad o consistencia atómica)?",
+    "options": [
+      "La garantía de que toda operación de lectura o escritura aparente ejecutarse de forma instantánea en un único punto global del tiempo entre su invocación y su respuesta",
+      "Que las tablas tengan forma de línea recta en memoria",
+      "Que el servidor procese consultas en una sola línea de comandos",
+      "Que las claves primarias aumenten siempre de 1 en 1"
+    ],
+    "correct_index": 0,
+    "hint": "Linearizability es la garantía de consistencia de un solo objeto más fuerte que existe en computación distribuida: elimina cualquier noción de lecturas obsoletas."
+  },
+  {
+    "id": "db_091",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la diferencia formal entre 'Linearizability' y 'Serializability'?",
+    "options": [
+      "Serializability es una propiedad multi-operación y multi-objeto sobre transacciones sin restricciones de tiempo real; Linearizability es una propiedad de tiempo real sobre operaciones individuales de un único objeto",
+      "Serializability solo se usa en discos de estado sólido",
+      "Linearizability solo se aplica a bases de datos relacionales SQL",
+      "Son términos completamente sinónimos en la literatura académica"
+    ],
+    "correct_index": 0,
+    "hint": "Un sistema puede ser Serializable sin ser Linearizable (las transacciones ocurren en orden secuencial lógico, pero pueden ver estados retrasados en el tiempo real). Combinados forman 'Strict Serializability'."
+  },
+  {
+    "id": "db_092",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Gossip Protocol' (protocolo de chismes) en bases de datos distribuidas como Apache Cassandra?",
+    "options": [
+      "Un protocolo de comunicación punto a punto descentralizado donde los nodos intercambian periódicamente información de estado del cluster con nodos aleatorios, alcanzando consenso eventual de topología",
+      "Un sistema para enviar advertencias de seguridad a los desarrolladores",
+      "Un protocolo de chat para operadores de centros de datos",
+      "Un algoritmo para detectar contraseñas filtradas"
+    ],
+    "correct_index": 0,
+    "hint": "Gossip permite detectar caídas de nodos y difundir cambios de topología de forma robusta, tolerante a fallos y sin un nodo maestro central."
+  },
+  {
+    "id": "db_093",
+    "difficulty": "advanced",
+    "question": "¿Qué es la 'Anti-Entropy Repair' utilizando 'Merkle Trees' en bases de datos distribuidas?",
+    "options": [
+      "Compara árboles de hashes criptográficos entre réplicas para identificar rápidamente y transmitir únicamente las particiones o rangos de claves divergentes sin escanear todos los datos",
+      "Un limpiador de virus informáticos para servidores Linux",
+      "Un algoritmo para ordenar tuplas alfabéticamente",
+      "Un optimizador de energía para procesadores AMD"
+    ],
+    "correct_index": 0,
+    "hint": "Los Merkle Trees reducen drásticamente el tráfico de red durante reparaciones en segundo plano, comparando hashes de ramas principales y bajando en el árbol solo donde hay discordancia."
+  },
+  {
+    "id": "db_094",
+    "difficulty": "advanced",
+    "question": "¿Qué es la arquitectura 'Shared-Nothing' frente a 'Shared-Disk' en bases de datos analíticas masivas?",
+    "options": [
+      "En Shared-Nothing cada nodo posee su propia CPU, RAM y almacenamiento independiente comunicándose solo por red; en Shared-Disk todos los nodos de cómputo comparten un almacenamiento centralizado SAN/NAS",
+      "Shared-Nothing significa que la base de datos es de uso exclusivo de un programador",
+      "Shared-Disk impide que los servidores tengan discos duros",
+      "Shared-Nothing solo funciona en bases de datos en memoria"
+    ],
+    "correct_index": 0,
+    "hint": "Shared-Nothing (Teradata, Greenplum, ClickHouse) escala casi linealmente a miles de nodos al eliminar la contención sobre un bus o canal de disco compartido."
+  },
+  {
+    "id": "db_095",
+    "difficulty": "advanced",
+    "question": "¿Qué es la 'Desagregación de Cómputo y Almacenamiento' (Disaggregated Compute-Storage) en bases de datos modernas como Snowflake o Amazon Aurora?",
+    "options": [
+      "Separar la capa de procesamiento sin estado (nodos de cómputo elásticos) de la capa de persistencia distribuida y replicada (almacenamiento de objetos o storage service dedicado)",
+      "Apagar los procesadores para ahorrar energía cuando no hay consultas",
+      "Desconectar los discos del servidor cada noche",
+      "Borrar los datos de cómputo al reiniciar"
+    ],
+    "correct_index": 0,
+    "hint": "Permite escalar cómputo (subir instancias ante picos de consultas complejas) y almacenamiento de manera totalmente independiente y económica."
+  },
+  {
+    "id": "db_096",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Sparse Index' (índice disperso) frente a un 'Dense Index' (índice denso)?",
+    "options": [
+      "Un índice denso tiene una entrada por cada fila de la tabla; un índice disperso tiene entradas solo para algunos registros (ej. por bloque o página), reduciendo memoria",
+      "Un índice disperso solo guarda números primos",
+      "Un índice denso no permite valores duplicados",
+      "Un índice disperso se almacena en la memoria swap del SO"
+    ],
+    "correct_index": 0,
+    "hint": "Los índices primarios de motores como ClickHouse o SSTables son dispersos (1 entrada cada 8192 filas), requiriendo mínima memoria RAM para navegar a la página correspondiente."
+  },
+  {
+    "id": "db_097",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Slotted Page Architecture' utilizado universalmente para almacenar registros en páginas de disco?",
+    "options": [
+      "La cabecera de la página contiene un array de slots (punteros y longitudes de offset) que crecen hacia adelante, mientras los registros de datos se escriben desde el final de la página hacia atrás",
+      "Una división de la página en sectores circulares concéntricos",
+      "Un formato para tarjetas de memoria SD",
+      "Un sistema de compresión basado en ranuras de tiempo"
+    ],
+    "correct_index": 0,
+    "hint": "Slotted Page permite almacenar registros de longitud variable, desfragmentar el espacio interno moviendo registros y conservar identificadores físicos de tupla estables (page_num, slot_num)."
+  },
+  {
+    "id": "db_098",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Vectorized Execution' (procesamiento vectorial) en motores de consulta analíticos modernos (como DuckDB, ClickHouse o Velox)?",
+    "options": [
+      "Procesa los datos en lotes de columnas (vectores de 1024 valores) en lugar de una tupla a la vez (modelo Volcano), aprovechando instrucciones SIMD de la CPU y reduciendo saltos de función virtual",
+      "Ejecuta consultas en tarjetas gráficas NVIDIA obligatoriamente",
+      "Convierte las consultas en fórmulas matemáticas vectoriales para dibujar gráficos",
+      "Un algoritmo para encriptar columnas con álgebra lineal"
+    ],
+    "correct_index": 0,
+    "hint": "El modelo de iterador tradicional (Volcano, next()) incurre en millones de llamadas a funciones virtuales por consulta; la ejecución vectorial procesa arrays contiguos en registros SIMD a velocidades de gigabytes por segundo."
+  },
+  {
+    "id": "db_099",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'JIT Compilation' (compilación Just-In-Time con LLVM) en motores de base de datos?",
+    "options": [
+      "Compila las expresiones y planes de consulta SQL directamente a código máquina nativo específico para la CPU durante el tiempo de ejecución de la consulta, eliminando la sobrecarga de interpretación",
+      "Descarga librerías de internet justo a tiempo",
+      "Genera código Java para ejecutar en la nube",
+      "Compila el servidor de base de datos antes de instalarlo"
+    ],
+    "correct_index": 0,
+    "hint": "Motores como PostgreSQL o Hyper compilan predicados complejos WHERE a instrucciones ensamblador en caliente, logrando velocidades cercanas al código C nativo."
+  },
+  {
+    "id": "db_0100",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la regla fundamental de diseño para elegir entre una base de datos SQL Relacional y una NoSQL en la ingeniería de software moderna?",
+    "options": [
+      "Elegir SQL relacional cuando se requieren garantías ACID estrictas, integridad referencial y relaciones complejas; elegir NoSQL cuando los patrones de acceso son predecibles y la escala horizontal o modelos de datos flexibles (documentos, grafos, clave-valor) superan las capacidades de un cluster relacional",
+      "Usar siempre NoSQL porque es más moderna y rápida para todo",
+      "Usar siempre SQL porque NoSQL no soporta persistencia en disco",
+      "Elegir basándose exclusivamente en el lenguaje de programación del backend"
+    ],
+    "correct_index": 0,
+    "hint": "No hay una solución universal: la arquitectura moderna favorece la 'Persistencia Políglota', empleando el motor idóneo (SQL para transacciones y pagos, Redis para caché y sesiones, Mongo para catálogos heterogéneos, Elastic/ClickHouse para telemetría)."
   }
 ]

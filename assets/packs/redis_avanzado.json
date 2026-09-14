@@ -388,5 +388,915 @@
     ],
     "correct_index": 1,
     "hint": "Cache Penetration ocurre cuando atacantes consultan millones de IDs que no existen en caché ni en BD, forzando a la BD a hacer búsquedas en disco inútiles. Un Bloom Filter descarta las búsquedas inexistentes en O(1) con cero falsos negativos."
+  },
+  {
+    "id": "redis_031",
+    "difficulty": "basic",
+    "question": "¿Cuál es el comando básico en Redis para verificar si una clave existe en la base de datos?",
+    "options": [
+      "EXISTS clave",
+      "CHECK clave",
+      "HAS clave",
+      "FIND clave"
+    ],
+    "correct_index": 0,
+    "hint": "'EXISTS clave' retorna 1 si la clave existe y 0 si no existe (o el número de claves existentes si se pasan varios argumentos)."
+  },
+  {
+    "id": "redis_032",
+    "difficulty": "basic",
+    "question": "¿Qué comando elimina una o varias claves en Redis?",
+    "options": [
+      "DEL clave [clave ...]",
+      "REMOVE clave",
+      "DROP clave",
+      "UNSET clave"
+    ],
+    "correct_index": 0,
+    "hint": "DEL elimina de forma síncrona las claves especificadas y libera la memoria asociada."
+  },
+  {
+    "id": "redis_033",
+    "difficulty": "basic",
+    "question": "¿Qué comando devuelve el tiempo restante de vida de una clave en segundos en Redis?",
+    "options": [
+      "TTL clave",
+      "PTTL clave",
+      "EXPIRETIME clave",
+      "TIMELEFT clave"
+    ],
+    "correct_index": 0,
+    "hint": "TTL devuelve los segundos restantes (-1 si no tiene expiración fijada, -2 si la clave no existe)."
+  },
+  {
+    "id": "redis_034",
+    "difficulty": "basic",
+    "question": "¿Qué comando devuelve el tipo de estructura de datos asignado a una clave en Redis?",
+    "options": [
+      "TYPE clave",
+      "GETTYPE clave",
+      "INFO clave",
+      "KIND clave"
+    ],
+    "correct_index": 0,
+    "hint": "TYPE retorna representaciones en texto como 'string', 'list', 'set', 'zset', 'hash' o 'stream'."
+  },
+  {
+    "id": "redis_035",
+    "difficulty": "basic",
+    "question": "¿Qué comando borra todas las claves de todas las bases de datos en la instancia de Redis?",
+    "options": [
+      "FLUSHALL",
+      "FLUSHDB",
+      "CLEARALL",
+      "RESET"
+    ],
+    "correct_index": 0,
+    "hint": "FLUSHALL borra absolutamente todas las claves de todos los namespaces numéricos; FLUSHDB solo borra las de la base de datos actual."
+  },
+  {
+    "id": "redis_036",
+    "difficulty": "basic",
+    "question": "¿Cuál es el puerto TCP predeterminado en el que escucha Redis?",
+    "options": [
+      "6379",
+      "5432",
+      "27017",
+      "11211"
+    ],
+    "correct_index": 0,
+    "hint": "6379 corresponde al deletreo mnemotécnico del teléfono de la cantante italiana MERZ (Alessia Merz)."
+  },
+  {
+    "id": "redis_037",
+    "difficulty": "basic",
+    "question": "¿Qué comando agrega uno o varios elementos al inicio (cabeza) de una lista en Redis?",
+    "options": [
+      "LPUSH lista valor",
+      "RPUSH lista valor",
+      "LINSERT lista valor",
+      "LAPPEND lista valor"
+    ],
+    "correct_index": 0,
+    "hint": "LPUSH inserta en el extremo izquierdo (Left push) de la lista."
+  },
+  {
+    "id": "redis_038",
+    "difficulty": "basic",
+    "question": "¿Qué comando extrae y elimina el último elemento (cola) de una lista en Redis?",
+    "options": [
+      "RPOP lista",
+      "LPOP lista",
+      "RREM lista",
+      "RPOLL lista"
+    ],
+    "correct_index": 0,
+    "hint": "RPOP extrae y elimina del extremo derecho (Right pop) de la lista."
+  },
+  {
+    "id": "redis_039",
+    "difficulty": "basic",
+    "question": "¿Qué comando devuelve el número de elementos contenidos en una lista?",
+    "options": [
+      "LLEN lista",
+      "LSIZE lista",
+      "LCOUNT lista",
+      "LENGTH lista"
+    ],
+    "correct_index": 0,
+    "hint": "LLEN devuelve la longitud de la lista en complejidad temporal O(1)."
+  },
+  {
+    "id": "redis_040",
+    "difficulty": "basic",
+    "question": "¿Qué comando permite renombrar una clave existente por un nuevo nombre en Redis?",
+    "options": [
+      "RENAME clave_vieja clave_nueva",
+      "MOVE clave_vieja clave_nueva",
+      "CHANGE clave_vieja clave_nueva",
+      "UPDATE clave_vieja clave_nueva"
+    ],
+    "correct_index": 0,
+    "hint": "RENAME reemplaza atómicamente el nombre de la clave por el nuevo."
+  },
+  {
+    "id": "redis_041",
+    "difficulty": "medium",
+    "question": "¿Cuál es la diferencia entre los comandos DEL y UNLINK en Redis?",
+    "options": [
+      "DEL desasigna y libera la memoria de la clave de forma síncrona (bloqueante), mientras que UNLINK desacopla la clave y libera la memoria en un hilo secundario asíncrono",
+      "UNLINK borra la clave sólo si está expirada",
+      "DEL solo funciona para cadenas y UNLINK para conjuntos",
+      "UNLINK es un alias idéntico de DEL sin cambios internos"
+    ],
+    "correct_index": 0,
+    "hint": "Para claves gigantes (ej. un Set de 10 millones de elementos), DEL bloquea el hilo de eventos de Redis durante segundos; UNLINK desacopla el puntero en O(1) y purga en background (lazy freeing)."
+  },
+  {
+    "id": "redis_042",
+    "difficulty": "medium",
+    "question": "¿Cómo funciona el comando SETNX (o SET key value NX) en Redis?",
+    "options": [
+      "Establece el valor de la clave solo si esta NO existe previamente en la base de datos (Set if Not eXists)",
+      "Establece una clave sin permitir que expire jamás",
+      "Guarda el valor en un cluster externo",
+      "Genera un número autoincremental único"
+    ],
+    "correct_index": 0,
+    "hint": "SETNX es comúnmente usado para primitivas básicas de exclusión mutua y locks distribuidos."
+  },
+  {
+    "id": "redis_043",
+    "difficulty": "medium",
+    "question": "¿Qué comando permite fijar simultáneamente el valor de una clave y su expiración en segundos en una sola operación atómica?",
+    "options": [
+      "SET clave valor EX segundos",
+      "SETEX clave valor segundos",
+      "SET clave valor TTL segundos",
+      "SETPX clave valor segundos"
+    ],
+    "correct_index": 0,
+    "hint": "SET clave valor EX segundos (o SETEX) garantiza la atomicidad entre la asignación y el tiempo de expiración."
+  },
+  {
+    "id": "redis_044",
+    "difficulty": "medium",
+    "question": "En operaciones con Hashes, ¿qué comando obtiene todos los campos y valores de un Hash en Redis?",
+    "options": [
+      "HGETALL clave",
+      "HGET * clave",
+      "HDUMP clave",
+      "HSCAN_ALL clave"
+    ],
+    "correct_index": 0,
+    "hint": "HGETALL retorna una lista alternando campo y valor para todo el hash. En producción con hashes gigantes se recomienda HSCAN para evitar bloqueos."
+  },
+  {
+    "id": "redis_045",
+    "difficulty": "medium",
+    "question": "¿Qué comando incrementa el valor de un campo específico dentro de un Hash de forma atómica?",
+    "options": [
+      "HINCRBY hash campo incremento",
+      "HADD hash campo incremento",
+      "HPLUS hash campo incremento",
+      "HSTEP hash campo incremento"
+    ],
+    "correct_index": 0,
+    "hint": "HINCRBY suma el incremento entero al valor del campo del hash, creándolo si no existe."
+  },
+  {
+    "id": "redis_046",
+    "difficulty": "medium",
+    "question": "¿Qué comando devuelve la cardinalidad (número de miembros) de un Set no ordenado en Redis?",
+    "options": [
+      "SCARD conjunto",
+      "SLEN conjunto",
+      "SCOUNT conjunto",
+      "SSIZE conjunto"
+    ],
+    "correct_index": 0,
+    "hint": "SCARD (Set Cardinality) devuelve el total de miembros únicos en O(1)."
+  },
+  {
+    "id": "redis_047",
+    "difficulty": "medium",
+    "question": "¿Qué comando calcula la intersección entre múltiples conjuntos (Sets) y devuelve los elementos resultantes?",
+    "options": [
+      "SINTER set1 set2",
+      "SDIFF set1 set2",
+      "SUNION set1 set2",
+      "SMERGE set1 set2"
+    ],
+    "correct_index": 0,
+    "hint": "SINTER devuelve los elementos comunes a todos los sets pasados por parámetro."
+  },
+  {
+    "id": "redis_048",
+    "difficulty": "medium",
+    "question": "En un Sorted Set (ZSET), ¿qué comando devuelve un rango de elementos ordenados por su puntuación (score)?",
+    "options": [
+      "ZRANGEBYSCORE zset min max (o ZRANGE zset min max BYSCORE)",
+      "ZSELECT zset min max",
+      "ZFILTER zset min max",
+      "ZGETRANGE zset min max"
+    ],
+    "correct_index": 0,
+    "hint": "ZRANGE con el modificador BYSCORE consulta rangos numéricos continuos de puntaje en tiempo logarítmico O(log(N)+M)."
+  },
+  {
+    "id": "redis_049",
+    "difficulty": "medium",
+    "question": "¿Qué estructura interna utiliza Redis para implementar los Sorted Sets (ZSET) para lograr búsquedas y rangos en O(log N)?",
+    "options": [
+      "Una combinación de una Skip List (lista por saltos) y una Hash Table",
+      "Un árbol B+ persistente en disco",
+      "Un array plano dinámico con búsqueda binaria",
+      "Un árbol Rojo-Negro puro"
+    ],
+    "correct_index": 0,
+    "hint": "La Hash Table ofrece búsquedas O(1) de puntaje por miembro, y la Skip List mantiene los elementos ordenados para escaneos por rango O(log N)."
+  },
+  {
+    "id": "redis_050",
+    "difficulty": "medium",
+    "question": "¿Qué comando bloqueante de listas permite implementar un worker consumidor en un patrón de colas FIFO en Redis?",
+    "options": [
+      "BLPOP lista timeout (o BRPOP)",
+      "BWAIT lista timeout",
+      "BPOLL lista timeout",
+      "BLISTEN lista timeout"
+    ],
+    "correct_index": 0,
+    "hint": "BLPOP extrae un elemento del frente de la lista de forma bloqueante; si la lista está vacía, suspende la conexión hasta que llegue un elemento o expire el timeout."
+  },
+  {
+    "id": "redis_051",
+    "difficulty": "medium",
+    "question": "¿Para qué sirve el comando SCAN (junto con SSCAN, HSCAN, ZSCAN) frente al comando KEYS * en Redis?",
+    "options": [
+      "Permite iterar sobre las claves usando un cursor de forma incremental sin bloquear el servidor en bases de datos con millones de elementos",
+      "Busca claves en todos los clusters de la nube a la vez",
+      "Convierte las claves a minúsculas",
+      "Calcula el hash criptográfico de los datos"
+    ],
+    "correct_index": 0,
+    "hint": "'KEYS *' es peligroso en producción porque recorre toda la memoria bloqueando el event loop de Redis; SCAN pagina los resultados con un cursor sin detener el servidor."
+  },
+  {
+    "id": "redis_052",
+    "difficulty": "medium",
+    "question": "¿Qué estructura probabilística en Redis permite estimar la cardinalidad de conjuntos con miles de millones de elementos únicos usando sólo 12 KB de memoria?",
+    "options": [
+      "HyperLogLog (comandos PFADD, PFCOUNT)",
+      "Bloom Filter",
+      "Count-Min Sketch",
+      "Bitmaps"
+    ],
+    "correct_index": 0,
+    "hint": "HyperLogLog ofrece un error estándar típico de ~0.81% para contar elementos únicos masivos con un consumo constante y despreciable de memoria (12KB)."
+  },
+  {
+    "id": "redis_053",
+    "difficulty": "medium",
+    "question": "¿Qué estructura probabilística en Redis Stack permite verificar con certeza si un elemento NO existe, con una probabilidad controlada de falsos positivos?",
+    "options": [
+      "Bloom Filter (comandos BF.ADD, BF.EXISTS)",
+      "HyperLogLog",
+      "Cuckoo Filter",
+      "T-Digest"
+    ],
+    "correct_index": 0,
+    "hint": "Un Bloom Filter garantiza que nunca habrá falsos negativos (si dice que no está, con certeza no está), protegiendo contra Cache Penetration."
+  },
+  {
+    "id": "redis_054",
+    "difficulty": "medium",
+    "question": "¿Cómo se manipulan bits individuales en una clave tipo String en Redis?",
+    "options": [
+      "Con los comandos SETBIT, GETBIT y BITCOUNT",
+      "Con BINARY.SET y BINARY.GET",
+      "Con BITMAP.WRITE y BITMAP.READ",
+      "No es posible manipular bits en Redis"
+    ],
+    "correct_index": 0,
+    "hint": "Los Bitmaps aprovechan las cadenas como arrays de bits contiguos de hasta 512MB, ideales para registrar asistencia de usuarios o métricas diarias booleanas compactas."
+  },
+  {
+    "id": "redis_055",
+    "difficulty": "medium",
+    "question": "¿Qué comando devuelve información detallada de telemetría, memoria, conexiones y rendimiento del servidor Redis?",
+    "options": [
+      "INFO",
+      "STATUS",
+      "STATS",
+      "METRICS"
+    ],
+    "correct_index": 0,
+    "hint": "'INFO' (o secciones como INFO memory, INFO stats, INFO replication) expone el estado operativo integral de la instancia."
+  },
+  {
+    "id": "redis_056",
+    "difficulty": "medium",
+    "question": "¿Qué es el 'Slowlog' en Redis y cómo se consulta?",
+    "options": [
+      "Un registro en memoria que guarda las consultas que excedieron un tiempo de ejecución configurado; se consulta con SLOWLOG GET",
+      "Un archivo físico donde se registran errores de conexión lentas",
+      "Un log que se envía por correo al administrador",
+      "Un daemon que ralentiza clientes abusivos"
+    ],
+    "correct_index": 0,
+    "hint": "SLOWLOG GET lee la cola circular en RAM donde Redis almacena sentencias cuya ejecución superó 'slowlog-log-slower-than' microsegundos."
+  },
+  {
+    "id": "redis_057",
+    "difficulty": "medium",
+    "question": "¿Cuál es la diferencia entre los comandos SAVE y BGSAVE en Redis?",
+    "options": [
+      "SAVE realiza un volcado RDB síncrono bloqueando todas las conexiones de clientes; BGSAVE hace un fork del proceso para guardar en segundo plano",
+      "SAVE solo guarda en memoria RAM y BGSAVE en disco SSD",
+      "BGSAVE borra la base de datos tras guardar",
+      "SAVE comprime con gzip y BGSAVE no"
+    ],
+    "correct_index": 0,
+    "hint": "SAVE nunca debe usarse en producción porque detiene el procesamiento de comandos; BGSAVE delega el trabajo al proceso hijo sin pausar el servicio."
+  },
+  {
+    "id": "redis_058",
+    "difficulty": "medium",
+    "question": "¿Qué comando permite observar en tiempo real todos los comandos recibidos y procesados por el servidor Redis?",
+    "options": [
+      "MONITOR",
+      "TRACE",
+      "WATCH",
+      "LISTEN"
+    ],
+    "correct_index": 0,
+    "hint": "'MONITOR' transmite cada comando procesado en streaming. Produce un impacto de rendimiento sustancial (reduce el throughput hasta un 50%) por lo que solo se usa para debugging puntual."
+  },
+  {
+    "id": "redis_059",
+    "difficulty": "medium",
+    "question": "¿Qué función cumple el comando MEMORY USAGE clave en Redis?",
+    "options": [
+      "Informa la cantidad exacta de bytes asignados en memoria RAM para almacenar dicha clave y su estructura interna",
+      "Limita la memoria máxima que esa clave puede consumir",
+      "Libera la memoria de la clave",
+      "Muestra el porcentaje de uso de swap"
+    ],
+    "correct_index": 0,
+    "hint": "MEMORY USAGE muestrea y calcula la memoria asignada por el allocator (jemalloc) para el objeto Redis."
+  },
+  {
+    "id": "redis_060",
+    "difficulty": "medium",
+    "question": "¿Qué comando en Redis permite suscribirse a patrones de canales Pub/Sub utilizando comodines (glob-style)?",
+    "options": [
+      "PSUBSCRIBE patrón",
+      "SUBSCRIBE_PATTERN patrón",
+      "WSUBSCRIBE patrón",
+      "SUBSCRIBE *patrón"
+    ],
+    "correct_index": 0,
+    "hint": "PSUBSCRIBE permite escuchar canales coincidentes con comodines (ej. PSUBSCRIBE 'notificaciones.*')."
+  },
+  {
+    "id": "redis_061",
+    "difficulty": "advanced",
+    "question": "¿Cómo maneja Redis la concurrencia a pesar de tener un bucle de eventos monohilo (Single-Threaded Event Loop)?",
+    "options": [
+      "Utiliza multiplexación de E/S no bloqueante basada en epoll (Linux) o kqueue (BSD) para despachar miles de sockets de red en microsegundos dentro de un único hilo principal",
+      "Crea un hilo del sistema operativo por cada conexión de cliente",
+      "Utiliza memoria transaccional de hardware en CPUs Intel",
+      "Delega la ejecución de comandos a hilos de OpenMP"
+    ],
+    "correct_index": 0,
+    "hint": "El procesado de datos en RAM es tan rápido que el cuello de botella suele ser la red. El bucle epoll/kqueue atiende sockets listos sin esperar bloqueos de E/S."
+  },
+  {
+    "id": "redis_062",
+    "difficulty": "advanced",
+    "question": "¿Qué función introdujo el soporte de 'I/O Threads' (Threading I/O) en Redis 6.0?",
+    "options": [
+      "Permite descargar la lectura/decodificación de sockets y la escritura de respuestas de red a hilos secundarios, manteniendo la ejecución de comandos en el hilo central",
+      "Ejecuta comandos de datos en paralelo en múltiples CPUs",
+      "Permite transacciones distribuidas multi-hilo",
+      "Reemplaza completamente el event loop monohilo"
+    ],
+    "correct_index": 0,
+    "hint": "Los hilos de I/O paralelizan el costo de parsing y serialización de paquetes de red sobre sockets concurrentes, doblando el throughput en interfaces 10G/40Gbps."
+  },
+  {
+    "id": "redis_063",
+    "difficulty": "advanced",
+    "question": "¿Cómo aprovecha BGSAVE el mecanismo de 'Copy-On-Write' (COW) del kernel de Linux durante el snapshot?",
+    "options": [
+      "El proceso hijo comparte inicialmente las mismas páginas de memoria física que el padre; el kernel solo duplica una página cuando el proceso padre escribe en ella",
+      "El kernel copia toda la memoria RAM a un archivo temporal antes de llamar a fork",
+      "El hijo bloquea las páginas de memoria para que el padre no pueda modificarlas",
+      "Se comprimen las páginas en memoria swap antes del volcado"
+    ],
+    "correct_index": 0,
+    "hint": "Gracias a fork() y Copy-on-Write, el proceso hijo lee una instantánea congelada en el tiempo sin duplicar la RAM completa, a menos que el padre modifique muchas páginas concurrentemente."
+  },
+  {
+    "id": "redis_064",
+    "difficulty": "advanced",
+    "question": "¿Por qué se recomienda desactivar 'Transparent Huge Pages' (THP) en Linux al ejecutar Redis?",
+    "options": [
+      "Porque incrementa la granularidad de Copy-On-Write de 4 KB a 2 MB por página modificada, disparando drásticamente el consumo de RAM y la latencia en forks",
+      "Porque impide que Redis use más de 4 GB de memoria",
+      "Porque desactiva la compresión del binlog",
+      "Porque THP causa fallos de segmentación en jemalloc"
+    ],
+    "correct_index": 0,
+    "hint": "Con THP activo, una modificación de 1 byte fuerza al kernel a copiar 2MB enteros en lugar de una página estándar de 4KB durante un fork de BGSAVE o AOF rewrite."
+  },
+  {
+    "id": "redis_065",
+    "difficulty": "advanced",
+    "question": "¿Cuáles son las tres políticas del parámetro 'appendfsync' para el log AOF en Redis y cuál es la recomendada en producción?",
+    "options": [
+      "always (sincroniza en cada escritura), everysec (sincroniza cada segundo en background, recomendada) y no (delega al buffer flush del SO)",
+      "sync, async, batch",
+      "fast, normal, safe",
+      "ram, disk, cloud"
+    ],
+    "correct_index": 0,
+    "hint": "'appendfsync everysec' combina un rendimiento altísimo cercano a memoria con una pérdida de datos acotada a como máximo 1-2 segundos ante un fallo de energía catastrófico."
+  },
+  {
+    "id": "redis_066",
+    "difficulty": "advanced",
+    "question": "¿Qué hace el proceso 'BGREWRITEAOF' en Redis?",
+    "options": [
+      "Reconstruye el archivo AOF desde cero en memoria generando las instrucciones mínimas necesarias para recrear el estado actual, compactando drásticamente su tamaño",
+      "Elimina todas las claves que no tengan TTL",
+      "Cifra el archivo AOF con claves AES",
+      "Convierte el log AOF en una base de datos MySQL"
+    ],
+    "correct_index": 0,
+    "hint": "Si una clave sufrió 10,000 operaciones INCR, el archivo AOF contendría 10,000 líneas. BGREWRITEAOF lo reemplaza por una única sentencia SET con el valor final acumulado."
+  },
+  {
+    "id": "redis_067",
+    "difficulty": "advanced",
+    "question": "En Redis 7.0, ¿cómo funciona el nuevo formato 'Multi-Part AOF'?",
+    "options": [
+      "Divide el AOF en un archivo base (snapshot inicial) y múltiples archivos incrementales continuos, eliminando la necesidad de duplicar datos durante el rewrite",
+      "Divide el archivo en trozos de 1 MB para enviarlos por correo",
+      "Separa las claves por tipo de dato en archivos distintos",
+      "Guarda las claves públicas en un archivo y las privadas en otro"
+    ],
+    "correct_index": 0,
+    "hint": "Multi-Part AOF evita el costo de I/O y race conditions de los rewrites tradicionales manteniendo archivos base estables y ficheros delta acumulativos administrados por un manifiesto."
+  },
+  {
+    "id": "redis_068",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la diferencia entre la política de desalojo 'allkeys-lru' y 'allkeys-lfu' en Redis?",
+    "options": [
+      "LRU desaloja las claves menos recientemente usadas (tiempo de acceso); LFU desaloja las claves menos frecuentemente usadas (contador de frecuencia de accesos)",
+      "LFU solo aplica a claves que tienen TTL asignado",
+      "LRU desaloja claves al azar y LFU por tamaño",
+      "Son algoritmos idénticos con diferente precisión matemática"
+    ],
+    "correct_index": 0,
+    "hint": "LFU (Least Frequently Used) protege contra ráfagas de consultas a claves nuevas que expulsarían elementos muy recurrentes si se utilizara solo recencia (LRU)."
+  },
+  {
+    "id": "redis_069",
+    "difficulty": "advanced",
+    "question": "¿Cómo aproxima Redis los algoritmos LRU y LFU sin incurrir en el alto costo de memoria de una lista doblemente enlazada exacta?",
+    "options": [
+      "Muestrea un número configurable de claves al azar (maxmemory-samples, ej. 5) y desaloja la mejor candidata entre esa muestra según su reloj de 24 bits",
+      "Utiliza un árbol B+ indexado por timestamp en disco",
+      "Recorre todas las claves de la base de datos de principio a fin",
+      "Calcula la distancia de Hamming sobre los punteros de memoria"
+    ],
+    "correct_index": 0,
+    "hint": "Un LRU estricto consumiría memoria desmedida por punteros. La aproximación por muestreo (5-10 claves) ofrece una curva de desalojo prácticamente indistinguible del LRU teórico."
+  },
+  {
+    "id": "redis_070",
+    "difficulty": "advanced",
+    "question": "¿Qué ocurre cuando se alcanza el límite 'maxmemory' y la política está configurada en 'noeviction'?",
+    "options": [
+      "Cualquier comando que requiera asignar memoria adicional (SET, HSET, LPUSH) fallará arrojando un error OOM (Out Of Memory), mientras que los de lectura continuarán funcionando",
+      "Redis se apaga inmediatamente",
+      "Redis comienza a escribir datos en swap de Linux automáticamente",
+      "Se borran las claves más antiguas"
+    ],
+    "correct_index": 0,
+    "hint": "noeviction protege los datos existentes de ser purgados pero rechaza cualquier escritura posterior que requiera más memoria."
+  },
+  {
+    "id": "redis_071",
+    "difficulty": "advanced",
+    "question": "¿Qué es la estructura 'Redis Stream' (XADD, XREAD, XRANGE) y qué modelo de mensajería implementa?",
+    "options": [
+      "Un log de datos secuencial indexado por timestamp (idéntico al concepto de commit log de Apache Kafka) con soporte de Consumer Groups y ACKs",
+      "Un protocolo para transferir video en streaming por UDP",
+      "Una cola FIFO simple en memoria sin persistencia",
+      "Un buffer circular para logs de errores"
+    ],
+    "correct_index": 0,
+    "hint": "Redis Streams provee mensajería robusta persistente, reanudación por ID de mensaje, grupos de consumidores concurrentes, Pending Entries List (PEL) y confirmaciones explícitas con XACK."
+  },
+  {
+    "id": "redis_072",
+    "difficulty": "advanced",
+    "question": "En Redis Streams, ¿qué es la lista PEL (Pending Entries List) de un Consumer Group?",
+    "options": [
+      "El registro de mensajes que han sido entregados a un consumidor específico pero que todavía no han sido confirmados mediante el comando XACK",
+      "La lista de mensajes corruptos descartados",
+      "Los mensajes programados para enviarse en el futuro",
+      "La cola de clientes esperando autenticación"
+    ],
+    "correct_index": 0,
+    "hint": "La PEL permite detectar mensajes no procesados por workers que murieron o fallaron, permitiendo a otros consumidores reclamarlos con XCLAIM o XAUTOCLAIM."
+  },
+  {
+    "id": "redis_073",
+    "difficulty": "advanced",
+    "question": "¿Por qué los scripts Lua (EVAL / EVALSHA) o las funciones (FCALL) en Redis son atómicas por naturaleza?",
+    "options": [
+      "Porque Redis ejecuta el script completo de forma síncrona en el hilo principal sin intercalar ningún otro comando de ningún cliente durante su ejecución",
+      "Porque Lua tiene un compilador transaccional JIT",
+      "Porque se adquiere un candado distribuido en Zookeeper",
+      "Porque se realiza un fork del proceso antes de correr Lua"
+    ],
+    "correct_index": 0,
+    "hint": "Al correr en el event loop monohilo, ningún otro cliente puede leer ni modificar el estado en memoria mientras el script Lua está ejecutándose, logrando atomicidad absoluta."
+  },
+  {
+    "id": "redis_074",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la ventaja de las 'Redis Functions' introducidas en Redis 7.0 frente a los scripts EVAL tradicionales?",
+    "options": [
+      "Las funciones se almacenan, versionan y persisten a nivel de base de datos (RDB/AOF y réplicas), desacoplándolas del código cliente y cargándose como librerías de primera clase",
+      "Las funciones se ejecutan en la GPU",
+      "Las funciones solo admiten código C compilado",
+      "Permiten llamadas a bases de datos remotas por HTTP"
+    ],
+    "correct_index": 0,
+    "hint": "Con EVAL, cada cliente debía cargar el script y gestionar el SHA hash; las Functions residen en el servidor como módulos nativos replicables y persistentes."
+  },
+  {
+    "id": "redis_075",
+    "difficulty": "advanced",
+    "question": "¿Cómo funciona el protocolo de transacciones MULTI / EXEC / DISCARD en Redis y qué garantía ACID NO proporciona de forma estricta?",
+    "options": [
+      "Encola comandos y los ejecuta atómicamente; sin embargo, NO soporta Rollback ante errores lógicos de ejecución (un comando puede fallar y los demás confirmarse igualmente)",
+      "No garantiza aislamiento",
+      "No permite ejecutar más de 2 comandos a la vez",
+      "Requiere guardar un punto de restauración en disco antes de empezar"
+    ],
+    "correct_index": 0,
+    "hint": "Redis no implementa Rollback en EXEC para mantener la simplicidad y el rendimiento extremo del motor en memoria; los fallos de tipo deben atraparse en la lógica de aplicación."
+  },
+  {
+    "id": "redis_076",
+    "difficulty": "advanced",
+    "question": "¿Qué papel cumple el comando WATCH en conjunto con MULTI / EXEC?",
+    "options": [
+      "Implementa Control de Concurrencia Optimista (Check-and-Set): aborta la transacción EXEC si alguna de las claves observadas fue modificada por otro cliente antes de confirmar",
+      "Muestra en pantalla el progreso de la transacción",
+      "Pausa el reloj del sistema durante la transacción",
+      "Convierte la transacción en un proceso en segundo plano"
+    ],
+    "correct_index": 0,
+    "hint": "Si una clave vigilada con WATCH cambia antes de EXEC, la transacción retorna nil y aborta, obligando a la aplicación a reintentar la operación."
+  },
+  {
+    "id": "redis_077",
+    "difficulty": "advanced",
+    "question": "¿Cómo funciona la replicación parcial (PSYNC) en Redis cuando una réplica sufre una desconexión temporal?",
+    "options": [
+      "Utiliza un 'Replication Backlog Buffer' circular en el nodo maestro; si la desconexión fue breve y el offset está dentro del buffer, transfiere sólo los bytes faltantes sin full sync",
+      "Vuelve a descargar toda la base de datos con un volcado RDB de 0",
+      "Pide los datos a los demás nodos de la red local",
+      "Descarta los datos locales y espera a que el usuario reinicie el servicio"
+    ],
+    "correct_index": 0,
+    "hint": "El replication backlog acumulativo permite reconexiones rápidas aplicando únicamente el delta de comandos acumulados durante la partición breve de red."
+  },
+  {
+    "id": "redis_078",
+    "difficulty": "advanced",
+    "question": "¿Qué es 'Redis Sentinel' y qué responsabilidades asume en un cluster de alta disponibilidad?",
+    "options": [
+      "Monitorea instancias maestras y réplicas, detecta caídas por consenso de quórum, ejecuta failover automático promoviendo una réplica a maestro y notifica a los clientes la nueva topología",
+      "Encripta el tráfico de red de Redis con TLS",
+      "Es un balanceador de carga HTTP para Redis",
+      "Realiza copias de seguridad cada medianoche en Amazon S3"
+    ],
+    "correct_index": 0,
+    "hint": "Sentinel provee alta disponibilidad para arquitecturas master-replica independientes sin necesidad de sharding."
+  },
+  {
+    "id": "redis_079",
+    "difficulty": "advanced",
+    "question": "¿Cómo particiona los datos 'Redis Cluster' y cuántos 'Hash Slots' utiliza en total?",
+    "options": [
+      "Utiliza un espacio fijo de 16,384 Hash Slots calculados mediante CRC16(clave) % 16384 distribuidos entre los nodos maestros del cluster",
+      "Utiliza particionamiento por rangos alfabéticos de nombres de clave",
+      "Utiliza un hash SHA-256 dividido en 1024 fragmentos",
+      "Asigna claves al azar usando un generador de números pseudoaleatorios"
+    ],
+    "correct_index": 0,
+    "hint": "Los 16,384 slots permiten migrar rangos de slots entre nodos sin interrumpir las operaciones y facilitan escalar horizontalmente agregando o quitando nodos."
+  },
+  {
+    "id": "redis_080",
+    "difficulty": "advanced",
+    "question": "¿Qué son los 'Hash Tags' (ej. {usuario100}:perfil y {usuario100}:pedidos) en Redis Cluster?",
+    "options": [
+      "Una sintaxis especial delimitada por llaves {} que obliga a que todas las claves con el mismo contenido entre llaves se mapeen exactamente al mismo Hash Slot",
+      "Etiquetas de metadatos para búsquedas semánticas",
+      "Comentarios de código ignorados por el parser",
+      "Campos de auditoría para seguridad"
+    ],
+    "correct_index": 0,
+    "hint": "Los Hash Tags son indispensables para poder ejecutar transacciones multi-key (como MGET o Lua scripts) en Redis Cluster, asegurando que residan en el mismo nodo."
+  },
+  {
+    "id": "redis_081",
+    "difficulty": "advanced",
+    "question": "¿Qué respuestas de redirección emite Redis Cluster a un cliente cuando una clave reside en otro nodo?",
+    "options": [
+      "-MOVED (si el slot fue migrado permanentemente a otro nodo) y -ASK (si el slot está en proceso de migración transitoria)",
+      "-REDIRECT y -FORWARD",
+      "-HTTP 301 y -HTTP 302",
+      "-RETRY y -FAIL"
+    ],
+    "correct_index": 0,
+    "hint": "-MOVED instruye al cliente a actualizar su mapa local de slots; -ASK le pide consultar al nuevo nodo de forma puntual enviando previamente ASKING."
+  },
+  {
+    "id": "redis_082",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Client-Side Caching' (Tracking) introducido en Redis 6.0?",
+    "options": [
+      "El servidor Redis rastrea qué claves ha leído el cliente y le envía mensajes de invalidación asíncronos cuando esas claves son modificadas en el servidor",
+      "El cliente guarda una copia en un archivo local de texto",
+      "Una memoria flash conectada al puerto USB del cliente",
+      "Un proxy NGINX que cachea respuestas HTTP"
+    ],
+    "correct_index": 0,
+    "hint": "Permite mantener cachés en memoria local en la aplicación con latencia casi nula garantizando que la aplicación se entere instantáneamente si el valor en Redis cambia."
+  },
+  {
+    "id": "redis_083",
+    "difficulty": "advanced",
+    "question": "¿Qué codificación interna de bajo nivel utiliza Redis para estructuras 'Hash' pequeñas (pocos campos y de poca longitud)?",
+    "options": [
+      "Listpack (anteriormente Ziplist), un bloque de memoria contiguo ultra compacto y libre de punteros",
+      "Una tabla hash abierta con encadenamiento",
+      "Un árbol AVL balanceado",
+      "Un array de structs en lenguaje C con punteros de 64 bits"
+    ],
+    "correct_index": 0,
+    "hint": "Listpack almacena secuencias contiguas de enteros o strings sin punteros, reduciendo drásticamente el overhead de memoria y aprovechando la caché L1 de la CPU."
+  },
+  {
+    "id": "redis_084",
+    "difficulty": "advanced",
+    "question": "¿Qué es 'Intset' en Redis y cuándo se utiliza?",
+    "options": [
+      "Una codificación de memoria contigua altamente optimizada para Sets cuyos elementos son exclusivamente enteros pequeños ordenados",
+      "Un conjunto de parámetros para configurar internet",
+      "Un compilador de enteros para instrucciones de 16 bits",
+      "Una estructura para operaciones de números en coma flotante"
+    ],
+    "correct_index": 0,
+    "hint": "Almacena arrays ordenados de enteros de 16, 32 o 64 bits con búsqueda binaria, reduciendo el consumo de RAM hasta 10 veces frente a una tabla hash estándar."
+  },
+  {
+    "id": "redis_085",
+    "difficulty": "advanced",
+    "question": "¿Qué allocator de memoria utiliza Redis por defecto en entornos Linux para combatir la fragmentación?",
+    "options": [
+      "jemalloc",
+      "glibc malloc",
+      "tcmalloc",
+      "mmap anónimo"
+    ],
+    "correct_index": 0,
+    "hint": "jemalloc gestiona la memoria en arenas fijas, reduciendo la fragmentación externa e implementando desfragmentación activa en caliente (active defragmentation)."
+  },
+  {
+    "id": "redis_086",
+    "difficulty": "advanced",
+    "question": "¿Qué indica el parámetro 'mem_fragmentation_ratio' en Redis y qué valores señalan un problema?",
+    "options": [
+      "La relación entre memoria física reservada por el SO (RSS) y la memoria real usada por datos; valores superiores a 1.5 señalan alta fragmentación y menores a 1.0 indican swap",
+      "El porcentaje de discos duros fragmentados",
+      "La cantidad de hilos en conflicto de mutex",
+      "El ratio de compresión de las claves expiradas"
+    ],
+    "correct_index": 0,
+    "hint": "Un ratio > 1.5 significa que el SO retiene mucha más memoria de la que Redis necesita realmente debido a fragmentación; ratio < 1.0 significa que Redis está swappeando a disco."
+  },
+  {
+    "id": "redis_087",
+    "difficulty": "advanced",
+    "question": "¿Cómo funciona la 'Active Defragmentation' (activedefrag) en Redis?",
+    "options": [
+      "En segundo plano, Redis inspecciona páginas de memoria fragmentadas, reasigna valores en bloques contiguos y libera las páginas dispersas hacia jemalloc sin reiniciar el servicio",
+      "Borra todas las claves que contengan espacios vacíos",
+      "Reconstruye los índices B-Tree en disco",
+      "Compacta los archivos de log con gzip"
+    ],
+    "correct_index": 0,
+    "hint": "Permite reducir mem_fragmentation_ratio dinámicamente durante picos de escritura y eliminación masiva de datos en caliente."
+  },
+  {
+    "id": "redis_088",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Cache Stampede' (o Dogpiling) y cómo se previene en sistemas con Redis?",
+    "options": [
+      "Ocurre cuando una clave muy solicitada expira y cientos de peticiones concurrentes golpean simultáneamente la base de datos relacional para regenerarla; se previene con mutex distribuidos o cálculo probabilístico de expiración anticipada (algoritmo XFetch)",
+      "Cuando la memoria RAM se agota por culpa de imágenes binarias",
+      "Cuando los clientes saturan la red de ping",
+      "Cuando dos instancias de Redis tienen la misma IP"
+    ],
+    "correct_index": 0,
+    "hint": "XFetch o locks de regeneración (como SET key lock NX EX) garantizan que un solo worker recalcule el valor mientras los demás esperan o reciben datos temporalmente obsoletos."
+  },
+  {
+    "id": "redis_089",
+    "difficulty": "advanced",
+    "question": "¿Qué problema representa la 'Cache Penetration' y cómo se mitiga?",
+    "options": [
+      "Peticiones recurrentes por claves inexistentes que esquivan la caché y van directo a la base de datos subyacente; se mitiga cacheando valores nulos con TTL corto o usando un Bloom Filter",
+      "Ataques de piratería informática a través de puertos SSH",
+      "Corrupción del archivo de volcado RDB",
+      "Fugas de contraseñas de red en texto plano"
+    ],
+    "correct_index": 0,
+    "hint": "Si un atacante busca IDs no existentes masivamente, la caché no los encuentra y sobrecarga la base de datos SQL. Un Bloom Filter filtra de inmediato las consultas imposibles."
+  },
+  {
+    "id": "redis_090",
+    "difficulty": "advanced",
+    "question": "¿Qué es la 'Cache Avalanche' y cómo se previene su impacto?",
+    "options": [
+      "La expiración simultánea de un gran volumen de claves en el mismo segundo exacto, saturando la base de datos principal; se previene agregando un tiempo aleatorio (jitter) a los TTLs",
+      "El desbordamiento del buffer de red de Linux",
+      "El fallo síncrono de todos los discos SSD",
+      "Un error fatal por desborde de pila en scripts Lua"
+    ],
+    "correct_index": 0,
+    "hint": "Agregar un 'jitter' aleatorio (ej. TTL = 3600 + rand(0, 300) segundos) dispersa las expiraciones en el tiempo evitando un alud de consultas a la base de datos de origen."
+  },
+  {
+    "id": "redis_091",
+    "difficulty": "advanced",
+    "question": "¿Cómo implementa Redis la expiración pasiva y activa de claves con TTL?",
+    "options": [
+      "Pasiva: la clave se evalúa y elimina cuando un cliente intenta acceder a ella. Activa: un hilo periódico muestrea aleatoriamente claves con TTL y elimina las que hayan vencido",
+      "Redis mantiene un hilo dedicado de Linux por cada clave con TTL",
+      "Redis crea un cron job en el sistema operativo para cada expiración",
+      "Solo borra claves cuando la memoria RAM está al 100%"
+    ],
+    "correct_index": 0,
+    "hint": "El ciclo activo muestrea periódicamente 20 claves aleatorias con TTL; si más del 25% están vencidas, repite el muestreo inmediatamente para mantener baja la memoria residual."
+  },
+  {
+    "id": "redis_092",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'RESP3' (REdis Serialization Protocol 3) introducido en Redis 6?",
+    "options": [
+      "Una versión moderna del protocolo de comunicación que introduce tipos de datos semánticos ricos como mapas (Hash maps), conjuntos (Sets), booleanos, nulos y tipos de streaming",
+      "Un protocolo para enviar mensajes por satélite",
+      "Un formato de compresión binario basado en ZIP",
+      "Un algoritmo para encriptar claves TLS"
+    ],
+    "correct_index": 0,
+    "hint": "RESP3 permite que los drivers de cliente distingan directamente entre un array plano y un mapa clave-valor estructurado sin tener que deducirlo a ciegas."
+  },
+  {
+    "id": "redis_093",
+    "difficulty": "advanced",
+    "question": "¿Qué es 'Redlock' y cuál es su principio fundamental de diseño?",
+    "options": [
+      "Un algoritmo propuesto por Salvatore Sanfilippo para bloqueos distribuidos que adquiere el lock de forma independiente en N instancias de Redis (ej. 5) requiriendo la mayoría (N/2 + 1)",
+      "Un candado físico para servidores en centros de datos",
+      "Un sistema para proteger el binario de Redis contra desensamblado",
+      "Un algoritmo para cifrar tablas hash"
+    ],
+    "correct_index": 0,
+    "hint": "Redlock evita el punto único de fallo (SPOF) adquiriendo candados con tiempos de expiración estrictos en nodos independientes sin replicación entre ellos."
+  },
+  {
+    "id": "redis_094",
+    "difficulty": "advanced",
+    "question": "¿Qué comando permite verificar la latencia intrínseca del sistema operativo y hardware donde corre Redis?",
+    "options": [
+      "redis-cli --intrinsic-latency 100",
+      "redis-benchmark -p 6379",
+      "redis-check-latency",
+      "redis-cli --hardware-test"
+    ],
+    "correct_index": 0,
+    "hint": "--intrinsic-latency mide la latencia inherente del kernel y CPU (context switches, frequency scaling) sin intervención del protocolo de red ni de Redis."
+  },
+  {
+    "id": "redis_095",
+    "difficulty": "advanced",
+    "question": "¿Qué es la característica de 'Access Control Lists' (ACL) en Redis 6+?",
+    "options": [
+      "Un sistema granular que permite definir usuarios, restringir contraseñas, habilitar/deshabilitar comandos específicos y limitar acceso a patrones de claves particulares",
+      "Un firewall externo para routers Cisco",
+      "Un plugin para autenticación en Active Directory",
+      "Una lista de IPs bloqueadas por intentos fallidos de login"
+    ],
+    "correct_index": 0,
+    "hint": "ACL permite que servicios de sólo lectura no puedan ejecutar comandos destructivos como FLUSHALL o CONFIG, y restrinjan comandos por prefijos de clave (ej. ~cache:*)."
+  },
+  {
+    "id": "redis_096",
+    "difficulty": "advanced",
+    "question": "¿Qué función cumple el comando LATENCY DOCTOR en Redis?",
+    "options": [
+      "Analiza las métricas del subsistema de latencia y emite un reporte legible por humanos con diagnósticos y recomendaciones de optimización",
+      "Genera gráficos de frecuencia cardíaca del servidor",
+      "Corrige automáticamente los fallos de red en Linux",
+      "Apaga los hilos que consumen más del 80% de CPU"
+    ],
+    "correct_index": 0,
+    "hint": "LATENCY DOCTOR analiza picos de fork time, desfragmentación, I/O lento y buffers de clientes proporcionando sugerencias concretas de sintonización."
+  },
+  {
+    "id": "redis_097",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'Lazy Freeing' (lazyfree-lazy-eviction, lazyfree-lazy-expire) en Redis?",
+    "options": [
+      "Delega la liberación de memoria de claves eliminadas o desalojadas a hilos de fondo asíncronos para no bloquear el bucle principal de procesamiento",
+      "Libera la memoria solo cuando el servidor se apaga",
+      "Borra las claves cuando la computadora entra en modo de reposo",
+      "Es una técnica para retrasar el guardado de snapshots"
+    ],
+    "correct_index": 0,
+    "hint": "Evita que operaciones automáticas de desalojo (eviction) o expiración de claves gigantes causen micro-congelamientos en las respuestas de clientes."
+  },
+  {
+    "id": "redis_098",
+    "difficulty": "advanced",
+    "question": "¿Qué ocurre si dos clientes ejecutan simultáneamente 'INCR contador' en Redis?",
+    "options": [
+      "Ambos incrementos se aplican de forma estrictamente secuencial y segura, resultando en un incremento neto de +2 sin ninguna condición de carrera",
+      "Uno de los dos clientes recibe un error de colisión de concurrencia",
+      "El contador solo se incrementa en +1 perdiéndose una actualización",
+      "Se produce un deadlock en la base de datos"
+    ],
+    "correct_index": 0,
+    "hint": "Al procesarse en el bucle monohilo secuencial, las operaciones numéricas atómicas de Redis son inmunes a race conditions sin requerir bloqueos de usuario."
+  },
+  {
+    "id": "redis_099",
+    "difficulty": "advanced",
+    "question": "¿Cómo se calcula el consumo de memoria de los 'Client Output Buffers' y por qué pueden agotar la RAM de un servidor Redis?",
+    "options": [
+      "Almacenan respuestas pendientes de enviar a clientes lentos; si un cliente lee lentamente o un esclavo no procesa la replicación a tiempo, el buffer crece indefinidamente hasta colapsar la memoria",
+      "Solo almacenan paquetes de confirmación SYN/ACK de TCP",
+      "Almacenan el código fuente compilado de los scripts Lua",
+      "Guardan las contraseñas de las sesiones activas"
+    ],
+    "correct_index": 0,
+    "hint": "Parámetros como 'client-output-buffer-limit' desconectan a clientes que acumulen demasiados megabytes en sus buffers de salida, protegiendo al servidor contra OOM."
+  },
+  {
+    "id": "redis_0100",
+    "difficulty": "advanced",
+    "question": "¿Qué es RedisJSON y qué ventaja sustancial aporta sobre almacenar JSONs serializados en Redis Strings estándar?",
+    "options": [
+      "Almacena documentos JSON de forma nativa en árboles binarios indexados, permitiendo leer y modificar campos internos individuales atómicamente con JSON.SET y JSON.GET sin serializar/deserializar el documento completo",
+      "Comprime los documentos con el formato 7z",
+      "Convierte documentos JSON en tablas relacionales MySQL",
+      "Es una librería cliente escrita en JavaScript que solo corre en NodeJS"
+    ],
+    "correct_index": 0,
+    "hint": "RedisJSON permite acceder y mutar sub-propiedades por ruta JSONPath (ej. JSON.SET doc $.usuario.nombre 'Leo') sin el overhead de transferir y parsear el payload completo."
   }
 ]

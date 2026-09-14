@@ -284,5 +284,1019 @@
     ],
     "correct_index": 1,
     "hint": "La documentación oficial de SQLite desaconseja Shared-Cache en sistemas modernos: fue diseñado para dispositivos embebidos con muy poca RAM de los años 2000. El modo WAL moderno en Private-Cache es mucho más rápido y seguro."
+  },
+  {
+    "id": "sqlite_023",
+    "difficulty": "basic",
+    "question": "¿En qué se diferencia SQLite fundamentalmente de motores como PostgreSQL o MySQL en términos de arquitectura de despliegue?",
+    "options": [
+      "SQLite es una librería embebida 'serverless' que corre en el mismo espacio de memoria de la aplicación, sin proceso de servidor independiente ni conexión de red",
+      "SQLite solo corre en centros de datos con servidores dedicados",
+      "SQLite requiere instalar un cluster de nodos de coordinación",
+      "SQLite solo soporta lenguaje ensamblador"
+    ],
+    "correct_index": 0,
+    "hint": "SQLite es una biblioteca C en proceso (in-process). No existe daemon ni socket TCP; las operaciones son llamadas a funciones directas sobre un archivo en disco."
+  },
+  {
+    "id": "sqlite_024",
+    "difficulty": "basic",
+    "question": "¿Qué comando especial en el CLI de SQLite permite salir de la consola interactiva?",
+    "options": [
+      ".quit (o .exit)",
+      "EXIT;",
+      "QUIT;",
+      ":q!"
+    ],
+    "correct_index": 0,
+    "hint": "Los comandos que inician con punto (.) son directivas internas del cliente de SQLite (dot commands) y no llevan punto y coma al final."
+  },
+  {
+    "id": "sqlite_025",
+    "difficulty": "basic",
+    "question": "¿Qué comando dot de SQLite permite listar todas las tablas presentes en la base de datos abierta?",
+    "options": [
+      ".tables",
+      "SHOW TABLES;",
+      ".schema --list",
+      ".list"
+    ],
+    "correct_index": 0,
+    "hint": "'.tables' lista los nombres de todas las tablas y vistas en el archivo SQLite actual."
+  },
+  {
+    "id": "sqlite_026",
+    "difficulty": "basic",
+    "question": "¿Qué comando dot muestra la sentencia DDL 'CREATE TABLE' con la que fue creada una tabla en SQLite?",
+    "options": [
+      ".schema nombre_tabla",
+      "SHOW CREATE TABLE nombre_tabla;",
+      ".ddl nombre_tabla",
+      ".inspect nombre_tabla"
+    ],
+    "correct_index": 0,
+    "hint": "'.schema nombre_tabla' consulta la tabla interna sqlite_schema y muestra el DDL exacto."
+  },
+  {
+    "id": "sqlite_027",
+    "difficulty": "basic",
+    "question": "¿Cómo se crea una base de datos puramente en memoria volátil en SQLite?",
+    "options": [
+      "Abriendo una conexión a ':memory:'",
+      "Con CREATE DATABASE IN_RAM;",
+      "Pasando el flag --ram en el ejecutable",
+      "Asignando una ruta a /dev/null"
+    ],
+    "correct_index": 0,
+    "hint": "El identificador ':memory:' (o un URI como 'file:memdb1?mode=memory&cache=shared') crea una base de datos que existe únicamente en la memoria RAM del proceso."
+  },
+  {
+    "id": "sqlite_028",
+    "difficulty": "basic",
+    "question": "¿Cuáles son las 5 clases fundamentales de almacenamiento (Storage Classes) en SQLite?",
+    "options": [
+      "NULL, INTEGER, REAL, TEXT y BLOB",
+      "INT, FLOAT, VARCHAR, BOOLEAN y DATE",
+      "NUMBER, STRING, OBJECT, ARRAY y BINARY",
+      "SMALLINT, BIGINT, CHAR, LONGTEXT y BYTES"
+    ],
+    "correct_index": 0,
+    "hint": "SQLite clasifica todos los valores internamente en una de estas 5 clases de almacenamiento dinámico."
+  },
+  {
+    "id": "sqlite_029",
+    "difficulty": "basic",
+    "question": "¿Qué significa que el sistema de tipos de SQLite sea de tipado dinámico (Type Affinity)?",
+    "options": [
+      "El tipo de un valor está asociado con el valor en sí, no con la columna en la que se almacena (salvo en tablas STRICT)",
+      "Que no permite almacenar números negativos",
+      "Que solo acepta tipos de datos definidos en Python",
+      "Que las columnas cambian de nombre en tiempo de ejecución"
+    ],
+    "correct_index": 0,
+    "hint": "En tablas estándar de SQLite se puede insertar un texto en una columna declarada como INTEGER sin que el motor lance un error; el valor conserva su tipo TEXT."
+  },
+  {
+    "id": "sqlite_030",
+    "difficulty": "basic",
+    "question": "¿Qué nombre recibe la columna entera interna que actúa como clave primaria implícita de 64 bits en la mayoría de tablas SQLite?",
+    "options": [
+      "rowid (o oid, o _rowid_)",
+      "primary_key",
+      "internal_id",
+      "record_num"
+    ],
+    "correct_index": 0,
+    "hint": "Toda tabla en SQLite (salvo las declaradas WITHOUT ROWID) cuenta con un entero firmado de 64 bits accesible como 'rowid'."
+  },
+  {
+    "id": "sqlite_031",
+    "difficulty": "basic",
+    "question": "¿Qué ocurre si una columna se declara explícitamente como 'INTEGER PRIMARY KEY' en SQLite?",
+    "options": [
+      "Se convierte en un alias exacto del rowid de la tabla",
+      "Genera un error de sintaxis si no se agrega AUTOINCREMENT",
+      "Se almacena en un archivo B-Tree separado",
+      "Impide insertar números mayores a 32767"
+    ],
+    "correct_index": 0,
+    "hint": "'INTEGER PRIMARY KEY' es un alias directo de rowid; buscar por esa columna accede directamente al árbol B de la tabla en O(1) páginas."
+  },
+  {
+    "id": "sqlite_032",
+    "difficulty": "basic",
+    "question": "¿Cuál es la diferencia entre declarar 'INTEGER PRIMARY KEY' y 'INTEGER PRIMARY KEY AUTOINCREMENT' en SQLite?",
+    "options": [
+      "AUTOINCREMENT garantiza que nunca se reutilicen números de ID previamente asignados, previniendo reciclaje de claves tras borrados",
+      "AUTOINCREMENT es necesario para que el ID se incremente",
+      "INTEGER PRIMARY KEY solo permite hasta 100 registros",
+      "AUTOINCREMENT desactiva los índices secundarios"
+    ],
+    "correct_index": 0,
+    "hint": "Sin AUTOINCREMENT, SQLite asigna max(rowid)+1 y si se llega al tope busca IDs libres dejados por eliminaciones; con AUTOINCREMENT consulta 'sqlite_sequence' y prohíbe reutilizar IDs."
+  },
+  {
+    "id": "sqlite_033",
+    "difficulty": "basic",
+    "question": "¿Cómo se insertan múltiples filas en una sola sentencia INSERT en SQLite?",
+    "options": [
+      "INSERT INTO t (col) VALUES (1), (2), (3);",
+      "INSERT INTO t (col) SET 1, 2, 3;",
+      "INSERT MULTIPLE t (col) [1, 2, 3];",
+      "BATCH INSERT INTO t (col) VALUES (1, 2, 3);"
+    ],
+    "correct_index": 0,
+    "hint": "SQLite soporta la sintaxis SQL estándar de tuplas múltiples separadas por coma en la cláusula VALUES."
+  },
+  {
+    "id": "sqlite_034",
+    "difficulty": "basic",
+    "question": "¿Qué función devuelve la cantidad de filas modificadas o insertadas por la sentencia más reciente en SQLite?",
+    "options": [
+      "changes()",
+      "row_count()",
+      "affected_rows()",
+      "total_changes()"
+    ],
+    "correct_index": 0,
+    "hint": "changes() devuelve el número de filas afectadas por la instrucción DML inmediatamente anterior en la misma conexión."
+  },
+  {
+    "id": "sqlite_035",
+    "difficulty": "basic",
+    "question": "¿Qué función devuelve el valor del rowid generado por el último INSERT exitoso en SQLite?",
+    "options": [
+      "last_insert_rowid()",
+      "get_last_id()",
+      "current_rowid()",
+      "sqlite_last_id()"
+    ],
+    "correct_index": 0,
+    "hint": "last_insert_rowid() devuelve el entero de 64 bits generado en la inserción más reciente de la conexión."
+  },
+  {
+    "id": "sqlite_036",
+    "difficulty": "basic",
+    "question": "¿Cuál es la extensión de archivo comúnmente utilizada para las bases de datos de SQLite?",
+    "options": [
+      ".db o .sqlite (o .sqlite3)",
+      ".sql",
+      ".myd",
+      ".mdf"
+    ],
+    "correct_index": 0,
+    "hint": "Cualquier extensión o incluso sin extensión es válida para el motor, pero .db, .sqlite y .sqlite3 son las convenciones estándar."
+  },
+  {
+    "id": "sqlite_037",
+    "difficulty": "basic",
+    "question": "¿Cómo se crea un índice en SQLite para acelerar búsquedas por la columna 'email'?",
+    "options": [
+      "CREATE INDEX idx_email ON usuarios(email);",
+      "ADD INDEX idx_email TO usuarios(email);",
+      "INDEX ON usuarios(email);",
+      "MAKE INDEX idx_email (email);"
+    ],
+    "correct_index": 0,
+    "hint": "La sintaxis estándar ANSI 'CREATE INDEX idx_name ON table(col)' es la utilizada por SQLite."
+  },
+  {
+    "id": "sqlite_038",
+    "difficulty": "basic",
+    "question": "¿Qué comando permite eliminar una tabla de forma definitiva en SQLite?",
+    "options": [
+      "DROP TABLE IF EXISTS nombre_tabla;",
+      "DELETE TABLE nombre_tabla;",
+      "REMOVE TABLE nombre_tabla;",
+      "PURGE TABLE nombre_tabla;"
+    ],
+    "correct_index": 0,
+    "hint": "'DROP TABLE IF EXISTS tabla;' borra la definición, índices asociados y páginas de datos en el archivo .db."
+  },
+  {
+    "id": "sqlite_039",
+    "difficulty": "basic",
+    "question": "¿Qué comando dot en el CLI de SQLite permite exportar los datos o esquemas a un archivo de script SQL?",
+    "options": [
+      ".dump [tabla]",
+      ".export [tabla]",
+      ".backup [tabla]",
+      ".save [tabla]"
+    ],
+    "correct_index": 0,
+    "hint": "'.dump' genera instrucciones DDL y DML estándar que recrean la base de datos completa o tablas seleccionadas."
+  },
+  {
+    "id": "sqlite_040",
+    "difficulty": "basic",
+    "question": "¿Qué operador de comparación en SQLite realiza coincidencias de cadenas con comodines de forma case-insensitive para caracteres ASCII?",
+    "options": [
+      "LIKE",
+      "GLOB",
+      "MATCH",
+      "REGEXP"
+    ],
+    "correct_index": 0,
+    "hint": "LIKE es insensible a mayúsculas/minúsculas para caracteres ASCII en SQLite (% y _); GLOB es case-sensitive y usa sintaxis Unix (* y ?)."
+  },
+  {
+    "id": "sqlite_041",
+    "difficulty": "medium",
+    "question": "¿Por qué las restricciones de clave foránea (Foreign Keys) no se aplican por defecto en SQLite y cómo se activan?",
+    "options": [
+      "Por compatibilidad con versiones antiguas; se activan en cada nueva conexión ejecutando 'PRAGMA foreign_keys = ON;'",
+      "Porque SQLite no soporta relaciones",
+      "Se activan recompilando el kernel del sistema operativo",
+      "Solo se activan en bases de datos mayores a 1GB"
+    ],
+    "correct_index": 0,
+    "hint": "Por razones históricas de retrocompatibilidad, la verificación de foreign keys viene desactivada por omisión y debe activarse por conexión."
+  },
+  {
+    "id": "sqlite_042",
+    "difficulty": "medium",
+    "question": "¿Qué función cumple el comando 'PRAGMA journal_mode = WAL;'?",
+    "options": [
+      "Cambia el mecanismo de concurrencia a Write-Ahead Logging, permitiendo que múltiples lectores lean en paralelo sin bloquear al escritor concurrente",
+      "Comprime la base de datos usando gzip",
+      "Desactiva las transacciones ACID",
+      "Guarda los logs en la nube de forma automática"
+    ],
+    "correct_index": 0,
+    "hint": "WAL desacopla lecturas de escrituras: los lectores consultan el archivo principal y el .wal sin adquirir locks que impidan que un escritor agregue transacciones."
+  },
+  {
+    "id": "sqlite_043",
+    "difficulty": "medium",
+    "question": "¿Cuáles son los archivos auxiliares que aparecen junto al archivo .db cuando SQLite opera en modo WAL?",
+    "options": [
+      "archivo.db-wal (Write-Ahead Log) y archivo.db-shm (Shared Memory Index)",
+      "archivo.db-log y archivo.db-bak",
+      "archivo.db-journal y archivo.db-tmp",
+      "archivo.db-lock y archivo.db-pid"
+    ],
+    "correct_index": 0,
+    "hint": "El archivo -wal almacena las páginas de transacciones sin consolidar y el -shm es una memoria compartida mmap para indexar rápidamente qué páginas residen en el WAL."
+  },
+  {
+    "id": "sqlite_044",
+    "difficulty": "medium",
+    "question": "¿Qué es un 'Checkpoint' en el modo WAL de SQLite?",
+    "options": [
+      "La operación en la cual las páginas modificadas acumuladas en el archivo .db-wal se copian de vuelta al archivo principal .db",
+      "Una copia de seguridad enviada por FTP",
+      "El reinicio forzoso de la aplicación",
+      "Un punto de guardado en memoria RAM"
+    ],
+    "correct_index": 0,
+    "hint": "El checkpointing transfiere páginas confirmadas del WAL al archivo .db principal para evitar que el fichero WAL crezca ilimitadamente."
+  },
+  {
+    "id": "sqlite_045",
+    "difficulty": "medium",
+    "question": "¿Qué directiva PRAGMA controla la frecuencia con la que SQLite ejecuta fsync en el sistema de archivos?",
+    "options": [
+      "PRAGMA synchronous = NORMAL | FULL | EXTRA | OFF;",
+      "PRAGMA flush_frequency;",
+      "PRAGMA fsync_mode;",
+      "PRAGMA disk_commit;"
+    ],
+    "correct_index": 0,
+    "hint": "En modo WAL, PRAGMA synchronous = NORMAL es completamente seguro contra corrupción del sistema de archivos y ofrece una velocidad mucho mayor que FULL."
+  },
+  {
+    "id": "sqlite_046",
+    "difficulty": "medium",
+    "question": "¿Qué tabla del sistema de solo lectura contiene las definiciones y metadatos de todos los esquemas en SQLite?",
+    "options": [
+      "sqlite_schema (anteriormente sqlite_master)",
+      "sqlite_tables",
+      "sqlite_metadata",
+      "sqlite_catalog"
+    ],
+    "correct_index": 0,
+    "hint": "sqlite_schema almacena filas de tipo 'table', 'index', 'view' y 'trigger' con su sentencia SQL DDL original."
+  },
+  {
+    "id": "sqlite_047",
+    "difficulty": "medium",
+    "question": "¿Qué funcionalidad aporta la extensión FTS5 (Full-Text Search 5) en SQLite?",
+    "options": [
+      "Permite crear tablas virtuales con índices invertidos para búsquedas lingüísticas de texto rápido con operadores MATCH, BM25 ranking y resaltado (highlight)",
+      "Permite transferir archivos por FTP en versión 5",
+      "Comprime texto usando el algoritmo Brotli",
+      "Es un sistema para encriptar claves de texto"
+    ],
+    "correct_index": 0,
+    "hint": "FTS5 crea tablas virtuales (CREATE VIRTUAL TABLE t USING fts5(...)) para motores de búsqueda de texto ultrarrápidos embebidos."
+  },
+  {
+    "id": "sqlite_048",
+    "difficulty": "medium",
+    "question": "¿Qué soporte nativo para JSON proporciona SQLite (desde 3.38+ integrado por defecto)?",
+    "options": [
+      "Funciones como json_extract(), json_set(), json_array() y el operador flecha (-> y ->>) para consultar y mutar JSON directamente en columnas de texto",
+      "Un tipo binario propietario no interoperable",
+      "Solo permite validar la sintaxis de archivos JSON externos",
+      "Requiere compilar una biblioteca de NodeJS"
+    ],
+    "correct_index": 0,
+    "hint": "SQLite implementa ricas funciones JSON con el operador -> (retorna JSON) y ->> (retorna valor escalar extraído)."
+  },
+  {
+    "id": "sqlite_049",
+    "difficulty": "medium",
+    "question": "En SQLite, ¿qué cláusula permite resolver conflictos de clave primaria o restricciones UNIQUE dentro de un INSERT sin abortar la transacción?",
+    "options": [
+      "ON CONFLICT DO UPDATE (Upsert) u ON CONFLICT DO NOTHING",
+      "ON DUPLICATE REPAIR",
+      "IGNORE CONFLICT FORCE",
+      "TRY INSERT EXCEPT"
+    ],
+    "correct_index": 0,
+    "hint": "SQLite soporta la sintaxis estándar PostgreSQL de Upsert: INSERT INTO ... ON CONFLICT(col) DO UPDATE SET ... o DO NOTHING."
+  },
+  {
+    "id": "sqlite_050",
+    "difficulty": "medium",
+    "question": "¿Cuál es la diferencia entre BEGIN DEFERRED, BEGIN IMMEDIATE y BEGIN EXCLUSIVE en SQLite?",
+    "options": [
+      "DEFERRED adquiere el bloqueo sólo al hacer la primera lectura/escritura; IMMEDIATE adquiere bloqueo de escritura de inmediato; EXCLUSIVE impide incluso que otros lean",
+      "DEFERRED borra los cambios anteriores",
+      "EXCLUSIVE solo funciona en bases de datos en memoria",
+      "Son exactamente sinónimos"
+    ],
+    "correct_index": 0,
+    "hint": "BEGIN IMMEDIATE previene deadlocks tipo SQLITE_BUSY garantizando que ninguna otra conexión pueda comenzar una transacción de escritura concurrente mientras dure la transacción."
+  },
+  {
+    "id": "sqlite_051",
+    "difficulty": "medium",
+    "question": "¿Qué código de error devuelve SQLite cuando una conexión intenta escribir pero otra conexión retiene un bloqueo exclusivo?",
+    "options": [
+      "SQLITE_BUSY (código 5)",
+      "SQLITE_LOCKED (código 6)",
+      "SQLITE_CANTOPEN (código 14)",
+      "SQLITE_READONLY (código 8)"
+    ],
+    "correct_index": 0,
+    "hint": "SQLITE_BUSY ocurre cuando un archivo de base de datos no puede accederse por concurrencia entre procesos; se maneja con 'PRAGMA busy_timeout = ms;'."
+  },
+  {
+    "id": "sqlite_052",
+    "difficulty": "medium",
+    "question": "¿Qué efecto tiene configurar 'PRAGMA busy_timeout = 5000;' en SQLite?",
+    "options": [
+      "Hace que SQLite reintente automáticamente acceder a una base de datos bloqueada durante hasta 5000 milisegundos antes de retornar SQLITE_BUSY",
+      "Cierra la base de datos tras 5 segundos de inactividad",
+      "Cancela consultas que tarden más de 5 segundos",
+      "Establece el tiempo de expiración de las contraseñas"
+    ],
+    "correct_index": 0,
+    "hint": "busy_timeout instala un manejador de reintentos interno con sleep progresivo que mitiga drásticamente errores de contención en aplicaciones concurrentes."
+  },
+  {
+    "id": "sqlite_053",
+    "difficulty": "medium",
+    "question": "¿Qué directiva PRAGMA permite verificar la integridad física de todas las páginas, índices y árboles B de una base de datos SQLite?",
+    "options": [
+      "PRAGMA integrity_check;",
+      "PRAGMA check_db;",
+      "PRAGMA verify_pages;",
+      "PRAGMA test_health;"
+    ],
+    "correct_index": 0,
+    "hint": "PRAGMA integrity_check recorre todos los B-Trees verificando que los registros estén ordenados, punteros válidos y que las páginas coincidan con el esquema."
+  },
+  {
+    "id": "sqlite_054",
+    "difficulty": "medium",
+    "question": "¿Qué comando libera el espacio en disco dejado por filas o tablas eliminadas en SQLite?",
+    "options": [
+      "VACUUM;",
+      "PURGE;",
+      "COMPACT;",
+      "DEFRAG;"
+    ],
+    "correct_index": 0,
+    "hint": "VACUUM crea un archivo temporal nuevo, copia únicamente los datos activos en páginas contiguas y reemplaza el archivo original, reduciendo el tamaño en disco."
+  },
+  {
+    "id": "sqlite_055",
+    "difficulty": "medium",
+    "question": "¿Qué es 'PRAGMA auto_vacuum = FULL | INCREMENTAL;' en SQLite?",
+    "options": [
+      "Configura la base de datos para que mueva las páginas libres al final del archivo tras borrados y pueda truncar el tamaño en disco automáticamente o mediante PRAGMA incremental_vacuum",
+      "Ejecuta VACUUM cada 24 horas automáticamente",
+      "Borra datos antiguos de más de 30 días",
+      "Desfragmenta la memoria RAM del proceso"
+    ],
+    "correct_index": 0,
+    "hint": "auto_vacuum evita tener que ejecutar un VACUUM completo (que duplica el tamaño en disco temporalmente) gestionando listas de páginas libres reutilizables y truncables."
+  },
+  {
+    "id": "sqlite_056",
+    "difficulty": "medium",
+    "question": "¿Qué comando dot en el CLI de SQLite permite cambiar la salida para mostrar cabeceras y columnas alineadas como tabla legible?",
+    "options": [
+      ".mode table (o .mode box / .mode column)",
+      ".format pretty",
+      ".style grid",
+      ".display table"
+    ],
+    "correct_index": 0,
+    "hint": "'.mode table' o '.mode box' formatea el output como una tabla limpia con bordes ASCII/Unicode y cabeceras de columnas."
+  },
+  {
+    "id": "sqlite_057",
+    "difficulty": "medium",
+    "question": "¿Qué comando dot permite importar datos desde un archivo CSV directamente a una tabla en SQLite?",
+    "options": [
+      ".mode csv seguido de .import archivo.csv tabla",
+      ".load_csv archivo.csv tabla",
+      "COPY tabla FROM 'archivo.csv'",
+      ".read_csv archivo.csv"
+    ],
+    "correct_index": 0,
+    "hint": "Configurar '.mode csv' y luego invocar '.import archivo.csv nombre_tabla' parsea e inserta todas las filas automáticamente."
+  },
+  {
+    "id": "sqlite_058",
+    "difficulty": "medium",
+    "question": "¿Cómo se inspecciona el plan de ejecución de una consulta en SQLite?",
+    "options": [
+      "EXPLAIN QUERY PLAN SELECT ...;",
+      "SHOW PLAN SELECT ...;",
+      "DESCRIBE SELECT ...;",
+      "INSPECT QUERY SELECT ...;"
+    ],
+    "correct_index": 0,
+    "hint": "'EXPLAIN QUERY PLAN' genera un reporte en texto que indica si la consulta usa SCAN TABLE o SEARCH TABLE USING INDEX."
+  },
+  {
+    "id": "sqlite_059",
+    "difficulty": "medium",
+    "question": "En la salida de EXPLAIN QUERY PLAN en SQLite, ¿cuál es la diferencia entre 'SCAN TABLE' y 'SEARCH TABLE'?",
+    "options": [
+      "SCAN escanea toda la tabla fila por fila (lento, sin índice); SEARCH utiliza un índice B-Tree o el rowid para ir directo a las filas (rápido)",
+      "SCAN es más rápido porque lee en paralelo",
+      "SEARCH solo busca en tablas virtuales FTS5",
+      "Son idénticos y solo cambia el nombre según la versión"
+    ],
+    "correct_index": 0,
+    "hint": "SEARCH indica que el optimizador encontró un índice utilizable para acotar la búsqueda; SCAN señala un table scan completo O(N)."
+  },
+  {
+    "id": "sqlite_060",
+    "difficulty": "medium",
+    "question": "¿Para qué sirve el comando ATTACH DATABASE 'otro.db' AS otro_esquema en SQLite?",
+    "options": [
+      "Permite conectar múltiples archivos de base de datos en una misma conexión y ejecutar consultas JOIN transaccionales entre tablas de distintos archivos",
+      "Crea una copia de seguridad en red",
+      "Une dos archivos físicos en uno solo",
+      "Comprime la base de datos externa"
+    ],
+    "correct_index": 0,
+    "hint": "ATTACH DATABASE permite operar sobre hasta 125 bases de datos simultáneas en una misma sesión con transacciones ACID cruzadas (two-phase commit)."
+  },
+  {
+    "id": "sqlite_061",
+    "difficulty": "advanced",
+    "question": "¿Cuáles son las capas arquitectónicas fundamentales que componen el núcleo de SQLite?",
+    "options": [
+      "Core (Tokenizer, Parser, Code Generator), Virtual Machine (VDBE), Backend (B-Tree, Pager, OS Interface / VFS)",
+      "Frontend, API Gateway, Database Cluster, Storage Engine",
+      "Driver, Network Socket, Thread Pool, Memory Manager",
+      "Client, Server Broker, Storage Node"
+    ],
+    "correct_index": 0,
+    "hint": "El SQL se tokeniza y compila a bytecode de la VDBE; la VDBE interactúa con el B-Tree, que pide páginas al Pager, y el Pager interactúa con el OS mediante la VFS."
+  },
+  {
+    "id": "sqlite_062",
+    "difficulty": "advanced",
+    "question": "¿Qué es la VDBE (Virtual Database Engine) en SQLite?",
+    "options": [
+      "Una máquina virtual basada en registros que ejecuta un conjunto de instrucciones bytecode compiladas a partir de las sentencias SQL",
+      "Un emulador de PostgreSQL escrito en WebAssembly",
+      "Un motor de renderizado gráfico para SQLite",
+      "Un contenedor Docker para SQLite"
+    ],
+    "correct_index": 0,
+    "hint": "Cuando se prepara una sentencia (sqlite3_prepare_v2), SQLite la compila a un programa de bytecode para la VDBE, ejecutable mediante sqlite3_step()."
+  },
+  {
+    "id": "sqlite_063",
+    "difficulty": "advanced",
+    "question": "¿Qué comando permite visualizar directamente las instrucciones de bytecode de la VDBE que ejecutará una sentencia?",
+    "options": [
+      "EXPLAIN sentencia_sql;",
+      "EXPLAIN QUERY PLAN sentencia_sql;",
+      "SHOW BYTECODE sentencia_sql;",
+      "DISASSEMBLE sentencia_sql;"
+    ],
+    "correct_index": 0,
+    "hint": "A diferencia de 'EXPLAIN QUERY PLAN' (que muestra un resumen de alto nivel), 'EXPLAIN' muestra la tabla detallada de opcodes VDBE (OpenRead, SeekRowid, Column, ResultRow, Halt)."
+  },
+  {
+    "id": "sqlite_064",
+    "difficulty": "advanced",
+    "question": "¿Qué responsabilidad tiene la capa 'Pager' dentro del motor de almacenamiento de SQLite?",
+    "options": [
+      "Gestionar la lectura/escritura de páginas de disco de tamaño fijo, la memoria caché de páginas (page cache) y garantizar atomicidad y durabilidad mediante el journal/WAL",
+      "Enviar notificaciones a dispositivos móviles",
+      "Formatear las páginas HTML para visualización",
+      "Gestionar las contraseñas de los usuarios"
+    ],
+    "correct_index": 0,
+    "hint": "El Pager abstrae el archivo de disco como una colección de páginas numeradas (de 512 a 65536 bytes) y maneja los bloqueos de archivo y la recuperación ante fallos."
+  },
+  {
+    "id": "sqlite_065",
+    "difficulty": "advanced",
+    "question": "¿Qué es la capa VFS (Virtual File System) en SQLite y qué permite?",
+    "options": [
+      "Una interfaz de abstracción del sistema operativo (open, read, write, sync, lock) que permite portar SQLite a cualquier SO o implementar sistemas de archivos virtuales personalizados en memoria o cifrados",
+      "Un sistema para formatear discos duros",
+      "Un protocolo de red para compartir archivos SAMBA",
+      "Una partición oculta en discos Linux"
+    ],
+    "correct_index": 0,
+    "hint": "sqlite3_vfs desacopla SQLite de las llamadas al sistema POSIX o Win32, permitiendo crear drivers de almacenamiento custom (ej. bases de datos cifradas en RAM, SQLCipher, o sobre S3)."
+  },
+  {
+    "id": "sqlite_066",
+    "difficulty": "advanced",
+    "question": "¿Qué es una tabla 'WITHOUT ROWID' en SQLite y cuándo proporciona una ventaja de rendimiento?",
+    "options": [
+      "Una tabla donde el PRIMARY KEY se convierte directamente en el índice Clustered B-Tree, eliminando el entero rowid adicional y ahorrando espacio y búsquedas indirectas en claves no enteras",
+      "Una tabla que no permite guardar más de una fila",
+      "Una tabla que solo existe mientras dura la transacción",
+      "Una tabla que no permite crear índices secundarios"
+    ],
+    "correct_index": 0,
+    "hint": "Para tablas con claves primarias textuales o compuestas (ej. UUIDs o pares id_usuario, id_rol), WITHOUT ROWID ahorra un árbol B completo y evita la duplicación de datos."
+  },
+  {
+    "id": "sqlite_067",
+    "difficulty": "advanced",
+    "question": "¿Qué restricción o comportamiento cambia en una tabla creada con la directiva 'STRICT' (introducida en SQLite 3.37)?",
+    "options": [
+      "Impone verificación estricta de tipos en tiempo de inserción/actualización rechazando valores que no coincidan con el tipo declarado de la columna, emulando bases de datos SQL tradicionales",
+      "Impide el uso de transacciones concurrentes",
+      "Obliga a que todas las columnas tengan índices B-Tree",
+      "No permite valores nulos en ninguna columna"
+    ],
+    "correct_index": 0,
+    "hint": "En tablas STRICT, si una columna se declara INT, intentar insertar una cadena arroja un error inmediato 'cannot store TEXT value in INT column'."
+  },
+  {
+    "id": "sqlite_068",
+    "difficulty": "advanced",
+    "question": "¿Qué limitación fundamental de concurrencia existe en SQLite incluso cuando se opera en modo WAL?",
+    "options": [
+      "Solo puede haber un único escritor activo simultáneamente en toda la base de datos (concurrencia de un solo escritor, múltiples lectores concurrentes)",
+      "No se permiten más de 2 lectores simultáneos",
+      "Las lecturas se bloquean cada 10 transacciones",
+      "El archivo solo puede ser accedido por un hilo a la vez"
+    ],
+    "correct_index": 0,
+    "hint": "WAL permite que múltiples conexiones lean sin bloquearse entre sí ni bloquear al escritor, pero dos transacciones de escritura concurrentes colisionan (SQLITE_BUSY)."
+  },
+  {
+    "id": "sqlite_069",
+    "difficulty": "advanced",
+    "question": "¿Qué estados de bloqueo (lock states) utiliza SQLite en el modo tradicional de Rollback Journal?",
+    "options": [
+      "UNLOCKED -> SHARED -> RESERVED -> PENDING -> EXCLUSIVE",
+      "READ -> WRITE -> COMMIT",
+      "FREE -> ACQUIRED -> LOCKED",
+      "OPEN -> BUSY -> CLOSED"
+    ],
+    "correct_index": 0,
+    "hint": "En Rollback Journal, una conexión avanza por estos estados POSIX lock. PENDING permite que lectores existentes terminen impidiendo nuevos lectores para que el escritor alcance EXCLUSIVE."
+  },
+  {
+    "id": "sqlite_070",
+    "difficulty": "advanced",
+    "question": "¿Por qué colocar una base de datos SQLite en un sistema de archivos en red (como NFS, SMB o CIFS) es riesgoso y desaconsejado?",
+    "options": [
+      "Porque las implementaciones de bloqueo de archivos (fcntl/flock) en redes remotas frecuentemente contienen bugs que pueden causar inconsistencias de lectura o corrupción de datos con escrituras concurrentes",
+      "Porque SQLite no soporta direcciones IP",
+      "Porque SQLite requiere conexión Bluetooth",
+      "Porque los archivos .db se borran automáticamente al cruzar routers"
+    ],
+    "correct_index": 0,
+    "hint": "Los bugs en los bloqueos distribuidos de NFS y la latencia en fsync hacen que múltiples procesos asuman bloqueos exclusivos al mismo tiempo, corrompiendo las páginas del B-Tree."
+  },
+  {
+    "id": "sqlite_071",
+    "difficulty": "advanced",
+    "question": "¿Qué tamaño de página (page_size) utiliza SQLite por defecto y cuál es el rango permitido?",
+    "options": [
+      "4096 bytes por defecto (rango entre 512 y 65536 bytes en potencias de 2)",
+      "1024 bytes fijos no modificables",
+      "16384 bytes sin posibilidad de ajuste",
+      "64 bytes"
+    ],
+    "correct_index": 0,
+    "hint": "Desde SQLite 3.12, 4096 bytes es el valor predeterminado, coincidiendo óptimamente con el tamaño de bloque de los sistemas de archivos y páginas de kernel OS."
+  },
+  {
+    "id": "sqlite_072",
+    "difficulty": "advanced",
+    "question": "¿Qué directiva PRAGMA controla la cantidad de memoria asignada al Page Cache de SQLite?",
+    "options": [
+      "PRAGMA cache_size = N; (si N es negativo representa kibibytes, si es positivo representa número de páginas)",
+      "PRAGMA ram_limit = N;",
+      "PRAGMA buffer_pool = N;",
+      "PRAGMA memory_cache = N;"
+    ],
+    "correct_index": 0,
+    "hint": "Por defecto son -2000 KiB (~2MB). En servidores con SQLite se suele configurar a -64000 (64MB) o más para retener índices y datos calientes en memoria."
+  },
+  {
+    "id": "sqlite_073",
+    "difficulty": "advanced",
+    "question": "¿Qué funcionalidad aporta la directiva 'PRAGMA mmap_size = N;' en sistemas de 64 bits?",
+    "options": [
+      "Habilita el mapeo directo del archivo de base de datos en el espacio de direcciones de memoria virtual del proceso (mmap), reduciendo el overhead de copias de lectura en el kernel",
+      "Crea una tarjeta de memoria virtual en la tarjeta gráfica",
+      "Comprime los datos en memoria swap",
+      "Limita la cantidad de hilos que pueden usar mmap"
+    ],
+    "correct_index": 0,
+    "hint": "mmap permite que las lecturas accedan directamente a las páginas de la caché del kernel de Linux sin invocar llamadas al sistema read(), acelerando lecturas masivas."
+  },
+  {
+    "id": "sqlite_074",
+    "difficulty": "advanced",
+    "question": "¿Cómo se implementan funciones escalares o de agregación personalizadas en SQLite?",
+    "options": [
+      "Registrando funciones en el lenguaje anfitrión (C, Rust, Python, Go) mediante las APIs de la librería como sqlite3_create_function()",
+      "Escribiendo scripts en bash dentro de una tabla especial",
+      "Compilando un servidor RPC independiente",
+      "SQLite no permite definir funciones personalizadas"
+    ],
+    "correct_index": 0,
+    "hint": "Al ser embebida, la aplicación registra callbacks nativos en memoria con sqlite3_create_function_v2() invocables directamente desde las consultas SQL."
+  },
+  {
+    "id": "sqlite_075",
+    "difficulty": "advanced",
+    "question": "¿Qué son los 'Savepoints' (SAVEPOINT nombre / RELEASE nombre / ROLLBACK TO nombre) en SQLite?",
+    "options": [
+      "Puntos de guardado anidados que permiten revertir transacciones parciales sin abortar la transacción principal exterior",
+      "Instantáneas exportadas a archivos .tar.gz",
+      "Copias de seguridad del esquema sqlite_master",
+      "Puntos de restauración de arranque del sistema operativo"
+    ],
+    "correct_index": 0,
+    "hint": "Los SAVEPOINTs proporcionan soporte transaccional anidado multinivel con semántica ROLLBACK TO que devuelve el estado a un punto intermedio."
+  },
+  {
+    "id": "sqlite_076",
+    "difficulty": "advanced",
+    "question": "¿Qué es la API 'sqlite3_backup_init()' / 'sqlite3_backup_step()' y qué ventaja ofrece?",
+    "options": [
+      "Permite realizar copias de seguridad de una base de datos activa a otro archivo o memoria en caliente, bloqueando por páginas pequeñas sin congelar la base de datos",
+      "Envía la base de datos a Google Drive por HTTP",
+      "Guarda la base de datos en formato JSON",
+      "Solo funciona si la base de datos está en modo de solo lectura"
+    ],
+    "correct_index": 0,
+    "hint": "La Backup API copia páginas de forma segura e incremental incluso mientras otros hilos están leyendo o escribiendo datos concurrentemente."
+  },
+  {
+    "id": "sqlite_077",
+    "difficulty": "advanced",
+    "question": "¿Qué directiva PRAGMA permite forzar la ejecución de un Checkpoint en modo WAL de forma programática?",
+    "options": [
+      "PRAGMA wal_checkpoint(PASSIVE | FULL | RESTART | TRUNCATE);",
+      "PRAGMA sync_wal;",
+      "PRAGMA flush_wal_to_disk;",
+      "PRAGMA checkpoint_now;"
+    ],
+    "correct_index": 0,
+    "hint": "TRUNCATE copia todas las páginas válidas al .db principal, espera a los lectores activos y trunca el archivo .db-wal a 0 bytes."
+  },
+  {
+    "id": "sqlite_078",
+    "difficulty": "advanced",
+    "question": "¿Qué ocurre si una aplicación finaliza de forma abrupta (crash o corte de energía) mientras SQLite opera en modo WAL?",
+    "options": [
+      "En la siguiente apertura de la conexión, SQLite inspecciona el WAL, descarta las transacciones no confirmadas y aplica las confirmadas automáticamente (cero corrupción)",
+      "La base de datos queda corrupta irreversiblemente",
+      "Se requiere ejecutar un comando manual en la terminal",
+      "El archivo .db se renombra a .corrupt"
+    ],
+    "correct_index": 0,
+    "hint": "El WAL garantiza atomicidad y durabilidad completas mediante sumas de verificación (checksums) por página y marcas de commit consistentes."
+  },
+  {
+    "id": "sqlite_079",
+    "difficulty": "advanced",
+    "question": "¿Qué es la extensión 'Session Extension' en SQLite?",
+    "options": [
+      "Un conjunto de funciones que permite capturar los cambios (deltas / changeset / patchset) realizados en una transacción para transmitirlos y aplicarlos en otra réplica",
+      "Un gestor de autenticación con cookies para sitios web",
+      "Un balanceador de carga de red para HTTP",
+      "Un registro de tiempo de actividad de la CPU"
+    ],
+    "correct_index": 0,
+    "hint": "La Session Extension permite generar diffs binarios estructurados de cambios locales para sincronización offline-first con servidores centrales o peers."
+  },
+  {
+    "id": "sqlite_080",
+    "difficulty": "advanced",
+    "question": "¿Qué es 'LiteFS' o 'rqlite' en el ecosistema moderno de SQLite?",
+    "options": [
+      "Proyectos que implementan replicación distribuida con consenso Raft o a nivel de sistema de archivos para permitir alta disponibilidad con SQLite",
+      "Interfaces gráficas para Windows",
+      "Compiladores de C++ a ensamblador",
+      "Bases de datos de clave-valor basadas en Redis"
+    ],
+    "correct_index": 0,
+    "hint": "LiteFS (Fuse-based replication) y rqlite (Raft consensus) permiten ejecutar SQLite distribuido con réplicas de lectura y failover de escrituras en la nube."
+  },
+  {
+    "id": "sqlite_081",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Partial Index' en SQLite y cuál es su sintaxis?",
+    "options": [
+      "Un índice que contiene una cláusula WHERE para indexar sólo un subconjunto de filas (ej. CREATE INDEX idx ON t(a) WHERE activo = 1;)",
+      "Un índice que solo guarda los primeros 4 bytes de cada campo",
+      "Un índice que solo se crea en días hábiles",
+      "Un índice temporal que se descarta tras cada reinicio"
+    ],
+    "correct_index": 0,
+    "hint": "Ahorra memoria y reduce la sobrecarga de escritura en disco indexando únicamente los registros que cumplen una condición selectiva."
+  },
+  {
+    "id": "sqlite_082",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Expression Index' (índice sobre expresiones) en SQLite?",
+    "options": [
+      "Un índice creado sobre el resultado de una función o expresión computada (ej. CREATE INDEX idx ON t(LOWER(email));)",
+      "Un índice que se evalúa mediante regex en memoria",
+      "Un índice que solo admite operaciones matemáticas",
+      "Un índice para almacenar fórmulas de Excel"
+    ],
+    "correct_index": 0,
+    "hint": "Permite que consultas con cláusulas WHERE LOWER(email) = '...' aprovechen el índice B-Tree sin recalcular la función por cada fila escaneada."
+  },
+  {
+    "id": "sqlite_083",
+    "difficulty": "advanced",
+    "question": "¿Cómo utiliza SQLite el optimizador estadístico cuando se ejecuta el comando 'ANALYZE;'?",
+    "options": [
+      "Genera y puebla tablas internas como 'sqlite_stat1' con la distribución y cardinalidad de claves para elegir el mejor orden de unión (join order) y selección de índices",
+      "Optimiza el tamaño de los tipos de letra en consola",
+      "Elimina tablas no utilizadas",
+      "Compila las consultas a código de bytes de Java"
+    ],
+    "correct_index": 0,
+    "hint": "Las estadísticas en sqlite_stat1 permiten al optimizador de consultas basado en costos (CBO) estimar con precisión el número de filas procesadas en cada rama."
+  },
+  {
+    "id": "sqlite_084",
+    "difficulty": "advanced",
+    "question": "¿Qué es el 'PRAGMA optimize;' y cuándo se recomienda invocarlo en aplicaciones en producción?",
+    "options": [
+      "Una directiva recomendada para ejecutarse justo antes de cerrar la conexión de la base de datos; ejecuta ANALYZE automáticamente sólo en tablas que lo necesiten",
+      "Un comando para borrar la memoria caché del navegador",
+      "Un comando para reiniciar el demonio de SQLite",
+      "Un desfragmentador de disco físico para discos HDD"
+    ],
+    "correct_index": 0,
+    "hint": "La documentación oficial de SQLite aconseja ejecutar 'PRAGMA optimize;' al cerrar la aplicación o periódicamente para mantener estadísticas frescas con costo mínimo."
+  },
+  {
+    "id": "sqlite_085",
+    "difficulty": "advanced",
+    "question": "¿Cómo maneja SQLite los desbordamientos de página (Overflow Pages) cuando un registro BLOB/TEXT supera el espacio disponible en una página del B-Tree?",
+    "options": [
+      "Almacena un prefijo y un puntero de 4 bytes a una lista enlazada de páginas de desbordamiento (overflow pages) fuera del árbol B",
+      "Trunca los datos para que quepan en la página",
+      "Falla arrojando un error de datos demasiado largos",
+      "Comprime automáticamente la columna con zstd"
+    ],
+    "correct_index": 0,
+    "hint": "Si una fila excede el umbral utilizable de la página (aprox. page_size - 35 bytes), el excedente se escribe en una cadena enlazada de overflow pages."
+  },
+  {
+    "id": "sqlite_086",
+    "difficulty": "advanced",
+    "question": "¿Qué estructura de árbol utiliza internamente SQLite para almacenar tablas con rowid y para índices secundarios?",
+    "options": [
+      "B+ Tree (B-Tree de tablas donde los datos residen solo en las hojas) y B Tree tradicional para índices",
+      "Árboles binarios AVL balanceados",
+      "Árboles rojo-negro en memoria RAM",
+      "Tablas hash extensibles con hashing consistente"
+    ],
+    "correct_index": 0,
+    "hint": "En Table B-Trees (B+ Tree), las páginas intermedias solo contienen rowids y punteros, mientras que los registros con datos residen exclusivamente en las páginas hoja."
+  },
+  {
+    "id": "sqlite_087",
+    "difficulty": "advanced",
+    "question": "¿Qué modos de hilos (threading modes) soporta SQLite y cómo se configuran con sqlite3_config()?",
+    "options": [
+      "Single-thread (sin mutex), Multi-thread (seguro entre hilos si cada uno usa conexiones distintas) y Serialized (completamente thread-safe en la misma conexión)",
+      "Async, Sync y Hybrid",
+      "Process-only, Coroutine y Parallel",
+      "Kernel-thread y User-thread"
+    ],
+    "correct_index": 0,
+    "hint": "Serialized es el modo por defecto: múltiples hilos pueden compartir la misma conexión de forma segura porque la API adquiere mutex internos por llamada."
+  },
+  {
+    "id": "sqlite_088",
+    "difficulty": "advanced",
+    "question": "¿Qué es la extensión 'R*Tree' en SQLite y para qué aplicaciones se utiliza?",
+    "options": [
+      "Un índice espacial especializado para búsquedas de rango multidimensionales eficientes (delimitación por rectángulos y coordenadas geográficas)",
+      "Un compilador de árboles de sintaxis abstracta para código C",
+      "Un índice para estructuras jerárquicas de árbol de directorio",
+      "Una estructura para ordenar números reales"
+    ],
+    "correct_index": 0,
+    "hint": "R*Tree es ideal para consultas geoespaciales y gráficos por computadora que requieren filtrar rectángulos o cajas 2D/3D concurrentes."
+  },
+  {
+    "id": "sqlite_089",
+    "difficulty": "advanced",
+    "question": "¿Qué directiva PRAGMA permite almacenar los archivos temporales (tablas temporales, índices al vuelo) en memoria RAM en lugar de disco?",
+    "options": [
+      "PRAGMA temp_store = MEMORY; (o valor 2)",
+      "PRAGMA ram_temp = ON;",
+      "PRAGMA virtual_temp = 1;",
+      "PRAGMA memory_tables = TRUE;"
+    ],
+    "correct_index": 0,
+    "hint": "temp_store = MEMORY fuerza a que tablas temporales y buffers de ordenación no toquen el disco, mejorando la velocidad en consultas complejas."
+  },
+  {
+    "id": "sqlite_090",
+    "difficulty": "advanced",
+    "question": "¿Qué es SQLCipher en el contexto de SQLite?",
+    "options": [
+      "Una extensión de código abierto que proporciona cifrado transparente de página completa de 256 bits AES para bases de datos SQLite en disco",
+      "Un algoritmo para ofuscar nombres de tablas",
+      "Un protocolo de autenticación SSH",
+      "Un parser de consultas SQL para detectar malware"
+    ],
+    "correct_index": 0,
+    "hint": "SQLCipher implementa cifrado a nivel de página física mediante una VFS personalizada, descifrando páginas en memoria al vuelo con claves PBKDF2/AES."
+  },
+  {
+    "id": "sqlite_091",
+    "difficulty": "advanced",
+    "question": "¿Qué ocurre si una base de datos SQLite alcanza el límite máximo de tamaño de archivo predeterminado?",
+    "options": [
+      "El límite teórico es de aproximadamente 281 Terabytes (2^31 - 1 páginas de 64 KB cada una)",
+      "Falla al llegar a 2 GB por límites de enteros de 32 bits",
+      "Se detiene al alcanzar exactamente 100 GB",
+      "SQLite no puede manejar bases de datos mayores a 4 GB"
+    ],
+    "correct_index": 0,
+    "hint": "Gracias a punteros de página de 64 bits y tamaños de página de hasta 64KB, SQLite soporta hasta ~281 TB por archivo de base de datos."
+  },
+  {
+    "id": "sqlite_092",
+    "difficulty": "advanced",
+    "question": "¿Para qué sirve la función compilatoria 'SQLITE_ENABLE_STAT4' en SQLite?",
+    "options": [
+      "Permite recolectar histogramas detallados con muestras de claves intermedias en índices para optimizar predicados de rango complejos y desigualdades",
+      "Muestra estadísticas de uso de CPU en la terminal",
+      "Habilita el protocolo SNMP para SQLite",
+      "Calcula la media y varianza de las columnas"
+    ],
+    "correct_index": 0,
+    "hint": "STAT4 almacena datos de distribución fina en 'sqlite_stat4', permitiendo al optimizador decidir entre index scan y full scan en rangos no uniformes."
+  },
+  {
+    "id": "sqlite_093",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'Generated Column' en SQLite y cómo se declaran las variantes STORED frente a VIRTUAL?",
+    "options": [
+      "Columnas declaradas como 'AS (expresion) STORED' o 'VIRTUAL'; STORED se escribe en disco al insertar y VIRTUAL se computa en lectura sin ocupar espacio",
+      "Columnas creadas por inteligencia artificial",
+      "Columnas temporales que solo duran una consulta",
+      "Columnas con valores numéricos aleatorios"
+    ],
+    "correct_index": 0,
+    "hint": "Ambas pueden tener índices B-Tree asociados, siendo VIRTUAL muy eficiente para indexar extracciones de campos JSON sin duplicar almacenamiento."
+  },
+  {
+    "id": "sqlite_094",
+    "difficulty": "advanced",
+    "question": "¿Qué comando dot permite cargar extensiones compiladas en C (.so / .dll / .dylib) en una sesión interactiva de SQLite?",
+    "options": [
+      ".load ./nombre_extension",
+      ".install_plugin ./nombre_extension",
+      ".import_c ./nombre_extension",
+      ".plugin ./nombre_extension"
+    ],
+    "correct_index": 0,
+    "hint": "'.load' (o la API C sqlite3_load_extension) enlaza dinámicamente librerías compartidas con funciones o módulos virtuales personalizados."
+  },
+  {
+    "id": "sqlite_095",
+    "difficulty": "advanced",
+    "question": "¿Cómo se previene la inyección SQL en aplicaciones que utilizan SQLite?",
+    "options": [
+      "Utilizando sentencias preparadas con marcadores de posición parametrizados (?, :nombre, @nombre) mediante APIs como sqlite3_bind_*()",
+      "Concatenando strings con comillas dobles",
+      "Filtrando manualmente las palabras clave SELECT y DROP",
+      "SQLite es inmune por naturaleza a la inyección SQL"
+    ],
+    "correct_index": 0,
+    "hint": "El binding de parámetros compila el AST y bytecode primero y transfiere los datos como escalares puros sin evaluar sintaxis arbitraria."
+  },
+  {
+    "id": "sqlite_096",
+    "difficulty": "advanced",
+    "question": "¿Qué función cumple el comando 'PRAGMA foreign_key_check;' en SQLite?",
+    "options": [
+      "Escanea la base de datos completa y lista todas las violaciones existentes de restricciones de clave foránea en forma de tabla",
+      "Repara automáticamente las claves foráneas rotas",
+      "Elimina las tablas que tengan claves huérfanas",
+      "Activa las claves foráneas de por vida"
+    ],
+    "correct_index": 0,
+    "hint": "Permite auditar si hay datos huérfanos o inválidos antes de activar PRAGMA foreign_keys = ON en esquemas importados."
+  },
+  {
+    "id": "sqlite_097",
+    "difficulty": "advanced",
+    "question": "¿Qué sucede con las conexiones de lectura activas cuando se invoca un 'PRAGMA wal_checkpoint(TRUNCATE);'?",
+    "options": [
+      "El checkpoint se bloquea y espera a que los lectores antiguos que están leyendo versiones del WAL terminen antes de poder truncar el archivo",
+      "Los lectores son desconectados forzosamente con un error fatal",
+      "El archivo WAL se borra inmediatamente sin importar los lectores",
+      "La base de datos se cambia a modo Rollback Journal"
+    ],
+    "correct_index": 0,
+    "hint": "TRUNCATE espera a que no haya ningún lector usando marcos antiguos del WAL para resetear el tamaño a cero de forma segura."
+  },
+  {
+    "id": "sqlite_098",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la función del 'Free List' (lista de páginas libres) en la cabecera de un archivo SQLite?",
+    "options": [
+      "Mantiene un registro de páginas en disco desocupadas por eliminaciones que pueden reutilizarse en futuras inserciones antes de expandir el archivo",
+      "Una lista de usuarios gratuitos del sistema",
+      "Una tabla de memoria RAM no asignada",
+      "Un índice de consultas gratuitas"
+    ],
+    "correct_index": 0,
+    "hint": "Cuando se eliminan filas, SQLite no reduce automáticamente el fichero en disco; añade las páginas a la freelist para reciclarlas en nuevos inserts."
+  },
+  {
+    "id": "sqlite_099",
+    "difficulty": "advanced",
+    "question": "¿Qué es una 'Virtual Table' (tabla virtual) en SQLite y qué interfaz C debe implementar?",
+    "options": [
+      "Un objeto que aparenta ser una tabla SQL estándar pero cuyos datos provienen de fuentes externas arbitrarias implementando la interfaz sqlite3_module (xCreate, xOpen, xFilter, xNext, etc.)",
+      "Una vista creada con CREATE VIEW en memoria RAM",
+      "Una tabla temporal en el esquema temp",
+      "Una tabla que solo existe en código ensamblador"
+    ],
+    "correct_index": 0,
+    "hint": "Las tablas virtuales permiten consultar como tablas SQL cualquier fuente: archivos CSV, repositorios Git, métricas del kernel o motores FTS5."
+  },
+  {
+    "id": "sqlite_0100",
+    "difficulty": "advanced",
+    "question": "¿Por qué SQLite es la base de datos más desplegada y utilizada en todo el planeta en la actualidad?",
+    "options": [
+      "Porque viene embebida en miles de millones de smartphones (Android/iOS), navegadores web (Chrome, Firefox, Safari), sistemas operativos (macOS, Windows 10/11) y aplicaciones IoT",
+      "Porque sustituyó a Oracle en todas las empresas de Wall Street",
+      "Porque es la base de datos oficial de los servidores de Google Search",
+      "Porque es el único gestor de base de datos de código abierto"
+    ],
+    "correct_index": 0,
+    "hint": "Con más de un billón (1,000,000,000,000+) de bases de datos activas en dispositivos móviles, navegadores, televisores y automóviles, SQLite es el motor más ubicuo de la historia del software."
   }
 ]

@@ -376,7 +376,7 @@ class _TopicsPageState extends State<TopicsPage> {
       icon: Icons.storage_rounded,
       description:
           'ACID vs BASE, Teorema CAP, Sharding, normalización 3NF, bloqueos optimistas vs pesimistas y deadlocks.',
-      defaultQuestionCount: 22,
+      defaultQuestionCount: 100,
       accentColor: Color(0xFF10B981),
       tags: ['sql', 'nosql', 'acid', 'cap', 'indices', 'database', 'sharding', 'transacciones'],
     ),
@@ -388,7 +388,7 @@ class _TopicsPageState extends State<TopicsPage> {
       icon: Icons.storage_rounded,
       description:
           'MVCC, dead tuples, VACUUM/autovacuum, índices GIN/GiST/BRIN, tipos JSONB, aislamiento Serializable y pgvector.',
-      defaultQuestionCount: 30,
+      defaultQuestionCount: 100,
       accentColor: Color(0xFF336791),
       tags: ['postgres', 'postgresql', 'mvcc', 'vacuum', 'gin', 'gist', 'jsonb', 'pgvector', 'sql'],
     ),
@@ -400,7 +400,7 @@ class _TopicsPageState extends State<TopicsPage> {
       icon: Icons.dns_rounded,
       description:
           'Motores InnoDB vs MyISAM, Buffer Pool LRU, Record/Gap/Next-Key locks, replicación con binlog y planes EXPLAIN.',
-      defaultQuestionCount: 30,
+      defaultQuestionCount: 100,
       accentColor: Color(0xFF00758F),
       tags: ['mysql', 'mariadb', 'innodb', 'buffer-pool', 'binlog', 'locks', 'explain', 'sql'],
     ),
@@ -412,7 +412,7 @@ class _TopicsPageState extends State<TopicsPage> {
       icon: Icons.folder_copy_rounded,
       description:
           'Documentos BSON, motor WiredTiger, Aggregation Pipelines, Replica Sets con Raft, Sharding horizontal y transacciones ACID.',
-      defaultQuestionCount: 30,
+      defaultQuestionCount: 100,
       accentColor: Color(0xFF47A248),
       tags: ['mongodb', 'mongo', 'nosql', 'bson', 'wiredtiger', 'aggregation', 'replica-sets', 'sharding'],
     ),
@@ -424,7 +424,7 @@ class _TopicsPageState extends State<TopicsPage> {
       icon: Icons.bolt_rounded,
       description:
           'Multiplexación I/O monohilo, Hashes, Sorted Sets, persistencia RDB vs AOF, Eviction LRU/LFU, Redlock y mitigación de stampede.',
-      defaultQuestionCount: 30,
+      defaultQuestionCount: 100,
       accentColor: Color(0xFFDC382D),
       tags: ['redis', 'cache', 'in-memory', 'rdb', 'aof', 'pub-sub', 'lru', 'redlock'],
     ),
@@ -436,7 +436,7 @@ class _TopicsPageState extends State<TopicsPage> {
       icon: Icons.save_rounded,
       description:
           'Arquitectura serverless en un archivo, modo WAL (Write-Ahead Logging) para lecturas concurrentes, pragmas de rendimiento y FTS5.',
-      defaultQuestionCount: 22,
+      defaultQuestionCount: 100,
       accentColor: Color(0xFF003B57),
       tags: ['sqlite', 'wal', 'embedded', 'mobile', 'local', 'sql', 'serverless'],
     ),

@@ -152,7 +152,7 @@ void main() {
         expect(file.existsSync(), isTrue, reason: '$filePath must exist');
 
         final decoded = jsonDecode(file.readAsStringSync()) as List<dynamic>;
-        expect(decoded.length, greaterThanOrEqualTo(20), reason: '$filePath must have at least 20 questions');
+        expect(decoded.length, greaterThanOrEqualTo(100), reason: '$filePath must have at least 100 questions');
 
         for (final item in decoded) {
           final q = Question.fromJson(Map<String, dynamic>.from(item as Map));
