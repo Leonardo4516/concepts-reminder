@@ -20,19 +20,33 @@ class ContentManager {
     'python': 'assets/packs/python_basico.json',
     'java': 'assets/packs/java_basico.json',
     'javascript': 'assets/packs/javascript_basico.json',
+    'typescript': 'assets/packs/typescript_basico.json',
     'go': 'assets/packs/go_basico.json',
+    'rust': 'assets/packs/rust_basico.json',
     'dart': 'assets/packs/dart_basico.json',
     'poo_conceptos': 'assets/packs/poo_conceptos.json',
     'principios_solid': 'assets/packs/principios_solid.json',
     'patrones_diseno': 'assets/packs/patrones_diseno.json',
+    'arquitectura_hexagonal': 'assets/packs/arquitectura_hexagonal.json',
+    'metodologia_scrum': 'assets/packs/metodologia_scrum.json',
+    'bases_de_datos': 'assets/packs/bases_de_datos.json',
+    'redes_y_apis': 'assets/packs/redes_y_apis.json',
+    'ciberseguridad_web': 'assets/packs/ciberseguridad_web.json',
+    'devops_cloud': 'assets/packs/devops_cloud.json',
+    'estructuras_algoritmos': 'assets/packs/estructuras_algoritmos.json',
   };
 
   /// Category definitions and their associated pack identifiers
   static const Map<String, List<String>> categoryPacks = {
-    'Lenguajes': ['python', 'java', 'javascript', 'go', 'dart'],
+    'Lenguajes': ['python', 'java', 'javascript', 'typescript', 'go', 'rust', 'dart'],
     'POO & Fundamentos': ['poo_conceptos'],
-    'Metodologías & SOLID': ['principios_solid'],
-    'Patrones & Arquitectura': ['patrones_diseno'],
+    'Metodologías & Agile': ['principios_solid', 'metodologia_scrum'],
+    'Arquitectura & Patrones': ['patrones_diseno', 'arquitectura_hexagonal'],
+    'Bases de Datos': ['bases_de_datos'],
+    'Redes & APIs': ['redes_y_apis'],
+    'Ciberseguridad Web': ['ciberseguridad_web'],
+    'DevOps & Cloud': ['devops_cloud'],
+    'Estructuras & Algoritmos': ['estructuras_algoritmos'],
   };
 
   /// Human-readable display titles for each pack
@@ -40,11 +54,20 @@ class ContentManager {
     'python': 'Python',
     'java': 'Java',
     'javascript': 'JavaScript',
+    'typescript': 'TypeScript',
     'go': 'Go',
+    'rust': 'Rust',
     'dart': 'Dart',
     'poo_conceptos': 'POO Conceptos',
     'principios_solid': 'Principios SOLID',
     'patrones_diseno': 'Patrones de Diseño',
+    'arquitectura_hexagonal': 'Arquitectura Hexagonal & Clean',
+    'metodologia_scrum': 'Metodología SCRUM & Agile',
+    'bases_de_datos': 'Bases de Datos & SQL',
+    'redes_y_apis': 'Redes & Protocolos HTTP',
+    'ciberseguridad_web': 'Ciberseguridad Web (OWASP)',
+    'devops_cloud': 'DevOps, Docker & Cloud',
+    'estructuras_algoritmos': 'Estructuras & Algoritmos (DSA)',
   };
 
   /// Reverse lookup from pack key to category
@@ -52,11 +75,20 @@ class ContentManager {
     'python': 'Lenguajes',
     'java': 'Lenguajes',
     'javascript': 'Lenguajes',
+    'typescript': 'Lenguajes',
     'go': 'Lenguajes',
+    'rust': 'Lenguajes',
     'dart': 'Lenguajes',
     'poo_conceptos': 'POO & Fundamentos',
-    'principios_solid': 'Metodologías & SOLID',
-    'patrones_diseno': 'Patrones & Arquitectura',
+    'principios_solid': 'Metodologías & Agile',
+    'metodologia_scrum': 'Metodologías & Agile',
+    'patrones_diseno': 'Arquitectura & Patrones',
+    'arquitectura_hexagonal': 'Arquitectura & Patrones',
+    'bases_de_datos': 'Bases de Datos',
+    'redes_y_apis': 'Redes & APIs',
+    'ciberseguridad_web': 'Ciberseguridad Web',
+    'devops_cloud': 'DevOps & Cloud',
+    'estructuras_algoritmos': 'Estructuras & Algoritmos',
   };
 
   bool _isLoaded = false;
@@ -161,9 +193,27 @@ class ContentManager {
     return _questionsById.values.toList();
   }
 
+  static const Map<String, String> _topicAliases = {
+    'poo': 'poo_conceptos',
+    'abstracción': 'poo_conceptos',
+    'abstraccion': 'poo_conceptos',
+    'polimorfismo': 'poo_conceptos',
+    'solid': 'principios_solid',
+    'clean code': 'principios_solid',
+    'dry/kiss': 'principios_solid',
+    'patrones de diseño': 'patrones_diseno',
+    'patrones de diseno': 'patrones_diseno',
+    'singleton': 'patrones_diseno',
+    'factory': 'patrones_diseno',
+    'observer': 'patrones_diseno',
+  };
+
   /// Query questions by pack key (e.g. 'python', 'poo_conceptos')
   List<Question> getQuestionsByPack(String packKey) {
-    final key = packKey.toLowerCase().trim();
+    String key = packKey.toLowerCase().trim();
+    if (_topicAliases.containsKey(key)) {
+      key = _topicAliases[key]!;
+    }
     return List.unmodifiable(_questionsByPack[key] ?? []);
   }
 

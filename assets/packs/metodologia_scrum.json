@@ -1,0 +1,74 @@
+[
+  {
+    "id": "scrum_001",
+    "question": "En la metodología Scrum, ¿cuál es la responsabilidad primaria y exclusiva del Product Owner (PO)?",
+    "options": [
+      "Asignar las tareas diarias a cada desarrollador del equipo y controlar sus horarios.",
+      "Maximizar el valor del producto resultante del trabajo del Scrum Team y gestionar de forma transparente el Product Backlog.",
+      "Resolver impedimentos técnicos y configurar los pipelines de integración continua.",
+      "Definir la arquitectura de microservicios y escribir pruebas unitarias."
+    ],
+    "correct_index": 1,
+    "hint": "El Product Owner es la voz del negocio y el dueño del qué se construye y en qué orden de prioridad."
+  },
+  {
+    "id": "scrum_002",
+    "question": "¿Cuál es el rol esencial del Scrum Master en un Scrum Team según la Guía Oficial de Scrum?",
+    "options": [
+      "Actuar como jefe de proyecto tradicional con autoridad jerárquica sobre los ingenieros.",
+      "Es un líder que sirve (Servant Leader) al equipo y a la organización facilitando eventos, eliminando impedimentos y promoviendo la efectividad de Scrum.",
+      "Revisar el código de cada Pull Request para autorizar el paso a producción.",
+      "Estimar los Story Points de cada User Story en solitario."
+    ],
+    "correct_index": 1,
+    "hint": "El Scrum Master no manda sobre el equipo; ayuda al equipo a auto-organizarse y remueve obstáculos."
+  },
+  {
+    "id": "scrum_003",
+    "question": "¿Cuál es la diferencia crítica entre la ceremonia de 'Sprint Review' y la de 'Sprint Retrospective'?",
+    "options": [
+      "La Review es para inspeccionar el Incremento del producto con stakeholders; la Retrospective es para que el Scrum Team reflexione sobre personas, procesos y herramientas.",
+      "La Review se hace al inicio del Sprint y la Retrospective a la mitad.",
+      "La Retrospective se enfoca en despedir a miembros del equipo de bajo rendimiento.",
+      "Son la misma reunión con dos nombres distintos para reportar a recursos humanos."
+    ],
+    "correct_index": 0,
+    "hint": "Review = inspeccionar el producto ('¿Qué construimos?'). Retrospectiva = inspeccionar al equipo y sus prácticas ('¿Cómo podemos mejorar como equipo?')."
+  },
+  {
+    "id": "scrum_004",
+    "question": "¿Qué es la 'Definición de Terminado' (Definition of Done - DoD) en Scrum y por qué es indispensable?",
+    "options": [
+      "Es la fecha límite en el calendario en la que el cliente debe pagar la factura del software.",
+      "Es un entendimiento compartido formal de los criterios de calidad que un incremento debe cumplir para ser considerado potencialmente desplegable.",
+      "Son las horas estimadas que un desarrollador pasa programando antes de irse a casa.",
+      "Un documento legal que impide al cliente solicitar cambios en el futuro."
+    ],
+    "correct_index": 1,
+    "hint": "Sin DoD no hay transparencia: lo que para un dev está 'terminado' podría no tener tests, code review o pasar QA."
+  },
+  {
+    "id": "scrum_005",
+    "question": "En metodologías ágiles basadas en Kanban, ¿qué objetivo persigue establecer límites de Trabajo en Progreso (WIP Limits)?",
+    "options": [
+      "Impedir que los desarrolladores ganen bonos de productividad por terminar tareas rápido.",
+      "Evitar la sobrecarga del sistema, reducir el multitasking destructivo y visibilizar cuellos de botella para optimizar el flujo (Lead Time).",
+      "Obligar a que solo trabaje un ingeniero a la vez mientras los demás observan.",
+      "Garantizar que no se comiteen más de 5 líneas de código por día."
+    ],
+    "correct_index": 1,
+    "hint": "'Deja de empezar y empieza a terminar'. Limitar el WIP fuerza al equipo a desbloquear tareas atascadas."
+  },
+  {
+    "id": "scrum_006",
+    "question": "En estimación ágil, ¿por qué se utilizan 'Story Points' y la serie de Fibonacci en lugar de horas exactas?",
+    "options": [
+      "Porque las computadoras no entienden números enteros secuenciales.",
+      "Porque los Story Points miden esfuerzo relativo, complejidad e incertidumbre, reflejando que a mayor tamaño mayor es la dispersión e inexactitud del cálculo.",
+      "Porque Scrum prohíbe el uso de relojes en las oficinas de tecnología.",
+      "Para confundir a los clientes y evitar que reclamen por demoras."
+    ],
+    "correct_index": 1,
+    "hint": "La mente humana es mucho mejor comparando tamaños relativos (ej: edificio vs casa) que estimando horas exactas."
+  }
+]

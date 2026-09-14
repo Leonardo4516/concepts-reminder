@@ -1,0 +1,74 @@
+[
+  {
+    "id": "net_001",
+    "question": "En el diseño de APIs RESTful, ¿cuáles de los métodos HTTP estándar se definen formalmente como 'Idempotentes'?",
+    "options": [
+      "Únicamente POST y PATCH.",
+      "GET, HEAD, PUT, DELETE y OPTIONS (ejecutar la petición N veces produce el mismo estado del servidor que ejecutarla una sola vez).",
+      "Todos los métodos HTTP son idempotentes por definición de la RFC.",
+      "Ninguno de los métodos HTTP puede garantizar idempotencia en la práctica."
+    ],
+    "correct_index": 1,
+    "hint": "POST no es idempotente (crear 10 veces creará 10 recursos). PUT sí es idempotente (reemplaza el estado completo exactamente con el mismo resultado)."
+  },
+  {
+    "id": "net_002",
+    "question": "¿Cuál es la diferencia clave entre el protocolo HTTP/1.1 y HTTP/2 en cuanto al transporte de datos?",
+    "options": [
+      "HTTP/2 utiliza texto plano sin formato para facilitar la lectura humana.",
+      "HTTP/2 introduce multiplexación binaria sobre una única conexión TCP, permitiendo múltiples peticiones y respuestas simultáneas sin Head-of-Line Blocking a nivel HTTP.",
+      "HTTP/1.1 soporta gRPC de manera nativa y HTTP/2 no.",
+      "HTTP/2 requiere obligatoriamente una tarjeta de red con hardware criptográfico propietario."
+    ],
+    "correct_index": 1,
+    "hint": "En HTTP/1.1 cada recurso requería una conexión separada o hacía cola. HTTP/2 divide streams binarios entrelazados en una sola conexión."
+  },
+  {
+    "id": "net_003",
+    "question": "¿Cuándo es arquitectónicamente preferible utilizar gRPC frente a una API REST tradicional basada en JSON?",
+    "options": [
+      "Cuando se requiere que los navegadores web antiguos muestren formularios HTML simples sin JavaScript.",
+      "En comunicación interna de alta velocidad entre microservicios (East-West traffic) con contratos estrictos (Protobuf) y bajo consumo de ancho de banda y CPU.",
+      "Cuando se quiere prescindir por completo del protocolo TCP.",
+      "Únicamente para descargar archivos de video MP4 pesados."
+    ],
+    "correct_index": 1,
+    "hint": "gRPC corre sobre HTTP/2, utiliza serialización binaria ultraligera (Protocol Buffers) y genera stubs fuertemente tipados automáticamente."
+  },
+  {
+    "id": "net_004",
+    "question": "¿Cuál es la diferencia técnica entre WebSockets y Server-Sent Events (SSE)?",
+    "options": [
+      "WebSockets es bidireccional full-duplex sobre una conexión persistente; SSE es unidireccional (del servidor al cliente) sobre HTTP tradicional.",
+      "SSE no funciona en navegadores web modernos y WebSockets requiere UDP.",
+      "WebSockets solo transporta texto y SSE solo audio comprimido.",
+      "Son protocolos idénticos desarrollados por consorcios distintos."
+    ],
+    "correct_index": 0,
+    "hint": "Si solo necesitas streaming de eventos del servidor (ej: cotizaciones de bolsa o feeds de noticias), SSE es mucho más simple y se reconecta automáticamente."
+  },
+  {
+    "id": "net_005",
+    "question": "¿Cómo se diferencian conceptual y operativamente TCP y UDP en la capa de transporte?",
+    "options": [
+      "TCP es orientado a conexión, confiable con retransmisión y control de flujo; UDP es sin conexión, no garantiza entrega ni orden pero tiene mínima latencia.",
+      "UDP encripta los datos obligatoriamente con AES-256 y TCP viaja sin cifrar.",
+      "TCP solo opera en redes inalámbricas Wi-Fi y UDP en cables de fibra óptica.",
+      "Ambos protocolos verifican el acuse de recibo (ACK) en cada paquete enviado."
+    ],
+    "correct_index": 0,
+    "hint": "TCP para páginas web, correos y transferencias donde ningún bit puede perderse. UDP para streaming en tiempo real, videollamadas y videojuegos online."
+  },
+  {
+    "id": "net_006",
+    "question": "¿Qué códigos de estado HTTP representan respectivamente: recurso creado exitosamente, cliente no autenticado y cliente autenticado sin permisos suficientes?",
+    "options": [
+      "200 OK, 404 Not Found y 500 Internal Error.",
+      "201 Created, 401 Unauthorized y 403 Forbidden.",
+      "204 No Content, 400 Bad Request y 405 Method Not Allowed.",
+      "201 Created, 403 Forbidden y 401 Unauthorized."
+    ],
+    "correct_index": 1,
+    "hint": "401 = 'No sé quién eres' (falta autenticación). 403 = 'Sé quién eres, pero no tienes permiso de entrar'."
+  }
+]

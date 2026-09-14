@@ -1,0 +1,74 @@
+[
+  {
+    "id": "db_001",
+    "question": "En el modelo transaccional ACID de bases de datos relacionales, ¿qué garantiza la propiedad de 'Aislamiento' (Isolation)?",
+    "options": [
+      "Que el servidor de base de datos no tenga conexión física a internet.",
+      "Que la ejecución concurrente de múltiples transacciones produzca el mismo estado final que si se hubieran ejecutado de forma secuencial una tras otra.",
+      "Que los datos nunca se almacenen en disco duro para evitar lecturas no autorizadas.",
+      "Que cada tabla contenga únicamente claves primarias sin relaciones foráneas."
+    ],
+    "correct_index": 1,
+    "hint": "Previene fenómenos anómalos como 'Dirty Reads' (lecturas sucias) o 'Non-repeatable Reads' mediante niveles de aislamiento (Read Committed, Serializable, etc.)."
+  },
+  {
+    "id": "db_002",
+    "question": "Según el Teorema CAP de Eric Brewer, ¿cuál es la limitación intrínseca de cualquier sistema de almacenamiento distribuido en red?",
+    "options": [
+      "No puede almacenar más de 1 Terabyte de información en nodos compartidos.",
+      "Ante una partición de red (P), el sistema solo puede garantizar simultáneamente o Consistencia estricta (C) o Disponibilidad total (A), pero no ambas.",
+      "Obliga a utilizar bases de datos relacionales para mantener certificados SSL activos.",
+      "Las transacciones solo pueden ejecutarse en horario diurno del datacenter principal."
+    ],
+    "correct_index": 1,
+    "hint": "Particiones de red ocurrirán inevitablemente. Eliges devolver el dato más reciente (bloqueando escrituras/lecturas) o responder siempre (con posible dato obsoleto)."
+  },
+  {
+    "id": "db_003",
+    "question": "¿En qué consiste el clásico antipatrón 'N+1 Query Problem' al utilizar ORMs (como Hibernate, Prisma, Entity Framework)?",
+    "options": [
+      "Crear N+1 tablas idénticas para cada usuario registrado.",
+      "Ejecutar 1 consulta inicial para obtener N registros y luego disparar N consultas individuales adicionales para traer relaciones asociadas de cada registro.",
+      "Superar el límite de conexiones TCP permitidas por el pool de la base de datos.",
+      "Escribir consultas SQL que contengan más de N cláusulas WHERE anidadas."
+    ],
+    "correct_index": 1,
+    "hint": "Se soluciona reemplazando el Lazy Loading por Eager Loading, JOIN fetch o batch fetching en una sola consulta combinada."
+  },
+  {
+    "id": "db_004",
+    "question": "¿Cómo opera un índice B-Tree (B+Tree) en un motor de base de datos relacional (PostgreSQL, MySQL)?",
+    "options": [
+      "Escanea todas las páginas del disco de principio a fin de manera secuencial.",
+      "Organiza los valores en un árbol balanceado multinivel ordenado, reduciendo las lecturas de disco necesarias para localizar un registro a O(log N).",
+      "Calcula un hash MD5 de la fila completa y lo compara con la clave primaria.",
+      "Comprime los datos en formato ZIP antes de guardarlos en memoria RAM."
+    ],
+    "correct_index": 1,
+    "hint": "El árbol balanceado garantiza que la profundidad de todas las hojas sea uniforme, permitiendo búsquedas por rango y ordenamiento sumamente eficientes."
+  },
+  {
+    "id": "db_005",
+    "question": "¿Cuál es la diferencia fundamental entre el modelo de consistencia ACID (SQL) y el modelo BASE (NoSQL)?",
+    "options": [
+      "ACID prioriza consistencia inmediata y rigidez; BASE prioriza alta disponibilidad y admite 'consistencia eventual' (Eventually Consistent).",
+      "ACID solo funciona en Linux y BASE en servidores Windows.",
+      "BASE no permite almacenar fechas ni números flotantes.",
+      "No existen diferencias; son estándares idénticos con terminología de marketing distinta."
+    ],
+    "correct_index": 0,
+    "hint": "BASE: Basically Available, Soft state, Eventual consistency. Típico en bases distribuidas como Cassandra, DynamoDB o MongoDB."
+  },
+  {
+    "id": "db_006",
+    "question": "¿Qué problema resuelve la técnica de 'Database Sharding' (particionamiento horizontal)?",
+    "options": [
+      "Evita que se borren datos cuando un administrador comete un error en un script.",
+      "Distribuye grandes volúmenes de filas entre múltiples bases de datos o nodos independientes mediante una clave de partición (Shard Key).",
+      "Convierte tablas relacionales en documentos JSON estáticos.",
+      "Permite ejecutar consultas SELECT sin necesidad de autenticación."
+    ],
+    "correct_index": 1,
+    "hint": "Escalabilidad horizontal cuando una sola máquina no puede soportar la carga de escritura o almacenamiento de cientos de millones de filas."
+  }
+]

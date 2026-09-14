@@ -1,0 +1,62 @@
+[
+  {
+    "id": "dsa_001",
+    "question": "En análisis de algoritmos (Notación Big-O), ¿cuál es la complejidad temporal en el peor caso de una Búsqueda Binaria sobre un arreglo ordenado de N elementos?",
+    "options": [
+      "O(1) tiempo constante.",
+      "O(log N) tiempo logarítmico.",
+      "O(N) tiempo lineal.",
+      "O(N^2) tiempo cuadrático."
+    ],
+    "correct_index": 1,
+    "hint": "En cada paso, el espacio de búsqueda se reduce exactamente a la mitad: N -> N/2 -> N/4 ... hasta 1."
+  },
+  {
+    "id": "dsa_002",
+    "question": "¿Cómo maneja una Tabla Hash (HashMap) las colisiones mediante la técnica de 'Encadenamiento Separado' (Separate Chaining)?",
+    "options": [
+      "Sobrescribe el valor anterior borrando los datos antiguos.",
+      "Almacena las entradas que colisionan en la misma casilla en una lista enlazada (o árbol balanceado) en ese índice.",
+      "Aumenta dinámicamente la memoria RAM física de la computadora.",
+      "Descarta la clave y arroja una excepción fatal de puntero nulo."
+    ],
+    "correct_index": 1,
+    "hint": "Cada posición del arreglo apunta a una estructura secundaria (lista o árbol rojo-negro en Java 8+) para almacenar múltiples elementos con el mismo bucket index."
+  },
+  {
+    "id": "dsa_003",
+    "question": "En un Árbol Binario de Búsqueda (BST) no balanceado, ¿cuál es la complejidad de búsqueda en el peor caso (árbol degenerado)?",
+    "options": [
+      "O(1)",
+      "O(log N)",
+      "O(N) (equivalente a recorrer una lista enlazada lineal).",
+      "O(N!) factorial."
+    ],
+    "correct_index": 2,
+    "hint": "Si insertas elementos ordenados (1, 2, 3, 4, 5) en un BST simple, se convierte en una lista lineal degenerada O(N). Por eso se usan árboles auto-balanceables como AVL o Red-Black."
+  },
+  {
+    "id": "dsa_004",
+    "question": "¿Cuál es la diferencia algorítmica principal entre el recorrido BFS (Breadth-First Search) y DFS (Depth-First Search) en grafos/árboles?",
+    "options": [
+      "BFS explora nivel por nivel utilizando una Cola (Queue FIFO); DFS explora por ramas en profundidad utilizando una Pila (Stack LIFO o recursión).",
+      "BFS solo funciona en árboles de decisión de inteligencia artificial y DFS en bases de datos.",
+      "DFS requiere más memoria que BFS en todos los escenarios sin excepción.",
+      "Ambos algoritmos exploran exactamente en el mismo orden de nodos."
+    ],
+    "correct_index": 0,
+    "hint": "BFS (anchura) usa una cola y es ideal para caminos más cortos en grafos sin pesos. DFS (profundidad) usa la pila de llamadas o un stack."
+  },
+  {
+    "id": "dsa_005",
+    "question": "¿Cuál es la diferencia fundamental entre una Pila (Stack) y una Cola (Queue)?",
+    "options": [
+      "La Pila es LIFO (Last-In, First-Out); la Cola es FIFO (First-In, First-Out).",
+      "La Pila solo admite números flotantes y la Cola cadenas de caracteres.",
+      "Las Colas no permiten eliminar elementos una vez insertados.",
+      "Son estructuras idénticas con distinta notación matemática."
+    ],
+    "correct_index": 0,
+    "hint": "Pila de platos (el último que pones es el primero que sacas). Fila del banco (el primero en llegar es el primero en ser atendido)."
+  }
+]

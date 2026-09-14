@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ts_001",
+    "question": "En TypeScript, ¿cuál es la diferencia clave entre una `interface` y un `type` alias?",
+    "options": [
+      "Las interfaces no soportan objetos y los types solo números.",
+      "Las interfaces pueden extenderse mediante declaración múltiple ('declaration merging') y son ideales para contratos de objetos OOP; los type aliases son más flexibles para uniones primitivas, tuplas y tipos mapeados.",
+      "Los types se compilan a código ejecutable en runtime y las interfaces desaparecen.",
+      "No existe diferencia; son 100% intercambiables en todas las situaciones."
+    ],
+    "correct_index": 1,
+    "hint": "Dos interfaces con el mismo nombre se fusionan automáticamente. Un `type` con el mismo nombre genera un error de duplicidad."
+  },
+  {
+    "id": "ts_002",
+    "question": "En el sistema de tipos de TypeScript, ¿en qué se diferencia el tipo `unknown` del tipo `any`?",
+    "options": [
+      "`any` desactiva completamente la verificación de tipos; `unknown` representa un valor de tipo desconocido y exige verificación de tipos previa (type narrowing) antes de operar con él.",
+      "`unknown` solo admite strings y `any` cualquier objeto.",
+      "`any` es el tipo más seguro de TypeScript introducido en la versión 5.",
+      "`unknown` arroja errores fatales en tiempo de ejecución si se le asigna un número."
+    ],
+    "correct_index": 0,
+    "hint": "`unknown` es la contraparte segura de `any`. Te obliga a hacer `typeof x === 'string'` o validaciones antes de invocar métodos."
+  },
+  {
+    "id": "ts_003",
+    "question": "¿Qué representa el tipo `never` en TypeScript y en qué escenario se utiliza?",
+    "options": [
+      "Representa un valor que puede ser nulo o indefinido temporalmente.",
+      "Representa el tipo de valores que nunca ocurren (ej: funciones que arrojan excepciones o entran en bucles infinitos, o comprobaciones exhaustivas de unión).",
+      "Es un sinónimo de `void` que devuelve null.",
+      "Una variable declarada pero que nunca fue leída por el garbage collector."
+    ],
+    "correct_index": 1,
+    "hint": "Muy útil para comprobar en un `switch` que todos los casos de una unión discriminada fueron manejados (`const _exhaustiveCheck: never = x;`)."
+  },
+  {
+    "id": "ts_004",
+    "question": "¿Qué función cumple el tipo de utilidad nativo `Record<K, T>` en TypeScript?",
+    "options": [
+      "Graba llamadas de red en una base de datos local SQLite.",
+      "Construye un tipo de objeto cuyas claves son del tipo K y cuyos valores son del tipo T.",
+      "Convierte todas las propiedades de un objeto en opcionales.",
+      "Serializa un objeto a formato XML de forma síncrona."
+    ],
+    "correct_index": 1,
+    "hint": "Por ejemplo: `Record<string, number>` representa un diccionario con claves de texto y valores numéricos."
+  },
+  {
+    "id": "ts_005",
+    "question": "¿Para qué se utiliza el operador `keyof` en TypeScript?",
+    "options": [
+      "Para abrir archivos protegidos con contraseña en Node.js.",
+      "Produce una unión de tipos literales con los nombres de las claves de un tipo de objeto.",
+      "Elimina una clave de una interfaz en tiempo de compilación.",
+      "Itera sobre los valores de un arreglo en tiempo de ejecución."
+    ],
+    "correct_index": 1,
+    "hint": "Si `type User = { id: number; name: string }`, entonces `keyof User` es `'id' | 'name'`."
+  }
+]

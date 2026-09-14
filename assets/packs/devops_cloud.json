@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ops_001",
+    "question": "¿Cuál es la diferencia técnica fundamental entre un Contenedor (Docker) y una Máquina Virtual (VM tradicional)?",
+    "options": [
+      "Las VMs comparten el kernel del sistema operativo anfitrión; los contenedores ejecutan su propio kernel independiente completo.",
+      "Los contenedores comparten el kernel del SO anfitrión aislando procesos en espacio de usuario (namespaces/cgroups); las VMs virtualizan hardware completo y corren un SO invitado dedicado.",
+      "Los contenedores solo pueden ejecutar código compilado en C++ y las VMs código Java.",
+      "No existe diferencia; son dos marcas comerciales de la misma tecnología de emulación."
+    ],
+    "correct_index": 1,
+    "hint": "Los contenedores son mucho más ligeros y arrancan en milisegundos porque no tienen la sobrecarga de un hipervisor ni un sistema operativo completo duplicado."
+  },
+  {
+    "id": "ops_002",
+    "question": "En un Dockerfile, ¿qué ventaja estratégica ofrecen los 'Multi-stage builds' (construcciones multietapa)?",
+    "options": [
+      "Permiten compilar código en una etapa con SDKs y herramientas pesadas, y copiar únicamente el artefacto final a una imagen base mínima (como Alpine o Distroless).",
+      "Duplican la velocidad del procesador del servidor anfitrión.",
+      "Impiden que los hackers puedan escanear puertos en la red.",
+      "Permiten correr Docker en teléfonos sin conexión a internet."
+    ],
+    "correct_index": 0,
+    "hint": "Reduce drásticamente el tamaño de la imagen final (de 1.5 GB a 30 MB) y reduce la superficie de ataque al no incluir compiladores ni herramientas de desarrollo."
+  },
+  {
+    "id": "ops_003",
+    "question": "En Kubernetes, ¿qué es un 'Pod' y cuál es su relación con los contenedores?",
+    "options": [
+      "Un Pod es un centro de datos físico donde se instalan los servidores de Google Cloud.",
+      "Es la unidad de cómputo desplegable más pequeña de Kubernetes, encapsulando uno o más contenedores estrechamente acoplados que comparten red y almacenamiento.",
+      "Es un balanceador de carga que asigna direcciones IP públicas a dominios externos.",
+      "Es una base de datos distribuida en memoria que reemplaza a Redis."
+    ],
+    "correct_index": 1,
+    "hint": "Los contenedores dentro de un mismo Pod comparten la misma dirección IP (localhost) y volúmenes de almacenamiento."
+  },
+  {
+    "id": "ops_004",
+    "question": "En flujos de trabajo con Git, ¿en qué se diferencia la estrategia 'Trunk-Based Development' de 'GitFlow'?",
+    "options": [
+      "Trunk-Based promueve ramas de vida muy corta integradas frecuentemente a la rama principal (trunk/main); GitFlow utiliza múltiples ramas de larga duración (develop, release, feature).",
+      "GitFlow prohíbe el uso de Pull Requests y Trunk-Based exige revisiones de 5 personas.",
+      "Trunk-Based solo funciona con repositorios alojados en GitLab.",
+      "GitFlow es un protocolo de red propietario que sustituye a SSH."
+    ],
+    "correct_index": 0,
+    "hint": "Trunk-Based Development es el estándar de facto en equipos de alto rendimiento con CI/CD continuo para evitar 'Merge Hells'."
+  },
+  {
+    "id": "ops_005",
+    "question": "De acuerdo con el estándar de Versionado Semántico (SemVer: MAJOR.MINOR.PATCH), ¿cuándo es mandatorio incrementar la versión MAJOR?",
+    "options": [
+      "Cuando se corrige un bug sin alterar la interfaz existente.",
+      "Cuando se introducen cambios incompatibles en la API pública (Breaking Changes).",
+      "Cuando se añade una funcionalidad retrocompatible (backward-compatible).",
+      "Cada vez que se sube un commit a GitHub."
+    ],
+    "correct_index": 1,
+    "hint": "MAJOR = romper compatibilidad; MINOR = nueva funcionalidad compatible; PATCH = corrección de errores."
+  }
+]

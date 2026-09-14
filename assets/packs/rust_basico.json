@@ -1,0 +1,62 @@
+[
+  {
+    "id": "rust_001",
+    "question": "En el modelo de memoria de Rust, ¿cuál es la regla primordial del sistema de Posesión (Ownership)?",
+    "options": [
+      "Cada valor puede tener múltiples propietarios en paralelo sin restricciones.",
+      "Cada valor en Rust tiene un único propietario (owner) a la vez, y cuando el propietario sale de ámbito (scope), el valor se libera de memoria automáticamente.",
+      "Todos los valores deben asignarse con punteros nulos inicializados en cero.",
+      "El Garbage Collector rastrea las variables en un ciclo de 10 milisegundos."
+    ],
+    "correct_index": 1,
+    "hint": "Rust no tiene Garbage Collector ni liberación manual de memoria (free/malloc); la memoria se gestiona mediante Ownership y RAII en tiempo de compilación."
+  },
+  {
+    "id": "rust_002",
+    "question": "¿Cuáles son las dos reglas fundamentales del Préstamo (Borrowing) y las referencias en Rust?",
+    "options": [
+      "Puedes tener cualquier número de referencias mutables (`&mut T`) al mismo tiempo.",
+      "En cualquier momento dado, puedes tener o bien una o más referencias inmutables (`&T`), O BIEN exactamente una referencia mutable (`&mut T`), pero nunca ambas simultáneamente.",
+      "Las referencias nunca pueden durar más de 10 líneas de código.",
+      "Las referencias mutables no pueden modificar los datos a los que apuntan."
+    ],
+    "correct_index": 1,
+    "hint": "Esta regla garantiza en tiempo de compilación la ausencia de 'Data Races' (condiciones de carrera por mutación concurrente de memoria)."
+  },
+  {
+    "id": "rust_003",
+    "question": "¿Cómo maneja Rust los valores ausentes y los errores sin utilizar punteros nulos (`null`) ni excepciones tradicionales?",
+    "options": [
+      "Mediante los enums genéricos estándar `Option<T>` (Some(T) / None) y `Result<T, E>` (Ok(T) / Err(E)) junto con Pattern Matching exhaustivo.",
+      "Arrojando excepciones con `try ... catch` similares a Java.",
+      "Devolviendo números negativos (-1) para todos los errores.",
+      "Finalizando el proceso del sistema operativo inmediatamente sin reportar mensajes."
+    ],
+    "correct_index": 0,
+    "hint": "El creador de 'null' lo llamó su 'error del billón de dólares'. Rust elimina null forzando a declarar explícitamente `Option<T>`."
+  },
+  {
+    "id": "rust_004",
+    "question": "¿Qué garantizan los 'Tiempos de Vida' (Lifetimes `'a`) en Rust?",
+    "options": [
+      "La velocidad a la que el CPU procesa las instrucciones en GHz.",
+      "Aseguran al compilador que las referencias serán válidas durante todo el tiempo en que sean utilizadas, impidiendo 'Dangling Pointers' (punteros colgantes).",
+      "La cantidad de días que un paquete de crates.io puede permanecer instalado.",
+      "El tiempo máximo que una tarea asíncrona de Tokio puede dormir con sleep."
+    ],
+    "correct_index": 1,
+    "hint": "Los lifetimes son anotaciones para el Borrow Checker que evitan que una referencia apunte a memoria que ya fue liberada."
+  },
+  {
+    "id": "rust_005",
+    "question": "¿Cuál es la función de un 'Trait' en Rust?",
+    "options": [
+      "Definir funcionalidad abstracta compartida (similar a una interfaz en otros lenguajes) que un tipo concreto puede implementar.",
+      "Crear hilos de ejecución en el kernel de Linux.",
+      "Gestionar la conexión a bases de datos relacionales.",
+      "Compilar código de Rust a binario WebAssembly sin dependencias."
+    ],
+    "correct_index": 0,
+    "hint": "Los Traits permiten polimorfismo paramétrico y despacho estático (monomorfización) o dinámico (`dyn Trait`)."
+  }
+]

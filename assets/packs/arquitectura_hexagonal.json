@@ -1,0 +1,74 @@
+[
+  {
+    "id": "arch_001",
+    "question": "En la Arquitectura Hexagonal (Puertos y Adaptadores), ¿cuál es la diferencia exacta entre un 'Puerto' (Port) y un 'Adaptador' (Adapter)?",
+    "options": [
+      "Un Puerto es una base de datos relacional y un Adaptador es el cable de red físico.",
+      "Un Puerto es una interfaz que define un contrato tecnológico independiente, mientras que un Adaptador es la implementación técnica concreta que interactúa con el mundo exterior.",
+      "Un Adaptador reside en el núcleo del dominio y el Puerto en el framework de presentación.",
+      "No existe diferencia; son sinónimos utilizados para referirse a endpoints de microservicios."
+    ],
+    "correct_index": 1,
+    "hint": "El puerto es el contrato abstracto (Driving/Driven port); el adaptador es el código que implementa o usa ese contrato (REST controller, JPA repository, etc.)."
+  },
+  {
+    "id": "arch_002",
+    "question": "¿Cuál es la regla fundamental de dependencia en la Clean Architecture de Robert C. Martin?",
+    "options": [
+      "Las capas internas de entidades y casos de uso deben depender de los frameworks web y librerías de persistencia.",
+      "Las dependencias del código fuente únicamente pueden apuntar hacia adentro, hacia políticas de más alto nivel (el dominio).",
+      "Todas las clases de negocio deben extender de la clase base del framework elegido.",
+      "Cada caso de uso debe interactuar directamente con el motor SQL mediante consultas preparadas."
+    ],
+    "correct_index": 1,
+    "hint": "El núcleo no sabe nada del framework, la UI, o la base de datos exterior. Las flechas siempre apuntan hacia el centro."
+  },
+  {
+    "id": "arch_003",
+    "question": "En sistemas distribuidos y microservicios, ¿cómo opera el patrón Circuit Breaker y qué problema previene?",
+    "options": [
+      "Corta la energía física de los servidores ante sobrecalentamiento del rack.",
+      "Interrumpe de forma temporal las llamadas a un servicio remoto degradado (estado Open) para evitar caídas en cascada y saturación de recursos.",
+      "Obliga a todas las peticiones a encriptarse con TLS 1.3 antes de salir del API Gateway.",
+      "Balancea la carga dividiendo el tráfico equitativamente en round-robin sin monitorizar errores."
+    ],
+    "correct_index": 1,
+    "hint": "Tiene 3 estados: Closed (normal), Open (fallando, no llama al servicio) y Half-Open (prueba si el servicio se recuperó)."
+  },
+  {
+    "id": "arch_004",
+    "question": "En el patrón arquitectónico CQRS (Command Query Responsibility Segregation), ¿cuál es la separación clave?",
+    "options": [
+      "Separar las peticiones HTTP GET de las peticiones WebSocket en diferentes hilos del CPU.",
+      "Dividir el modelo conceptual y las rutas de procesamiento en dos caminos: uno para mutar datos (Commands) y otro para consultar datos (Queries).",
+      "Exigir que las lecturas y escrituras se ejecuten obligatoriamente en diferentes lenguajes de programación.",
+      "Reemplazar todas las bases de datos relacionales por archivos de texto JSON planos."
+    ],
+    "correct_index": 1,
+    "hint": "Un Command cambia el estado pero no devuelve datos de negocio; una Query consulta datos sin alterar el estado."
+  },
+  {
+    "id": "arch_005",
+    "question": "¿Cómo se gestionan las transacciones distribuidas en el Patrón Saga sin recurrir a bloqueo 2PC (Two-Phase Commit)?",
+    "options": [
+      "Mediante una secuencia de transacciones locales coordinadas, donde cada paso exitoso emite eventos y los fallos disparan 'transacciones de compensación'.",
+      "Bloqueando todas las tablas de todas las bases de datos de la empresa hasta completar el flujo.",
+      "Reintentando la petición fallida en un bucle infinito hasta que el servidor remoto responda.",
+      "Ignorando los errores y confiando en que el cliente repetirá la compra manualmente."
+    ],
+    "correct_index": 0,
+    "hint": "Si un paso de la saga falla, se ejecutan transacciones compensatorias que deshacen semánticamente los pasos anteriores."
+  },
+  {
+    "id": "arch_006",
+    "question": "¿Cuál es la diferencia entre la coordinación de una Saga por Coreografía frente a Orquestación?",
+    "options": [
+      "En coreografía los servicios publican y reaccionan a eventos sin punto central; en orquestación un orquestador centralizado le indica a cada participante qué ejecutar.",
+      "La coreografía solo sirve para microservicios frontend y la orquestación para Kubernetes.",
+      "La orquestación no admite transacciones compensatorias.",
+      "La coreografía requiere un servidor RabbitMQ exclusivo por cada método de la clase."
+    ],
+    "correct_index": 0,
+    "hint": "Coreografía = baile sincronizado sin director visible (reactivo). Orquestación = director de orquesta que manda mensajes directos."
+  }
+]

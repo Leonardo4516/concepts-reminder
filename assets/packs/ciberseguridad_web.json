@@ -1,0 +1,62 @@
+[
+  {
+    "id": "sec_001",
+    "question": "En seguridad de aplicaciones web (OWASP), ¿cuál es la diferencia fundamental entre un ataque XSS (Cross-Site Scripting) y un CSRF (Cross-Site Request Forgery)?",
+    "options": [
+      "XSS roba discos duros mediante malware y CSRF apaga los routers Wi-Fi.",
+      "XSS inyecta y ejecuta scripts maliciosos en el navegador de la víctima; CSRF engaña al navegador autenticado para que ejecute acciones no deseadas en una web de confianza.",
+      "XSS solo afecta a bases de datos relacionales y CSRF solo a servidores Linux.",
+      "Ambos ataques son equivalentes y se previenen únicamente cambiando contraseñas."
+    ],
+    "correct_index": 1,
+    "hint": "En XSS el atacante ejecuta JavaScript en tu contexto; en CSRF el atacante abusa de tus cookies de sesión para mandar peticiones falsificadas a tu banco/app."
+  },
+  {
+    "id": "sec_002",
+    "question": "¿Cuál es la medida de defensa más efectiva e indiscutible contra la Inyección SQL (SQL Injection)?",
+    "options": [
+      "Concatenar las cadenas de entrada del usuario usando comillas simples dobles.",
+      "Utilizar consultas preparadas (Prepared Statements) con vinculación parametrizada (Parameterized Queries) o un ORM confiable.",
+      "Filtrar manualmente la palabra 'DROP' de los campos de texto.",
+      "Reiniciar el servidor de base de datos cada 24 horas."
+    ],
+    "correct_index": 1,
+    "hint": "Las sentencias preparadas compilan la estructura SQL primero y tratan los inputs del usuario estrictamente como datos, nunca como código ejecutable."
+  },
+  {
+    "id": "sec_003",
+    "question": "Al utilizar tokens JWT (JSON Web Tokens) en una arquitectura web, ¿dónde es más seguro almacenar el Access Token para mitigar ataques XSS?",
+    "options": [
+      "En `window.localStorage` sin cifrar.",
+      "En una cookie HTTP con las banderas `HttpOnly`, `Secure` y `SameSite=Strict` o `Lax`.",
+      "En la URL visible en formato query param (`?token=...`).",
+      "En un archivo de texto `.txt` público en la raíz del servidor Apache."
+    ],
+    "correct_index": 1,
+    "hint": "La bandera `HttpOnly` impide que cualquier código JavaScript (incluyendo scripts inyectados por XSS) pueda leer el token."
+  },
+  {
+    "id": "sec_004",
+    "question": "¿Qué función cumple el mecanismo CORS (Cross-Origin Resource Sharing) en la seguridad de navegadores web?",
+    "options": [
+      "Es un firewall que bloquea ataques de denegación de servicio distribuido (DDoS).",
+      "Es una política impuesta por el navegador que restringe las peticiones HTTP cruzadas entre diferentes orígenes (dominio, protocolo o puerto) a menos que el servidor las autorice.",
+      "Un algoritmo de compresión que acelera la transferencia de imágenes PNG.",
+      "Un protocolo para autenticar usuarios con huella digital en dispositivos móviles."
+    ],
+    "correct_index": 1,
+    "hint": "CORS protege a los usuarios en el navegador mediante cabeceras como `Access-Control-Allow-Origin`."
+  },
+  {
+    "id": "sec_005",
+    "question": "¿Por qué nunca se deben almacenar contraseñas utilizando algoritmos criptográficos como MD5 o SHA-256 simples?",
+    "options": [
+      "Porque esos algoritmos son demasiado lentos y saturan la memoria del servidor.",
+      "Porque son algoritmos diseñados para ser ultra rápidos en hardware, haciéndolos extremadamente vulnerables a ataques de fuerza bruta con GPUs y Rainbow Tables.",
+      "Porque no son compatibles con bases de datos PostgreSQL.",
+      "Porque los navegadores web modernos impiden iniciar sesión con contraseñas hash."
+    ],
+    "correct_index": 1,
+    "hint": "Las contraseñas deben hashearse con algoritmos adaptativos lentos con salting integrado como Argon2, bcrypt o PBKDF2."
+  }
+]
