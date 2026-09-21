@@ -9,7 +9,8 @@
       "Un paquete solo puede contener una clase pública y cero clases auxiliares."
     ],
     "correct_index": 1,
-    "hint": "Como afirmó Robert C. Martin: 'Reúne las cosas que cambian por las mismas razones y separa aquellas que cambian por razones distintas'."
+    "hint": "Como afirmó Robert C. Martin: 'Reúne las cosas que cambian por las mismas razones y separa aquellas que cambian por razones distintas'.",
+    "subtopic": "clean_code"
   },
   {
     "id": "solid_002",
@@ -21,7 +22,8 @@
       "Cerrando el repositorio de código a nuevos commits una vez alcanzada la versión 1.0."
     ],
     "correct_index": 1,
-    "hint": "'Abierto para su extensión, cerrado para su modificación'. Usualmente logrado con interfaces o clases base abstractas."
+    "hint": "'Abierto para su extensión, cerrado para su modificación'. Usualmente logrado con interfaces o clases base abstractas.",
+    "subtopic": "clean_code"
   },
   {
     "id": "solid_003",
@@ -33,7 +35,8 @@
       "Las precondiciones y postcondiciones son irrelevantes si el compilador no arroja errores sintácticos."
     ],
     "correct_index": 1,
-    "hint": "Un cliente que llama a un método esperando un supertipo no debe verse sorprendido por mayores exigencias ni menores garantías del subtipo."
+    "hint": "Un cliente que llama a un método esperando un supertipo no debe verse sorprendido por mayores exigencias ni menores garantías del subtipo.",
+    "subtopic": "solid_principles"
   },
   {
     "id": "solid_004",
@@ -45,7 +48,8 @@
       "Las interfaces no deben permitir parámetros de tipos genéricos."
     ],
     "correct_index": 0,
-    "hint": "Es mejor tener muchas interfaces pequeñas y cohesivas orientadas a clientes específicos que una sola interfaz monolítica ('fat interface')."
+    "hint": "Es mejor tener muchas interfaces pequeñas y cohesivas orientadas a clientes específicos que una sola interfaz monolítica ('fat interface').",
+    "subtopic": "clean_code"
   },
   {
     "id": "solid_005",
@@ -57,7 +61,8 @@
       "DI obliga al uso de variables globales estáticas, mientras que DIP las prohíbe."
     ],
     "correct_index": 1,
-    "hint": "DIP establece la regla de diseño; DI e Inversión de Control (IoC) son los mecanismos para implementarla."
+    "hint": "DIP establece la regla de diseño; DI e Inversión de Control (IoC) son los mecanismos para implementarla.",
+    "subtopic": "solid_principles"
   },
   {
     "id": "solid_006",
@@ -69,7 +74,8 @@
       "Ambos principios prohíben totalmente el uso de patrones de diseño orientados a objetos."
     ],
     "correct_index": 0,
-    "hint": "A veces, aplicar DRY ciegamente en código accidentalmente similar introduce abstracciones prematuras complejas, violando KISS."
+    "hint": "A veces, aplicar DRY ciegamente en código accidentalmente similar introduce abstracciones prematuras complejas, violando KISS.",
+    "subtopic": "clean_code"
   },
   {
     "id": "solid_007",
@@ -81,6 +87,7 @@
       "No utilizar frameworks externos a menos que sean de código abierto."
     ],
     "correct_index": 0,
-    "hint": "La sobreingeniería predictiva casi siempre genera código muerto, deuda técnica y mantenimiento inútil."
+    "hint": "La sobreingeniería predictiva casi siempre genera código muerto, deuda técnica y mantenimiento inútil.",
+    "subtopic": "clean_code"
   }
 ]

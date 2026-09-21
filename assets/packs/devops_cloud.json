@@ -9,7 +9,8 @@
       "No existe diferencia; son dos marcas comerciales de la misma tecnología de emulación."
     ],
     "correct_index": 1,
-    "hint": "Los contenedores son mucho más ligeros y arrancan en milisegundos porque no tienen la sobrecarga de un hipervisor ni un sistema operativo completo duplicado."
+    "hint": "Los contenedores son mucho más ligeros y arrancan en milisegundos porque no tienen la sobrecarga de un hipervisor ni un sistema operativo completo duplicado.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "ops_002",
@@ -21,7 +22,8 @@
       "Permiten correr Docker en teléfonos sin conexión a internet."
     ],
     "correct_index": 0,
-    "hint": "Reduce drásticamente el tamaño de la imagen final (de 1.5 GB a 30 MB) y reduce la superficie de ataque al no incluir compiladores ni herramientas de desarrollo."
+    "hint": "Reduce drásticamente el tamaño de la imagen final (de 1.5 GB a 30 MB) y reduce la superficie de ataque al no incluir compiladores ni herramientas de desarrollo.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "ops_003",
@@ -33,7 +35,8 @@
       "Es una base de datos distribuida en memoria que reemplaza a Redis."
     ],
     "correct_index": 1,
-    "hint": "Los contenedores dentro de un mismo Pod comparten la misma dirección IP (localhost) y volúmenes de almacenamiento."
+    "hint": "Los contenedores dentro de un mismo Pod comparten la misma dirección IP (localhost) y volúmenes de almacenamiento.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "ops_004",
@@ -45,7 +48,8 @@
       "GitFlow es un protocolo de red propietario que sustituye a SSH."
     ],
     "correct_index": 0,
-    "hint": "Trunk-Based Development es el estándar de facto en equipos de alto rendimiento con CI/CD continuo para evitar 'Merge Hells'."
+    "hint": "Trunk-Based Development es el estándar de facto en equipos de alto rendimiento con CI/CD continuo para evitar 'Merge Hells'.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "ops_005",
@@ -57,6 +61,7 @@
       "Cada vez que se sube un commit a GitHub."
     ],
     "correct_index": 1,
-    "hint": "MAJOR = romper compatibilidad; MINOR = nueva funcionalidad compatible; PATCH = corrección de errores."
+    "hint": "MAJOR = romper compatibilidad; MINOR = nueva funcionalidad compatible; PATCH = corrección de errores.",
+    "subtopic": "fundamentos"
   }
 ]

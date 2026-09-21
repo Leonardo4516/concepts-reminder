@@ -5,6 +5,7 @@ class Question {
   final int correctIndex;
   final String hint;
   final String difficulty;
+  final String subtopic;
 
   Question({
     required this.id,
@@ -13,6 +14,7 @@ class Question {
     required this.correctIndex,
     required this.hint,
     this.difficulty = 'medium',
+    this.subtopic = 'general',
   });
 
   factory Question.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class Question {
       correctIndex: json['correct_index'],
       hint: json['hint'] ?? 'No hint available.',
       difficulty: (json['difficulty'] as String?)?.toLowerCase().trim() ?? 'medium',
+      subtopic: (json['subtopic'] as String?)?.toLowerCase().trim() ?? 'general',
     );
   }
 
@@ -34,6 +37,7 @@ class Question {
       'correct_index': correctIndex,
       'hint': hint,
       'difficulty': difficulty,
+      'subtopic': subtopic,
     };
   }
 }

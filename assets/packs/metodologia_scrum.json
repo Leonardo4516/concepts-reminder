@@ -9,7 +9,8 @@
       "Definir la arquitectura de microservicios y escribir pruebas unitarias."
     ],
     "correct_index": 1,
-    "hint": "El Product Owner es la voz del negocio y el dueño del qué se construye y en qué orden de prioridad."
+    "hint": "El Product Owner es la voz del negocio y el dueño del qué se construye y en qué orden de prioridad.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "scrum_002",
@@ -21,7 +22,8 @@
       "Estimar los Story Points de cada User Story en solitario."
     ],
     "correct_index": 1,
-    "hint": "El Scrum Master no manda sobre el equipo; ayuda al equipo a auto-organizarse y remueve obstáculos."
+    "hint": "El Scrum Master no manda sobre el equipo; ayuda al equipo a auto-organizarse y remueve obstáculos.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "scrum_003",
@@ -33,7 +35,8 @@
       "Son la misma reunión con dos nombres distintos para reportar a recursos humanos."
     ],
     "correct_index": 0,
-    "hint": "Review = inspeccionar el producto ('¿Qué construimos?'). Retrospectiva = inspeccionar al equipo y sus prácticas ('¿Cómo podemos mejorar como equipo?')."
+    "hint": "Review = inspeccionar el producto ('¿Qué construimos?'). Retrospectiva = inspeccionar al equipo y sus prácticas ('¿Cómo podemos mejorar como equipo?').",
+    "subtopic": "fundamentos"
   },
   {
     "id": "scrum_004",
@@ -45,7 +48,8 @@
       "Un documento legal que impide al cliente solicitar cambios en el futuro."
     ],
     "correct_index": 1,
-    "hint": "Sin DoD no hay transparencia: lo que para un dev está 'terminado' podría no tener tests, code review o pasar QA."
+    "hint": "Sin DoD no hay transparencia: lo que para un dev está 'terminado' podría no tener tests, code review o pasar QA.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "scrum_005",
@@ -57,7 +61,8 @@
       "Garantizar que no se comiteen más de 5 líneas de código por día."
     ],
     "correct_index": 1,
-    "hint": "'Deja de empezar y empieza a terminar'. Limitar el WIP fuerza al equipo a desbloquear tareas atascadas."
+    "hint": "'Deja de empezar y empieza a terminar'. Limitar el WIP fuerza al equipo a desbloquear tareas atascadas.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "scrum_006",
@@ -69,6 +74,7 @@
       "Para confundir a los clientes y evitar que reclamen por demoras."
     ],
     "correct_index": 1,
-    "hint": "La mente humana es mucho mejor comparando tamaños relativos (ej: edificio vs casa) que estimando horas exactas."
+    "hint": "La mente humana es mucho mejor comparando tamaños relativos (ej: edificio vs casa) que estimando horas exactas.",
+    "subtopic": "fundamentos"
   }
 ]

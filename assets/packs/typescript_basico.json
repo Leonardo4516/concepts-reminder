@@ -9,7 +9,8 @@
       "No existe diferencia; son 100% intercambiables en todas las situaciones."
     ],
     "correct_index": 1,
-    "hint": "Dos interfaces con el mismo nombre se fusionan automáticamente. Un `type` con el mismo nombre genera un error de duplicidad."
+    "hint": "Dos interfaces con el mismo nombre se fusionan automáticamente. Un `type` con el mismo nombre genera un error de duplicidad.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "ts_002",
@@ -21,7 +22,8 @@
       "`unknown` arroja errores fatales en tiempo de ejecución si se le asigna un número."
     ],
     "correct_index": 0,
-    "hint": "`unknown` es la contraparte segura de `any`. Te obliga a hacer `typeof x === 'string'` o validaciones antes de invocar métodos."
+    "hint": "`unknown` es la contraparte segura de `any`. Te obliga a hacer `typeof x === 'string'` o validaciones antes de invocar métodos.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "ts_003",
@@ -33,7 +35,8 @@
       "Una variable declarada pero que nunca fue leída por el garbage collector."
     ],
     "correct_index": 1,
-    "hint": "Muy útil para comprobar en un `switch` que todos los casos de una unión discriminada fueron manejados (`const _exhaustiveCheck: never = x;`)."
+    "hint": "Muy útil para comprobar en un `switch` que todos los casos de una unión discriminada fueron manejados (`const _exhaustiveCheck: never = x;`).",
+    "subtopic": "fundamentos"
   },
   {
     "id": "ts_004",
@@ -45,7 +48,8 @@
       "Serializa un objeto a formato XML de forma síncrona."
     ],
     "correct_index": 1,
-    "hint": "Por ejemplo: `Record<string, number>` representa un diccionario con claves de texto y valores numéricos."
+    "hint": "Por ejemplo: `Record<string, number>` representa un diccionario con claves de texto y valores numéricos.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "ts_005",
@@ -57,6 +61,7 @@
       "Itera sobre los valores de un arreglo en tiempo de ejecución."
     ],
     "correct_index": 1,
-    "hint": "Si `type User = { id: number; name: string }`, entonces `keyof User` es `'id' | 'name'`."
+    "hint": "Si `type User = { id: number; name: string }`, entonces `keyof User` es `'id' | 'name'`.",
+    "subtopic": "fundamentos"
   }
 ]

@@ -9,7 +9,8 @@
       "No existe diferencia; son sinónimos utilizados para referirse a endpoints de microservicios."
     ],
     "correct_index": 1,
-    "hint": "El puerto es el contrato abstracto (Driving/Driven port); el adaptador es el código que implementa o usa ese contrato (REST controller, JPA repository, etc.)."
+    "hint": "El puerto es el contrato abstracto (Driving/Driven port); el adaptador es el código que implementa o usa ese contrato (REST controller, JPA repository, etc.).",
+    "subtopic": "fundamentos"
   },
   {
     "id": "arch_002",
@@ -21,7 +22,8 @@
       "Cada caso de uso debe interactuar directamente con el motor SQL mediante consultas preparadas."
     ],
     "correct_index": 1,
-    "hint": "El núcleo no sabe nada del framework, la UI, o la base de datos exterior. Las flechas siempre apuntan hacia el centro."
+    "hint": "El núcleo no sabe nada del framework, la UI, o la base de datos exterior. Las flechas siempre apuntan hacia el centro.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "arch_003",
@@ -33,7 +35,8 @@
       "Balancea la carga dividiendo el tráfico equitativamente en round-robin sin monitorizar errores."
     ],
     "correct_index": 1,
-    "hint": "Tiene 3 estados: Closed (normal), Open (fallando, no llama al servicio) y Half-Open (prueba si el servicio se recuperó)."
+    "hint": "Tiene 3 estados: Closed (normal), Open (fallando, no llama al servicio) y Half-Open (prueba si el servicio se recuperó).",
+    "subtopic": "fundamentos"
   },
   {
     "id": "arch_004",
@@ -45,7 +48,8 @@
       "Reemplazar todas las bases de datos relacionales por archivos de texto JSON planos."
     ],
     "correct_index": 1,
-    "hint": "Un Command cambia el estado pero no devuelve datos de negocio; una Query consulta datos sin alterar el estado."
+    "hint": "Un Command cambia el estado pero no devuelve datos de negocio; una Query consulta datos sin alterar el estado.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "arch_005",
@@ -57,7 +61,8 @@
       "Ignorando los errores y confiando en que el cliente repetirá la compra manualmente."
     ],
     "correct_index": 0,
-    "hint": "Si un paso de la saga falla, se ejecutan transacciones compensatorias que deshacen semánticamente los pasos anteriores."
+    "hint": "Si un paso de la saga falla, se ejecutan transacciones compensatorias que deshacen semánticamente los pasos anteriores.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "arch_006",
@@ -69,6 +74,7 @@
       "La coreografía requiere un servidor RabbitMQ exclusivo por cada método de la clase."
     ],
     "correct_index": 0,
-    "hint": "Coreografía = baile sincronizado sin director visible (reactivo). Orquestación = director de orquesta que manda mensajes directos."
+    "hint": "Coreografía = baile sincronizado sin director visible (reactivo). Orquestación = director de orquesta que manda mensajes directos.",
+    "subtopic": "fundamentos"
   }
 ]

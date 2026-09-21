@@ -9,7 +9,8 @@
       "O(N^2) tiempo cuadrático."
     ],
     "correct_index": 1,
-    "hint": "En cada paso, el espacio de búsqueda se reduce exactamente a la mitad: N -> N/2 -> N/4 ... hasta 1."
+    "hint": "En cada paso, el espacio de búsqueda se reduce exactamente a la mitad: N -> N/2 -> N/4 ... hasta 1.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "dsa_002",
@@ -21,7 +22,8 @@
       "Descarta la clave y arroja una excepción fatal de puntero nulo."
     ],
     "correct_index": 1,
-    "hint": "Cada posición del arreglo apunta a una estructura secundaria (lista o árbol rojo-negro en Java 8+) para almacenar múltiples elementos con el mismo bucket index."
+    "hint": "Cada posición del arreglo apunta a una estructura secundaria (lista o árbol rojo-negro en Java 8+) para almacenar múltiples elementos con el mismo bucket index.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "dsa_003",
@@ -33,7 +35,8 @@
       "O(N!) factorial."
     ],
     "correct_index": 2,
-    "hint": "Si insertas elementos ordenados (1, 2, 3, 4, 5) en un BST simple, se convierte en una lista lineal degenerada O(N). Por eso se usan árboles auto-balanceables como AVL o Red-Black."
+    "hint": "Si insertas elementos ordenados (1, 2, 3, 4, 5) en un BST simple, se convierte en una lista lineal degenerada O(N). Por eso se usan árboles auto-balanceables como AVL o Red-Black.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "dsa_004",
@@ -45,7 +48,8 @@
       "Ambos algoritmos exploran exactamente en el mismo orden de nodos."
     ],
     "correct_index": 0,
-    "hint": "BFS (anchura) usa una cola y es ideal para caminos más cortos en grafos sin pesos. DFS (profundidad) usa la pila de llamadas o un stack."
+    "hint": "BFS (anchura) usa una cola y es ideal para caminos más cortos en grafos sin pesos. DFS (profundidad) usa la pila de llamadas o un stack.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "dsa_005",
@@ -57,6 +61,7 @@
       "Son estructuras idénticas con distinta notación matemática."
     ],
     "correct_index": 0,
-    "hint": "Pila de platos (el último que pones es el primero que sacas). Fila del banco (el primero en llegar es el primero en ser atendido)."
+    "hint": "Pila de platos (el último que pones es el primero que sacas). Fila del banco (el primero en llegar es el primero en ser atendido).",
+    "subtopic": "fundamentos"
   }
 ]

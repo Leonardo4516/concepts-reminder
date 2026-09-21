@@ -9,7 +9,8 @@
       "Porque solo puede ser utilizado en arquitecturas de microservicios."
     ],
     "correct_index": 1,
-    "hint": "El acceso global estático crea dependencias ocultas que hacen que las pruebas unitarias dependan del orden de ejecución."
+    "hint": "El acceso global estático crea dependencias ocultas que hacen que las pruebas unitarias dependan del orden de ejecución.",
+    "subtopic": "patrones_creacionales"
   },
   {
     "id": "patron_002",
@@ -21,7 +22,8 @@
       "Factory Method es un patrón de comportamiento y Abstract Factory es un patrón estructural."
     ],
     "correct_index": 0,
-    "hint": "Factory Method = un método virtual para crear un producto. Abstract Factory = un objeto con múltiples métodos factory para una familia de productos."
+    "hint": "Factory Method = un método virtual para crear un producto. Abstract Factory = un objeto con múltiples métodos factory para una familia de productos.",
+    "subtopic": "patrones_creacionales"
   },
   {
     "id": "patron_003",
@@ -33,7 +35,8 @@
       "Obliga a que todos los componentes conozcan la dirección de memoria exacta de los demás."
     ],
     "correct_index": 0,
-    "hint": "El emisor (Subject/Publisher) solo conoce que los observadores implementan una interfaz común (Observer/Subscriber), no sus clases concretas."
+    "hint": "El emisor (Subject/Publisher) solo conoce que los observadores implementan una interfaz común (Observer/Subscriber), no sus clases concretas.",
+    "subtopic": "patrones_estructurales"
   },
   {
     "id": "patron_004",
@@ -45,7 +48,8 @@
       "Añadir responsabilidades dinámicas a un objeto envolviéndolo en otra clase."
     ],
     "correct_index": 0,
-    "hint": "Permite seleccionar un algoritmo (por ejemplo, métodos de cálculo de impuestos o rutas de compresión) en runtime mediante inyección de una interfaz común."
+    "hint": "Permite seleccionar un algoritmo (por ejemplo, métodos de cálculo de impuestos o rutas de compresión) en runtime mediante inyección de una interfaz común.",
+    "subtopic": "patrones_estructurales"
   },
   {
     "id": "patron_005",
@@ -57,7 +61,8 @@
       "Crea un clon idéntico del objeto en una partición de memoria protegida."
     ],
     "correct_index": 1,
-    "hint": "El decorador tiene una relación 'is-a' (implementa la misma interfaz) y 'has-a' (contiene una referencia al objeto envuelto), permitiendo apilar comportamientos en tiempo de ejecución."
+    "hint": "El decorador tiene una relación 'is-a' (implementa la misma interfaz) y 'has-a' (contiene una referencia al objeto envuelto), permitiendo apilar comportamientos en tiempo de ejecución.",
+    "subtopic": "patrones_estructurales"
   },
   {
     "id": "patron_006",
@@ -69,6 +74,7 @@
       "Ambos patrones son idénticos y reemplazables sin ningún cambio conceptual."
     ],
     "correct_index": 0,
-    "hint": "Adapter = resolver incompatibilidad de interfaz (hacer que encajen). Facade = simplificar la interacción con múltiples componentes complejos."
+    "hint": "Adapter = resolver incompatibilidad de interfaz (hacer que encajen). Facade = simplificar la interacción con múltiples componentes complejos.",
+    "subtopic": "patrones_estructurales"
   }
 ]

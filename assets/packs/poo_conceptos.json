@@ -9,7 +9,8 @@
       "No existe diferencia práctica; ambos términos son sinónimos utilizados según el compilador."
     ],
     "correct_index": 0,
-    "hint": "Piensa en el momento del enlace (binding): sobrecarga de métodos (compile-time) vs dynamic dispatch de métodos virtuales (runtime)."
+    "hint": "Piensa en el momento del enlace (binding): sobrecarga de métodos (compile-time) vs dynamic dispatch de métodos virtuales (runtime).",
+    "subtopic": "polimorfismo_herencia"
   },
   {
     "id": "poo_002",
@@ -21,7 +22,8 @@
       "Garantizar que todas las subclases hereden obligatoriamente las variables privadas."
     ],
     "correct_index": 1,
-    "hint": "El encapsulamiento delimita el estado interno de un objeto y expone únicamente una interfaz pública coherente y segura."
+    "hint": "El encapsulamiento delimita el estado interno de un objeto y expone únicamente una interfaz pública coherente y segura.",
+    "subtopic": "polimorfismo_herencia"
   },
   {
     "id": "poo_003",
@@ -33,7 +35,8 @@
       "Cuando la clase base necesita implementar métodos privados y estáticos de manera obligatoria."
     ],
     "correct_index": 2,
-    "hint": "Las interfaces expresan capacidades ('qué puede hacer' un objeto) sin imponer una relación de identidad ('qué es' el objeto)."
+    "hint": "Las interfaces expresan capacidades ('qué puede hacer' un objeto) sin imponer una relación de identidad ('qué es' el objeto).",
+    "subtopic": "polimorfismo_herencia"
   },
   {
     "id": "poo_004",
@@ -45,7 +48,8 @@
       "Porque la herencia no permite la sobrescritura de métodos virtuales en la mayoría de lenguajes."
     ],
     "correct_index": 0,
-    "hint": "La relación 'tiene-un' ofrece flexibilidad en tiempo de ejecución y bajo acoplamiento; la relación 'es-un' crea dependencias rígidas."
+    "hint": "La relación 'tiene-un' ofrece flexibilidad en tiempo de ejecución y bajo acoplamiento; la relación 'es-un' crea dependencias rígidas.",
+    "subtopic": "polimorfismo_herencia"
   },
   {
     "id": "poo_005",
@@ -57,7 +61,8 @@
       "Alta cohesión y bajo acoplamiento."
     ],
     "correct_index": 3,
-    "hint": "Alta cohesión significa que los elementos de un módulo están fuertemente enfocados en una tarea; bajo acoplamiento minimiza la interdependencia entre módulos."
+    "hint": "Alta cohesión significa que los elementos de un módulo están fuertemente enfocados en una tarea; bajo acoplamiento minimiza la interdependencia entre módulos.",
+    "subtopic": "cohesion_acoplamiento"
   },
   {
     "id": "poo_006",
@@ -69,7 +74,8 @@
       "La clase base debe conocer explícitamente a todas sus derivadas para realizar casts en ejecución."
     ],
     "correct_index": 0,
-    "hint": "Un subtipo debe cumplir los contratos sintácticos y semánticos establecidos por su supertipo sin causar comportamientos inesperados."
+    "hint": "Un subtipo debe cumplir los contratos sintácticos y semánticos establecidos por su supertipo sin causar comportamientos inesperados.",
+    "subtopic": "polimorfismo_herencia"
   },
   {
     "id": "poo_007",
@@ -81,6 +87,7 @@
       "Es un buffer de memoria que almacena los constructores de clases estáticas."
     ],
     "correct_index": 0,
-    "hint": "Cada objeto con métodos polimórficos contiene un puntero oculto (vptr) a su correspondiente vtable."
+    "hint": "Cada objeto con métodos polimórficos contiene un puntero oculto (vptr) a su correspondiente vtable.",
+    "subtopic": "polimorfismo_herencia"
   }
 ]

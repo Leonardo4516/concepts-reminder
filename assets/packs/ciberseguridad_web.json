@@ -9,7 +9,8 @@
       "Ambos ataques son equivalentes y se previenen únicamente cambiando contraseñas."
     ],
     "correct_index": 1,
-    "hint": "En XSS el atacante ejecuta JavaScript en tu contexto; en CSRF el atacante abusa de tus cookies de sesión para mandar peticiones falsificadas a tu banco/app."
+    "hint": "En XSS el atacante ejecuta JavaScript en tu contexto; en CSRF el atacante abusa de tus cookies de sesión para mandar peticiones falsificadas a tu banco/app.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "sec_002",
@@ -21,7 +22,8 @@
       "Reiniciar el servidor de base de datos cada 24 horas."
     ],
     "correct_index": 1,
-    "hint": "Las sentencias preparadas compilan la estructura SQL primero y tratan los inputs del usuario estrictamente como datos, nunca como código ejecutable."
+    "hint": "Las sentencias preparadas compilan la estructura SQL primero y tratan los inputs del usuario estrictamente como datos, nunca como código ejecutable.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "sec_003",
@@ -33,7 +35,8 @@
       "En un archivo de texto `.txt` público en la raíz del servidor Apache."
     ],
     "correct_index": 1,
-    "hint": "La bandera `HttpOnly` impide que cualquier código JavaScript (incluyendo scripts inyectados por XSS) pueda leer el token."
+    "hint": "La bandera `HttpOnly` impide que cualquier código JavaScript (incluyendo scripts inyectados por XSS) pueda leer el token.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "sec_004",
@@ -45,7 +48,8 @@
       "Un protocolo para autenticar usuarios con huella digital en dispositivos móviles."
     ],
     "correct_index": 1,
-    "hint": "CORS protege a los usuarios en el navegador mediante cabeceras como `Access-Control-Allow-Origin`."
+    "hint": "CORS protege a los usuarios en el navegador mediante cabeceras como `Access-Control-Allow-Origin`.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "sec_005",
@@ -57,6 +61,7 @@
       "Porque los navegadores web modernos impiden iniciar sesión con contraseñas hash."
     ],
     "correct_index": 1,
-    "hint": "Las contraseñas deben hashearse con algoritmos adaptativos lentos con salting integrado como Argon2, bcrypt o PBKDF2."
+    "hint": "Las contraseñas deben hashearse con algoritmos adaptativos lentos con salting integrado como Argon2, bcrypt o PBKDF2.",
+    "subtopic": "fundamentos"
   }
 ]

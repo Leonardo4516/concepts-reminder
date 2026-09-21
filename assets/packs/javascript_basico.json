@@ -9,7 +9,8 @@
       "Las microtasks solo se ejecutan cuando el hilo del navegador entra en reposo absoluto."
     ],
     "correct_index": 1,
-    "hint": "Microtasks tienen mayor prioridad y se ejecutan antes de que el Event Loop entregue el control al renderizado o a la siguiente macrotask de timers o I/O."
+    "hint": "Microtasks tienen mayor prioridad y se ejecutan antes de que el Event Loop entregue el control al renderizado o a la siguiente macrotask de timers o I/O.",
+    "subtopic": "event_loop"
   },
   {
     "id": "js_002",
@@ -21,7 +22,8 @@
       "Es una variable declarada con la palabra reservada 'close' en tiempo de ejecución."
     ],
     "correct_index": 0,
-    "hint": "Las funciones en JS recuerdan el entorno en el que fueron creadas, reteniendo referencias vivas a sus variables externas."
+    "hint": "Las funciones en JS recuerdan el entorno en el que fueron creadas, reteniendo referencias vivas a sus variables externas.",
+    "subtopic": "closures_scope"
   },
   {
     "id": "js_003",
@@ -33,7 +35,8 @@
       "async/await reemplazó las Promesas, eliminándolas del motor V8."
     ],
     "correct_index": 0,
-    "hint": "Cualquier función con la palabra clave 'async' encapsula su resultado en Promise.resolve() o Promise.reject()."
+    "hint": "Cualquier función con la palabra clave 'async' encapsula su resultado en Promise.resolve() o Promise.reject().",
+    "subtopic": "event_loop"
   },
   {
     "id": "js_004",
@@ -45,7 +48,8 @@
       "Solo los objetos instanciados con 'class' tienen cadena de prototipos; los literales de objeto no."
     ],
     "correct_index": 1,
-    "hint": "La herencia en JS es prototípica; cada objeto tiene un puntero interno a su prototipo ancestro hasta terminar en null."
+    "hint": "La herencia en JS es prototípica; cada objeto tiene un puntero interno a su prototipo ancestro hasta terminar en null.",
+    "subtopic": "closures_scope"
   },
   {
     "id": "js_005",
@@ -57,7 +61,8 @@
       "Las Arrow Functions solo pueden usarse como constructores con el operador 'new'."
     ],
     "correct_index": 1,
-    "hint": "En funciones tradicionales 'this' depende de cómo se invoca la función; en arrow functions 'this' depende de dónde se escribe el código (ámbito léxico)."
+    "hint": "En funciones tradicionales 'this' depende de cómo se invoca la función; en arrow functions 'this' depende de dónde se escribe el código (ámbito léxico).",
+    "subtopic": "closures_scope"
   },
   {
     "id": "js_006",
@@ -69,6 +74,7 @@
       "'var' lanza ReferenceError si se lee antes de su línea de asignación."
     ],
     "correct_index": 0,
-    "hint": "Acceder a una variable 'let' o 'const' antes de su línea de definición arroja ReferenceError debido a la TDZ."
+    "hint": "Acceder a una variable 'let' o 'const' antes de su línea de definición arroja ReferenceError debido a la TDZ.",
+    "subtopic": "closures_scope"
   }
 ]

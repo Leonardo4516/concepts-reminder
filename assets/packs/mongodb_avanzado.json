@@ -10,7 +10,8 @@
       "Lenguaje de consulta compilado que traduce documentos NoSQL a instrucciones relacionales compatibles con ANSI SQL."
     ],
     "correct_index": 0,
-    "hint": "BSON (Binary JSON) codifica longitud y tipos explícitos (Date, BinData, ObjectId) permitiendo escanear campos sin parsear todo el documento."
+    "hint": "BSON (Binary JSON) codifica longitud y tipos explícitos (Date, BinData, ObjectId) permitiendo escanear campos sin parsear todo el documento.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_002",
@@ -23,7 +24,8 @@
       "6 bytes que almacenan el hash criptográfico SHA-1 del documento y 6 bytes con el tamaño total en disco."
     ],
     "correct_index": 1,
-    "hint": "Los 4 bytes de timestamp inicial ordenan los ObjectIds cronológicamente, permitiendo extraer la fecha de creación con getTimestamp()."
+    "hint": "Los 4 bytes de timestamp inicial ordenan los ObjectIds cronológicamente, permitiendo extraer la fecha de creación con getTimestamp().",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_003",
@@ -36,7 +38,8 @@
       "$set convierte los tipos numéricos a números flotantes; guardar sin operadores conserva enteros de 64 bits."
     ],
     "correct_index": 2,
-    "hint": "{ $set: { edad: 30 } } solo actualiza el campo 'edad'; omitir operadores atómicos reemplaza todo el documento por el objeto pasado."
+    "hint": "{ $set: { edad: 30 } } solo actualiza el campo 'edad'; omitir operadores atómicos reemplaza todo el documento por el objeto pasado.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_004",
@@ -49,7 +52,8 @@
       "Ejecutar una unión (left outer join) trayendo documentos coincidentes de otra colección dentro de la misma BD."
     ],
     "correct_index": 3,
-    "hint": "$lookup realiza un left outer join no correlacionado o correlacionado, incrustando las tuplas hijas en un array del documento padre."
+    "hint": "$lookup realiza un left outer join no correlacionado o correlacionado, incrustando las tuplas hijas en un array del documento padre.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_005",
@@ -62,7 +66,8 @@
       "Ordena los documentos del conjunto de resultados en orden inverso según el identificador interno de la tupla."
     ],
     "correct_index": 0,
-    "hint": "$unwind deconstruye un array de N elementos emitiendo N copias del documento original, cada una con un elemento individual del array."
+    "hint": "$unwind deconstruye un array de N elementos emitiendo N copias del documento original, cada una con un elemento individual del array.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_006",
@@ -75,7 +80,8 @@
       "Una colección protegida mediante claves criptográficas que prohíbe la ejecución de operaciones de borrado DELETE."
     ],
     "correct_index": 1,
-    "hint": "Las Capped Collections mantienen orden de inserción estricto, tamaño en disco fijo y son la base del oplog de replicación."
+    "hint": "Las Capped Collections mantienen orden de inserción estricto, tamaño en disco fijo y son la base del oplog de replicación.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_007",
@@ -88,7 +94,8 @@
       "Restringe la vigencia de las contraseñas de red de los clientes; requiere habilitar autenticación por certificados."
     ],
     "correct_index": 2,
-    "hint": "Los índices TTL purgan documentos automáticamente con un hilo de fondo (expireAfterSeconds); el campo debe ser tipo BSON Date."
+    "hint": "Los índices TTL purgan documentos automáticamente con un hilo de fondo (expireAfterSeconds); el campo debe ser tipo BSON Date.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_008",
@@ -101,7 +108,8 @@
       "Un índice sobre un campo que contiene un array, creando entradas en el árbol B para cada elemento del array."
     ],
     "correct_index": 3,
-    "hint": "Si un campo indexado es un array, MongoDB crea un índice multikey. En índices compuestos solo uno de los campos puede ser array."
+    "hint": "Si un campo indexado es un array, MongoDB crea un índice multikey. En índices compuestos solo uno de los campos puede ser array.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_009",
@@ -114,7 +122,8 @@
       "Incrustar únicamente cadenas de texto y referenciar exclusivamente los valores numéricos y booleanos del documento."
     ],
     "correct_index": 0,
-    "hint": "Incrustar favorece lecturas atómicas en una sola operación; referenciar evita superar el límite de 16MB de BSON y el crecimiento descontrolado."
+    "hint": "Incrustar favorece lecturas atómicas en una sola operación; referenciar evita superar el límite de 16MB de BSON y el crecimiento descontrolado.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_010",
@@ -127,7 +136,8 @@
       "El motor convierte automáticamente los documentos a una tabla temporal de SQLite en memoria swap del sistema."
     ],
     "correct_index": 1,
-    "hint": "El límite de RAM por etapa en agregaciones es de 100MB; allowDiskUse: true permite volcar buffers temporales a disco."
+    "hint": "El límite de RAM por etapa en agregaciones es de 100MB; allowDiskUse: true permite volcar buffers temporales a disco.",
+    "subtopic": "aggregation_pipeline"
   },
   {
     "id": "mongo_011",
@@ -140,7 +150,8 @@
       "Serializa todas las operaciones a través de un único hilo central desactivando el soporte para procesadores multinúcleo."
     ],
     "correct_index": 2,
-    "hint": "WiredTiger implementa control de concurrencia optimista a nivel de documento y checkpoints periódicos que acotan el tiempo de crash recovery."
+    "hint": "WiredTiger implementa control de concurrencia optimista a nivel de documento y checkpoints periódicos que acotan el tiempo de crash recovery.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_012",
@@ -153,7 +164,8 @@
       "Que la confirmación solo retorna cuando la mayoría de los nodos votantes han escrito el cambio en su journal en disco."
     ],
     "correct_index": 3,
-    "hint": "Ofrece máxima durabilidad: la mayoría de nodos miembros con derecho a voto han grabado la operación en su journal físico en disco."
+    "hint": "Ofrece máxima durabilidad: la mayoría de nodos miembros con derecho a voto han grabado la operación en su journal físico en disco.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_013",
@@ -166,7 +178,8 @@
       "Calcula la latencia de ping de todos los servidores descartando los nodos que respondan en más de cinco milisegundos."
     ],
     "correct_index": 0,
-    "hint": "Evita leer de un stale primary aislado comprobando con la mayoría en tiempo de lectura que no se ha elegido un nuevo primario en otra partición."
+    "hint": "Evita leer de un stale primary aislado comprobando con la mayoría en tiempo de lectura que no se ha elegido un nuevo primario en otra partición.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_014",
@@ -179,7 +192,8 @@
       "Inhabilita el balanceador de fragmentos impidiendo que los chunks se migren entre réplicas en segundo plano."
     ],
     "correct_index": 1,
-    "hint": "Una shard key monotónica dirige todos los inserts al último chunk en un único shard. Se mitiga con Hashed Sharding o shard keys compuestas."
+    "hint": "Una shard key monotónica dirige todos los inserts al último chunk en un único shard. Se mitiga con Hashed Sharding o shard keys compuestas.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_015",
@@ -192,7 +206,8 @@
       "Hashed cifra los documentos con claves simétricas; Ranged almacena la información en texto plano no estructurado."
     ],
     "correct_index": 2,
-    "hint": "Hashed reparte los inserts perfectamente con un hash MD5 pero obliga a scatter-gather queries en rangos; Ranged optimiza rangos continuos."
+    "hint": "Hashed reparte los inserts perfectamente con un hash MD5 pero obliga a scatter-gather queries en rangos; Ranged optimiza rangos continuos.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_016",
@@ -205,7 +220,8 @@
       "Una Capped Collection circular en la base de datos 'local' (local.oplog.rs) que registra escrituras de forma idempotente."
     ],
     "correct_index": 3,
-    "hint": "El Oplog registra operaciones en formato idempotente: si se aplica varias veces el mismo evento, el resultado en el secundario no cambia."
+    "hint": "El Oplog registra operaciones en formato idempotente: si se aplica varias veces el mismo evento, el resultado en el secundario no cambia.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_017",
@@ -218,7 +234,8 @@
       "Indexar cadenas de texto primero, seguidas de valores numéricos de punto flotante y finalmente campos booleanos."
     ],
     "correct_index": 0,
-    "hint": "La regla ESR asegura que el índice filtre por claves exactas, proporcione el orden requerido sin 'in-memory sort' y acote el escaneo de rango."
+    "hint": "La regla ESR asegura que el índice filtre por claves exactas, proporcione el orden requerido sin 'in-memory sort' y acote el escaneo de rango.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_018",
@@ -231,7 +248,8 @@
       "Un comando que permite cambiar la zona horaria del servidor mongod sin necesidad de reiniciar el servicio."
     ],
     "correct_index": 1,
-    "hint": "Change Streams exponen eventos en tiempo real garantizando orden y reanudación ordenada (resume tokens) gracias al Oplog."
+    "hint": "Change Streams exponen eventos en tiempo real garantizando orden y reanudación ordenada (resume tokens) gracias al Oplog.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_019",
@@ -244,7 +262,8 @@
       "Almacenan los datos exclusivamente en memoria RAM volátil sin posibilidad de persistencia duradera en almacenamiento SSD."
     ],
     "correct_index": 2,
-    "hint": "Almacenan series temporales en buckets compactos comprimidos, reduciendo dramáticamente el volumen de metadatos e índices B-Tree."
+    "hint": "Almacenan series temporales en buckets compactos comprimidos, reduciendo dramáticamente el volumen de metadatos e índices B-Tree.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_020",
@@ -257,7 +276,8 @@
       "Cifrado de campos sensibles en el driver del cliente antes de enviar los datos por red o guardarlos en la base de datos."
     ],
     "correct_index": 3,
-    "hint": "Con CSFLE, los datos viajan y se almacenan como texto cifrado; la base de datos nunca ve los datos en claro ni posee las claves de cifrado."
+    "hint": "Con CSFLE, los datos viajan y se almacenan como texto cifrado; la base de datos nunca ve los datos en claro ni posee las claves de cifrado.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_021",
@@ -270,7 +290,8 @@
       "Mostrar las estadísticas de consumo de memoria RAM y el número de páginas calientes en el buffer pool."
     ],
     "correct_index": 0,
-    "hint": "find() sin parámetros selecciona todos los documentos y devuelve un cursor para recorrerlos."
+    "hint": "find() sin parámetros selecciona todos los documentos y devuelve un cursor para recorrerlos.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_022",
@@ -283,7 +304,8 @@
       ".take(n)"
     ],
     "correct_index": 1,
-    "hint": ".limit(n) acota el tamaño máximo del conjunto de resultados devuelto por el cursor de MongoDB."
+    "hint": ".limit(n) acota el tamaño máximo del conjunto de resultados devuelto por el cursor de MongoDB.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_023",
@@ -296,7 +318,8 @@
       "db.col.find().reverse('fecha')"
     ],
     "correct_index": 2,
-    "hint": "En el método sort(), 1 indica orden ascendente y -1 indica orden descendente."
+    "hint": "En el método sort(), 1 indica orden ascendente y -1 indica orden descendente.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_024",
@@ -309,7 +332,8 @@
       "El operador de array $addToSet"
     ],
     "correct_index": 3,
-    "hint": "$addToSet trata el array como un conjunto (set) sin duplicados; $push agrega siempre aunque ya exista el valor."
+    "hint": "$addToSet trata el array como un conjunto (set) sin duplicados; $push agrega siempre aunque ya exista el valor.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_025",
@@ -322,7 +346,8 @@
       "$contains"
     ],
     "correct_index": 0,
-    "hint": "{ campo: { $exists: true } } verifica la presencia de la clave en el documento, independientemente de su valor."
+    "hint": "{ campo: { $exists: true } } verifica la presencia de la clave en el documento, independientemente de su valor.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_026",
@@ -335,7 +360,8 @@
       "El operador condicional $not"
     ],
     "correct_index": 1,
-    "hint": "$or toma un array de dos o más expresiones y selecciona documentos que cumplan al menos una de ellas."
+    "hint": "$or toma un array de dos o más expresiones y selecciona documentos que cumplan al menos una de ellas.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_027",
@@ -348,7 +374,8 @@
       "db.collection.calculatedAmount(query)"
     ],
     "correct_index": 2,
-    "hint": "countDocuments() realiza un conteo preciso según el filtro provisto (a diferencia del obsoleto count())."
+    "hint": "countDocuments() realiza un conteo preciso según el filtro provisto (a diferencia del obsoleto count()).",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_028",
@@ -361,7 +388,8 @@
       "db.dropDatabase()"
     ],
     "correct_index": 3,
-    "hint": "db.dropDatabase() borra la base de datos actual y desasigna los archivos asociados en el motor WiredTiger."
+    "hint": "db.dropDatabase() borra la base de datos actual y desasigna los archivos asociados en el motor WiredTiger.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_029",
@@ -374,7 +402,8 @@
       "6379"
     ],
     "correct_index": 0,
-    "hint": "27017 es el puerto predeterminado asignado a instancias independientes y réplicas de MongoDB."
+    "hint": "27017 es el puerto predeterminado asignado a instancias independientes y réplicas de MongoDB.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_030",
@@ -387,7 +416,8 @@
       "popOne(filter)"
     ],
     "correct_index": 1,
-    "hint": "deleteOne() elimina como máximo el primer documento que cumpla la condición especificada."
+    "hint": "deleteOne() elimina como máximo el primer documento que cumpla la condición especificada.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_031",
@@ -400,7 +430,8 @@
       "$step"
     ],
     "correct_index": 2,
-    "hint": "{ $inc: { visitas: 1 } } o { $inc: { visitas: -1 } } muta el contador numérico de forma atómica en el documento."
+    "hint": "{ $inc: { visitas: 1 } } o { $inc: { visitas: -1 } } muta el contador numérico de forma atómica en el documento.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_032",
@@ -413,7 +444,8 @@
       "$pop"
     ],
     "correct_index": 3,
-    "hint": "{ $pop: { items: 1 } } elimina el último elemento del array y { $pop: { items: -1 } } elimina el primero."
+    "hint": "{ $pop: { items: 1 } } elimina el último elemento del array y { $pop: { items: -1 } } elimina el primero.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_033",
@@ -426,7 +458,8 @@
       "$delete"
     ],
     "correct_index": 0,
-    "hint": "$pull remueve del array todas las entradas que coincidan con un valor o expresión dada."
+    "hint": "$pull remueve del array todas las entradas que coincidan con un valor o expresión dada.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_034",
@@ -439,7 +472,8 @@
       "Ordena los elementos del array de forma descendente antes de persistir las modificaciones en almacenamiento."
     ],
     "correct_index": 1,
-    "hint": "El operador posicional `items.$.precio` actúa como marcador del primer elemento que cumplió la condición del query."
+    "hint": "El operador posicional `items.$.precio` actúa como marcador del primer elemento que cumplió la condición del query.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_035",
@@ -452,7 +486,8 @@
       "No existe ninguna diferencia técnica entre ambos operadores siendo sinónimos en el analizador de sintaxis BSON."
     ],
     "correct_index": 2,
-    "hint": "El operador `$[]` modifica todos los elementos del array; `$[<identifier>]` permite filtrado posicional múltiple."
+    "hint": "El operador `$[]` modifica todos los elementos del array; `$[<identifier>]` permite filtrado posicional múltiple.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_036",
@@ -465,7 +500,8 @@
       "La etapa proyectiva $project"
     ],
     "correct_index": 3,
-    "hint": "$project remodela el documento proyectando campos; $addFields agrega campos nuevos conservando los existentes."
+    "hint": "$project remodela el documento proyectando campos; $addFields agrega campos nuevos conservando los existentes.",
+    "subtopic": "aggregation_pipeline"
   },
   {
     "id": "mongo_037",
@@ -478,7 +514,8 @@
       "El tamaño total del índice en disco no puede superar un megabyte de almacenamiento bajo ninguna configuración."
     ],
     "correct_index": 0,
-    "hint": "MongoDB prohíbe indexar más de un array en un índice compuesto para evitar una explosión cartesiana exponencial de claves."
+    "hint": "MongoDB prohíbe indexar más de un array en un índice compuesto para evitar una explosión cartesiana exponencial de claves.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_038",
@@ -491,7 +528,8 @@
       "Un índice que solo se actualiza periódicamente mediante un comando programado en el cron del sistema operativo."
     ],
     "correct_index": 1,
-    "hint": "partialFilterExpression acota la indexación a tuplas relevantes (ej. { status: 'activo' }), reduciendo el costo de almacenamiento y de escritura."
+    "hint": "partialFilterExpression acota la indexación a tuplas relevantes (ej. { status: 'activo' }), reduciendo el costo de almacenamiento y de escritura.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_039",
@@ -504,7 +542,8 @@
       "db.col.createIndex({ ubicacion: \"coordinates\" })"
     ],
     "correct_index": 2,
-    "hint": "Los índices 2dsphere soportan cálculos sobre la geometría esférica de la Tierra utilizando objetos GeoJSON estándar."
+    "hint": "Los índices 2dsphere soportan cálculos sobre la geometría esférica de la Tierra utilizando objetos GeoJSON estándar.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_040",
@@ -517,7 +556,8 @@
       "$geoWithin"
     ],
     "correct_index": 3,
-    "hint": "$geoWithin selecciona geometrías que se encuentran completamente contenidas dentro del perímetro especificado."
+    "hint": "$geoWithin selecciona geometrías que se encuentran completamente contenidas dentro del perímetro especificado.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_041",
@@ -530,7 +570,8 @@
       "mongocopy"
     ],
     "correct_index": 0,
-    "hint": "mongodump produce volcados binarios BSON fieles a los tipos; mongoexport genera texto JSON o CSV."
+    "hint": "mongodump produce volcados binarios BSON fieles a los tipos; mongoexport genera texto JSON o CSV.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_042",
@@ -543,7 +584,8 @@
       "mongorecover"
     ],
     "correct_index": 1,
-    "hint": "mongorestore es la herramienta complementaria de mongodump para restaurar colecciones e índices."
+    "hint": "mongorestore es la herramienta complementaria de mongodump para restaurar colecciones e índices.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_043",
@@ -556,7 +598,8 @@
       "Cifrar campos seleccionados utilizando diferentes algoritmos de clave simétrica gestionados por la aplicación."
     ],
     "correct_index": 2,
-    "hint": "$facet es indispensable para navegación facetada y búsquedas complejas con múltiples categorizaciones y conteos en un único query."
+    "hint": "$facet es indispensable para navegación facetada y búsquedas complejas con múltiples categorizaciones y conteos en un único query.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_044",
@@ -569,7 +612,8 @@
       "db.col.find(...).explain(\"executionStats\")"
     ],
     "correct_index": 3,
-    "hint": ".explain('executionStats') detalla si se usó COLLSCAN o IXSCAN, documentos examinados vs devueltos y tiempos de ejecución."
+    "hint": ".explain('executionStats') detalla si se usó COLLSCAN o IXSCAN, documentos examinados vs devueltos y tiempos de ejecución.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_045",
@@ -582,7 +626,8 @@
       "COLLSCAN solo funciona en colecciones particionadas; IXSCAN se aplica exclusivamente en instancias independientes."
     ],
     "correct_index": 0,
-    "hint": "COLLSCAN (Collection Scan) lee cada documento en disco/RAM; IXSCAN (Index Scan) recorre el árbol B acotando la búsqueda."
+    "hint": "COLLSCAN (Collection Scan) lee cada documento en disco/RAM; IXSCAN (Index Scan) recorre el árbol B acotando la búsqueda.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_046",
@@ -595,7 +640,8 @@
       "El clúster elimina automáticamente los datos del nodo primario para igualar el estado con el del nodo secundario."
     ],
     "correct_index": 1,
-    "hint": "Si el puntero del secundario queda fuera del Oplog circular (capped), ya no puede sincronizar por streaming y requiere initial sync."
+    "hint": "Si el puntero del secundario queda fuera del Oplog circular (capped), ya no puede sincronizar por streaming y requiere initial sync.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_047",
@@ -608,7 +654,8 @@
       "Bloquea la colección entera en modo exclusivo impidiendo cualquier modificación concurrente durante la consulta."
     ],
     "correct_index": 2,
-    "hint": "WiredTiger mantiene snapshots basados en timestamps globales de consenso; majority lee localmente sin consultar a otros nodos en cada query."
+    "hint": "WiredTiger mantiene snapshots basados en timestamps globales de consenso; majority lee localmente sin consultar a otros nodos en cada query.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_048",
@@ -621,7 +668,8 @@
       "Enruta lecturas al miembro del Replica Set con menor latencia de red de ping, sin importar si es primario o secundario."
     ],
     "correct_index": 3,
-    "hint": "nearest minimiza la latencia de red en despliegues distribuidos geográficamente (multi-región) a costa de posible eventual consistency."
+    "hint": "nearest minimiza la latencia de red en despliegues distribuidos geográficamente (multi-región) a costa de posible eventual consistency.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_049",
@@ -634,7 +682,8 @@
       "Servidores proxy NGINX que balancean peticiones HTTP y almacenes en memoria volátil basados en Redis Enterprise."
     ],
     "correct_index": 0,
-    "hint": "mongos enruta consultas usando los metadatos de rangos alojados en los Config Servers hacia los shards correspondientes."
+    "hint": "mongos enruta consultas usando los metadatos de rangos alojados en los Config Servers hacia los shards correspondientes.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_050",
@@ -647,7 +696,8 @@
       "Utiliza el protocolo BitTorrent para distribuir bloques de datos de forma descentralizada entre todos los nodos del clúster."
     ],
     "correct_index": 1,
-    "hint": "La migración es en caliente: transmite documentos, aplica deltas acumulados en el oplog y hace un cambio atómico de metadatos."
+    "hint": "La migración es en caliente: transmite documentos, aplica deltas acumulados en el oplog y hace un cambio atómico de metadatos.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_051",
@@ -660,7 +710,8 @@
       "Indexa particiones temporales del oplog que hayan sido archivadas en almacenamiento secundario."
     ],
     "correct_index": 2,
-    "hint": "Los índices parciales usan 'partialFilterExpression' para indexar solo los documentos que cumplen un predicado específico, ahorrando espacio en disco y memoria RAM."
+    "hint": "Los índices parciales usan 'partialFilterExpression' para indexar solo los documentos que cumplen un predicado específico, ahorrando espacio en disco y memoria RAM.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_052",
@@ -673,7 +724,8 @@
       "Elimina automáticamente documentos tras transcurrir una cantidad fijada de segundos tras una fecha."
     ],
     "correct_index": 3,
-    "hint": "Un índice TTL evalúa un campo de tipo fecha (Date) con expireAfterSeconds y un hilo en segundo plano cada 60 segundos borra los documentos expirados."
+    "hint": "Un índice TTL evalúa un campo de tipo fecha (Date) con expireAfterSeconds y un hilo en segundo plano cada 60 segundos borra los documentos expirados.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_053",
@@ -686,7 +738,8 @@
       "db.lugares.createIndex({ ubicacion: \"spatial3d\" }) para calcular volúmenes de coordenadas polares."
     ],
     "correct_index": 0,
-    "hint": "2dsphere soporta geometrías basadas en la esfera terrestre conforme al estándar GeoJSON (puntos, líneas y polígonos)."
+    "hint": "2dsphere soporta geometrías basadas en la esfera terrestre conforme al estándar GeoJSON (puntos, líneas y polígonos).",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_054",
@@ -699,7 +752,8 @@
       "$near, el cual calcula distancias cartesianas euclidianas directas en índices planos de tipo 2d."
     ],
     "correct_index": 1,
-    "hint": "$geoIntersects selecciona documentos cuya geometría se cruza o comparte puntos con el GeoJSON especificado."
+    "hint": "$geoIntersects selecciona documentos cuya geometría se cruza o comparte puntos con el GeoJSON especificado.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_055",
@@ -712,7 +766,8 @@
       "mongorestore, sincronizando réplicas desde los archivos de transacciones temporales del journal."
     ],
     "correct_index": 2,
-    "hint": "mongodump exporta las colecciones en binario BSON preservando la fidelidad de tipos que se perderían con mongoexport (JSON plano)."
+    "hint": "mongodump exporta las colecciones en binario BSON preservando la fidelidad de tipos que se perderían con mongoexport (JSON plano).",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_056",
@@ -725,7 +780,8 @@
       "mongorestore, reconstruyendo documentos BSON e índices en la instancia destino especificada."
     ],
     "correct_index": 3,
-    "hint": "mongorestore toma las carpetas de volcados BSON generados por mongodump y los restaura en el servidor MongoDB."
+    "hint": "mongorestore toma las carpetas de volcados BSON generados por mongodump y los restaura en el servidor MongoDB.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_057",
@@ -738,7 +794,8 @@
       "Aplanar recursivamente matrices anidadas de documentos generando un flujo secuencial sin duplicados."
     ],
     "correct_index": 0,
-    "hint": "$facet permite procesar múltiples agregaciones (como conteos, categorizaciones y listas) dentro de una sola etapa sobre los mismos datos de entrada."
+    "hint": "$facet permite procesar múltiples agregaciones (como conteos, categorizaciones y listas) dentro de una sola etapa sobre los mismos datos de entrada.",
+    "subtopic": "aggregation_pipeline"
   },
   {
     "id": "mongo_058",
@@ -751,7 +808,8 @@
       "Delega la agregación al nodo secundario más cercano que posea mayor capacidad de memoria asignada."
     ],
     "correct_index": 1,
-    "hint": "El límite en memoria RAM por etapa de agregación es típicamente 100 MB; superarlo genera error a menos que se habilite allowDiskUse."
+    "hint": "El límite en memoria RAM por etapa de agregación es típicamente 100 MB; superarlo genera error a menos que se habilite allowDiskUse.",
+    "subtopic": "aggregation_pipeline"
   },
   {
     "id": "mongo_059",
@@ -764,7 +822,8 @@
       "cursor.inspect(\"detailedPlan\"), ejecutando micro-benchmarks comparativos entre índices candidatos."
     ],
     "correct_index": 2,
-    "hint": "explain('executionStats') ejecuta la consulta midiendo tiempos reales, número de documentos escaneados y devueltos."
+    "hint": "explain('executionStats') ejecuta la consulta midiendo tiempos reales, número de documentos escaneados y devueltos.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_060",
@@ -777,7 +836,8 @@
       "COLLSCAN examina cada documento de la colección secuencialmente, mientras que IXSCAN usa un índice."
     ],
     "correct_index": 3,
-    "hint": "COLLSCAN es un escaneo completo de colección (equivalente a table scan), mientras que IXSCAN utiliza un índice de árbol B."
+    "hint": "COLLSCAN es un escaneo completo de colección (equivalente a table scan), mientras que IXSCAN utiliza un índice de árbol B.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_061",
@@ -790,7 +850,8 @@
       "Un búfer de eventos reactivos que gestiona las suscripciones activas abiertas por Change Streams."
     ],
     "correct_index": 0,
-    "hint": "El Oplog es una Capped Collection con operaciones idempotentes que los nodos secundarios leen continuamente para replicar las escrituras del primario."
+    "hint": "El Oplog es una Capped Collection con operaciones idempotentes que los nodos secundarios leen continuamente para replicar las escrituras del primario.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_062",
@@ -803,7 +864,8 @@
       "Trunca la base de datos local y copia únicamente los índices secundarios para restaurar la lectura."
     ],
     "correct_index": 1,
-    "hint": "Si se excede la ventana del Oplog, el secundario ya no puede recuperar los datos secuencialmente y requiere Initial Sync."
+    "hint": "Si se excede la ventana del Oplog, el secundario ya no puede recuperar los datos secuencialmente y requiere Initial Sync.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_063",
@@ -816,7 +878,8 @@
       "Que la transacción fue cifrada con claves asimétricas antes de replicarse a la mayoría de particiones."
     ],
     "correct_index": 2,
-    "hint": "'w: majority' asegura que la mayoría de nodos votantes confirmaron la escritura, y 'j: true' asegura que se escribió en el journal en disco para evitar pérdida por corte eléctrico."
+    "hint": "'w: majority' asegura que la mayoría de nodos votantes confirmaron la escritura, y 'j: true' asegura que se escribió en el journal en disco para evitar pérdida por corte eléctrico.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_064",
@@ -829,7 +892,8 @@
       "Garantiza que no lee escrituras revertidas confirmando con la mayoría que el primario sigue siendo líder."
     ],
     "correct_index": 3,
-    "hint": "'linearizable' evita stale reads confirmando en tiempo real con la mayoría de nodos antes de devolver los datos, lo que incrementa notablemente la latencia."
+    "hint": "'linearizable' evita stale reads confirmando en tiempo real con la mayoría de nodos antes de devolver los datos, lo que incrementa notablemente la latencia.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_065",
@@ -842,7 +906,8 @@
       "Reconstruye los datos sobre la marcha fusionando los registros del Oplog con el último checkpoint físico."
     ],
     "correct_index": 0,
-    "hint": "WiredTiger mantiene snapshots en memoria que reflejan el punto en el tiempo confirmado por la mayoría de nodos sin bloquear lectores ni emisores."
+    "hint": "WiredTiger mantiene snapshots en memoria que reflejan el punto en el tiempo confirmado por la mayoría de nodos sin bloquear lectores ni emisores.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_066",
@@ -855,7 +920,8 @@
       "Enruta lecturas de manera rotativa ponderando la cantidad de conexiones TCP abiertas por cada instancia."
     ],
     "correct_index": 1,
-    "hint": "'nearest' mide la latencia de ping a todos los nodos del set y envía la lectura al más cercano (dentro de un margen de umbral de latencia)."
+    "hint": "'nearest' mide la latencia de ping a todos los nodos del set y envía la lectura al más cercano (dentro de un margen de umbral de latencia).",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_067",
@@ -868,7 +934,8 @@
       "Instancias mongod primarias, agentes de replicación en segundo plano y gateways Envoy de enrutamiento."
     ],
     "correct_index": 2,
-    "hint": "Un Sharded Cluster consta de routers stateless 'mongos', un replica set de 'Config Servers' que guardan los metadatos y rangos de chunks, y los 'Shards' que almacenan los datos."
+    "hint": "Un Sharded Cluster consta de routers stateless 'mongos', un replica set de 'Config Servers' que guardan los metadatos y rangos de chunks, y los 'Shards' que almacenan los datos.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_068",
@@ -881,7 +948,8 @@
       "Concentra todas las operaciones de inserción en un único shard receptor, generando un cuello de botella térmico."
     ],
     "correct_index": 3,
-    "hint": "Los valores secuenciales crecientes siempre caen en el chunk del límite superior ('MaxKey'), saturando de escrituras a un único shard (hotspotting)."
+    "hint": "Los valores secuenciales crecientes siempre caen en el chunk del límite superior ('MaxKey'), saturando de escrituras a un único shard (hotspotting).",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_069",
@@ -894,7 +962,8 @@
       "Garantiza aislamiento de transacciones distribuidas, pero deshabilita la replicación en nodos secundarios."
     ],
     "correct_index": 0,
-    "hint": "Hashed Sharding distribuye inserciones de manera uniforme evitando hotspots, pero como no preserva orden contiguo, las consultas por rango ($gt/$lt) deben consultar todos los shards."
+    "hint": "Hashed Sharding distribuye inserciones de manera uniforme evitando hotspots, pero como no preserva orden contiguo, las consultas por rango ($gt/$lt) deben consultar todos los shards.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_070",
@@ -907,7 +976,8 @@
       "Reasigna únicamente punteros virtuales en los Config Servers sin transferir físicamente documentos en disco."
     ],
     "correct_index": 1,
-    "hint": "El balanceador copia documentos de un shard a otro mientras captura escrituras entrantes y actualiza metadatos atómicamente sin interrumpir el servicio."
+    "hint": "El balanceador copia documentos de un shard a otro mientras captura escrituras entrantes y actualiza metadatos atómicamente sin interrumpir el servicio.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_071",
@@ -920,7 +990,8 @@
       "Indefinido, permaneciendo activa hasta que la aplicación envíe explícitamente el commit o abort."
     ],
     "correct_index": 2,
-    "hint": "Por defecto, 'transactionLifetimeLimitSeconds' es de 60 segundos para evitar retener snapshots en WiredTiger y saturar la RAM."
+    "hint": "Por defecto, 'transactionLifetimeLimitSeconds' es de 60 segundos para evitar retener snapshots en WiredTiger y saturar la RAM.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_072",
@@ -933,7 +1004,8 @@
       "Usa control de concurrencia optimista con control de versiones multi-versión (MVCC) y bloqueos a nivel documento."
     ],
     "correct_index": 3,
-    "hint": "WiredTiger utiliza MVCC y bloqueos a nivel de documento, permitiendo que múltiples hilos escriban simultáneamente en diferentes documentos de la misma colección."
+    "hint": "WiredTiger utiliza MVCC y bloqueos a nivel de documento, permitiendo que múltiples hilos escriban simultáneamente en diferentes documentos de la misma colección.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_073",
@@ -946,7 +1018,8 @@
       "LZ4, optimizado exclusivamente para lecturas streaming monohilo sobre almacenamiento NVMe ultra-rápido."
     ],
     "correct_index": 0,
-    "hint": "Por defecto, las colecciones en WiredTiger usan compresión Snappy (rápida y balanceada), mientras que zlib ofrece mayor compresión pero mayor costo de CPU."
+    "hint": "Por defecto, las colecciones en WiredTiger usan compresión Snappy (rápida y balanceada), mientras que zlib ofrece mayor compresión pero mayor costo de CPU.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_074",
@@ -959,7 +1032,8 @@
       "Ninguno, puesto que los índices se almacenan sin comprimir para evitar penalizaciones en búsquedas."
     ],
     "correct_index": 1,
-    "hint": "WiredTiger usa 'prefix compression' por defecto en índices, reduciendo drásticamente el espacio en memoria al no repetir prefijos duplicados."
+    "hint": "WiredTiger usa 'prefix compression' por defecto en índices, reduciendo drásticamente el espacio en memoria al no repetir prefijos duplicados.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_075",
@@ -972,7 +1046,8 @@
       "El 25% de la RAM disponible para la caché de datos y otro 25% reservado exclusivamente para los índices."
     ],
     "correct_index": 2,
-    "hint": "Por defecto la caché de WiredTiger consume el 50% de (RAM - 1GB) o 256 MB (lo que sea mayor), dejando el resto de la memoria para el sistema operativo y buffers de red."
+    "hint": "Por defecto la caché de WiredTiger consume el 50% de (RAM - 1GB) o 256 MB (lo que sea mayor), dejando el resto de la memoria para el sistema operativo y buffers de red.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_076",
@@ -985,7 +1060,8 @@
       "Registra modificaciones entre checkpoints para garantizar durabilidad ante caídas, sincronizando cada 100 ms."
     ],
     "correct_index": 3,
-    "hint": "El journal registra escrituras entre checkpoints (que ocurren cada 60 segundos) y hace flush a disco por defecto cada 100 ms para durabilidad sin pérdida."
+    "hint": "El journal registra escrituras entre checkpoints (que ocurren cada 60 segundos) y hace flush a disco por defecto cada 100 ms para durabilidad sin pérdida.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_077",
@@ -998,7 +1074,8 @@
       "Una política de permisos que regula operaciones de lectura según roles de usuario en seguridad RBAC."
     ],
     "correct_index": 0,
-    "hint": "La regla ESR establece que los campos con filtros de igualdad deben ir primero, luego los campos usados para ordenar (Sort) y finalmente los campos con operadores de rango ($gt, $lt)."
+    "hint": "La regla ESR establece que los campos con filtros de igualdad deben ir primero, luego los campos usados para ordenar (Sort) y finalmente los campos con operadores de rango ($gt, $lt).",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_078",
@@ -1011,7 +1088,8 @@
       "Reconstruye temporalmente un índice B-Tree volátil en disco para completar la operación de clasificación."
     ],
     "correct_index": 1,
-    "hint": "Un sort sin índice (blocking sort) requiere cargar todo en RAM; si excede 100 MB fallará a menos que se configure allowDiskUse: true o se agregue un índice adecuado."
+    "hint": "Un sort sin índice (blocking sort) requiere cargar todo en RAM; si excede 100 MB fallará a menos que se configure allowDiskUse: true o se agregue un índice adecuado.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_079",
@@ -1024,7 +1102,8 @@
       "Una consulta que incluye una cláusula hint() explícita obligando al motor a ignorar otros índices."
     ],
     "correct_index": 2,
-    "hint": "Una consulta cubierta se satisface 100% leyendo las claves del índice sin acceder a los documentos en disco, reflejado con 'totalDocsExamined: 0'."
+    "hint": "Una consulta cubierta se satisface 100% leyendo las claves del índice sin acceder a los documentos en disco, reflejado con 'totalDocsExamined: 0'.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_080",
@@ -1037,7 +1116,8 @@
       "Un mecanismo donde el driver cliente cifra campos específicos con KMS antes de enviarlos por la red al servidor."
     ],
     "correct_index": 3,
-    "hint": "Con CSFLE, los datos sensibles se cifran y descifran en la propia aplicación del cliente con claves gestionadas en un KMS externo, por lo que MongoDB nunca ve los datos en texto claro."
+    "hint": "Con CSFLE, los datos sensibles se cifran y descifran en la propia aplicación del cliente con claves gestionadas en un KMS externo, por lo que MongoDB nunca ve los datos en texto claro.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_081",
@@ -1050,7 +1130,8 @@
       "Acelera las inserciones batch duplicando el ancho de banda del protocolo binario de conexión de sockets."
     ],
     "correct_index": 0,
-    "hint": "Queryable Encryption permite buscar coincidencias y rangos sobre datos fuertemente cifrados sin que el servidor conozca la clave ni el contenido en claro."
+    "hint": "Queryable Encryption permite buscar coincidencias y rangos sobre datos fuertemente cifrados sin que el servidor conozca la clave ni el contenido en claro.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_082",
@@ -1063,7 +1144,8 @@
       "Un hilo de fondo que detecta campos modificados en la caché de WiredTiger y genera eventos de log."
     ],
     "correct_index": 1,
-    "hint": "Change Streams permiten a las aplicaciones escuchar inserciones, actualizaciones y borrados en tiempo real apoyándose en el Oplog de Replica Sets o Sharded Clusters."
+    "hint": "Change Streams permiten a las aplicaciones escuchar inserciones, actualizaciones y borrados en tiempo real apoyándose en el Oplog de Replica Sets o Sharded Clusters.",
+    "subtopic": "aggregation_pipeline"
   },
   {
     "id": "mongo_083",
@@ -1076,7 +1158,8 @@
       "Deshabilitan las consultas con agregación permitiendo únicamente lecturas secuenciales directas por cursor."
     ],
     "correct_index": 2,
-    "hint": "Las colecciones de series temporales organizan los datos en buckets columnarias internos, reduciendo drásticamente el espacio en disco y acelerando consultas sobre intervalos."
+    "hint": "Las colecciones de series temporales organizan los datos en buckets columnarias internos, reduciendo drásticamente el espacio en disco y acelerando consultas sobre intervalos.",
+    "subtopic": "wiredtiger_internals"
   },
   {
     "id": "mongo_084",
@@ -1089,7 +1172,8 @@
       "Una colección cuyos documentos se almacenan físicamente ordenados por su clave primaria clustered index."
     ],
     "correct_index": 3,
-    "hint": "Una clustered collection almacena los documentos ordenados físicamente por la clave primaria del índice agrupado, evitando lecturas secundarias adicionales."
+    "hint": "Una clustered collection almacena los documentos ordenados físicamente por la clave primaria del índice agrupado, evitando lecturas secundarias adicionales.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_085",
@@ -1102,7 +1186,8 @@
       "Distribuye automáticamente el tráfico de lectura entre réplicas secundarias balanceando la carga en red."
     ],
     "correct_index": 0,
-    "hint": "El Bucket Pattern agrupa múltiples métricas (p.ej. datos de sensores IoT) dentro de un único documento por hora/día, reduciendo dramáticamente el índice y número de documentos."
+    "hint": "El Bucket Pattern agrupa múltiples métricas (p.ej. datos de sensores IoT) dentro de un único documento por hora/día, reduciendo dramáticamente el índice y número de documentos.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_086",
@@ -1115,7 +1200,8 @@
       "Almacena documentos de más de 16 MB dividiéndolos en fragmentos binarios en las colecciones fs.chunks de GridFS."
     ],
     "correct_index": 1,
-    "hint": "El Outlier Pattern evita que el 99.9% de los documentos paguen el costo de soportar casos extremos (como influencers con millones de seguidores), moviendo los excesos a colecciones complementarias."
+    "hint": "El Outlier Pattern evita que el 99.9% de los documentos paguen el costo de soportar casos extremos (como influencers con millones de seguidores), moviendo los excesos a colecciones complementarias.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_087",
@@ -1128,7 +1214,8 @@
       "WiredTiger rechaza actualizaciones que aumenten el tamaño original del documento obligando a un re-insert."
     ],
     "correct_index": 2,
-    "hint": "En el viejo motor MMAPv1 el crecimiento de un documento obligaba a moverlo físicamente y actualizar todos los índices. WiredTiger maneja páginas dinámicas en árbol B eliminando ese problema."
+    "hint": "En el viejo motor MMAPv1 el crecimiento de un documento obligaba a moverlo físicamente y actualizar todos los índices. WiredTiger maneja páginas dinámicas en árbol B eliminando ese problema.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_088",
@@ -1141,7 +1228,8 @@
       "Mediante el operador $jsonSchema en las opciones de la colección evaluando tipos, propiedades requeridas y reglas."
     ],
     "correct_index": 3,
-    "hint": "Schema Validation en MongoDB usa la directiva de consulta $jsonSchema permitiendo definir tipos, campos obligatorios, patrones regex y rangos numéricos."
+    "hint": "Schema Validation en MongoDB usa la directiva de consulta $jsonSchema permitiendo definir tipos, campos obligatorios, patrones regex y rangos numéricos.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_089",
@@ -1154,7 +1242,8 @@
       "error borra la colección en caso de discrepancia de esquema, mientras que warn repara los tipos automáticamente."
     ],
     "correct_index": 0,
-    "hint": "'error' aborta la operación devolviendo una excepción al cliente; 'warn' registra la infracción en el archivo de log del servidor pero permite persistir el documento."
+    "hint": "'error' aborta la operación devolviendo una excepción al cliente; 'warn' registra la infracción en el archivo de log del servidor pero permite persistir el documento.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_090",
@@ -1167,7 +1256,8 @@
       "Impide que dos clientes modifiquen simultáneamente documentos que compartan claves primarias correlacionadas."
     ],
     "correct_index": 1,
-    "hint": "Causal Consistency garantiza que dentro de una sesión de cliente, una lectura siempre refleja el resultado de una escritura anterior efectuada por la misma sesión, incluso leyendo de secundarias."
+    "hint": "Causal Consistency garantiza que dentro de una sesión de cliente, una lectura siempre refleja el resultado de una escritura anterior efectuada por la misma sesión, incluso leyendo de secundarias.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_091",
@@ -1180,7 +1270,8 @@
       "Un proceso de balanceo de chunks en shards; desaconsejado porque consume demasiada memoria caché en RAM."
     ],
     "correct_index": 2,
-    "hint": "Un árbitro no almacena datos y solo vota para romper empates. Si un nodo de datos cae, w: 'majority' requerirá confirmar en todos los nodos con datos restantes, perdiendo tolerancia a fallos."
+    "hint": "Un árbitro no almacena datos y solo vota para romper empates. Si un nodo de datos cae, w: 'majority' requerirá confirmar en todos los nodos con datos restantes, perdiendo tolerancia a fallos.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_092",
@@ -1193,7 +1284,8 @@
       "Un nodo con copia de datos que no es visible para los clientes ni recibe lecturas, ideal para tareas analíticas."
     ],
     "correct_index": 3,
-    "hint": "Un miembro oculto ({ hidden: true, priority: 0 }) mantiene los datos actualizados pero la aplicación no se conecta a él para lecturas normales, siendo ideal para respaldos o BI."
+    "hint": "Un miembro oculto ({ hidden: true, priority: 0 }) mantiene los datos actualizados pero la aplicación no se conecta a él para lecturas normales, siendo ideal para respaldos o BI.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_093",
@@ -1206,7 +1298,8 @@
       "Espera la aprobación manual de un operador antes de aplicar cambios estructurales en el esquema de la base."
     ],
     "correct_index": 0,
-    "hint": "Un delayed member replica los datos con un retraso configurado (slaveDelay/secondaryDelaySecs) permitiendo recuperar la base ante un drop accidental de colecciones."
+    "hint": "Un delayed member replica los datos con un retraso configurado (slaveDelay/secondaryDelaySecs) permitiendo recuperar la base ante un drop accidental de colecciones.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_094",
@@ -1219,7 +1312,8 @@
       "Valida que las credenciales de los roles de usuario tengan privilegios vigentes sobre la colección."
     ],
     "correct_index": 1,
-    "hint": "db.collection.validate() inspecciona la integridad física del almacenamiento y de las estructuras del árbol de índices para detectar corrupción."
+    "hint": "db.collection.validate() inspecciona la integridad física del almacenamiento y de las estructuras del árbol de índices para detectar corrupción.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_095",
@@ -1232,7 +1326,8 @@
       "Un microservicio en la nube que delega consultas léxicas en índices B-Tree invertidos tradicionales."
     ],
     "correct_index": 2,
-    "hint": "Atlas Search ejecuta Apache Lucene en el mismo proceso/nodo que mongod, permitiendo búsquedas semánticas y de texto con $search sin infraestructura externa."
+    "hint": "Atlas Search ejecuta Apache Lucene en el mismo proceso/nodo que mongod, permitiendo búsquedas semánticas y de texto con $search sin infraestructura externa.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_096",
@@ -1245,7 +1340,8 @@
       "Un índice sobre `$**` que indexa todos los campos o subcampos dinámicos en documentos con esquemas arbitrarios."
     ],
     "correct_index": 3,
-    "hint": "Los índices comodín ({ \"campo.$**\": 1 }) indexan todos los atributos anidados dentro de un subdocumento, ideales para atributos definidos por usuarios o estructuras polimórficas."
+    "hint": "Los índices comodín ({ \"campo.$**\": 1 }) indexan todos los atributos anidados dentro de un subdocumento, ideales para atributos definidos por usuarios o estructuras polimórficas.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_097",
@@ -1258,7 +1354,8 @@
       "awaitData transforma la colección Capped en una estructura de colas RabbitMQ con confirmación explícita."
     ],
     "correct_index": 0,
-    "hint": "Un cursor tailable permanece abierto al llegar al final; con 'awaitData' el servidor retiene la llamada unos instantes esperando nuevos datos en vez de responder de inmediato sin datos."
+    "hint": "Un cursor tailable permanece abierto al llegar al final; con 'awaitData' el servidor retiene la llamada unos instantes esperando nuevos datos en vez de responder de inmediato sin datos.",
+    "subtopic": "sharding_replicas"
   },
   {
     "id": "mongo_098",
@@ -1271,7 +1368,8 @@
       "La actualización se completa en memoria pero emite una advertencia crítica en el log del sistema operativo."
     ],
     "correct_index": 1,
-    "hint": "El tamaño máximo estricto para un documento BSON es 16 MB. Si una mutación lo sobrepasa, el servidor rechaza la operación con error."
+    "hint": "El tamaño máximo estricto para un documento BSON es 16 MB. Si una mutación lo sobrepasa, el servidor rechaza la operación con error.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_099",
@@ -1284,7 +1382,8 @@
       "Comprime el fichero en formato TAR binario y lo vincula como un puntero BLOB en la memoria caché de WiredTiger."
     ],
     "correct_index": 2,
-    "hint": "GridFS divide archivos grandes en bloques llamados 'chunks' (por defecto de 255 KB en fs.chunks) y guarda la información descriptiva en fs.files."
+    "hint": "GridFS divide archivos grandes en bloques llamados 'chunks' (por defecto de 255 KB en fs.chunks) y guarda la información descriptiva en fs.files.",
+    "subtopic": "crud_documentos"
   },
   {
     "id": "mongo_0100",
@@ -1297,6 +1396,7 @@
       "Búsqueda por similitud semántica de embeddings vectoriales usando algoritmos de tipo HNSW (Hierarchical Navigable Small World)."
     ],
     "correct_index": 3,
-    "hint": "Vector Search permite buscar vectores densos (embeddings generados por LLMs) usando indexación HNSW (Hierarchical Navigable Small World) para k-Nearest Neighbors (k-NN)."
+    "hint": "Vector Search permite buscar vectores densos (embeddings generados por LLMs) usando indexación HNSW (Hierarchical Navigable Small World) para k-Nearest Neighbors (k-NN).",
+    "subtopic": "sharding_replicas"
   }
 ]

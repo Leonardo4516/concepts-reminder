@@ -41,17 +41,18 @@ void _triggerReminderQuiz() {
 
   final storage = StorageService();
   storage.loadSettings().then((settings) {
-    // Seleccionar pregunta considerando los lenguajes activos
     final contentManager = ContentManager();
     final activeLangs = settings.activeLanguages;
-    
-    // Buscar pregunta de alguno de los lenguajes activos filtrado por dificultad
+    final activeSub = settings.activeSubtopics;
+
     Question? selectedQuestion;
     for (final lang in activeLangs) {
+      final allowed = activeSub[lang.toLowerCase().trim()];
       selectedQuestion = contentManager.getDueQuestion(
         lang.toLowerCase(),
         false,
         settings.difficulty,
+        allowed,
       );
       if (selectedQuestion != null) break;
     }
@@ -107,9 +108,12 @@ class _ConceptsReminderAppState extends State<ConceptsReminderApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: const Color(0xFF0C0E12),
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF10B981),
           brightness: Brightness.dark,
+          surface: const Color(0xFF13161C),
         ),
         fontFamily: 'Segoe UI',
       ),
@@ -138,49 +142,119 @@ class MainDashboard extends StatefulWidget {
 class _MainDashboardState extends State<MainDashboard> {
   int _selectedIndex = 0;
 
+  void _onNavigate(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Row(
-        children: [
-          NavigationRail(
-            selectedIndex: _selectedIndex,
-            onDestinationSelected: (int index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-            labelType: NavigationRailLabelType.all,
-            backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-            destinations: const [
-              NavigationRailDestination(
-                icon: Icon(Icons.dashboard_outlined),
-                selectedIcon: Icon(Icons.dashboard),
-                label: Text('Inicio'),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final bool isMobile = constraints.maxWidth < 650;
+
+        if (isMobile) {
+          return Scaffold(
+            backgroundColor: const Color(0xFF0C0E12),
+            body: SafeArea(child: _buildContent()),
+            bottomNavigationBar: Container(
+              decoration: const BoxDecoration(
+                color: Color(0xFF11141A),
+                border: Border(
+                  top: BorderSide(color: Color(0xFF1E232E), width: 1),
+                ),
               ),
-              NavigationRailDestination(
-                icon: Icon(Icons.auto_stories_outlined),
-                selectedIcon: Icon(Icons.auto_stories),
-                label: Text('Temas'),
+              child: NavigationBar(
+                selectedIndex: _selectedIndex,
+                onDestinationSelected: _onNavigate,
+                backgroundColor: const Color(0xFF11141A),
+                indicatorColor: const Color(0xFF064E3B),
+                destinations: const [
+                  NavigationDestination(
+                    icon: Icon(Icons.dashboard_outlined),
+                    selectedIcon: Icon(Icons.dashboard, color: Color(0xFF34D399)),
+                    label: 'Inicio',
+                  ),
+                  NavigationDestination(
+                    icon: Icon(Icons.auto_stories_outlined),
+                    selectedIcon: Icon(Icons.auto_stories, color: Color(0xFF34D399)),
+                    label: 'Temas',
+                  ),
+                  NavigationDestination(
+                    icon: Icon(Icons.tune_outlined),
+                    selectedIcon: Icon(Icons.tune, color: Color(0xFF34D399)),
+                    label: 'Ajustes',
+                  ),
+                ],
               ),
-              NavigationRailDestination(
-                icon: Icon(Icons.settings_outlined),
-                selectedIcon: Icon(Icons.settings),
-                label: Text('Ajustes'),
+            ),
+          );
+        }
+
+        return Scaffold(
+          backgroundColor: const Color(0xFF0C0E12),
+          body: Row(
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    right: BorderSide(color: Color(0xFF1D222B), width: 1),
+                  ),
+                ),
+                child: NavigationRail(
+                  selectedIndex: _selectedIndex,
+                  onDestinationSelected: _onNavigate,
+                  labelType: NavigationRailLabelType.all,
+                  backgroundColor: const Color(0xFF101318),
+                  indicatorColor: const Color(0xFF064E3B),
+                  leading: Padding(
+                    padding: const EdgeInsets.only(top: 20, bottom: 24),
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF064E3B),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: const Color(0xFF10B981).withValues(alpha: 0.4)),
+                      ),
+                      child: const Icon(Icons.psychology_outlined, color: Color(0xFF34D399), size: 22),
+                    ),
+                  ),
+                  destinations: const [
+                    NavigationRailDestination(
+                      icon: Icon(Icons.dashboard_outlined),
+                      selectedIcon: Icon(Icons.dashboard, color: Color(0xFF34D399)),
+                      label: Text('Inicio'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.auto_stories_outlined),
+                      selectedIcon: Icon(Icons.auto_stories, color: Color(0xFF34D399)),
+                      label: Text('Temas'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.tune_outlined),
+                      selectedIcon: Icon(Icons.tune, color: Color(0xFF34D399)),
+                      label: Text('Ajustes'),
+                    ),
+                  ],
+                ),
               ),
+              Expanded(child: _buildContent()),
             ],
           ),
-          const VerticalDivider(thickness: 1, width: 1),
-          Expanded(child: _buildContent()),
-        ],
-      ),
+        );
+      },
     );
   }
 
   Widget _buildContent() {
     switch (_selectedIndex) {
       case 0:
-        return HomePage(settings: widget.settings);
+        return HomePage(
+          settings: widget.settings,
+          onNavigateToTopics: () => _onNavigate(1),
+        );
       case 1:
         return TopicsPage(
           settings: widget.settings,
@@ -192,14 +266,23 @@ class _MainDashboardState extends State<MainDashboard> {
           onSettingsChanged: widget.onSettingsChanged,
         );
       default:
-        return HomePage(settings: widget.settings);
+        return HomePage(
+          settings: widget.settings,
+          onNavigateToTopics: () => _onNavigate(1),
+        );
     }
   }
 }
 
 class HomePage extends StatefulWidget {
   final AppSettings settings;
-  const HomePage({super.key, required this.settings});
+  final VoidCallback onNavigateToTopics;
+
+  const HomePage({
+    super.key,
+    required this.settings,
+    required this.onNavigateToTopics,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -208,6 +291,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _totalQuestions = 0;
   int _dueQuestions = 0;
+  int _masteredQuestions = 0;
 
   @override
   void initState() {
@@ -219,23 +303,421 @@ class _HomePageState extends State<HomePage> {
     final cm = ContentManager();
     int total = 0;
     int due = 0;
+    int mastered = 0;
 
     for (final lang in widget.settings.activeLanguages) {
-      final questions = cm.getQuestionsByLanguage(lang.toLowerCase(), widget.settings.difficulty);
+      final allowed = widget.settings.activeSubtopics[lang.toLowerCase().trim()];
+      final questions = cm.getQuestionsByLanguage(lang.toLowerCase(), widget.settings.difficulty, allowed);
       total += questions.length;
-      due += cm.getDueQuestions(lang.toLowerCase(), widget.settings.difficulty).length;
+      due += cm.getDueQuestions(lang.toLowerCase(), widget.settings.difficulty, allowed).length;
+
+      for (final q in questions) {
+        final progress = cm.getProgress(q.id);
+        if (progress != null && progress.intervalDays >= 21) {
+          mastered++;
+        }
+      }
     }
 
     setState(() {
       _totalQuestions = total;
       _dueQuestions = due;
+      _masteredQuestions = mastered;
     });
+  }
+
+  Future<void> _startFocusedReview() async {
+    final cm = ContentManager();
+    Question? q;
+    for (final lang in widget.settings.activeLanguages) {
+      final allowed = widget.settings.activeSubtopics[lang.toLowerCase().trim()];
+      q = cm.getDueQuestion(
+        lang.toLowerCase(),
+        false,
+        widget.settings.difficulty,
+        allowed,
+      );
+      if (q != null) break;
+    }
+    q ??= cm.getDueQuestion(null, true, widget.settings.difficulty);
+
+    if (q != null && mounted) {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => QuizScreen(
+            question: q!,
+            fullScreenLock: widget.settings.fullScreenLock,
+          ),
+        ),
+      );
+      _refreshStats();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(40.0),
+      padding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 32.0),
+      child: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 860),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Top Bar: Branding, Greeting and Streak Badge
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Concepts Reminder',
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 1.2,
+                            color: Colors.grey.shade400,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        const Text(
+                          '¡Hola, Desarrollador!',
+                          style: TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          'Mantén tus conceptos técnicos consolidados con repetición espaciada.',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.shade400,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1B202A),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: const Color(0xFF2C3445)),
+                    ),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('🔥', style: TextStyle(fontSize: 15)),
+                        SizedBox(width: 6),
+                        Text(
+                          '7 días racha',
+                          style: TextStyle(
+                            fontSize: 12.5,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFFF3F4F6),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 28),
+
+              // Rhythmic Notification Status Card
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF13171F),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: const Color(0xFF222836)),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1B222E),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Icon(Icons.timer_outlined, color: Color(0xFF34D399), size: 20),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Recordatorios automáticos en curso',
+                            style: TextStyle(
+                              fontSize: 14.5,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFFF3F4F6),
+                            ),
+                          ),
+                          const SizedBox(height: 3),
+                          Text(
+                            'Frecuencia: cada ${widget.settings.frequencyMinutes} min • Nivel ${widget.settings.difficulty.toUpperCase()}',
+                            style: TextStyle(
+                              fontSize: 12.5,
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    OutlinedButton.icon(
+                      onPressed: () => _triggerReminderQuiz(),
+                      icon: const Icon(Icons.notifications_active_outlined, size: 15),
+                      label: const Text('Probar alarma'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: const Color(0xFF34D399),
+                        side: const BorderSide(color: Color(0xFF065F46)),
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // 3 Metric Cards Row
+              LayoutBuilder(
+                builder: (context, c) {
+                  final bool stackMetrics = c.maxWidth < 620;
+                  final cards = [
+                    _buildMetricCard(
+                      title: 'Pendientes hoy',
+                      value: '$_dueQuestions',
+                      subtitle: 'Listos para repasar',
+                      accentColor: const Color(0xFF10B981),
+                      icon: Icons.access_time_rounded,
+                    ),
+                    _buildMetricCard(
+                      title: 'Dominados',
+                      value: '$_masteredQuestions',
+                      subtitle: 'Intervalo > 21 días',
+                      accentColor: const Color(0xFF60A5FA),
+                      icon: Icons.verified_outlined,
+                    ),
+                    _buildMetricCard(
+                      title: 'Conceptos activos',
+                      value: '$_totalQuestions',
+                      subtitle: 'En tus subtemas',
+                      accentColor: const Color(0xFFA78BFA),
+                      icon: Icons.layers_outlined,
+                    ),
+                  ];
+
+                  if (stackMetrics) {
+                    return Column(
+                      children: cards
+                          .map((card) => Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: card,
+                              ))
+                          .toList(),
+                    );
+                  }
+
+                  return Row(
+                    children: [
+                      Expanded(child: cards[0]),
+                      const SizedBox(width: 14),
+                      Expanded(child: cards[1]),
+                      const SizedBox(width: 14),
+                      Expanded(child: cards[2]),
+                    ],
+                  );
+                },
+              ),
+              const SizedBox(height: 28),
+
+              // Primary Action: Focused Review (Concept 3 inspired)
+              Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF0F261E), Color(0xFF131922)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: const Color(0xFF16533E), width: 1.2),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Row(
+                            children: [
+                              Icon(Icons.bolt, color: Color(0xFF34D399), size: 18),
+                              SizedBox(width: 6),
+                              Text(
+                                'Repaso Inmediato',
+                                style: TextStyle(
+                                  color: Color(0xFF34D399),
+                                  fontSize: 12.5,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          const Text(
+                            'Sesión Rápida de Preguntas',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Refuerza conceptos inmediatamente sin esperar el siguiente ciclo.',
+                            style: TextStyle(
+                              color: Colors.grey.shade400,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    ElevatedButton.icon(
+                      onPressed: _startFocusedReview,
+                      icon: const Icon(Icons.play_arrow_rounded),
+                      label: const Text('Comenzar'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF10B981),
+                        foregroundColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 15),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14.5),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 28),
+
+              // Active Modules & Micro-options Section
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Expanded(
+                    child: Text(
+                      'Módulos y Subtemas Activos',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  TextButton.icon(
+                    onPressed: widget.onNavigateToTopics,
+                    icon: const Icon(Icons.tune_rounded, size: 15, color: Color(0xFF34D399)),
+                    label: const Text('Personalizar', style: TextStyle(color: Color(0xFF34D399), fontSize: 13)),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              ...widget.settings.activeLanguages.map((langKey) {
+                final cm = ContentManager();
+                final displayName = cm.getPackDisplayName(langKey);
+                final allSubtopics = cm.getSubtopicsForPack(langKey);
+                final activeSub = widget.settings.activeSubtopics[langKey.toLowerCase().trim()] ?? allSubtopics.keys.toList();
+
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF12151C),
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(color: const Color(0xFF1F2430)),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            displayName,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFFF3F4F6),
+                            ),
+                          ),
+                          Text(
+                            '${activeSub.length} de ${allSubtopics.length} subtemas',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey.shade400,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 6,
+                        children: activeSub.map((subKey) {
+                          final label = allSubtopics[subKey] ?? subKey;
+                          return Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF1A202C),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: const Color(0xFF283244)),
+                            ),
+                            child: Text(
+                              label,
+                              style: const TextStyle(
+                                fontSize: 11.5,
+                                color: Color(0xFFD1D5DB),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMetricCard({
+    required String title,
+    required String value,
+    required String subtitle,
+    required Color accentColor,
+    required IconData icon,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: const Color(0xFF12151C),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFF1F2533)),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -243,123 +725,36 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '¡Hola, Desarrollador!',
-                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Mantén tus conceptos frescos con el algoritmo de repetición espaciada.',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Colors.grey,
-                          ),
-                    ),
-                  ],
+                child: Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey.shade400,
+                  ),
                 ),
               ),
-              const SizedBox(width: 16),
-              // Botón para probar recordatorio de inmediato
-              ElevatedButton.icon(
-                onPressed: () {
-                  _triggerReminderQuiz();
-                },
-                icon: const Icon(Icons.play_arrow),
-                label: const Text('Probar Alarma Ahora'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF374151),
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                ),
-              ),
+              const SizedBox(width: 6),
+              Icon(icon, size: 16, color: accentColor),
             ],
           ),
-          const SizedBox(height: 30),
-          // Tarjeta Principal
-          Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            child: Container(
-              padding: const EdgeInsets.all(30),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF10B981), Color(0xFF059669)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Icon(Icons.psychology, size: 48, color: Colors.white),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Lenguajes activos: ${widget.settings.activeLanguages.join(", ")}',
-                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Tienes $_dueQuestions conceptos pendientes de $_totalQuestions disponibles (${widget.settings.difficulty.toUpperCase()}).',
-                    style: const TextStyle(fontSize: 16, color: Colors.white70),
-                  ),
-                  const SizedBox(height: 24),
-                  Wrap(
-                    spacing: 20,
-                    runSpacing: 12,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () async {
-                          final cm = ContentManager();
-                          Question? q;
-                          for (final lang in widget.settings.activeLanguages) {
-                            q = cm.getDueQuestion(
-                              lang.toLowerCase(),
-                              false,
-                              widget.settings.difficulty,
-                            );
-                            if (q != null) break;
-                          }
-                          q ??= cm.getDueQuestion(
-                            null,
-                            true,
-                            widget.settings.difficulty,
-                          );
-
-                          if (q != null) {
-                            await Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => QuizScreen(
-                                  question: q!,
-                                  fullScreenLock: widget.settings.fullScreenLock,
-                                ),
-                              ),
-                            );
-                            _refreshStats();
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: const Color(0xFF059669),
-                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                          textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        child: const Text('Comenzar Repaso Manual'),
-                      ),
-                      Text(
-                        'Próximo recordatorio automático cada ${widget.settings.frequencyMinutes} min',
-                        style: const TextStyle(color: Colors.white70, fontSize: 14),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+          const SizedBox(height: 10),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            subtitle,
+            style: TextStyle(
+              fontSize: 11.5,
+              color: Colors.grey.shade500,
             ),
           ),
         ],
@@ -367,7 +762,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
 
 class SettingsPage extends StatelessWidget {
   final AppSettings settings;
@@ -382,66 +776,254 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(40.0),
+      padding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 32.0),
+      child: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 780),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header
+              const Text(
+                'Ajustes de Preferencias',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'Configura el ritmo de estudio, dificultad y comportamiento del sistema.',
+                style: TextStyle(fontSize: 14, color: Colors.grey.shade400),
+              ),
+              const SizedBox(height: 32),
+
+              // Section 1: Ritmo de Recordatorios (Concept 5 inspired)
+              _buildSectionCard(
+                title: 'Frecuencia de Recordatorios',
+                subtitle: 'Cada cuánto tiempo saldrá un concepto de repaso',
+                icon: Icons.timer_outlined,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
+                      children: [
+                        _buildIntervalPill(1, '1 min (Test)', context),
+                        _buildIntervalPill(15, '15 min', context),
+                        _buildIntervalPill(25, '25 min (Pomodoro)', context),
+                        _buildIntervalPill(45, '45 min', context),
+                        _buildIntervalPill(60, '60 min (1h)', context),
+                        _buildIntervalPill(120, '120 min (2h)', context),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Section 2: Modo de Dificultad (Concept 5 inspired segmented)
+              _buildSectionCard(
+                title: 'Modo de Dificultad',
+                subtitle: 'Ajusta el nivel de desafío conceptual según tu experiencia',
+                icon: Icons.leaderboard_outlined,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1A1F2A),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: const Color(0xFF283142)),
+                      ),
+                      child: Row(
+                        children: [
+                          _buildDiffSegment('basic', 'Fácil', context),
+                          _buildDiffSegment('medium', 'Medio', context),
+                          _buildDiffSegment('advanced', 'Difícil', context),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      _getDifficultyExplanation(settings.difficulty),
+                      style: TextStyle(fontSize: 12.5, color: Colors.grey.shade400),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Section 3: Comportamiento de Pantalla & Sistema
+              _buildSectionCard(
+                title: 'Comportamiento en Sistema',
+                subtitle: 'Integración en escritorio y dispositivos móviles',
+                icon: Icons.devices_outlined,
+                child: Column(
+                  children: [
+                    SwitchListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: const Text(
+                        'Superposición forzada (Hyprland / Wayland)',
+                        style: TextStyle(fontSize: 14.5, fontWeight: FontWeight.w600, color: Colors.white),
+                      ),
+                      subtitle: const Text(
+                        'Asegura que el recordatorio salte sobre cualquier ventana de trabajo activa.',
+                        style: TextStyle(fontSize: 12, color: Color(0xFF9CA3AF)),
+                      ),
+                      value: settings.fullScreenLock,
+                      activeThumbColor: const Color(0xFF10B981),
+                      activeTrackColor: const Color(0xFF065F46),
+                      inactiveThumbColor: Colors.grey.shade400,
+                      inactiveTrackColor: const Color(0xFF374151),
+                      onChanged: (val) {
+                        onSettingsChanged(settings.copyWith(fullScreenLock: val));
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSectionCard({
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required Widget child,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(22),
+      decoration: BoxDecoration(
+        color: const Color(0xFF13171F),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: const Color(0xFF202633)),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Ajustes de Recordatorios', style: Theme.of(context).textTheme.headlineLarge),
-          const SizedBox(height: 40),
-          ListTile(
-            title: const Text('Frecuencia del Recordatorio'),
-            subtitle: Text('Cada ${settings.frequencyMinutes} minutos'),
-            leading: const Icon(Icons.timer),
-            trailing: DropdownButton<int>(
-              value: settings.frequencyMinutes,
-              dropdownColor: const Color(0xFF1F2937),
-              items: const [
-                DropdownMenuItem(value: 1, child: Text('1 minuto (Prueba rápida)')),
-                DropdownMenuItem(value: 5, child: Text('5 minutos')),
-                DropdownMenuItem(value: 15, child: Text('15 minutos')),
-                DropdownMenuItem(value: 30, child: Text('30 minutos')),
-                DropdownMenuItem(value: 60, child: Text('60 minutos (1 hora)')),
-                DropdownMenuItem(value: 120, child: Text('120 minutos (2 horas)')),
-              ],
-              onChanged: (int? newValue) {
-                if (newValue != null) {
-                  onSettingsChanged(settings.copyWith(frequencyMinutes: newValue));
-                }
-              },
-            ),
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF1E2533),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(icon, color: const Color(0xFF34D399), size: 18),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      subtitle,
+                      style: const TextStyle(fontSize: 12, color: Color(0xFF9CA3AF)),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          const Divider(),
-          ListTile(
-            title: const Text('Nivel de Dificultad'),
-            subtitle: Text('Nivel actual: ${settings.difficulty.toUpperCase()}'),
-            leading: const Icon(Icons.leaderboard),
-            trailing: DropdownButton<String>(
-              value: settings.difficulty,
-              dropdownColor: const Color(0xFF1F2937),
-              items: const [
-                DropdownMenuItem(value: 'basic', child: Text('Básico')),
-                DropdownMenuItem(value: 'medium', child: Text('Intermedio')),
-                DropdownMenuItem(value: 'advanced', child: Text('Avanzado')),
-              ],
-              onChanged: (String? newValue) {
-                if (newValue != null) {
-                  onSettingsChanged(settings.copyWith(difficulty: newValue));
-                }
-              },
-            ),
-          ),
-          const Divider(),
-          SwitchListTile(
-            title: const Text('Bloqueo de Pantalla Completa (Modo Kiosco)'),
-            subtitle: const Text('Exige responder correctamente para continuar usando el equipo'),
-            secondary: const Icon(Icons.lock),
-            value: settings.fullScreenLock,
-            onChanged: (bool value) {
-              onSettingsChanged(settings.copyWith(fullScreenLock: value));
-            },
-          ),
+          const SizedBox(height: 18),
+          child,
         ],
       ),
     );
   }
+
+  Widget _buildIntervalPill(int minutes, String label, BuildContext context) {
+    final bool isSelected = settings.frequencyMinutes == minutes;
+    return InkWell(
+      onTap: () {
+        onSettingsChanged(settings.copyWith(frequencyMinutes: minutes));
+      },
+      borderRadius: BorderRadius.circular(10),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        decoration: BoxDecoration(
+          color: isSelected ? const Color(0xFF064E3B) : const Color(0xFF191F2B),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: isSelected ? const Color(0xFF10B981) : const Color(0xFF283244),
+            width: 1.2,
+          ),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 12.5,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+            color: isSelected ? Colors.white : const Color(0xFF9CA3AF),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDiffSegment(String diffKey, String label, BuildContext context) {
+    final bool isSelected = settings.difficulty.toLowerCase() == diffKey;
+    return Expanded(
+      child: InkWell(
+        onTap: () {
+          onSettingsChanged(settings.copyWith(difficulty: diffKey));
+        },
+        borderRadius: BorderRadius.circular(10),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 160),
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: isSelected ? const Color(0xFF2B364A) : Colors.transparent,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: isSelected
+                ? [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.3),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    )
+                  ]
+                : null,
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+              color: isSelected ? Colors.white : const Color(0xFF9CA3AF),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  String _getDifficultyExplanation(String diff) {
+    switch (diff.toLowerCase()) {
+      case 'basic':
+        return '• Modo Fácil: Recibirás únicamente conceptos básicos e introductorios.';
+      case 'medium':
+        return '• Modo Medio: Recibirás preguntas intermedias y conceptos básicos.';
+      case 'advanced':
+      default:
+        return '• Modo Difícil: Recibirás una combinación de preguntas avanzadas, intermedias y básicas.';
+    }
+  }
 }
+

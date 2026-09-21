@@ -10,7 +10,8 @@
       "Que toda modificación preserve las reglas de validación, claves foráneas y restricciones del esquema."
     ],
     "correct_index": 0,
-    "hint": "Aislamiento (Isolation) previene interferencias y lecturas sucias entre transacciones simultáneas, garantizando que el resultado sea equivalente a ejecutarlas una tras otra."
+    "hint": "Aislamiento (Isolation) previene interferencias y lecturas sucias entre transacciones simultáneas, garantizando que el resultado sea equivalente a ejecutarlas una tras otra.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_002",
@@ -23,7 +24,8 @@
       "Requiere replicación síncrona en todos los nodos para evitar lecturas de datos parcialmente confirmados."
     ],
     "correct_index": 1,
-    "hint": "En un sistema distribuido donde las particiones de red (P) son inevitables, se debe elegir entre Consistencia (CP, rechazar peticiones no sincronizadas) o Disponibilidad (AP, responder con datos potencialmente stale)."
+    "hint": "En un sistema distribuido donde las particiones de red (P) son inevitables, se debe elegir entre Consistencia (CP, rechazar peticiones no sincronizadas) o Disponibilidad (AP, responder con datos potencialmente stale).",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_003",
@@ -36,7 +38,8 @@
       "Anidar N cláusulas JOIN en una sola sentencia SQL provocando un producto cartesiano descontrolado."
     ],
     "correct_index": 2,
-    "hint": "Ocurre cuando por pereza (Lazy Loading) el ORM hace 1 query para listar los padres y luego N queries individuales para traer los hijos de cada fila, multiplicando la latencia de red."
+    "hint": "Ocurre cuando por pereza (Lazy Loading) el ORM hace 1 query para listar los padres y luego N queries individuales para traer los hijos de cada fila, multiplicando la latencia de red.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_004",
@@ -49,7 +52,8 @@
       "Organiza claves en un árbol balanceado multinivel permitiendo búsquedas y rangos en tiempo O(log N)."
     ],
     "correct_index": 3,
-    "hint": "Los árboles B+Tree mantienen las claves ordenadas en páginas multinivel de tamaño de bloque, facilitando tanto búsquedas puntuales como escaneos por rango en costo logarítmico O(log N)."
+    "hint": "Los árboles B+Tree mantienen las claves ordenadas en páginas multinivel de tamaño de bloque, facilitando tanto búsquedas puntuales como escaneos por rango en costo logarítmico O(log N).",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_005",
@@ -62,7 +66,8 @@
       "ACID admite escrituras no atómicas concurrentes, mientras que BASE serializa cada transacción de forma estricta."
     ],
     "correct_index": 0,
-    "hint": "ACID garantiza consistencia estricta en cada commit; BASE (Basically Available, Soft state, Eventual consistency) permite que los nodos converjan eventualmente para lograr alta disponibilidad."
+    "hint": "ACID garantiza consistencia estricta en cada commit; BASE (Basically Available, Soft state, Eventual consistency) permite que los nodos converjan eventualmente para lograr alta disponibilidad.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_006",
@@ -75,7 +80,8 @@
       "Dos transacciones intentan actualizar concurrentemente el mismo registro generando un interbloqueo."
     ],
     "correct_index": 1,
-    "hint": "Dirty Read ocurre cuando se leen datos no confirmados (uncommitted). Si la transacción origen aborta, los datos leídos jamás existieron válidamente."
+    "hint": "Dirty Read ocurre cuando se leen datos no confirmados (uncommitted). Si la transacción origen aborta, los datos leídos jamás existieron válidamente.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_007",
@@ -88,7 +94,8 @@
       "Dos transacciones concurrentes leen claves distintas pero violan una restricción de integridad global."
     ],
     "correct_index": 2,
-    "hint": "Non-Repeatable Read ocurre cuando una misma consulta sobre una tupla existente devuelve datos diferentes en dos lecturas porque otra transacción hizo commit en medio."
+    "hint": "Non-Repeatable Read ocurre cuando una misma consulta sobre una tupla existente devuelve datos diferentes en dos lecturas porque otra transacción hizo commit en medio.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_008",
@@ -101,7 +108,8 @@
       "Reejecutar una consulta por rango y descubrir nuevas filas insertadas y confirmadas por otra transacción."
     ],
     "correct_index": 3,
-    "hint": "Phantom Read no muta una fila previa, sino que hace aparecer tuplas enteramente nuevas en una consulta con filtro de rango repetida tras el commit de un tercero."
+    "hint": "Phantom Read no muta una fila previa, sino que hace aparecer tuplas enteramente nuevas en una consulta con filtro de rango repetida tras el commit de un tercero.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_009",
@@ -114,7 +122,8 @@
       "Convierte automáticamente consultas relacionales con múltiples JOINs en estructuras de documentos desnormalizados."
     ],
     "correct_index": 0,
-    "hint": "MVCC crea versiones lógicas de cada fila (snapshots). Los lectores ven la foto consistente de sus datos sin esperar a los escritores, y viceversa."
+    "hint": "MVCC crea versiones lógicas de cada fila (snapshots). Los lectores ven la foto consistente de sus datos sin esperar a los escritores, y viceversa.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_010",
@@ -127,7 +136,8 @@
       "El Clustered Index admite múltiples instancias por tabla, mientras que el Secondary solo permite una única clave."
     ],
     "correct_index": 1,
-    "hint": "En una tabla con Clustered Index (ej. InnoDB por PK), los datos residen en las hojas del propio árbol. Un índice secundario guarda en sus hojas la clave primaria para buscar luego en el clustered."
+    "hint": "En una tabla con Clustered Index (ej. InnoDB por PK), los datos residen en las hojas del propio árbol. Un índice secundario guarda en sus hojas la clave primaria para buscar luego en el clustered.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_011",
@@ -140,7 +150,8 @@
       "Monitorear las consultas lentas que superan el umbral configurado de tiempo de ejecución del optimizador."
     ],
     "correct_index": 2,
-    "hint": "La regla fundamental del WAL exige que ningún cambio de datos en memoria sucia se escriba en el archivo principal de la BD hasta que el registro de log de la operación esté sincronizado en disco."
+    "hint": "La regla fundamental del WAL exige que ningún cambio de datos en memoria sucia se escriba en el archivo principal de la BD hasta que el registro de log de la operación esté sincronizado en disco.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_012",
@@ -153,7 +164,8 @@
       "Horizontal reparte filas entre diferentes nodos o tablas; vertical distribuye columnas entre distintas tablas."
     ],
     "correct_index": 3,
-    "hint": "Sharding horizontal divide el conjunto de filas (ej. usuarios 1-1M en Shard A, 1M-2M en Shard B). El vertical descompone columnas (ej. separar datos frecuentes de campos pesados BLOB/TEXT)."
+    "hint": "Sharding horizontal divide el conjunto de filas (ej. usuarios 1-1M en Shard A, 1M-2M en Shard B). El vertical descompone columnas (ej. separar datos frecuentes de campos pesados BLOB/TEXT).",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_013",
@@ -166,7 +178,8 @@
       "El pesimista no genera bloqueos en disco; el optimista adquiere cerrojos físicos exclusivos en el sistema de ficheros."
     ],
     "correct_index": 0,
-    "hint": "El pesimista usa SELECT FOR UPDATE para prevenir conflictos. El optimista lee sin bloqueos y verifica al hacer UPDATE WHERE version = N que nadie haya modificado el registro."
+    "hint": "El pesimista usa SELECT FOR UPDATE para prevenir conflictos. El optimista lee sin bloqueos y verifica al hacer UPDATE WHERE version = N que nadie haya modificado el registro.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_014",
@@ -179,7 +192,8 @@
       "Dos consultas de lectura masiva saturan el ancho de banda del canal de red impidiendo el envío de respuestas."
     ],
     "correct_index": 1,
-    "hint": "Un deadlock es un abrazo mortal (deadly embrace) donde la transacción A espera el lock retenido por B, y B espera el de A. El motor debe detectar el ciclo y abortar a una como víctima."
+    "hint": "Un deadlock es un abrazo mortal (deadly embrace) donde la transacción A espera el lock retenido por B, y B espera el de A. El motor debe detectar el ciclo y abortar a una como víctima.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_015",
@@ -192,7 +206,8 @@
       "Que toda relación posea al menos dos claves foráneas que aseguren la integridad referencial del esquema."
     ],
     "correct_index": 2,
-    "hint": "1NF exige atomicidad: no almacenar listas de valores separados por coma ni tuplas repetidas en un mismo registro."
+    "hint": "1NF exige atomicidad: no almacenar listas de valores separados por coma ni tuplas repetidas en un mismo registro.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_016",
@@ -205,7 +220,8 @@
       "Cumplir 1NF y asegurar que ninguna columna no clave dependa parcialmente de una clave primaria compuesta."
     ],
     "correct_index": 3,
-    "hint": "2NF elimina la dependencia parcial: todo atributo no clave debe depender de la clave primaria en su totalidad, no de un subconjunto de ella en claves compuestas."
+    "hint": "2NF elimina la dependencia parcial: todo atributo no clave debe depender de la clave primaria en su totalidad, no de un subconjunto de ella en claves compuestas.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_017",
@@ -218,7 +234,8 @@
       "Eliminar todas las restricciones CHECK para delegar la validación semántica a la lógica de aplicación."
     ],
     "correct_index": 0,
-    "hint": "3NF erradica dependencias transitivas (si A determina B y B determina C, C no debe estar en la misma tabla que A)."
+    "hint": "3NF erradica dependencias transitivas (si A determina B y B determina C, C no debe estar en la misma tabla que A).",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_018",
@@ -231,7 +248,8 @@
       "Impone que los esquemas de bases de datos relacionales se definan exclusivamente en archivos binarios planos."
     ],
     "correct_index": 1,
-    "hint": "BCNF es una versión más estricta de 3NF: todo determinante de una dependencia funcional debe ser superclave, resolviendo anomalías en tablas con múltiples claves candidatas solapadas."
+    "hint": "BCNF es una versión más estricta de 3NF: todo determinante de una dependencia funcional debe ser superclave, resolviendo anomalías en tablas con múltiples claves candidatas solapadas.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_019",
@@ -244,7 +262,8 @@
       "Soportan exclusivamente consultas escritas en lenguaje Python sin necesidad de compilar sentencias SQL estándar."
     ],
     "correct_index": 2,
-    "hint": "Al guardar los datos de una misma columna contiguos en disco, escaneos masivos de agregaciones (SUM, AVG) solo leen las columnas necesarias con altísimos ratios de compresión."
+    "hint": "Al guardar los datos de una misma columna contiguos en disco, escaneos masivos de agregaciones (SUM, AVG) solo leen las columnas necesarias con altísimos ratios de compresión.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_020",
@@ -257,7 +276,8 @@
       "Convierten escrituras aleatorias en secuenciales en memoria y log antes de fusionarlas en disco mediante compactación."
     ],
     "correct_index": 3,
-    "hint": "LSM-trees (RocksDB, Cassandra) escriben en MemTable y WAL secuencial, logrando un throughput de escritura fenomenal frente al I/O aleatorio in-place de los árboles B-Tree."
+    "hint": "LSM-trees (RocksDB, Cassandra) escriben en MemTable y WAL secuencial, logrando un throughput de escritura fenomenal frente al I/O aleatorio in-place de los árboles B-Tree.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_021",
@@ -270,7 +290,8 @@
       "Elimina automáticamente las claves obsoletas que han superado su tiempo de vida configurado en la sesión."
     ],
     "correct_index": 0,
-    "hint": "Un filtro de Bloom es una estructura probabilística: si responde que la clave no está, es 100% seguro que no está en la SSTable, ahorrando costosos accesos a disco."
+    "hint": "Un filtro de Bloom es una estructura probabilística: si responde que la clave no está, es 100% seguro que no está en la SSTable, ahorrando costosos accesos a disco.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_022",
@@ -283,7 +304,8 @@
       "Un índice temporal que se descarta automáticamente cuando finaliza la conexión del cliente con la base de datos."
     ],
     "correct_index": 1,
-    "hint": "En append-only no se sobreescribe el dato borrado inmediatamente; se agrega un registro marcador (tombstone) que oculta versiones previas hasta que la compactación lo borre físicamente."
+    "hint": "En append-only no se sobreescribe el dato borrado inmediatamente; se agrega un registro marcador (tombstone) que oculta versiones previas hasta que la compactación lo borre físicamente.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_023",
@@ -296,7 +318,8 @@
       "Alineación: las filas se almacenan físicamente contiguas en páginas ordenadas por clave primaria."
     ],
     "correct_index": 2,
-    "hint": "Atomicidad (Atomicity) asegura el principio de 'todo o nada': la transacción es indivisible."
+    "hint": "Atomicidad (Atomicity) asegura el principio de 'todo o nada': la transacción es indivisible.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_024",
@@ -309,7 +332,8 @@
       "Consistencia: transforma la base de datos de un estado válido a otro respetando todas las reglas del esquema."
     ],
     "correct_index": 3,
-    "hint": "Consistencia (Consistency) garantiza que ninguna transacción deje la base de datos en un estado que viole reglas de integridad, tipos o claves foráneas."
+    "hint": "Consistencia (Consistency) garantiza que ninguna transacción deje la base de datos en un estado que viole reglas de integridad, tipos o claves foráneas.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_025",
@@ -322,7 +346,8 @@
       "Indexación: obliga a que toda tabla posea al menos un índice B-Tree sobre una clave candidata."
     ],
     "correct_index": 0,
-    "hint": "Aislamiento (Isolation) controla la visibilidad y el grado de interferencia entre transacciones concurrentes."
+    "hint": "Aislamiento (Isolation) controla la visibilidad y el grado de interferencia entre transacciones concurrentes.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_026",
@@ -335,7 +360,8 @@
       "Dinámico: permite modificar tipos de datos de columnas en caliente sin necesidad de reconstruir índices."
     ],
     "correct_index": 1,
-    "hint": "Durabilidad (Durability) asegura que una vez retornado el COMMIT, los datos quedan grabados en almacenamiento no volátil o WAL."
+    "hint": "Durabilidad (Durability) asegura que una vez retornado el COMMIT, los datos quedan grabados en almacenamiento no volátil o WAL.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_027",
@@ -348,7 +374,8 @@
       "Un identificador criptográfico generado por el driver de conexión para autenticar al usuario."
     ],
     "correct_index": 2,
-    "hint": "Una clave primaria garantiza unicidad e impide valores nulos, sirviendo de referencia para la integridad referencial."
+    "hint": "Una clave primaria garantiza unicidad e impide valores nulos, sirviendo de referencia para la integridad referencial.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_028",
@@ -361,7 +388,8 @@
       "Una columna que referencia la clave primaria de otra tabla garantizando integridad referencial entre ambas."
     ],
     "correct_index": 3,
-    "hint": "Una clave foránea impide inconsistencias referenciales vinculando datos entre tuplas hijas y tuplas padres."
+    "hint": "Una clave foránea impide inconsistencias referenciales vinculando datos entre tuplas hijas y tuplas padres.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_029",
@@ -374,7 +402,8 @@
       "INNER JOIN descarta duplicados automáticamente; LEFT JOIN requiere agregar obligatoriamente la cláusula DISTINCT."
     ],
     "correct_index": 0,
-    "hint": "LEFT JOIN incluye todos los registros del conjunto izquierdo; si no hay coincidencia a la derecha, rellena los atributos con NULL."
+    "hint": "LEFT JOIN incluye todos los registros del conjunto izquierdo; si no hay coincidencia a la derecha, rellena los atributos con NULL.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_030",
@@ -387,7 +416,8 @@
       "Dynamic Data Loader: utilidad para importar archivos masivos en formatos delimitados por coma."
     ],
     "correct_index": 1,
-    "hint": "DDL abarca sentencias como CREATE, ALTER, DROP y TRUNCATE que alteran la estructura de las tablas."
+    "hint": "DDL abarca sentencias como CREATE, ALTER, DROP y TRUNCATE que alteran la estructura de las tablas.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_031",
@@ -400,7 +430,8 @@
       "Distributed Multi-node Log: archivo de transacciones coordinado mediante algoritmos de consenso Paxos."
     ],
     "correct_index": 2,
-    "hint": "DML incluye SELECT, INSERT, UPDATE y DELETE, enfocadas en manipular los datos almacenados."
+    "hint": "DML incluye SELECT, INSERT, UPDATE y DELETE, enfocadas en manipular los datos almacenados.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_032",
@@ -413,7 +444,8 @@
       "Data Control Language: sentencias como GRANT y REVOKE para administrar permisos y privilegios de usuarios."
     ],
     "correct_index": 3,
-    "hint": "DCL gestiona permisos y seguridad sobre objetos de base de datos mediante GRANT y REVOKE."
+    "hint": "DCL gestiona permisos y seguridad sobre objetos de base de datos mediante GRANT y REVOKE.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_033",
@@ -426,7 +458,8 @@
       "La tabla no debe contener índices secundarios para maximizar el throughput de operaciones de inserción."
     ],
     "correct_index": 0,
-    "hint": "1NF prohíbe atributos multivaluados y exige que cada celda sea un valor escalar único."
+    "hint": "1NF prohíbe atributos multivaluados y exige que cada celda sea un valor escalar único.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_034",
@@ -439,7 +472,8 @@
       "Cumplir 1NF y prohibir el uso de claves foráneas con reglas de eliminación en cascada (ON DELETE CASCADE)."
     ],
     "correct_index": 1,
-    "hint": "2NF elimina dependencias parciales: ningún atributo puede depender de una fracción de una clave compuesta."
+    "hint": "2NF elimina dependencias parciales: ningún atributo puede depender de una fracción de una clave compuesta.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_035",
@@ -452,7 +486,8 @@
       "Cumplir 2NF y forzar que todas las consultas de selección utilicen vistas materializadas previamente cacheadas."
     ],
     "correct_index": 2,
-    "hint": "3NF asegura que columnas no clave dependan exclusivamente de la clave primaria y no de otras columnas no clave."
+    "hint": "3NF asegura que columnas no clave dependan exclusivamente de la clave primaria y no de otras columnas no clave.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_036",
@@ -465,7 +500,8 @@
       "Evitar la redundancia de datos innecesaria y prevenir anomalías de inserción, actualización y borrado."
     ],
     "correct_index": 3,
-    "hint": "La normalización previene incoherencias causadas por datos duplicados dispersos en el esquema."
+    "hint": "La normalización previene incoherencias causadas por datos duplicados dispersos en el esquema.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_037",
@@ -478,7 +514,8 @@
       "Cuando una tabla supera las diez columnas obligando a dividir los tipos de datos en esquemas independientes."
     ],
     "correct_index": 0,
-    "hint": "La desnormalización es un compromiso consciente de rendimiento para acelerar lecturas complejas a costa de redundancia."
+    "hint": "La desnormalización es un compromiso consciente de rendimiento para acelerar lecturas complejas a costa de redundancia.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_038",
@@ -491,7 +528,8 @@
       "Un procedimiento almacenado que se ejecuta automáticamente cuando ocurre un error de restricción UNIQUE."
     ],
     "correct_index": 1,
-    "hint": "Una vista estándar es una consulta almacenada con nombre; no duplica datos a menos que sea una vista materializada."
+    "hint": "Una vista estándar es una consulta almacenada con nombre; no duplica datos a menos que sea una vista materializada.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_039",
@@ -504,7 +542,8 @@
       "DELETE reinicia los contadores de secuencias autoincrementales; TRUNCATE conserva el último valor de clave generado."
     ],
     "correct_index": 2,
-    "hint": "TRUNCATE recrea internamente las estructuras o libera páginas en masa (DDL), mientras DELETE procesa tuplas individualmente (DML)."
+    "hint": "TRUNCATE recrea internamente las estructuras o libera páginas en masa (DDL), mientras DELETE procesa tuplas individualmente (DML).",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_040",
@@ -517,7 +556,8 @@
       "Un procedimiento que se ejecuta automáticamente en respuesta a eventos de INSERT, UPDATE o DELETE sobre una tabla."
     ],
     "correct_index": 3,
-    "hint": "Los triggers ejecutan lógica procedural vinculada al ciclo de vida de mutaciones de datos en tablas específicas."
+    "hint": "Los triggers ejecutan lógica procedural vinculada al ciclo de vida de mutaciones de datos en tablas específicas.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_041",
@@ -530,7 +570,8 @@
       "La capacidad de almacenamiento de un nodo debe duplicarse periódicamente para soportar el crecimiento del catálogo."
     ],
     "correct_index": 0,
-    "hint": "Dado que las particiones de red son inevitables (P), los sistemas distribuidos deben priorizar entre consistencia (CP) o disponibilidad (AP)."
+    "hint": "Dado que las particiones de red son inevitables (P), los sistemas distribuidos deben priorizar entre consistencia (CP) o disponibilidad (AP).",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_042",
@@ -543,7 +584,8 @@
       "Establece que las consultas de lectura deben derivarse a réplicas en función del ancho de banda disponible entre regiones."
     ],
     "correct_index": 1,
-    "hint": "PACELC modela el compromiso inherente de las bases de datos distribuidas incluso en estado normal sin fallos de red (latencia vs consistencia)."
+    "hint": "PACELC modela el compromiso inherente de las bases de datos distribuidas incluso en estado normal sin fallos de red (latencia vs consistencia).",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_043",
@@ -556,7 +598,8 @@
       "Broadcast All Servers Equally: política de replicación que transmite cada mutación a todos los nodos simultáneamente."
     ],
     "correct_index": 2,
-    "hint": "BASE es el paradigma opuesto a la rigidez de ACID en almacenes distribuidos altamente escalables."
+    "hint": "BASE es el paradigma opuesto a la rigidez de ACID en almacenes distribuidos altamente escalables.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_044",
@@ -569,7 +612,8 @@
       "OLTP maneja muchas transacciones concurrentes y rápidas por fila; OLAP ejecuta consultas complejas de agregación analítica."
     ],
     "correct_index": 3,
-    "hint": "OLTP está optimizado para la operación diaria transaccional; OLAP está diseñado para análisis multidimensional y data warehousing."
+    "hint": "OLTP está optimizado para la operación diaria transaccional; OLAP está diseñado para análisis multidimensional y data warehousing.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_045",
@@ -582,7 +626,8 @@
       "Ejecutan cada sentencia SQL en paralelo sobre múltiples tarjetas gráficas GPU dedicadas exclusivamente al filtrado."
     ],
     "correct_index": 0,
-    "hint": "Al no leer columnas no solicitadas y comprimir valores del mismo tipo de forma contigua, reducen radicalmente la E/S en disco."
+    "hint": "Al no leer columnas no solicitadas y comprimir valores del mismo tipo de forma contigua, reducen radicalmente la E/S en disco.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_046",
@@ -595,7 +640,8 @@
       "Una lista doblemente enlazada en RAM que almacena los últimos mil registros consultados por las aplicaciones cliente."
     ],
     "correct_index": 1,
-    "hint": "Su alto factor de ramificación (branching factor) permite indexar millones de tuplas con apenas 3 o 4 lecturas de página."
+    "hint": "Su alto factor de ramificación (branching factor) permite indexar millones de tuplas con apenas 3 o 4 lecturas de página.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_047",
@@ -608,7 +654,8 @@
       "LSM requiere reconstruir la base de datos completa cada medianoche; B-Tree permite operaciones DDL en caliente sin bloqueo."
     ],
     "correct_index": 2,
-    "hint": "LSM sustituye el I/O aleatorio de modificar páginas B-Tree dispersas por escrituras secuenciales en memoria y compactación por niveles."
+    "hint": "LSM sustituye el I/O aleatorio de modificar páginas B-Tree dispersas por escrituras secuenciales en memoria y compactación por niveles.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_048",
@@ -621,7 +668,8 @@
       "La proporción entre la cantidad de bytes escritos físicamente en disco y los bytes lógicos solicitados por la aplicación."
     ],
     "correct_index": 3,
-    "hint": "Modificar un valor de pocos bytes puede forzar a escribir páginas enteras (16KB), redo logs y doublewrite buffers (alta amplificación)."
+    "hint": "Modificar un valor de pocos bytes puede forzar a escribir páginas enteras (16KB), redo logs y doublewrite buffers (alta amplificación).",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_049",
@@ -634,7 +682,8 @@
       "El fenómeno donde una consulta SELECT lee automáticamente las páginas adyacentes mediante precarga predictiva del kernel."
     ],
     "correct_index": 0,
-    "hint": "Como una clave puede encontrarse en varios niveles de SSTables, una lectura puede requerir buscar en múltiples ficheros en disco."
+    "hint": "Como una clave puede encontrarse en varios niveles de SSTables, una lectura puede requerir buscar en múltiples ficheros en disco.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_050",
@@ -647,7 +696,8 @@
       "Crear copias temporales de tablas durante la ejecución de sentencias ALTER TABLE para evitar bloqueos en caliente."
     ],
     "correct_index": 1,
-    "hint": "Permite durabilidad y recuperación fiable (crash recovery) desacoplando la persistencia inmediata de páginas de datos complejas."
+    "hint": "Permite durabilidad y recuperación fiable (crash recovery) desacoplando la persistencia inmediata de páginas de datos complejas.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_051",
@@ -660,7 +710,8 @@
       "Es el número de tablas secundarias que hacen referencia a esa columna mediante restricciones de clave foránea activa."
     ],
     "correct_index": 2,
-    "hint": "Columnas con alta cardinalidad (ej. email) son ideales para indexar; columnas con baja cardinalidad (ej. género) suelen descartarse para B-Trees."
+    "hint": "Columnas con alta cardinalidad (ej. email) son ideales para indexar; columnas con baja cardinalidad (ej. género) suelen descartarse para B-Trees.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_052",
@@ -673,7 +724,8 @@
       "El componente que evalúa planes de ejecución asignando un costo estimado (E/S y CPU) para elegir el más eficiente."
     ],
     "correct_index": 3,
-    "hint": "El CBO calcula el camino óptimo comparando el costo computacional proyectado de index scans, sequential scans, hash joins o nested loops."
+    "hint": "El CBO calcula el camino óptimo comparando el costo computacional proyectado de index scans, sequential scans, hash joins o nested loops.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_053",
@@ -686,7 +738,8 @@
       "Low-Latency, Balanced, High-Durability y Critical-Security, definidos según los acuerdos de nivel de servicio (SLA)."
     ],
     "correct_index": 0,
-    "hint": "Definen los compromisos entre rendimiento de concurrencia y prevención de anomalías (lecturas sucias, no repetibles y fantasmas)."
+    "hint": "Definen los compromisos entre rendimiento de concurrencia y prevención de anomalías (lecturas sucias, no repetibles y fantasmas).",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_054",
@@ -699,7 +752,8 @@
       "Una lectura por rango devuelve más registros debido a la confirmación de nuevos registros por transacciones paralelas."
     ],
     "correct_index": 1,
-    "hint": "Ocurre en Read Uncommitted: la transacción confía en datos transitorios que acaban siendo revertidos."
+    "hint": "Ocurre en Read Uncommitted: la transacción confía en datos transitorios que acaban siendo revertidos.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_055",
@@ -712,7 +766,8 @@
       "Un bloqueo exclusivo impide que dos transacciones diferentes lean concurrentemente la misma página de índice."
     ],
     "correct_index": 2,
-    "hint": "Repeatable Read previene esta anomalía asegurando que lecturas repetidas de un registro devuelvan siempre la misma instantánea."
+    "hint": "Repeatable Read previene esta anomalía asegurando que lecturas repetidas de un registro devuelvan siempre la misma instantánea.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_056",
@@ -725,7 +780,8 @@
       "Una consulta de rango repetida descubre tuplas enteramente nuevas que fueron insertadas y confirmadas por otra transacción."
     ],
     "correct_index": 3,
-    "hint": "Surge en predicados de rango cuando otra transacción inserta registros que cumplen la condición de búsqueda."
+    "hint": "Surge en predicados de rango cuando otra transacción inserta registros que cumplen la condición de búsqueda.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_057",
@@ -738,7 +794,8 @@
       "Una anomalía donde una transacción confirma sus cambios en memoria pero falla al volcarlos al archivo de redo log."
     ],
     "correct_index": 0,
-    "hint": "En Snapshot Isolation, ambas transacciones leen fotos válidas pero al modificar registros distintos el motor no detecta colisión directa, rompiendo la regla de negocio conjunta."
+    "hint": "En Snapshot Isolation, ambas transacciones leen fotos válidas pero al modificar registros distintos el motor no detecta colisión directa, rompiendo la regla de negocio conjunta.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_058",
@@ -751,7 +808,8 @@
       "Un sistema de indexación que divide los árboles B en dos niveles de memoria para acelerar búsquedas de clave exacta."
     ],
     "correct_index": 1,
-    "hint": "2PL previene anomalías de concurrencia asegurando que una transacción no adquiera ningún lock nuevo tras haber liberado el primero."
+    "hint": "2PL previene anomalías de concurrencia asegurando que una transacción no adquiera ningún lock nuevo tras haber liberado el primero.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_059",
@@ -764,7 +822,8 @@
       "Nested Loop está limitado a 100 filas; Hash Join cifra los resultados con SHA-256; Merge Join borra las tablas tras la unión."
     ],
     "correct_index": 2,
-    "hint": "Merge Join es óptimo para entradas ya ordenadas O(N+M); Hash Join brilla en grandes uniones ad-hoc; Nested Loop es insustituible para lookups selectivos con índice."
+    "hint": "Merge Join es óptimo para entradas ya ordenadas O(N+M); Hash Join brilla en grandes uniones ad-hoc; Nested Loop es insustituible para lookups selectivos con índice.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_060",
@@ -777,7 +836,8 @@
       "Una variante estricta de 3NF donde todo determinante de una dependencia funcional no trivial debe ser una superclave."
     ],
     "correct_index": 3,
-    "hint": "Resuelve anomalías de redundancia que la 3NF no cubre cuando coexisten múltiples claves candidatas compuestas y solapadas."
+    "hint": "Resuelve anomalías de redundancia que la 3NF no cubre cuando coexisten múltiples claves candidatas compuestas y solapadas.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_061",
@@ -790,7 +850,8 @@
       "Algoritmo de balanceo de carga que distribuye consultas de lectura entre réplicas analizando métricas de CPU."
     ],
     "correct_index": 0,
-    "hint": "ARIES es el estándar de recuperación post-crash: analiza el log, repite la historia completa con Redo y revierte transacciones no confirmadas con Undo."
+    "hint": "ARIES es el estándar de recuperación post-crash: analiza el log, repite la historia completa con Redo y revierte transacciones no confirmadas con Undo.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_062",
@@ -803,7 +864,8 @@
       "Un fichero temporal que almacena páginas descartadas por el algoritmo de reemplazo LRU ante saturación de RAM."
     ],
     "correct_index": 1,
-    "hint": "Los CLRs son registros redo-only que garantizan que el proceso de abort y recuperación ante fallos repetidos sea estrictamente idempotente."
+    "hint": "Los CLRs son registros redo-only que garantizan que el proceso de abort y recuperación ante fallos repetidos sea estrictamente idempotente.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_063",
@@ -816,7 +878,8 @@
       "STEAL es exclusivo de bases de datos columnares; NO-FORCE se aplica únicamente a tablas temporales almacenadas en RAM."
     ],
     "correct_index": 2,
-    "hint": "Los motores de alto rendimiento operan bajo STEAL/NO-FORCE: máxima flexibilidad en memoria, apoyándose en el WAL para la durabilidad."
+    "hint": "Los motores de alto rendimiento operan bajo STEAL/NO-FORCE: máxima flexibilidad en memoria, apoyándose en el WAL para la durabilidad.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_064",
@@ -829,7 +892,8 @@
       "El coordinador envía PREPARE a todos los nodos y, si todos responden listos, emite COMMIT; si alguno falla, emite ROLLBACK."
     ],
     "correct_index": 3,
-    "hint": "2PC asegura atomicidad distribuida: fase 1 (Prepare / Voting) y fase 2 (Commit / Abort), aunque es vulnerable al bloqueo si el coordinador cae."
+    "hint": "2PC asegura atomicidad distribuida: fase 1 (Prepare / Voting) y fase 2 (Commit / Abort), aunque es vulnerable al bloqueo si el coordinador cae.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_065",
@@ -842,7 +906,8 @@
       "Obliga a ejecutar cada consulta tres veces en nodos diferentes comparando las salidas para detectar anomalías."
     ],
     "correct_index": 0,
-    "hint": "3PC desacopla el paso irreversible de commit mediante un estado no bloqueante con timeouts, aunque no tolera particiones de red arbitrarias."
+    "hint": "3PC desacopla el paso irreversible de commit mediante un estado no bloqueante con timeouts, aunque no tolera particiones de red arbitrarias.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_066",
@@ -855,7 +920,8 @@
       "Una cola de mensajes en memoria volátil que procesa peticiones en lotes sin garantizar entrega de mensajes ordenados."
     ],
     "correct_index": 1,
-    "hint": "El patrón Saga sustituye el 2PC bloqueante en arquitecturas distribuidas mediante consistencia eventual y acciones compensatorias."
+    "hint": "El patrón Saga sustituye el 2PC bloqueante en arquitecturas distribuidas mediante consistencia eventual y acciones compensatorias.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_067",
@@ -868,7 +934,8 @@
       "En Coreografía los datos se guardan en SQL relacional; en Orquestación se exige utilizar bases de datos de documentos NoSQL."
     ],
     "correct_index": 2,
-    "hint": "Coreografía es descentralizada basada en eventos (event-driven); Orquestación usa un orquestador explícito que modela la máquina de estados."
+    "hint": "Coreografía es descentralizada basada en eventos (event-driven); Orquestación usa un orquestador explícito que modela la máquina de estados.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_068",
@@ -881,7 +948,8 @@
       "Garantiza que la modificación en base de datos y la publicación del evento en el broker ocurran atómicamente en la misma transacción."
     ],
     "correct_index": 3,
-    "hint": "Evita la doble escritura fallida guardando el evento en una tabla 'outbox' local con ACID; luego un proceso CDC lee y publica al broker."
+    "hint": "Evita la doble escritura fallida guardando el evento en una tabla 'outbox' local con ACID; luego un proceso CDC lee y publica al broker.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_069",
@@ -894,7 +962,8 @@
       "Un proceso por lotes que compara snapshots diarios de tablas completas calculando sumas de verificación MD5."
     ],
     "correct_index": 0,
-    "hint": "CDC captura cambios en tiempo real leyendo directamente los ficheros de log de transacciones del motor sin sobrecargar las consultas."
+    "hint": "CDC captura cambios en tiempo real leyendo directamente los ficheros de log de transacciones del motor sin sobrecargar las consultas.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_070",
@@ -907,7 +976,8 @@
       "Aplica un bloqueo global de lectura sobre todos los nodos durante la fase de votación para prevenir lecturas fantasmas."
     ],
     "correct_index": 1,
-    "hint": "Raft descompone el consenso distribuido en subproblemas formales: elección de líder, replicación de log y seguridad de quórum."
+    "hint": "Raft descompone el consenso distribuido en subproblemas formales: elección de líder, replicación de log y seguridad de quórum.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_071",
@@ -920,7 +990,8 @@
       "Prohíbe las transacciones de escritura simultáneas forzando un esquema de acceso de un solo escritor a nivel mundial."
     ],
     "correct_index": 2,
-    "hint": "TrueTime expone la incertidumbre del reloj [t.earliest, t.latest]. Spanner espera ese margen antes de confirmar (commit wait) logrando linearizabilidad global."
+    "hint": "TrueTime expone la incertidumbre del reloj [t.earliest, t.latest]. Spanner espera ese margen antes de confirmar (commit wait) logrando linearizabilidad global.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_072",
@@ -933,7 +1004,8 @@
       "Un vector de contadores lógicos por nodo que permite determinar causalidad parcial y descubrir escrituras concurrentes conflictivas."
     ],
     "correct_index": 3,
-    "hint": "Los relojes vectoriales registran qué eventos causaron a otros y detectan divergencias donde dos clientes escribieron sin conocer el cambio del otro."
+    "hint": "Los relojes vectoriales registran qué eventos causaron a otros y detectan divergencias donde dos clientes escribieron sin conocer el cambio del otro.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_073",
@@ -946,7 +1018,8 @@
       "Formatos de compresión columnar desarrollados para reducir el tamaño de índices B-Tree en bases de datos espaciales."
     ],
     "correct_index": 0,
-    "hint": "Los CRDTs permiten que múltiples réplicas muten concurrentemente sin bloqueos y garanticen convergencia determinista automática."
+    "hint": "Los CRDTs permiten que múltiples réplicas muten concurrentemente sin bloqueos y garanticen convergencia determinista automática.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_074",
@@ -959,7 +1032,8 @@
       "Garantiza que dos consultas idénticas reciban exactamente el mismo plan de ejecución en el optimizador basado en costos."
     ],
     "correct_index": 1,
-    "hint": "A diferencia de hash(key) % N (que reubica todo si N cambia), el hashing consistente solo afecta a las claves del nodo vecino en el anillo."
+    "hint": "A diferencia de hash(key) % N (que reubica todo si N cambia), el hashing consistente solo afecta a las claves del nodo vecino en el anillo.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_075",
@@ -972,7 +1046,8 @@
       "Define interfaces de red virtuales en el sistema operativo para balancear el tráfico TCP entre varios adaptadores."
     ],
     "correct_index": 2,
-    "hint": "Los vnodes garantizan equilibrio estadístico uniforme y permiten ponderar nodos con hardware más potente asignándoles más posiciones en el anillo."
+    "hint": "Los vnodes garantizan equilibrio estadístico uniforme y permiten ponderar nodos con hardware más potente asignándoles más posiciones en el anillo.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_076",
@@ -985,7 +1060,8 @@
       "Organiza SSTables en niveles jerárquicos con tamaños exponenciales y claves no solapadas por nivel, reduciendo la amplificación de lectura."
     ],
     "correct_index": 3,
-    "hint": "Leveled Compaction garantiza que cada clave exista a lo sumo en un archivo por nivel (L1+), acotando sustancialmente las lecturas puntuales."
+    "hint": "Leveled Compaction garantiza que cada clave exista a lo sumo en un archivo por nivel (L1+), acotando sustancialmente las lecturas puntuales.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_077",
@@ -998,7 +1074,8 @@
       "Reconstruye los índices B-Tree en memoria RAM; incrementa la velocidad pero consume el doble de energía eléctrica en el servidor."
     ],
     "correct_index": 0,
-    "hint": "En Size-Tiered, claves idénticas pueden coexistir en múltiples SSTables al mismo tiempo, lo que encarece las lecturas y exige hasta un 50% de disco libre durante fusiones."
+    "hint": "En Size-Tiered, claves idénticas pueden coexistir en múltiples SSTables al mismo tiempo, lo que encarece las lecturas y exige hasta un 50% de disco libre durante fusiones.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_078",
@@ -1011,7 +1088,8 @@
       "Un sistema NoSQL que almacena exclusivamente imágenes vectoriales SVG para aplicaciones cartográficas interactivas."
     ],
     "correct_index": 1,
-    "hint": "Index-Free Adjacency permite atravesar millones de aristas en tiempo proporcional al subgrafo explorado, sin recurrir a índices globales de búsqueda."
+    "hint": "Index-Free Adjacency permite atravesar millones de aristas en tiempo proporcional al subgrafo explorado, sin recurrir a índices globales de búsqueda.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_079",
@@ -1024,7 +1102,8 @@
       "Una extensión para bases de datos relacionales que compila consultas SQL a código ensamblador nativo en tiempo de ejecución."
     ],
     "correct_index": 2,
-    "hint": "Parquet almacena datos tabulares de forma columnar en disco; los motores analíticos solo leen las columnas necesarias y saltan grupos enteros de filas (row groups)."
+    "hint": "Parquet almacena datos tabulares de forma columnar en disco; los motores analíticos solo leen las columnas necesarias y saltan grupos enteros de filas (row groups).",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_080",
@@ -1037,7 +1116,8 @@
       "Evaluar condiciones WHERE en la capa más baja de almacenamiento para transferir únicamente las tuplas coincidentes hacia la CPU."
     ],
     "correct_index": 3,
-    "hint": "Aprovecha metadatos de bloques (ej. min/max en Parquet) para saltar la lectura y descompresión de datos que no cumplen el predicado."
+    "hint": "Aprovecha metadatos de bloques (ej. min/max en Parquet) para saltar la lectura y descompresión de datos que no cumplen el predicado.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_081",
@@ -1050,7 +1130,8 @@
       "Una infraestructura que reemplaza completamente el uso de sentencias SQL por modelos predictivos de aprendizaje profundo."
     ],
     "correct_index": 0,
-    "hint": "Une la flexibilidad y bajo costo del almacenamiento de objetos de los Data Lakes con las garantías transaccionales ACID de los Data Warehouses."
+    "hint": "Une la flexibilidad y bajo costo del almacenamiento de objetos de los Data Lakes con las garantías transaccionales ACID de los Data Warehouses.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_082",
@@ -1063,7 +1144,8 @@
       "Restaurando una copia de seguridad completa en una máquina virtual temporal y aplicando los deltas de log correspondientes."
     ],
     "correct_index": 1,
-    "hint": "Como los archivos de datos nunca se sobreescriben (inmutabilidad), viajar en el tiempo es simplemente leer el árbol de manifiesto de un commit anterior."
+    "hint": "Como los archivos de datos nunca se sobreescriben (inmutabilidad), viajar en el tiempo es simplemente leer el árbol de manifiesto de un commit anterior.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_083",
@@ -1076,7 +1158,8 @@
       "Una tabla de dispersión en memoria que cifra las claves de búsqueda utilizando funciones de hash criptográficas SHA-3."
     ],
     "correct_index": 2,
-    "hint": "Garantiza con costo O(k) si un elemento NO pertenece al conjunto, evitando costosas operaciones de entrada/salida en almacenamiento secundario."
+    "hint": "Garantiza con costo O(k) si un elemento NO pertenece al conjunto, evitando costosas operaciones de entrada/salida en almacenamiento secundario.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_084",
@@ -1089,7 +1172,8 @@
       "Un registro especial insertado para señalar que una clave fue eliminada, ocultándola hasta que la compactación física la purgue."
     ],
     "correct_index": 3,
-    "hint": "En sistemas inmutables o append-only, las eliminaciones son escrituras de marcadores de borrado (tombstones) que se consolidan durante el merge."
+    "hint": "En sistemas inmutables o append-only, las eliminaciones son escrituras de marcadores de borrado (tombstones) que se consolidan durante el merge.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_085",
@@ -1102,7 +1186,8 @@
       "Hash requiere servidores con procesadores idénticos; rango permite combinar nodos con diferentes arquitecturas de hardware."
     ],
     "correct_index": 0,
-    "hint": "Hash reparte equitativamente las escrituras pero dispersa los datos; rango mantiene la proximidad secuencial pero puede generar sobrecarga en la partición más reciente."
+    "hint": "Hash reparte equitativamente las escrituras pero dispersa los datos; rango mantiene la proximidad secuencial pero puede generar sobrecarga en la partición más reciente.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_086",
@@ -1115,7 +1200,8 @@
       "Write-Through cifra los datos antes de guardarlos; Write-Behind almacena la información en texto plano para reducir latencia."
     ],
     "correct_index": 1,
-    "hint": "Write-Behind ofrece la menor latencia posible al desacoplar la escritura lenta a la base de datos, con el riesgo de pérdida si la caché colapsa antes del volcado."
+    "hint": "Write-Behind ofrece la menor latencia posible al desacoplar la escritura lenta a la base de datos, con el riesgo de pérdida si la caché colapsa antes del volcado.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_087",
@@ -1128,7 +1214,8 @@
       "Dos consultas de selección idénticas reciben resultados diferentes debido a fallos en el algoritmo de ordenación del motor."
     ],
     "correct_index": 2,
-    "hint": "Se combate exigiendo quórum estricto (N/2 + 1): la partición minoritaria reconoce que no tiene la mayoría y se niega a procesar escrituras."
+    "hint": "Se combate exigiendo quórum estricto (N/2 + 1): la partición minoritaria reconoce que no tiene la mayoría y se niega a procesar escrituras.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_088",
@@ -1141,7 +1228,8 @@
       "Cada transacción lee de un snapshot consistente inicial; evita lecturas sucias y fantasmas pero es vulnerable al 'Write Skew'."
     ],
     "correct_index": 3,
-    "hint": "En Snapshot Isolation, dos transacciones pueden leer datos solapados y modificar filas distintas violando una invariante global (Write Skew)."
+    "hint": "En Snapshot Isolation, dos transacciones pueden leer datos solapados y modificar filas distintas violando una invariante global (Write Skew).",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_089",
@@ -1154,7 +1242,8 @@
       "Obliga a que todas las tablas tengan claves primarias numéricas para resolver discrepancias mediante sumas aritméticas."
     ],
     "correct_index": 0,
-    "hint": "SSI (utilizado en PostgreSQL Serializable) detecta conflictos rw-antidependencies en tiempo de ejecución y aborta transacciones sin bloquear lectores."
+    "hint": "SSI (utilizado en PostgreSQL Serializable) detecta conflictos rw-antidependencies en tiempo de ejecución y aborta transacciones sin bloquear lectores.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_090",
@@ -1167,7 +1256,8 @@
       "Restricción que exige que las claves primarias aumenten siempre de forma monotónica sin dejar huecos numéricos intermedios."
     ],
     "correct_index": 1,
-    "hint": "Linearizability es la garantía más fuerte de consistencia para operaciones individuales sobre objetos únicos en sistemas distribuidos."
+    "hint": "Linearizability es la garantía más fuerte de consistencia para operaciones individuales sobre objetos únicos en sistemas distribuidos.",
+    "subtopic": "transacciones_locks"
   },
   {
     "id": "db_091",
@@ -1180,7 +1270,8 @@
       "Serializability admite anomalías de lectura sucia; Linearizability elimina exclusivamente las anomalías de lectura fantasma."
     ],
     "correct_index": 2,
-    "hint": "Serializability ordena transacciones en algún orden secuencial lógico válido; Linearizability garantiza que las operaciones respeten el tiempo real del reloj exterior."
+    "hint": "Serializability ordena transacciones en algún orden secuencial lógico válido; Linearizability garantiza que las operaciones respeten el tiempo real del reloj exterior.",
+    "subtopic": "normalizacion"
   },
   {
     "id": "db_092",
@@ -1193,7 +1284,8 @@
       "Protocolo descentralizado donde los nodos intercambian periódicamente estado del cluster con pares aleatorios alcanzando consenso."
     ],
     "correct_index": 3,
-    "hint": "Gossip permite detectar caídas de nodos y difundir la topología de forma robusta sin la fragilidad de un único punto de fallo (SPOF)."
+    "hint": "Gossip permite detectar caídas de nodos y difundir la topología de forma robusta sin la fragilidad de un único punto de fallo (SPOF).",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_093",
@@ -1206,7 +1298,8 @@
       "Un protocolo que apaga temporalmente servidores secundarios con alto consumo térmico para prevenir fallos de hardware en el rack."
     ],
     "correct_index": 0,
-    "hint": "Los Merkle Trees reducen drásticamente el tráfico de red en background repairs comparando raíces y descendiendo solo por ramas divergentes."
+    "hint": "Los Merkle Trees reducen drásticamente el tráfico de red en background repairs comparando raíces y descendiendo solo por ramas divergentes.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_094",
@@ -1219,7 +1312,8 @@
       "En Shared-Nothing se exige hardware idéntico en cada nodo; en Shared-Disk se permite mezclar arquitecturas sin restricciones."
     ],
     "correct_index": 1,
-    "hint": "Shared-Nothing escala horizontalmente a miles de nodos al erradicar la contención de bus o canal de disco compartido."
+    "hint": "Shared-Nothing escala horizontalmente a miles de nodos al erradicar la contención de bus o canal de disco compartido.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_095",
@@ -1232,7 +1326,8 @@
       "Desconectar los cables de red entre los servidores de base de datos y los servidores web durante las tareas de mantenimiento."
     ],
     "correct_index": 2,
-    "hint": "Permite escalar el cómputo (número de workers de cálculo) y el almacenamiento (terabytes de datos) de forma totalmente independiente."
+    "hint": "Permite escalar el cómputo (número de workers de cálculo) y el almacenamiento (terabytes de datos) de forma totalmente independiente.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_096",
@@ -1245,7 +1340,8 @@
       "Un índice denso contiene una entrada por cada fila; un índice disperso solo tiene entradas para algunas filas o bloques."
     ],
     "correct_index": 3,
-    "hint": "Los índices dispersos (ClickHouse, SSTables) consumen mínima memoria RAM almacenando una clave por bloque y navegando luego secuencialmente."
+    "hint": "Los índices dispersos (ClickHouse, SSTables) consumen mínima memoria RAM almacenando una clave por bloque y navegando luego secuencialmente.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_097",
@@ -1258,7 +1354,8 @@
       "Un formato que exige que todos los registros de la tabla tengan exactamente la misma longitud fija en bytes sin excepciones."
     ],
     "correct_index": 0,
-    "hint": "Slotted Page permite tuplas de longitud variable, reubicación interna sin cambiar identificadores de tupla (Record ID = page_id + slot_id) y compactación."
+    "hint": "Slotted Page permite tuplas de longitud variable, reubicación interna sin cambiar identificadores de tupla (Record ID = page_id + slot_id) y compactación.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_098",
@@ -1271,7 +1368,8 @@
       "Distribuir fragmentos de consultas en una red de ordenadores conectados mediante cables de fibra óptica de topología en estrella."
     ],
     "correct_index": 1,
-    "hint": "Sustituye el modelo tupla-a-tupla (Volcano Iterator) por procesamiento por bloques contiguos en registros SIMD de la CPU, multiplicando el throughput."
+    "hint": "Sustituye el modelo tupla-a-tupla (Volcano Iterator) por procesamiento por bloques contiguos en registros SIMD de la CPU, multiplicando el throughput.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_099",
@@ -1284,7 +1382,8 @@
       "Reescribir consultas complejas transformando sentencias con múltiples JOINs en subconsultas anidadas más simples."
     ],
     "correct_index": 2,
-    "hint": "Elimina la sobrecarga del bucle de interpretación de expresiones compilando directamente a instrucciones binarias optimizadas para el hardware local."
+    "hint": "Elimina la sobrecarga del bucle de interpretación de expresiones compilando directamente a instrucciones binarias optimizadas para el hardware local.",
+    "subtopic": "fundamentos_acid"
   },
   {
     "id": "db_0100",
@@ -1297,6 +1396,7 @@
       "Elegir SQL para transacciones ACID e integridad compleja; elegir NoSQL para modelos flexibles o escala horizontal masiva con acceso simple."
     ],
     "correct_index": 3,
-    "hint": "La ingeniería moderna favorece la 'Persistencia Políglota': emplear cada motor para su fortaleza específica (SQL para pagos y core transaccional, NoSQL para catálogos y streaming masivo)."
+    "hint": "La ingeniería moderna favorece la 'Persistencia Políglota': emplear cada motor para su fortaleza específica (SQL para pagos y core transaccional, NoSQL para catálogos y streaming masivo).",
+    "subtopic": "transacciones_locks"
   }
 ]

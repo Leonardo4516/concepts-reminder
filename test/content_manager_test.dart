@@ -181,5 +181,58 @@ void main() {
       final advancedTier = manager.filterByDifficulty(testQuestions, 'advanced');
       expect(advancedTier.map((q) => q.id), ['1', '2', '3']);
     });
+
+    test('validates Question subtopic field deserialization', () {
+      final json = {
+        'id': 'sub_01',
+        'question': 'Test question',
+        'options': ['A', 'B', 'C', 'D'],
+        'correct_index': 0,
+        'hint': 'Test hint',
+        'subtopic': 'concurrencia',
+      };
+      final q = Question.fromJson(json);
+      expect(q.subtopic, 'concurrencia');
+
+      final defaultJson = {
+        'id': 'sub_02',
+        'question': 'Test question 2',
+        'options': ['A', 'B'],
+        'correct_index': 1,
+        'hint': 'Test hint 2',
+      };
+      final qDefault = Question.fromJson(defaultJson);
+      expect(qDefault.subtopic, 'general');
+    });
+
+    test('validates ContentManager.getSubtopicsForPack and filterBySubtopics', () {
+      final manager = ContentManager();
+      
+      // Test predefined subtopics for Java
+      final javaSubtopics = manager.getSubtopicsForPack('java');
+      expect(javaSubtopics.containsKey('fundamentos'), isTrue);
+      expect(javaSubtopics.containsKey('poo'), isTrue);
+      expect(javaSubtopics.containsKey('concurrencia'), isTrue);
+      expect(javaSubtopics['concurrencia'], 'Concurrencia & Threads');
+
+      // Test filtering by subtopics
+      final testQuestions = [
+        Question(id: '1', question: 'q1', options: ['a', 'b'], correctIndex: 0, hint: 'h', subtopic: 'fundamentos'),
+        Question(id: '2', question: 'q2', options: ['a', 'b'], correctIndex: 0, hint: 'h', subtopic: 'poo'),
+        Question(id: '3', question: 'q3', options: ['a', 'b'], correctIndex: 0, hint: 'h', subtopic: 'javafx'),
+      ];
+
+      final filteredFundamentos = manager.filterBySubtopics(testQuestions, ['fundamentos']);
+      expect(filteredFundamentos.map((q) => q.id), ['1']);
+
+      final filteredMulti = manager.filterBySubtopics(testQuestions, ['fundamentos', 'javafx']);
+      expect(filteredMulti.map((q) => q.id), ['1', '3']);
+
+      // Empty or null list returns all questions
+      final allWithNull = manager.filterBySubtopics(testQuestions, null);
+      expect(allWithNull.length, 3);
+      final allWithEmpty = manager.filterBySubtopics(testQuestions, []);
+      expect(allWithEmpty.length, 3);
+    });
   });
 }

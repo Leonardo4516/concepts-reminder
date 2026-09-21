@@ -9,7 +9,8 @@
       "El Garbage Collector rastrea las variables en un ciclo de 10 milisegundos."
     ],
     "correct_index": 1,
-    "hint": "Rust no tiene Garbage Collector ni liberación manual de memoria (free/malloc); la memoria se gestiona mediante Ownership y RAII en tiempo de compilación."
+    "hint": "Rust no tiene Garbage Collector ni liberación manual de memoria (free/malloc); la memoria se gestiona mediante Ownership y RAII en tiempo de compilación.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "rust_002",
@@ -21,7 +22,8 @@
       "Las referencias mutables no pueden modificar los datos a los que apuntan."
     ],
     "correct_index": 1,
-    "hint": "Esta regla garantiza en tiempo de compilación la ausencia de 'Data Races' (condiciones de carrera por mutación concurrente de memoria)."
+    "hint": "Esta regla garantiza en tiempo de compilación la ausencia de 'Data Races' (condiciones de carrera por mutación concurrente de memoria).",
+    "subtopic": "fundamentos"
   },
   {
     "id": "rust_003",
@@ -33,7 +35,8 @@
       "Finalizando el proceso del sistema operativo inmediatamente sin reportar mensajes."
     ],
     "correct_index": 0,
-    "hint": "El creador de 'null' lo llamó su 'error del billón de dólares'. Rust elimina null forzando a declarar explícitamente `Option<T>`."
+    "hint": "El creador de 'null' lo llamó su 'error del billón de dólares'. Rust elimina null forzando a declarar explícitamente `Option<T>`.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "rust_004",
@@ -45,7 +48,8 @@
       "El tiempo máximo que una tarea asíncrona de Tokio puede dormir con sleep."
     ],
     "correct_index": 1,
-    "hint": "Los lifetimes son anotaciones para el Borrow Checker que evitan que una referencia apunte a memoria que ya fue liberada."
+    "hint": "Los lifetimes son anotaciones para el Borrow Checker que evitan que una referencia apunte a memoria que ya fue liberada.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "rust_005",
@@ -57,6 +61,7 @@
       "Compilar código de Rust a binario WebAssembly sin dependencias."
     ],
     "correct_index": 0,
-    "hint": "Los Traits permiten polimorfismo paramétrico y despacho estático (monomorfización) o dinámico (`dyn Trait`)."
+    "hint": "Los Traits permiten polimorfismo paramétrico y despacho estático (monomorfización) o dinámico (`dyn Trait`).",
+    "subtopic": "fundamentos"
   }
 ]

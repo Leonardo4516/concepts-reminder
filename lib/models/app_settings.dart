@@ -3,12 +3,14 @@ class AppSettings {
   final List<String> activeLanguages;
   final String difficulty;
   final bool fullScreenLock;
+  final Map<String, List<String>> activeSubtopics;
 
   const AppSettings({
     this.frequencyMinutes = 60,
     this.activeLanguages = const ['Python', 'Java'],
     this.difficulty = 'medium',
     this.fullScreenLock = true,
+    this.activeSubtopics = const {},
   });
 
   AppSettings copyWith({
@@ -16,16 +18,29 @@ class AppSettings {
     List<String>? activeLanguages,
     String? difficulty,
     bool? fullScreenLock,
+    Map<String, List<String>>? activeSubtopics,
   }) {
     return AppSettings(
       frequencyMinutes: frequencyMinutes ?? this.frequencyMinutes,
       activeLanguages: activeLanguages ?? this.activeLanguages,
       difficulty: difficulty ?? this.difficulty,
       fullScreenLock: fullScreenLock ?? this.fullScreenLock,
+      activeSubtopics: activeSubtopics ?? this.activeSubtopics,
     );
   }
 
   factory AppSettings.fromJson(Map<String, dynamic> json) {
+    Map<String, List<String>> subtopics = {};
+    if (json['activeSubtopics'] != null && json['activeSubtopics'] is Map) {
+      final rawMap = json['activeSubtopics'] as Map;
+      rawMap.forEach((key, value) {
+        if (value is List) {
+          subtopics[key.toString().toLowerCase()] =
+              value.map((e) => e.toString().toLowerCase()).toList();
+        }
+      });
+    }
+
     return AppSettings(
       frequencyMinutes: json['frequencyMinutes'] as int? ?? 60,
       activeLanguages: (json['activeLanguages'] as List<dynamic>?)
@@ -34,6 +49,7 @@ class AppSettings {
           const ['Python', 'Java'],
       difficulty: json['difficulty'] as String? ?? 'medium',
       fullScreenLock: json['fullScreenLock'] as bool? ?? true,
+      activeSubtopics: subtopics,
     );
   }
 
@@ -43,6 +59,7 @@ class AppSettings {
       'activeLanguages': activeLanguages,
       'difficulty': difficulty,
       'fullScreenLock': fullScreenLock,
+      'activeSubtopics': activeSubtopics,
     };
   }
 
@@ -61,7 +78,8 @@ class AppSettings {
       frequencyMinutes.hashCode ^
       activeLanguages.fold(0, (prev, element) => prev ^ element.hashCode) ^
       difficulty.hashCode ^
-      fullScreenLock.hashCode;
+      fullScreenLock.hashCode ^
+      activeSubtopics.hashCode;
 
   static bool _listEquals<T>(List<T>? a, List<T>? b) {
     if (a == null) return b == null;
@@ -74,6 +92,6 @@ class AppSettings {
 
   @override
   String toString() {
-    return 'AppSettings(frequencyMinutes: $frequencyMinutes, activeLanguages: $activeLanguages, difficulty: $difficulty, fullScreenLock: $fullScreenLock)';
+    return 'AppSettings(frequencyMinutes: $frequencyMinutes, activeLanguages: $activeLanguages, difficulty: $difficulty, fullScreenLock: $fullScreenLock, activeSubtopics: $activeSubtopics)';
   }
 }

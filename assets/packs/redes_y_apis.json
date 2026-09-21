@@ -9,7 +9,8 @@
       "Ninguno de los métodos HTTP puede garantizar idempotencia en la práctica."
     ],
     "correct_index": 1,
-    "hint": "POST no es idempotente (crear 10 veces creará 10 recursos). PUT sí es idempotente (reemplaza el estado completo exactamente con el mismo resultado)."
+    "hint": "POST no es idempotente (crear 10 veces creará 10 recursos). PUT sí es idempotente (reemplaza el estado completo exactamente con el mismo resultado).",
+    "subtopic": "fundamentos"
   },
   {
     "id": "net_002",
@@ -21,7 +22,8 @@
       "HTTP/2 requiere obligatoriamente una tarjeta de red con hardware criptográfico propietario."
     ],
     "correct_index": 1,
-    "hint": "En HTTP/1.1 cada recurso requería una conexión separada o hacía cola. HTTP/2 divide streams binarios entrelazados en una sola conexión."
+    "hint": "En HTTP/1.1 cada recurso requería una conexión separada o hacía cola. HTTP/2 divide streams binarios entrelazados en una sola conexión.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "net_003",
@@ -33,7 +35,8 @@
       "Únicamente para descargar archivos de video MP4 pesados."
     ],
     "correct_index": 1,
-    "hint": "gRPC corre sobre HTTP/2, utiliza serialización binaria ultraligera (Protocol Buffers) y genera stubs fuertemente tipados automáticamente."
+    "hint": "gRPC corre sobre HTTP/2, utiliza serialización binaria ultraligera (Protocol Buffers) y genera stubs fuertemente tipados automáticamente.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "net_004",
@@ -45,7 +48,8 @@
       "Son protocolos idénticos desarrollados por consorcios distintos."
     ],
     "correct_index": 0,
-    "hint": "Si solo necesitas streaming de eventos del servidor (ej: cotizaciones de bolsa o feeds de noticias), SSE es mucho más simple y se reconecta automáticamente."
+    "hint": "Si solo necesitas streaming de eventos del servidor (ej: cotizaciones de bolsa o feeds de noticias), SSE es mucho más simple y se reconecta automáticamente.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "net_005",
@@ -57,7 +61,8 @@
       "Ambos protocolos verifican el acuse de recibo (ACK) en cada paquete enviado."
     ],
     "correct_index": 0,
-    "hint": "TCP para páginas web, correos y transferencias donde ningún bit puede perderse. UDP para streaming en tiempo real, videollamadas y videojuegos online."
+    "hint": "TCP para páginas web, correos y transferencias donde ningún bit puede perderse. UDP para streaming en tiempo real, videollamadas y videojuegos online.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "net_006",
@@ -69,6 +74,7 @@
       "201 Created, 403 Forbidden y 401 Unauthorized."
     ],
     "correct_index": 1,
-    "hint": "401 = 'No sé quién eres' (falta autenticación). 403 = 'Sé quién eres, pero no tienes permiso de entrar'."
+    "hint": "401 = 'No sé quién eres' (falta autenticación). 403 = 'Sé quién eres, pero no tienes permiso de entrar'.",
+    "subtopic": "fundamentos"
   }
 ]

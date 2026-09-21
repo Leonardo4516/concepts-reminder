@@ -9,7 +9,8 @@
       "Es un algoritmo que bloquea llamadas a APIs para evitar consumo de tokens."
     ],
     "correct_index": 1,
-    "hint": "En lugar de confiar únicamente en la memoria estática del modelo (pesos paramétricos), RAG le proporciona 'documentos de referencia' en tiempo real."
+    "hint": "En lugar de confiar únicamente en la memoria estática del modelo (pesos paramétricos), RAG le proporciona 'documentos de referencia' en tiempo real.",
+    "subtopic": "rag_embeddings"
   },
   {
     "id": "llm_002",
@@ -21,7 +22,8 @@
       "Convierte imágenes PNG a archivos de audio WAV en tiempo de inferencia."
     ],
     "correct_index": 0,
-    "hint": "Permite resolver ambigüedades como en 'El banco estaba cerrado porque no tenía dinero' identificando que 'banco' se refiere a la entidad financiera y no a un asiento."
+    "hint": "Permite resolver ambigüedades como en 'El banco estaba cerrado porque no tenía dinero' identificando que 'banco' se refiere a la entidad financiera y no a un asiento.",
+    "subtopic": "llms_transformers"
   },
   {
     "id": "llm_003",
@@ -33,7 +35,8 @@
       "Establece la cantidad máxima de tokens permitidos en la respuesta."
     ],
     "correct_index": 1,
-    "hint": "T cercana a 0 aplana las opciones hacia la palabra más probable (ideal para código o matemáticas); T alta distribuye la probabilidad favoreciendo alternativas menos comunes."
+    "hint": "T cercana a 0 aplana las opciones hacia la palabra más probable (ideal para código o matemáticas); T alta distribuye la probabilidad favoreciendo alternativas menos comunes.",
+    "subtopic": "llms_transformers"
   },
   {
     "id": "llm_004",
@@ -45,7 +48,8 @@
       "Un identificador numérico único secuencial autoincremental de una tabla SQL."
     ],
     "correct_index": 1,
-    "hint": "Convierte conceptos como 'rey' y 'reina' en arreglos de números de cientos de dimensiones que quedan situados muy cerca en el espacio vectorial."
+    "hint": "Convierte conceptos como 'rey' y 'reina' en arreglos de números de cientos de dimensiones que quedan situados muy cerca en el espacio vectorial.",
+    "subtopic": "rag_embeddings"
   },
   {
     "id": "llm_005",
@@ -57,7 +61,8 @@
       "Fine-Tuning solo se puede realizar en lenguajes de programación compilados como C++."
     ],
     "correct_index": 1,
-    "hint": "Prompt Engineering es instantáneo y sin coste de reentrenamiento. Fine-Tuning altera la memoria profunda del modelo mediante entrenamiento supervisado."
+    "hint": "Prompt Engineering es instantáneo y sin coste de reentrenamiento. Fine-Tuning altera la memoria profunda del modelo mediante entrenamiento supervisado.",
+    "subtopic": "prompting_finetuning"
   },
   {
     "id": "llm_006",
@@ -69,6 +74,7 @@
       "Sustituye por completo la necesidad de escribir software tradicional."
     ],
     "correct_index": 1,
-    "hint": "El modelo no corre la herramienta por sí mismo: decide llamar a la herramienta y emite un JSON estructurado con los parámetros que tu código debe procesar."
+    "hint": "El modelo no corre la herramienta por sí mismo: decide llamar a la herramienta y emite un JSON estructurado con los parámetros que tu código debe procesar.",
+    "subtopic": "llms_transformers"
   }
 ]

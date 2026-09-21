@@ -10,7 +10,8 @@
       "Requiere un broker intermedio en segundo plano para arbitrar transacciones concurrentes entre múltiples procesos activos."
     ],
     "correct_index": 0,
-    "hint": "SQLite es serverless e in-process: no hay demonio ni socket TCP. Todo el motor corre como código de la aplicación y la BD es un único fichero ordinario en disco."
+    "hint": "SQLite es serverless e in-process: no hay demonio ni socket TCP. Todo el motor corre como código de la aplicación y la BD es un único fichero ordinario en disco.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_002",
@@ -23,7 +24,8 @@
       "Asigna identificadores hash a cada tipo de dato delegando la validación a la máquina virtual Java en tiempo de ejecución."
     ],
     "correct_index": 1,
-    "hint": "Salvo en tablas STRICT, SQLite es dinámicamente tipado: el tipo acompaña al dato concreto, mientras la columna solo sugiere una afinidad."
+    "hint": "Salvo en tablas STRICT, SQLite es dinámicamente tipado: el tipo acompaña al dato concreto, mientras la columna solo sugiere una afinidad.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_003",
@@ -36,7 +38,8 @@
       "La comparación con el operador '=' convierte el NULL a cero; mientras que 'IS' lo transforma en una cadena vacía."
     ],
     "correct_index": 2,
-    "hint": "En lógica trivaluada de SQL, NULL = NULL es desconocido (NULL), por lo que en WHERE no filtra; NULL IS NULL es una comparación de identidad que evalúa a TRUE."
+    "hint": "En lógica trivaluada de SQL, NULL = NULL es desconocido (NULL), por lo que en WHERE no filtra; NULL IS NULL es una comparación de identidad que evalúa a TRUE.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_004",
@@ -49,7 +52,8 @@
       "Por razones históricas de retrocompatibilidad; deben activarse explícitamente ejecutando PRAGMA foreign_keys = ON."
     ],
     "correct_index": 3,
-    "hint": "Por compatibilidad con versiones antiguas donde no existían, foreign_keys viene desactivado por defecto en cada conexión nueva."
+    "hint": "Por compatibilidad con versiones antiguas donde no existían, foreign_keys viene desactivado por defecto en cada conexión nueva.",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_005",
@@ -62,7 +66,8 @@
       "Elimina la necesidad de utilizar transacciones ACID al sustituirlas por operaciones en memoria no bloqueantes."
     ],
     "correct_index": 0,
-    "hint": "WAL desacopla lecturas y escrituras: los lectores leen del archivo principal y del WAL, mientras el escritor agrega marcos al WAL sin contención."
+    "hint": "WAL desacopla lecturas y escrituras: los lectores leen del archivo principal y del WAL, mientras el escritor agrega marcos al WAL sin contención.",
+    "subtopic": "modo_wal"
   },
   {
     "id": "sqlite_006",
@@ -75,7 +80,8 @@
       "Los ficheros comprimidos archivo.db-bak (copia de seguridad) y archivo.db-log (registro de errores del motor)."
     ],
     "correct_index": 1,
-    "hint": "El .db-wal guarda las páginas de transacciones pendientes y el .db-shm es una memoria compartida mmap para indexar rápidamente qué páginas residen en el WAL."
+    "hint": "El .db-wal guarda las páginas de transacciones pendientes y el .db-shm es una memoria compartida mmap para indexar rápidamente qué páginas residen en el WAL.",
+    "subtopic": "modo_wal"
   },
   {
     "id": "sqlite_007",
@@ -88,7 +94,8 @@
       "La recolección de basura en memoria RAM que purga las variables de sesión no utilizadas por la aplicación cliente."
     ],
     "correct_index": 2,
-    "hint": "El checkpoint transfiere las páginas confirmadas del WAL al fichero principal .db y resetea los punteros del WAL para evitar crecimiento desmedido."
+    "hint": "El checkpoint transfiere las páginas confirmadas del WAL al fichero principal .db y resetea los punteros del WAL para evitar crecimiento desmedido.",
+    "subtopic": "modo_wal"
   },
   {
     "id": "sqlite_008",
@@ -101,7 +108,8 @@
       "Ejecuta un conjunto de instrucciones de bytecode en registros generado por el compilador SQL sobre páginas de B-Tree."
     ],
     "correct_index": 3,
-    "hint": "La VDBE es el corazón de SQLite: las consultas SQL se compilan a bytecode que la VDBE ejecuta llamando a las capas de B-Tree y Pager."
+    "hint": "La VDBE es el corazón de SQLite: las consultas SQL se compilan a bytecode que la VDBE ejecuta llamando a las capas de B-Tree y Pager.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_009",
@@ -114,7 +122,8 @@
       "Asignar permisos y privilegios de usuario controlando el acceso a esquemas mediante roles administrativos."
     ],
     "correct_index": 0,
-    "hint": "El Pager abstrae el archivo como un conjunto de páginas uniformes (de 512B a 64KB), administrando bloqueos de archivo, cachés y recuperación."
+    "hint": "El Pager abstrae el archivo como un conjunto de páginas uniformes (de 512B a 64KB), administrando bloqueos de archivo, cachés y recuperación.",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_010",
@@ -127,7 +136,8 @@
       "Un emulador de comandos de consola que permite ejecutar scripts bash directamente desde la sintaxis de SQL estándar."
     ],
     "correct_index": 1,
-    "hint": "sqlite3_vfs desacopla SQLite de llamadas POSIX/Win32 directas, permitiendo crear VFS en RAM, cifradas (SQLCipher) o sobre APIs remotas."
+    "hint": "sqlite3_vfs desacopla SQLite de llamadas POSIX/Win32 directas, permitiendo crear VFS en RAM, cifradas (SQLCipher) o sobre APIs remotas.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_011",
@@ -140,7 +150,8 @@
       "Una tabla que almacena datos exclusivamente en formato columnar para acelerar consultas analíticas complejas."
     ],
     "correct_index": 2,
-    "hint": "Para claves primarias textuales o compuestas, WITHOUT ROWID ahorra un árbol B entero y evita el doble lookup por rowid."
+    "hint": "Para claves primarias textuales o compuestas, WITHOUT ROWID ahorra un árbol B entero y evita el doble lookup por rowid.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_012",
@@ -153,7 +164,8 @@
       "Impone verificación rígida de tipos en inserción y actualización, rechazando valores discordantes con la columna."
     ],
     "correct_index": 3,
-    "hint": "En tablas STRICT, SQLite se comporta como una base de datos relacional tradicional rechazando inserciones que violen el tipo declarado."
+    "hint": "En tablas STRICT, SQLite se comporta como una base de datos relacional tradicional rechazando inserciones que violen el tipo declarado.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_013",
@@ -166,7 +178,8 @@
       ".views"
     ],
     "correct_index": 0,
-    "hint": "'.tables' es la directiva interna del CLI para listar tablas y vistas."
+    "hint": "'.tables' es la directiva interna del CLI para listar tablas y vistas.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_014",
@@ -179,7 +192,8 @@
       "DESCRIBE TABLE nombre_tabla;"
     ],
     "correct_index": 1,
-    "hint": "'.schema nombre_tabla' consulta la tabla interna sqlite_schema e imprime la definición DDL exacta."
+    "hint": "'.schema nombre_tabla' consulta la tabla interna sqlite_schema e imprime la definición DDL exacta.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_015",
@@ -192,7 +206,8 @@
       "Asignando la ruta del archivo a la partición /dev/null."
     ],
     "correct_index": 2,
-    "hint": "':memory:' instruye a SQLite para que cree una base de datos temporal que reside enteramente en memoria RAM y se destruye al cerrar la conexión."
+    "hint": "':memory:' instruye a SQLite para que cree una base de datos temporal que reside enteramente en memoria RAM y se destruye al cerrar la conexión.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_016",
@@ -205,7 +220,8 @@
       "NULL, INTEGER, REAL, TEXT y BLOB."
     ],
     "correct_index": 3,
-    "hint": "SQLite clasifica todos los valores internamente en una de estas 5 clases de almacenamiento dinámico."
+    "hint": "SQLite clasifica todos los valores internamente en una de estas 5 clases de almacenamiento dinámico.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_017",
@@ -218,7 +234,8 @@
       "hashid (o sus alias _key_ o hid)"
     ],
     "correct_index": 0,
-    "hint": "Toda tabla estándar en SQLite tiene una columna entera implícita de 64 bits accesible como 'rowid'."
+    "hint": "Toda tabla estándar en SQLite tiene una columna entera implícita de 64 bits accesible como 'rowid'.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_018",
@@ -231,7 +248,8 @@
       "Limita los valores numéricos a un rango máximo de 32 bits con signo."
     ],
     "correct_index": 1,
-    "hint": "INTEGER PRIMARY KEY es un alias del rowid, permitiendo búsquedas directas en el árbol B principal en O(1) páginas."
+    "hint": "INTEGER PRIMARY KEY es un alias del rowid, permitiendo búsquedas directas en el árbol B principal en O(1) páginas.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_019",
@@ -244,7 +262,8 @@
       "AUTOINCREMENT desactiva automáticamente las restricciones de clave foránea en tablas relacionadas."
     ],
     "correct_index": 2,
-    "hint": "Sin AUTOINCREMENT, SQLite puede reciclar IDs liberados por eliminaciones; con AUTOINCREMENT garantiza IDs estrictamente monotónicos crecientes."
+    "hint": "Sin AUTOINCREMENT, SQLite puede reciclar IDs liberados por eliminaciones; con AUTOINCREMENT garantiza IDs estrictamente monotónicos crecientes.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_020",
@@ -257,7 +276,8 @@
       "changes()"
     ],
     "correct_index": 3,
-    "hint": "changes() devuelve el conteo de tuplas afectadas por la última instrucción DML de la conexión actual."
+    "hint": "changes() devuelve el conteo de tuplas afectadas por la última instrucción DML de la conexión actual.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_021",
@@ -270,7 +290,8 @@
       "sqlite_last_id()"
     ],
     "correct_index": 0,
-    "hint": "last_insert_rowid() devuelve el entero de 64 bits generado en el último INSERT exitoso de la sesión."
+    "hint": "last_insert_rowid() devuelve el entero de 64 bits generado en el último INSERT exitoso de la sesión.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_022",
@@ -283,7 +304,8 @@
       "LIKE requiere un índice B-Tree creado previamente; GLOB realiza siempre escaneos secuenciales de tabla completa."
     ],
     "correct_index": 1,
-    "hint": "LIKE es case-insensitive para caracteres ASCII (% y _); GLOB es case-sensitive y usa sintaxis estilo shell (* y ?)."
+    "hint": "LIKE es case-insensitive para caracteres ASCII (% y _); GLOB es case-sensitive y usa sintaxis estilo shell (* y ?).",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_023",
@@ -296,7 +318,8 @@
       ".term (o .halt)"
     ],
     "correct_index": 2,
-    "hint": "Los dot commands del CLI de SQLite empiezan con punto y no llevan punto y coma al final."
+    "hint": "Los dot commands del CLI de SQLite empiezan con punto y no llevan punto y coma al final.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_024",
@@ -309,7 +332,8 @@
       ".dump [tabla]"
     ],
     "correct_index": 3,
-    "hint": "'.dump' emite sentencias DDL y DML estándar para recrear el estado completo de la base de datos."
+    "hint": "'.dump' emite sentencias DDL y DML estándar para recrear el estado completo de la base de datos.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_025",
@@ -322,7 +346,8 @@
       "Cifra los campos de texto sensible aplicando claves simétricas gestionadas en el llavero del sistema."
     ],
     "correct_index": 0,
-    "hint": "FTS5 permite motores de búsqueda de texto ultrarrápidos integrados con operadores MATCH, snippets y ordenación por relevancia."
+    "hint": "FTS5 permite motores de búsqueda de texto ultrarrápidos integrados con operadores MATCH, snippets y ordenación por relevancia.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_026",
@@ -335,7 +360,8 @@
       "Una extensión que requiere instalar librerías externas de NodeJS en el sistema operativo anfitrión."
     ],
     "correct_index": 1,
-    "hint": "SQLite incluye funciones completas JSON nativas con sintaxis moderna -> (extrae JSON) y ->> (extrae valor escalar)."
+    "hint": "SQLite incluye funciones completas JSON nativas con sintaxis moderna -> (extrae JSON) y ->> (extrae valor escalar).",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_027",
@@ -348,7 +374,8 @@
       "MERGE ON CONFLICT RESCUE"
     ],
     "correct_index": 2,
-    "hint": "SQLite soporta la sintaxis estándar: INSERT INTO ... ON CONFLICT(col) DO UPDATE SET ... o DO NOTHING."
+    "hint": "SQLite soporta la sintaxis estándar: INSERT INTO ... ON CONFLICT(col) DO UPDATE SET ... o DO NOTHING.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_028",
@@ -361,7 +388,8 @@
       "DEFERRED adquiere bloqueos en el primer acceso; IMMEDIATE bloquea escrituras al inicio; EXCLUSIVE impide lecturas."
     ],
     "correct_index": 3,
-    "hint": "BEGIN IMMEDIATE previene bloqueos SQLITE_BUSY adquiriendo de inmediato el bloqueo de escritura antes de iniciar."
+    "hint": "BEGIN IMMEDIATE previene bloqueos SQLITE_BUSY adquiriendo de inmediato el bloqueo de escritura antes de iniciar.",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_029",
@@ -374,7 +402,8 @@
       "SQLITE_READONLY (código 8)"
     ],
     "correct_index": 0,
-    "hint": "SQLITE_BUSY ocurre por contención entre conexiones; se mitiga configurando PRAGMA busy_timeout."
+    "hint": "SQLITE_BUSY ocurre por contención entre conexiones; se mitiga configurando PRAGMA busy_timeout.",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_030",
@@ -387,7 +416,8 @@
       "Establece el intervalo de sincronización periódica del archivo WAL con el archivo principal en disco."
     ],
     "correct_index": 1,
-    "hint": "busy_timeout añade un manejador interno que espera con backoff progresivo reduciendo drásticamente errores por concurrencia."
+    "hint": "busy_timeout añade un manejador interno que espera con backoff progresivo reduciendo drásticamente errores por concurrencia.",
+    "subtopic": "modo_wal"
   },
   {
     "id": "sqlite_031",
@@ -400,7 +430,8 @@
       "PRAGMA validate_all;"
     ],
     "correct_index": 2,
-    "hint": "PRAGMA integrity_check recorre todos los árboles B validando punteros, orden de registros y coherencia física de páginas."
+    "hint": "PRAGMA integrity_check recorre todos los árboles B validando punteros, orden de registros y coherencia física de páginas.",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_032",
@@ -413,7 +444,8 @@
       "VACUUM;"
     ],
     "correct_index": 3,
-    "hint": "VACUUM reconstruye el archivo de base de datos desde cero compactando páginas y reduciendo el tamaño físico en disco."
+    "hint": "VACUUM reconstruye el archivo de base de datos desde cero compactando páginas y reduciendo el tamaño físico en disco.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_033",
@@ -426,7 +458,8 @@
       "Desfragmenta la memoria RAM asignada a la caché de páginas del kernel de Linux durante picos de lectura."
     ],
     "correct_index": 0,
-    "hint": "auto_vacuum organiza las páginas libres para permitir truncar el archivo en disco periódicamente sin reconstruir toda la BD."
+    "hint": "auto_vacuum organiza las páginas libres para permitir truncar el archivo en disco periódicamente sin reconstruir toda la BD.",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_034",
@@ -439,7 +472,8 @@
       ".mode format (o .mode raw)"
     ],
     "correct_index": 1,
-    "hint": "'.mode table' o '.mode box' formatea el output como una tabla limpia con bordes y cabeceras de columnas."
+    "hint": "'.mode table' o '.mode box' formatea el output como una tabla limpia con bordes y cabeceras de columnas.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_035",
@@ -452,7 +486,8 @@
       ".read csv seguido de .source archivo.csv tabla"
     ],
     "correct_index": 2,
-    "hint": "Configurar '.mode csv' y luego invocar '.import archivo.csv tabla' parsea e inserta todas las filas automáticamente."
+    "hint": "Configurar '.mode csv' y luego invocar '.import archivo.csv tabla' parsea e inserta todas las filas automáticamente.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_036",
@@ -465,7 +500,8 @@
       "EXPLAIN QUERY PLAN SELECT ...;"
     ],
     "correct_index": 3,
-    "hint": "EXPLAIN QUERY PLAN emite un reporte legible en texto indicando si se usó SEARCH TABLE USING INDEX o SCAN TABLE."
+    "hint": "EXPLAIN QUERY PLAN emite un reporte legible en texto indicando si se usó SEARCH TABLE USING INDEX o SCAN TABLE.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_037",
@@ -478,7 +514,8 @@
       "Son sinónimos idénticos y el nombre solo varía en función de la versión del compilador de C utilizado."
     ],
     "correct_index": 0,
-    "hint": "SEARCH indica que el optimizador encontró un índice utilizable; SCAN señala un table scan completo O(N)."
+    "hint": "SEARCH indica que el optimizador encontró un índice utilizable; SCAN señala un table scan completo O(N).",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_038",
@@ -491,7 +528,8 @@
       "Asigna permisos de sólo lectura a un archivo externo impidiendo cualquier modificación concurrente desde la app."
     ],
     "correct_index": 1,
-    "hint": "ATTACH DATABASE permite operar sobre múltiples bases de datos a la vez con transacciones atómicas de dos fases entre ellas."
+    "hint": "ATTACH DATABASE permite operar sobre múltiples bases de datos a la vez con transacciones atómicas de dos fases entre ellas.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_039",
@@ -504,7 +542,8 @@
       "sqlite_registry (o sqlite_base)"
     ],
     "correct_index": 2,
-    "hint": "sqlite_schema almacena filas con el tipo de objeto, nombre, tabla asociada y sentencia SQL DDL de creación."
+    "hint": "sqlite_schema almacena filas con el tipo de objeto, nombre, tabla asociada y sentencia SQL DDL de creación.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_040",
@@ -517,7 +556,8 @@
       "PRAGMA synchronous = NORMAL;"
     ],
     "correct_index": 3,
-    "hint": "En modo WAL, PRAGMA synchronous = NORMAL es completamente seguro contra corrupción y ofrece altísimo rendimiento."
+    "hint": "En modo WAL, PRAGMA synchronous = NORMAL es completamente seguro contra corrupción y ofrece altísimo rendimiento.",
+    "subtopic": "modo_wal"
   },
   {
     "id": "sqlite_041",
@@ -530,7 +570,8 @@
       "DISASSEMBLE VDBE sentencia_sql;"
     ],
     "correct_index": 0,
-    "hint": "'EXPLAIN' (a diferencia de EXPLAIN QUERY PLAN) muestra la tabla detallada de opcodes VDBE (OpenRead, SeekRowid, Column, ResultRow)."
+    "hint": "'EXPLAIN' (a diferencia de EXPLAIN QUERY PLAN) muestra la tabla detallada de opcodes VDBE (OpenRead, SeekRowid, Column, ResultRow).",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_042",
@@ -543,7 +584,8 @@
       "El archivo .db solo puede abrirse si todos los procesos anfitriones pertenecen exactamente al mismo usuario de Linux."
     ],
     "correct_index": 1,
-    "hint": "WAL desacopla lecturas de escrituras, pero las transacciones de escritura se serializan: solo puede haber un escritor a la vez."
+    "hint": "WAL desacopla lecturas de escrituras, pero las transacciones de escritura se serializan: solo puede haber un escritor a la vez.",
+    "subtopic": "modo_wal"
   },
   {
     "id": "sqlite_043",
@@ -556,7 +598,8 @@
       "IDLE -> ACQUIRED -> MUTEX -> FSYNC -> RELEASED"
     ],
     "correct_index": 2,
-    "hint": "Una transacción avanza por estos estados; PENDING impide nuevos lectores para que el escritor alcance EXCLUSIVE sin starvation."
+    "hint": "Una transacción avanza por estos estados; PENDING impide nuevos lectores para que el escritor alcance EXCLUSIVE sin starvation.",
+    "subtopic": "modo_wal"
   },
   {
     "id": "sqlite_044",
@@ -569,7 +612,8 @@
       "Los bugs en bloqueos de archivo remotos (fcntl/flock) pueden permitir que varios procesos asuman locks exclusivos concurrentes."
     ],
     "correct_index": 3,
-    "hint": "Las fallas en la semántica de bloqueo distribuido de NFS pueden permitir que dos clientes escriban a la vez corrompiendo la BD."
+    "hint": "Las fallas en la semántica de bloqueo distribuido de NFS pueden permitir que dos clientes escriban a la vez corrompiendo la BD.",
+    "subtopic": "modo_wal"
   },
   {
     "id": "sqlite_045",
@@ -582,7 +626,8 @@
       "64 bytes por defecto optimizados para minimizar el consumo de memoria en microcontroladores IoT."
     ],
     "correct_index": 0,
-    "hint": "Desde SQLite 3.12, 4096 bytes es el predeterminado, coincidiendo con el tamaño de bloque de los sistemas de archivos modernos."
+    "hint": "Desde SQLite 3.12, 4096 bytes es el predeterminado, coincidiendo con el tamaño de bloque de los sistemas de archivos modernos.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_046",
@@ -595,7 +640,8 @@
       "PRAGMA ram_cache = N; (reserva memoria física no paginable en el espacio del kernel)."
     ],
     "correct_index": 1,
-    "hint": "PRAGMA cache_size = -64000 asigna 64MB a la caché de páginas en memoria para retener datos e índices calientes."
+    "hint": "PRAGMA cache_size = -64000 asigna 64MB a la caché de páginas en memoria para retener datos e índices calientes.",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_047",
@@ -608,7 +654,8 @@
       "Limita la cantidad de hilos simultáneos del sistema operativo que pueden invocar funciones de la librería SQLite."
     ],
     "correct_index": 2,
-    "hint": "mmap permite que las lecturas accedan directamente a la caché del kernel sin llamadas al sistema read(), acelerando lecturas masivas."
+    "hint": "mmap permite que las lecturas accedan directamente a la caché del kernel sin llamadas al sistema read(), acelerando lecturas masivas.",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_048",
@@ -621,7 +668,8 @@
       "Registrando callbacks nativos en el lenguaje anfitrión (C, Rust, Python) mediante la API sqlite3_create_function()."
     ],
     "correct_index": 3,
-    "hint": "Al ser una librería embebida, la aplicación registra funciones directamente en memoria con sqlite3_create_function_v2()."
+    "hint": "Al ser una librería embebida, la aplicación registra funciones directamente en memoria con sqlite3_create_function_v2().",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_049",
@@ -634,7 +682,8 @@
       "Instrucciones DDL que congelan el esquema de la base de datos impidiendo que se agreguen nuevas columnas a las tablas."
     ],
     "correct_index": 0,
-    "hint": "Los SAVEPOINTs ofrecen transacciones anidadas con soporte para revertir a puntos intermedios (ROLLBACK TO) de forma limpia."
+    "hint": "Los SAVEPOINTs ofrecen transacciones anidadas con soporte para revertir a puntos intermedios (ROLLBACK TO) de forma limpia.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_050",
@@ -647,7 +696,8 @@
       "Genera un reporte en formato PDF con la estructura del esquema y los índices para auditoría de cumplimiento legal."
     ],
     "correct_index": 1,
-    "hint": "La Backup API copia páginas incrementalmente permitiendo que otros hilos sigan leyendo o escribiendo sin interrupciones."
+    "hint": "La Backup API copia páginas incrementalmente permitiendo que otros hilos sigan leyendo o escribiendo sin interrupciones.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_051",
@@ -660,7 +710,8 @@
       "BEGIN CONCURRENT"
     ],
     "correct_index": 2,
-    "hint": "BEGIN IMMEDIATE adquiere el lock de escritura inmediatamente, evitando que dos conexiones arranquen en DEFERRED y colisionen al intentar escribir a la vez."
+    "hint": "BEGIN IMMEDIATE adquiere el lock de escritura inmediatamente, evitando que dos conexiones arranquen en DEFERRED y colisionen al intentar escribir a la vez.",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_052",
@@ -673,7 +724,8 @@
       "PRAGMA wal_checkpoint(TRUNCATE);"
     ],
     "correct_index": 3,
-    "hint": "PRAGMA wal_checkpoint permite sincronizar y opcionalmente truncar el archivo WAL para reducir su tamaño físico."
+    "hint": "PRAGMA wal_checkpoint permite sincronizar y opcionalmente truncar el archivo WAL para reducir su tamaño físico.",
+    "subtopic": "modo_wal"
   },
   {
     "id": "sqlite_053",
@@ -686,7 +738,8 @@
       "Se requiere ejecutar un comando manual de reparación en la consola de comandos de Linux antes de abrir."
     ],
     "correct_index": 0,
-    "hint": "El WAL es a prueba de fallos: contiene checksums por marco y recupera el estado consistente en la siguiente apertura."
+    "hint": "El WAL es a prueba de fallos: contiene checksums por marco y recupera el estado consistente en la siguiente apertura.",
+    "subtopic": "modo_wal"
   },
   {
     "id": "sqlite_054",
@@ -699,7 +752,8 @@
       "Un registro de auditoría que guarda las sentencias ejecutadas por cada usuario en un archivo de texto plano rotativo."
     ],
     "correct_index": 1,
-    "hint": "La Session Extension permite generar deltas binarios de modificaciones para sincronización offline-first o replicación."
+    "hint": "La Session Extension permite generar deltas binarios de modificaciones para sincronización offline-first o replicación.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_055",
@@ -712,7 +766,8 @@
       "Controladores de almacenamiento flash que optimizan la vida útil de los bloques de memoria en tarjetas SD embebidas."
     ],
     "correct_index": 2,
-    "hint": "LiteFS (Fuse) y rqlite (Raft) permiten ejecutar SQLite como una base de datos distribuida con réplicas de lectura y failover."
+    "hint": "LiteFS (Fuse) y rqlite (Raft) permiten ejecutar SQLite como una base de datos distribuida con réplicas de lectura y failover.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_056",
@@ -725,7 +780,8 @@
       "Un índice con cláusula WHERE que indexa solo un subconjunto de filas, ahorrando espacio en disco y tiempo de escritura."
     ],
     "correct_index": 3,
-    "hint": "Un índice parcial (CREATE INDEX idx ON t(a) WHERE activo = 1) solo incluye tuplas relevantes, reduciendo I/O y memoria."
+    "hint": "Un índice parcial (CREATE INDEX idx ON t(a) WHERE activo = 1) solo incluye tuplas relevantes, reduciendo I/O y memoria.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_057",
@@ -738,7 +794,8 @@
       "Un índice que se compila a código de bytes de la VDBE para optimizar la ejecución de filtros con operadores LIKE."
     ],
     "correct_index": 0,
-    "hint": "Permite que consultas que filtran por expresiones calculadas aprovechen el árbol B sin recalcular la función fila a fila."
+    "hint": "Permite que consultas que filtran por expresiones calculadas aprovechen el árbol B sin recalcular la función fila a fila.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_058",
@@ -751,7 +808,8 @@
       "Genera gráficos de dispersión de uso de CPU y memoria RAM que se exportan en formato SVG al directorio del proyecto."
     ],
     "correct_index": 1,
-    "hint": "ANALYZE recoge estadísticas de distribución que el optimizador de consultas basado en costos usa para estimar selectividades."
+    "hint": "ANALYZE recoge estadísticas de distribución que el optimizador de consultas basado en costos usa para estimar selectividades.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_059",
@@ -764,7 +822,8 @@
       "Un algoritmo que ajusta automáticamente el tamaño de sector de los discos SSD para evitar escrituras desalineadas."
     ],
     "correct_index": 2,
-    "hint": "La documentación oficial recomienda ejecutar 'PRAGMA optimize;' al cerrar la aplicación para mantener estadísticas frescas con costo mínimo."
+    "hint": "La documentación oficial recomienda ejecutar 'PRAGMA optimize;' al cerrar la aplicación para mantener estadísticas frescas con costo mínimo.",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_060",
@@ -777,7 +836,8 @@
       "Almacena un prefijo y un puntero de cuatro bytes a una lista enlazada de páginas de desbordamiento (overflow pages)."
     ],
     "correct_index": 3,
-    "hint": "Si una fila excede el umbral de página, el excedente se vuelca en una cadena de overflow pages fuera del árbol B principal."
+    "hint": "Si una fila excede el umbral de página, el excedente se vuelca en una cadena de overflow pages fuera del árbol B principal.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_061",
@@ -790,7 +850,8 @@
       "Árboles Rojo-Negro en memoria RAM para tablas y ficheros planos contiguos no balanceados para los índices."
     ],
     "correct_index": 0,
-    "hint": "Las tablas con rowid son B+ Trees (las ramas solo tienen claves de navegación y las hojas guardan datos); los índices son B-Trees."
+    "hint": "Las tablas con rowid son B+ Trees (las ramas solo tienen claves de navegación y las hojas guardan datos); los índices son B-Trees.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_062",
@@ -803,7 +864,8 @@
       "Blocking-thread y Nonblocking-thread, dependiendo de si las consultas invocan llamadas a funciones del sistema POSIX."
     ],
     "correct_index": 1,
-    "hint": "Serialized es el predeterminado: seguro para compartir conexiones entre hilos gracias a mutex internos en cada llamada."
+    "hint": "Serialized es el predeterminado: seguro para compartir conexiones entre hilos gracias a mutex internos en cada llamada.",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_063",
@@ -816,7 +878,8 @@
       "Una estructura de datos para indexar jerarquías de directorios del sistema de archivos en aplicaciones de escritorio."
     ],
     "correct_index": 2,
-    "hint": "R*Tree es ideal para consultas geoespaciales y gráficos por computadora que requieren filtrar rectángulos o bounding boxes."
+    "hint": "R*Tree es ideal para consultas geoespaciales y gráficos por computadora que requieren filtrar rectángulos o bounding boxes.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_064",
@@ -829,7 +892,8 @@
       "PRAGMA temp_store = MEMORY; (o valor numérico 2)"
     ],
     "correct_index": 3,
-    "hint": "temp_store = MEMORY evita que tablas temporales y ordenaciones intermedias toquen el disco, acelerando consultas complejas."
+    "hint": "temp_store = MEMORY evita que tablas temporales y ordenaciones intermedias toquen el disco, acelerando consultas complejas.",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_065",
@@ -842,7 +906,8 @@
       "Una utilidad para ofuscar nombres de tablas y columnas impidiendo la lectura del esquema mediante ingeniería inversa."
     ],
     "correct_index": 0,
-    "hint": "SQLCipher cifra cada página física mediante una VFS personalizada, descifrándola en memoria al vuelo con claves PBKDF2/AES."
+    "hint": "SQLCipher cifra cada página física mediante una VFS personalizada, descifrándola en memoria al vuelo con claves PBKDF2/AES.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_066",
@@ -855,7 +920,8 @@
       "Un terabyte fijo impuesto por la capacidad máxima del búfer de memoria virtual del kernel."
     ],
     "correct_index": 1,
-    "hint": "Con punteros de página de 64 bits y páginas de 64KB, SQLite soporta hasta ~281 TB por archivo de base de datos."
+    "hint": "Con punteros de página de 64 bits y páginas de 64KB, SQLite soporta hasta ~281 TB por archivo de base de datos.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_067",
@@ -868,7 +934,8 @@
       "Calcula la varianza y desviación estándar de columnas numéricas sin necesidad de invocar funciones de agregación."
     ],
     "correct_index": 2,
-    "hint": "STAT4 almacena datos de distribución fina en 'sqlite_stat4', ayudando al optimizador a decidir entre index scan y full scan en rangos."
+    "hint": "STAT4 almacena datos de distribución fina en 'sqlite_stat4', ayudando al optimizador a decidir entre index scan y full scan en rangos.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_068",
@@ -881,7 +948,8 @@
       "STORED se computa y guarda en disco al escribir; VIRTUAL se evalúa al vuelo en cada lectura sin ocupar espacio en disco."
     ],
     "correct_index": 3,
-    "hint": "Ambas admiten índices, siendo VIRTUAL muy eficiente para indexar extracciones JSON sin duplicar almacenamiento en disco."
+    "hint": "Ambas admiten índices, siendo VIRTUAL muy eficiente para indexar extracciones JSON sin duplicar almacenamiento en disco.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_069",
@@ -894,7 +962,8 @@
       ".plugin_add ./nombre_libreria"
     ],
     "correct_index": 0,
-    "hint": "'.load' (o la API sqlite3_load_extension) enlaza dinámicamente librerías compartidas con funciones o módulos virtuales."
+    "hint": "'.load' (o la API sqlite3_load_extension) enlaza dinámicamente librerías compartidas con funciones o módulos virtuales.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_070",
@@ -907,7 +976,8 @@
       "SQLite es inmune por arquitectura a la inyección SQL al no contar con un analizador de sintaxis interpretado."
     ],
     "correct_index": 1,
-    "hint": "El enlace de parámetros compila el bytecode previamente y transfiere los datos como valores escalares puros sin interpretar sintaxis."
+    "hint": "El enlace de parámetros compila el bytecode previamente y transfiere los datos como valores escalares puros sin interpretar sintaxis.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_071",
@@ -920,7 +990,8 @@
       "Activa de forma permanente la comprobación de claves foráneas en todas las futuras conexiones del sistema."
     ],
     "correct_index": 2,
-    "hint": "Permite auditar si hay datos huérfanos o inválidos antes de activar PRAGMA foreign_keys = ON en esquemas importados."
+    "hint": "Permite auditar si hay datos huérfanos o inválidos antes de activar PRAGMA foreign_keys = ON en esquemas importados.",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_072",
@@ -933,7 +1004,8 @@
       "El checkpoint espera a que los lectores antiguos que leen marcos del WAL terminen para poder truncar el archivo a cero bytes."
     ],
     "correct_index": 3,
-    "hint": "TRUNCATE espera a que no haya ningún lector utilizando marcos antiguos del WAL para resetear el tamaño del archivo a cero de forma segura."
+    "hint": "TRUNCATE espera a que no haya ningún lector utilizando marcos antiguos del WAL para resetear el tamaño del archivo a cero de forma segura.",
+    "subtopic": "modo_wal"
   },
   {
     "id": "sqlite_073",
@@ -946,7 +1018,8 @@
       "Guardar un índice de consultas que no consumen tiempo de procesador para eximirlas de auditorías de rendimiento."
     ],
     "correct_index": 0,
-    "hint": "Al borrar datos, SQLite no reduce el fichero en disco; agrega las páginas a la freelist para reciclarlas en nuevos INSERTs."
+    "hint": "Al borrar datos, SQLite no reduce el fichero en disco; agrega las páginas a la freelist para reciclarlas en nuevos INSERTs.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_074",
@@ -959,7 +1032,8 @@
       "Una estructura de datos que solo puede manipularse mediante llamadas a funciones escritas en código ensamblador."
     ],
     "correct_index": 1,
-    "hint": "Las tablas virtuales permiten consultar como tablas SQL cualquier fuente: archivos CSV, repositorios Git, métricas del SO o motores FTS5."
+    "hint": "Las tablas virtuales permiten consultar como tablas SQL cualquier fuente: archivos CSV, repositorios Git, métricas del SO o motores FTS5.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_075",
@@ -972,7 +1046,8 @@
       "Es el motor oficial de almacenamiento utilizado internamente por todos los servidores de búsqueda web de Google."
     ],
     "correct_index": 2,
-    "hint": "Con más de un billón (10^12) de bases de datos activas en smartphones, navegadores, televisores y vehículos, es el motor más ubicuo."
+    "hint": "Con más de un billón (10^12) de bases de datos activas en smartphones, navegadores, televisores y vehículos, es el motor más ubicuo.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_076",
@@ -985,7 +1060,8 @@
       "Convierte la cadena de texto de la consulta SQL en un árbol de análisis abstracto que el generador de código transforma en bytecode."
     ],
     "correct_index": 3,
-    "hint": "Usa el generador Lemon Parser para producir un AST rápido que el Code Generator compila a instrucciones VDBE."
+    "hint": "Usa el generador Lemon Parser para producir un AST rápido que el Code Generator compila a instrucciones VDBE.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_077",
@@ -998,7 +1074,8 @@
       ".write_disk ARCHIVO"
     ],
     "correct_index": 0,
-    "hint": "'.backup ARCHIVO' utiliza la backup API para volcar la base de datos de forma segura a un nuevo archivo."
+    "hint": "'.backup ARCHIVO' utiliza la backup API para volcar la base de datos de forma segura a un nuevo archivo.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_078",
@@ -1011,7 +1088,8 @@
       "% comentario"
     ],
     "correct_index": 1,
-    "hint": "En SQLite, el comentario de una sola línea comienza con '--' y el comentario multilínea con '/* ... */'."
+    "hint": "En SQLite, el comentario de una sola línea comienza con '--' y el comentario multilínea con '/* ... */'.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_079",
@@ -1024,7 +1102,8 @@
       "& (ampersand)"
     ],
     "correct_index": 2,
-    "hint": "El operador estándar de concatenación de cadenas en SQLite y SQL ANSI es '||' (ej. 'Hola' || ' ' || 'Mundo')."
+    "hint": "El operador estándar de concatenación de cadenas en SQLite y SQL ANSI es '||' (ej. 'Hola' || ' ' || 'Mundo').",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_080",
@@ -1037,7 +1116,8 @@
       "sqlite_version()"
     ],
     "correct_index": 3,
-    "hint": "'SELECT sqlite_version();' devuelve el número de versión (ej. '3.42.0')."
+    "hint": "'SELECT sqlite_version();' devuelve el número de versión (ej. '3.42.0').",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_081",
@@ -1050,7 +1130,8 @@
       "RANGE n START m"
     ],
     "correct_index": 0,
-    "hint": "LIMIT n OFFSET m (o LIMIT m, n) restringe el número de filas omitiendo las primeras m tuplas."
+    "hint": "LIMIT n OFFSET m (o LIMIT m, n) restringe el número de filas omitiendo las primeras m tuplas.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_082",
@@ -1063,7 +1144,8 @@
       "nvl_list(x, y, ...)"
     ],
     "correct_index": 1,
-    "hint": "coalesce(...) devuelve la primera expresión no NULL de la lista, estándar en SQL."
+    "hint": "coalesce(...) devuelve la primera expresión no NULL de la lista, estándar en SQL.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_083",
@@ -1076,7 +1158,8 @@
       "fallback(x, y)"
     ],
     "correct_index": 2,
-    "hint": "ifnull(x, y) devuelve x si x no es NULL; en caso contrario devuelve y."
+    "hint": "ifnull(x, y) devuelve x si x no es NULL; en caso contrario devuelve y.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_084",
@@ -1089,7 +1172,8 @@
       "Devuelve NULL si x es exactamente igual a y; en caso contrario devuelve x."
     ],
     "correct_index": 3,
-    "hint": "nullif(x, y) retorna NULL cuando ambos argumentos coinciden, útil para evitar divisiones por cero: x / nullif(y, 0)."
+    "hint": "nullif(x, y) retorna NULL cuando ambos argumentos coinciden, útil para evitar divisiones por cero: x / nullif(y, 0).",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_085",
@@ -1102,7 +1186,8 @@
       "oct(x)"
     ],
     "correct_index": 0,
-    "hint": "hex(x) devuelve una cadena en mayúsculas con la codificación hexadecimal de los bytes del argumento."
+    "hint": "hex(x) devuelve una cadena en mayúsculas con la codificación hexadecimal de los bytes del argumento.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_086",
@@ -1115,7 +1200,8 @@
       "SQLite no permite la inserción directa de datos binarios literales en sentencias SQL."
     ],
     "correct_index": 1,
-    "hint": "El literal binario en SQLite se escribe como X'...' o x'...' con pares de dígitos hexadecimales."
+    "hint": "El literal binario en SQLite se escribe como X'...' o x'...' con pares de dígitos hexadecimales.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_087",
@@ -1128,7 +1214,8 @@
       "Muestra los errores de sintaxis detectados en el último procedimiento almacenado invocado."
     ],
     "correct_index": 2,
-    "hint": "PRAGMA compile_options lista todas las flags de compilación (como ENABLE_FTS5, ENABLE_JSON1, etc.)."
+    "hint": "PRAGMA compile_options lista todas las flags de compilación (como ENABLE_FTS5, ENABLE_JSON1, etc.).",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_088",
@@ -1141,7 +1228,8 @@
       "Retorna columnas con información de cada campo: cid, name, type, notnull, dflt_value y pk."
     ],
     "correct_index": 3,
-    "hint": "PRAGMA table_info devuelve los metadatos de las columnas de una tabla (nombre, tipo de dato, nulabilidad, clave primaria)."
+    "hint": "PRAGMA table_info devuelve los metadatos de las columnas de una tabla (nombre, tipo de dato, nulabilidad, clave primaria).",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_089",
@@ -1154,7 +1242,8 @@
       "Elimina automáticamente los índices que contienen entradas duplicadas o punteros huérfanos."
     ],
     "correct_index": 0,
-    "hint": "PRAGMA index_list enumera los índices asociados a una tabla dada con sus atributos de unicidad."
+    "hint": "PRAGMA index_list enumera los índices asociados a una tabla dada con sus atributos de unicidad.",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_090",
@@ -1167,7 +1256,8 @@
       "Exporta las definiciones de los índices a un script SQL compatible con servidores PostgreSQL."
     ],
     "correct_index": 1,
-    "hint": "REINDEX reconstruye índices, necesario si se alteró una secuencia de colación o tras recuperaciones de datos."
+    "hint": "REINDEX reconstruye índices, necesario si se alteró una secuencia de colación o tras recuperaciones de datos.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_091",
@@ -1180,7 +1270,8 @@
       "Protocolos de comunicación de red que ordenan los paquetes TCP recibidos por el driver del cliente."
     ],
     "correct_index": 2,
-    "hint": "BINARY compara bytes directamente, NOCASE ignora mayúsculas en el alfabeto ASCII, y RTRIM ignora espacios al final."
+    "hint": "BINARY compara bytes directamente, NOCASE ignora mayúsculas en el alfabeto ASCII, y RTRIM ignora espacios al final.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_092",
@@ -1193,7 +1284,8 @@
       "Declarando PRIMARY KEY (col1, col2) al final de la definición de columnas de la tabla."
     ],
     "correct_index": 3,
-    "hint": "Se declara como restricción de tabla: CREATE TABLE t(a, b, c, PRIMARY KEY(a, b))."
+    "hint": "Se declara como restricción de tabla: CREATE TABLE t(a, b, c, PRIMARY KEY(a, b)).",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_093",
@@ -1206,7 +1298,8 @@
       "El servidor apaga la conexión del cliente e imprime un mensaje de alerta en la consola del SO."
     ],
     "correct_index": 0,
-    "hint": "Las restricciones CHECK se evalúan en cada INSERT/UPDATE; si la expresión es falsa, arroja error SQLITE_CONSTRAINT_CHECK."
+    "hint": "Las restricciones CHECK se evalúan en cada INSERT/UPDATE; si la expresión es falsa, arroja error SQLITE_CONSTRAINT_CHECK.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_094",
@@ -1219,7 +1312,8 @@
       "Un registro de seguridad que audita los permisos de acceso de cada usuario conectado a la base de datos."
     ],
     "correct_index": 1,
-    "hint": "sqlite_stat1 contiene una fila por índice con estimaciones de número de filas y tuplas por clave que guían al optimizador."
+    "hint": "sqlite_stat1 contiene una fila por índice con estimaciones de número de filas y tuplas por clave que guían al optimizador.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_095",
@@ -1232,7 +1326,8 @@
       "Desactiva las escrituras en disco forzando a que todas las mutaciones se mantengan en memoria volátil."
     ],
     "correct_index": 2,
-    "hint": "En sistemas embebidos monoproceso, EXCLUSIVE locking mode elimina la penalización de llamadas al sistema de bloqueo en cada transacción."
+    "hint": "En sistemas embebidos monoproceso, EXCLUSIVE locking mode elimina la penalización de llamadas al sistema de bloqueo en cada transacción.",
+    "subtopic": "pragmas_concurrencia"
   },
   {
     "id": "sqlite_096",
@@ -1245,7 +1340,8 @@
       "Indica que otra conexión está ejecutando el proceso de recuperación del archivo WAL tras una caída previa."
     ],
     "correct_index": 3,
-    "hint": "Ocurre cuando el primer proceso que abre la base tras un crash está reconstruyendo el índice .shm desde el fichero .wal."
+    "hint": "Ocurre cuando el primer proceso que abre la base tras un crash está reconstruyendo el índice .shm desde el fichero .wal.",
+    "subtopic": "modo_wal"
   },
   {
     "id": "sqlite_097",
@@ -1258,7 +1354,8 @@
       "Un subsistema que convierte consultas con múltiples predicados OR en colecciones de expresiones regulares."
     ],
     "correct_index": 0,
-    "hint": "El aplanador de consultas (Query Flattener) reescribe subqueries y vistas en la consulta exterior permitiendo evaluar índices globales."
+    "hint": "El aplanador de consultas (Query Flattener) reescribe subqueries y vistas en la consulta exterior permitiendo evaluar índices globales.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_098",
@@ -1271,7 +1368,8 @@
       "Exige compilar nuevamente el binario de la aplicación anfitriona cada vez que se modifica una columna."
     ],
     "correct_index": 1,
-    "hint": "Hasta versiones recientes (3.35+ que agregó DROP COLUMN), SQLite requería recrear la tabla (crear tabla_nueva, copiar datos, renombrar)."
+    "hint": "Hasta versiones recientes (3.35+ que agregó DROP COLUMN), SQLite requería recrear la tabla (crear tabla_nueva, copiar datos, renombrar).",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_099",
@@ -1284,7 +1382,8 @@
       "Una técnica para almacenar estructuras de datos cíclicas en índices B-Tree sin consumir memoria RAM."
     ],
     "correct_index": 2,
-    "hint": "WITH RECURSIVE evalúa un miembro inicial (ancla), agrega resultados a una cola y ejecuta el término recursivo hasta vaciar la cola."
+    "hint": "WITH RECURSIVE evalúa un miembro inicial (ancla), agrega resultados a una cola y ejecuta el término recursivo hasta vaciar la cola.",
+    "subtopic": "arquitectura_btree"
   },
   {
     "id": "sqlite_0100",
@@ -1297,6 +1396,7 @@
       "El formato binario del archivo de base de datos es idéntico en arquitecturas de 32/64 bits y big/little endian."
     ],
     "correct_index": 3,
-    "hint": "Un archivo SQLite creado en un sistema little-endian de 32 bits puede copiarse directamente y abrirse en un sistema big-endian de 64 bits sin conversión."
+    "hint": "Un archivo SQLite creado en un sistema little-endian de 32 bits puede copiarse directamente y abrirse en un sistema big-endian de 64 bits sin conversión.",
+    "subtopic": "arquitectura_btree"
   }
 ]

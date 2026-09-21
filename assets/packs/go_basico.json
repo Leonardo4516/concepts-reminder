@@ -9,7 +9,8 @@
       "Las goroutines requieren llamadas al kernel del sistema operativo para cada cambio de contexto (context switch)."
     ],
     "correct_index": 0,
-    "hint": "El runtime de Go multiplexa miles de goroutines sobre una cantidad pequeña de hilos del SO mediante un scheduler cooperativo de bajo coste."
+    "hint": "El runtime de Go multiplexa miles de goroutines sobre una cantidad pequeña de hilos del SO mediante un scheduler cooperativo de bajo coste.",
+    "subtopic": "goroutines_canales"
   },
   {
     "id": "go_002",
@@ -21,7 +22,8 @@
       "Los canales buffered no requieren el operador '<-' para enviar datos."
     ],
     "correct_index": 0,
-    "hint": "Un canal unbuffered (capacidad 0) garantiza sincronización estricta punto a punto entre goroutines (rendezvous)."
+    "hint": "Un canal unbuffered (capacidad 0) garantiza sincronización estricta punto a punto entre goroutines (rendezvous).",
+    "subtopic": "goroutines_canales"
   },
   {
     "id": "go_003",
@@ -33,7 +35,8 @@
       "Solo pueden usarse para capturar excepciones con panic sin importar el retorno de la función."
     ],
     "correct_index": 1,
-    "hint": "Imagina una pila (stack): las llamadas diferidas se apilan y se desapilan en orden inverso (LIFO) cuando la función termina."
+    "hint": "Imagina una pila (stack): las llamadas diferidas se apilan y se desapilan en orden inverso (LIFO) cuando la función termina.",
+    "subtopic": "goroutines_canales"
   },
   {
     "id": "go_004",
@@ -45,7 +48,8 @@
       "Registrando manualmente el tipo en el compilador dentro del archivo go.mod."
     ],
     "correct_index": 0,
-    "hint": "Go utiliza tipado estructural (structural typing o 'duck typing en tiempo de compilación'): si un tipo define los métodos del contrato, cumple la interfaz automáticamente."
+    "hint": "Go utiliza tipado estructural (structural typing o 'duck typing en tiempo de compilación'): si un tipo define los métodos del contrato, cumple la interfaz automáticamente.",
+    "subtopic": "interfaces_tipos"
   },
   {
     "id": "go_005",
@@ -57,7 +61,8 @@
       "Los pointer receivers están prohibidos cuando se implementan interfaces públicas."
     ],
     "correct_index": 1,
-    "hint": "Un Value Receiver recibe una copia completa del struct (cualquier modificación no afecta al llamador); un Pointer Receiver opera directamente sobre la referencia original."
+    "hint": "Un Value Receiver recibe una copia completa del struct (cualquier modificación no afecta al llamador); un Pointer Receiver opera directamente sobre la referencia original.",
+    "subtopic": "interfaces_tipos"
   },
   {
     "id": "go_006",
@@ -69,6 +74,7 @@
       "No existe ninguna diferencia; son dos palabras para la misma estructura de memoria."
     ],
     "correct_index": 0,
-    "hint": "El tipo [5]int es diferente de [10]int (longitud fija). Un []int es un slice flexible compuesto por un puntero al array subyacente, longitud y capacidad."
+    "hint": "El tipo [5]int es diferente de [10]int (longitud fija). Un []int es un slice flexible compuesto por un puntero al array subyacente, longitud y capacidad.",
+    "subtopic": "interfaces_tipos"
   }
 ]

@@ -248,6 +248,117 @@ class ContentManager {
     'bases de datos': 'bases_de_datos',
   };
 
+  /// Predefined subtopic metadata with friendly display names
+  static const Map<String, Map<String, String>> packSubtopicDefinitions = {
+    'java': {
+      'fundamentos': 'Fundamentos Básicos',
+      'poo': 'POO en Java',
+      'colecciones': 'Colecciones & Generics',
+      'concurrencia': 'Concurrencia & Threads',
+      'javafx': 'JavaFX & GUI',
+    },
+    'python': {
+      'fundamentos': 'Sintaxis & Tipos',
+      'poo': 'POO & Clases',
+      'avanzado': 'Generadores & Decoradores',
+      'asyncio': 'Asyncio & Concurrencia',
+    },
+    'postgresql': {
+      'indices_planes': 'Índices & Planes de Ejecución',
+      'mvcc_vacuum': 'MVCC, VACUUM & Bloat',
+      'wal_replicacion': 'WAL & Replicación',
+      'extensiones_jsonb': 'JSONB & Extensiones',
+    },
+    'mysql': {
+      'motores_innodb': 'Motores InnoDB & MyISAM',
+      'buffer_pool': 'Buffer Pool & Memoria',
+      'replicacion_binlog': 'Replicación & Logs Binarios',
+      'optimizacion_queries': 'Índices & Optimización EXPLAIN',
+    },
+    'mongodb': {
+      'crud_documentos': 'CRUD, BSON & Documentos',
+      'aggregation_pipeline': 'Aggregation Pipeline',
+      'wiredtiger_internals': 'WiredTiger & Checkpoints',
+      'sharding_replicas': 'Sharding & Replica Sets',
+    },
+    'redis': {
+      'estructuras_datos': 'Strings, Hashes, Lists & Sets',
+      'persistencia_rdb_aof': 'Persistencia RDB & AOF',
+      'streams_pubsub_lua': 'Streams, Pub/Sub & Lua',
+      'cluster_sentinel': 'Redis Cluster & Sentinel',
+    },
+    'sqlite': {
+      'arquitectura_btree': 'B-Tree & Páginas en Disco',
+      'modo_wal': 'Modo WAL & Concurrencia',
+      'pragmas_concurrencia': 'Pragmas & Rendimiento',
+    },
+    'bases_de_datos': {
+      'fundamentos_acid': 'Modelo Relacional & ACID',
+      'normalizacion': 'Normalización & Formas Normales',
+      'transacciones_locks': 'Aislamiento & Bloqueos',
+    },
+    'ia_generativa_llms': {
+      'llms_transformers': 'LLMs & Transformers',
+      'rag_embeddings': 'RAG & Embeddings Vectoriales',
+      'prompting_finetuning': 'Prompting & Fine-Tuning',
+    },
+    'ia_machine_learning': {
+      'aprendizaje_supervisado': 'Supervisado & No Supervisado',
+      'deep_learning': 'Redes Neuronales & Backpropagation',
+      'metricas_evaluacion': 'Métricas & Evaluación',
+    },
+    'poo_conceptos': {
+      'polimorfismo_herencia': 'Polimorfismo & Herencia',
+      'encapsulamiento_abstraccion': 'Encapsulamiento & Abstracción',
+      'cohesion_acoplamiento': 'Acoplamiento & Cohesión',
+    },
+    'principios_solid': {
+      'solid_principles': 'Principios S.O.L.I.D.',
+      'clean_code': 'Clean Code, DRY & KISS',
+    },
+    'patrones_diseno': {
+      'patrones_creacionales': 'Patrones Creacionales',
+      'patrones_estructurales': 'Patrones Estructurales & Comportamiento',
+    },
+    'javascript': {
+      'event_loop': 'Event Loop & Asincronía',
+      'closures_scope': 'Closures & Scope Léxico',
+      'prototipos_async': 'Prototipos & Clases',
+    },
+    'go': {
+      'goroutines_canales': 'Goroutines & Canales',
+      'interfaces_tipos': 'Interfaces & Tipos',
+      'memoria_punteros': 'Punteros & Rutinas',
+    },
+  };
+
+  /// Returns available subtopics for a given pack as a Map of key -> displayName
+  Map<String, String> getSubtopicsForPack(String packKey) {
+    String key = packKey.toLowerCase().trim();
+    if (_topicAliases.containsKey(key)) {
+      key = _topicAliases[key]!;
+    }
+    if (packSubtopicDefinitions.containsKey(key)) {
+      return Map.from(packSubtopicDefinitions[key]!);
+    }
+    final questions = _questionsByPack[key] ?? [];
+    final Map<String, String> result = {};
+    for (final q in questions) {
+      if (!result.containsKey(q.subtopic)) {
+        final sub = q.subtopic;
+        final formatted = sub.replaceAll('_', ' ');
+        final title = formatted.isNotEmpty
+            ? '${formatted[0].toUpperCase()}${formatted.substring(1)}'
+            : sub;
+        result[sub] = title;
+      }
+    }
+    if (result.isEmpty) {
+      result['general'] = 'General';
+    }
+    return result;
+  }
+
   /// Returns the list of difficulties allowed for a given target difficulty:
   /// - 'basic'    => ['basic'] (only easy questions)
   /// - 'medium'   => ['basic', 'medium'] (medium and easy questions)
@@ -271,24 +382,34 @@ class ContentManager {
     if (difficulty == null || difficulty.isEmpty) return questions;
     final allowed = getAllowedDifficulties(difficulty);
     final filtered = questions.where((q) => allowed.contains(q.difficulty)).toList();
-    // If no questions match the filter (e.g. legacy pack), fallback to all questions
+    return filtered.isNotEmpty ? filtered : questions;
+  }
+
+  /// Filters questions by allowed subtopics. If [allowedSubtopics] is null or empty, returns all.
+  List<Question> filterBySubtopics(List<Question> questions, List<String>? allowedSubtopics) {
+    if (allowedSubtopics == null || allowedSubtopics.isEmpty) return questions;
+    final lowerAllowed = allowedSubtopics.map((s) => s.toLowerCase().trim()).toSet();
+    final filtered = questions
+        .where((q) => lowerAllowed.contains(q.subtopic.toLowerCase().trim()))
+        .toList();
     return filtered.isNotEmpty ? filtered : questions;
   }
 
   /// Query questions by pack key (e.g. 'python', 'poo_conceptos', 'postgresql'),
-  /// optionally filtered by [difficulty].
-  List<Question> getQuestionsByPack(String packKey, [String? difficulty]) {
+  /// optionally filtered by [difficulty] and [allowedSubtopics].
+  List<Question> getQuestionsByPack(String packKey, [String? difficulty, List<String>? allowedSubtopics]) {
     String key = packKey.toLowerCase().trim();
     if (_topicAliases.containsKey(key)) {
       key = _topicAliases[key]!;
     }
     final raw = List<Question>.unmodifiable(_questionsByPack[key] ?? []);
-    return filterByDifficulty(raw, difficulty);
+    final byDiff = filterByDifficulty(raw, difficulty);
+    return filterBySubtopics(byDiff, allowedSubtopics);
   }
 
   /// Backwards-compatible alias for getQuestionsByPack
-  List<Question> getQuestionsByLanguage(String language, [String? difficulty]) {
-    return getQuestionsByPack(language, difficulty);
+  List<Question> getQuestionsByLanguage(String language, [String? difficulty, List<String>? allowedSubtopics]) {
+    return getQuestionsByPack(language, difficulty, allowedSubtopics);
   }
 
   /// Returns available registered pack keys
@@ -325,16 +446,15 @@ class ContentManager {
 
   /// Returns all questions belonging to all packs within a given category,
   /// optionally filtered by [difficulty].
-  List<Question> getQuestionsByCategory(String category, [String? difficulty]) {
+  List<Question> getQuestionsByCategory(String category, [String? difficulty, Map<String, List<String>>? activeSubtopics]) {
     final packs = getPacksByCategory(category);
     final List<Question> result = [];
     for (final packKey in packs) {
-      final questions = _questionsByPack[packKey];
-      if (questions != null) {
-        result.addAll(questions);
-      }
+      final allowedSub = activeSubtopics?[packKey.toLowerCase().trim()];
+      final questions = getQuestionsByPack(packKey, difficulty, allowedSub);
+      result.addAll(questions);
     }
-    return filterByDifficulty(result, difficulty);
+    return result;
   }
 
   /// Check whether a question is due according to SRS progress
@@ -348,18 +468,18 @@ class ContentManager {
         progress.nextReview.isAtSameMomentAs(DateTime.now());
   }
 
-  /// Returns all questions that are due, optionally filtered by pack and difficulty
-  List<Question> getDueQuestions([String? packKey, String? difficulty]) {
+  /// Returns all questions that are due, optionally filtered by pack, difficulty, and allowed subtopics
+  List<Question> getDueQuestions([String? packKey, String? difficulty, List<String>? allowedSubtopics]) {
     final candidateQuestions = (packKey != null && packKey.isNotEmpty)
-        ? getQuestionsByPack(packKey, difficulty)
+        ? getQuestionsByPack(packKey, difficulty, allowedSubtopics)
         : filterByDifficulty(getAllQuestions(), difficulty);
 
     return candidateQuestions.where((q) => isQuestionDue(q.id)).toList();
   }
 
   /// Returns all questions that are due within a specific category, optionally filtered by difficulty
-  List<Question> getDueQuestionsByCategory(String category, [String? difficulty]) {
-    final candidateQuestions = getQuestionsByCategory(category, difficulty);
+  List<Question> getDueQuestionsByCategory(String category, [String? difficulty, Map<String, List<String>>? activeSubtopics]) {
+    final candidateQuestions = getQuestionsByCategory(category, difficulty, activeSubtopics);
     return candidateQuestions.where((q) => isQuestionDue(q.id)).toList();
   }
 
@@ -367,9 +487,10 @@ class ContentManager {
   /// If [packKey] is provided, restricts selection to that pack.
   /// If [fallbackToAny] is true, returns a random question when none are strictly due.
   /// If [difficulty] is specified, restricts candidate pool according to tiered difficulty rules.
-  Question? getDueQuestion([String? packKey, bool fallbackToAny = false, String? difficulty]) {
+  /// If [allowedSubtopics] is provided, only picks from active subtopics.
+  Question? getDueQuestion([String? packKey, bool fallbackToAny = false, String? difficulty, List<String>? allowedSubtopics]) {
     final candidateQuestions = (packKey != null && packKey.isNotEmpty)
-        ? getQuestionsByPack(packKey, difficulty)
+        ? getQuestionsByPack(packKey, difficulty, allowedSubtopics)
         : filterByDifficulty(getAllQuestions(), difficulty);
 
     return _pickDueQuestionFromList(candidateQuestions, fallbackToAny);

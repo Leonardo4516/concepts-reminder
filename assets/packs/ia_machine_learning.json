@@ -9,7 +9,8 @@
       "El no supervisado prohíbe el uso de redes neuronales convolucionales."
     ],
     "correct_index": 0,
-    "hint": "Supervisado = ejemplos resueltos (ej: fotos con etiqueta 'gato'/'perro'). No supervisado = agrupar clientes por similitud sin etiquetas previas. Refuerzo = agente aprendiendo a caminar recibiendo recompensas."
+    "hint": "Supervisado = ejemplos resueltos (ej: fotos con etiqueta 'gato'/'perro'). No supervisado = agrupar clientes por similitud sin etiquetas previas. Refuerzo = agente aprendiendo a caminar recibiendo recompensas.",
+    "subtopic": "deep_learning"
   },
   {
     "id": "ml_002",
@@ -21,7 +22,8 @@
       "El costo financiero de comprar tarjetas gráficas NVIDIA."
     ],
     "correct_index": 1,
-    "hint": "El objetivo es encontrar el punto óptimo que minimice el error total, equilibrando la simplicidad del modelo frente a su capacidad de generalización."
+    "hint": "El objetivo es encontrar el punto óptimo que minimice el error total, equilibrando la simplicidad del modelo frente a su capacidad de generalización.",
+    "subtopic": "deep_learning"
   },
   {
     "id": "ml_003",
@@ -33,7 +35,8 @@
       "Siempre que se utilice el algoritmo de K-Means clustering."
     ],
     "correct_index": 1,
-    "hint": "Recall = de todos los casos reales positivos, ¿cuántos logró capturar el modelo? Minimiza los falsos negativos."
+    "hint": "Recall = de todos los casos reales positivos, ¿cuántos logró capturar el modelo? Minimiza los falsos negativos.",
+    "subtopic": "metricas_evaluacion"
   },
   {
     "id": "ml_004",
@@ -45,7 +48,8 @@
       "Convierte la red neuronal en un árbol de decisión binario estático."
     ],
     "correct_index": 1,
-    "hint": "Mide cuánto contribuyó cada peso al error final y los ajusta en la dirección que reduce la pérdida."
+    "hint": "Mide cuánto contribuyó cada peso al error final y los ajusta en la dirección que reduce la pérdida.",
+    "subtopic": "deep_learning"
   },
   {
     "id": "ml_005",
@@ -57,6 +61,7 @@
       "Bloquea la ejecución de consultas que contengan más de 10 palabras."
     ],
     "correct_index": 1,
-    "hint": "Es la técnica que convirtió modelos base impredecibles (GPT-3) en asistentes conversacionales útiles, seguros y coherentes (ChatGPT)."
+    "hint": "Es la técnica que convirtió modelos base impredecibles (GPT-3) en asistentes conversacionales útiles, seguros y coherentes (ChatGPT).",
+    "subtopic": "aprendizaje_supervisado"
   }
 ]

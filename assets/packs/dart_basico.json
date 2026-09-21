@@ -9,7 +9,8 @@
       "Que los punteros a memoria se liberan manualmente para evitar fugas."
     ],
     "correct_index": 0,
-    "hint": "'Soundness' garantiza que si el tipo es int, nunca será null; optimizando el código generado para el runtime."
+    "hint": "'Soundness' garantiza que si el tipo es int, nunca será null; optimizando el código generado para el runtime.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "dart_002",
@@ -21,7 +22,8 @@
       "Los Isolates solo se pueden ejecutar en aplicaciones móviles Android y no en Flutter Desktop."
     ],
     "correct_index": 1,
-    "hint": "Al no compartir memoria (isolated), los Isolates eliminan problemas clásicos de concurrencia como race conditions o deadlocks por bloqueo de memoria."
+    "hint": "Al no compartir memoria (isolated), los Isolates eliminan problemas clásicos de concurrencia como race conditions o deadlocks por bloqueo de memoria.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "dart_003",
@@ -33,7 +35,8 @@
       "Es una función asíncrona que retorna streams mediante la palabra clave 'yield*'."
     ],
     "correct_index": 0,
-    "hint": "En Dart: `class Auto extends Vehiculo with Conducible, Motorizado`."
+    "hint": "En Dart: `class Auto extends Vehiculo with Conducible, Motorizado`.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "dart_004",
@@ -45,7 +48,8 @@
       "Para forzar la compilación en tiempo de ejecución (JIT) en compilaciones de producción AOT."
     ],
     "correct_index": 0,
-    "hint": "Permiten escribir `extension StringParsing on String { int toInt() => int.parse(this); }`."
+    "hint": "Permiten escribir `extension StringParsing on String { int toInt() => int.parse(this); }`.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "dart_005",
@@ -57,7 +61,8 @@
       "Transforman la clase en un objeto dinámico que puede cambiar de tipo en runtime."
     ],
     "correct_index": 0,
-    "hint": "En Flutter, usar widgets `const` permite al framework saltarse la reconstrucción de subárboles de widgets inmutables."
+    "hint": "En Flutter, usar widgets `const` permite al framework saltarse la reconstrucción de subárboles de widgets inmutables.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "dart_006",
@@ -69,6 +74,7 @@
       "Dart no utiliza colas; procesa el código únicamente mediante interrupciones de hardware."
     ],
     "correct_index": 0,
-    "hint": "scheduleMicrotask() programa tareas que se ejecutan antes del siguiente evento regular del loop."
+    "hint": "scheduleMicrotask() programa tareas que se ejecutan antes del siguiente evento regular del loop.",
+    "subtopic": "fundamentos"
   }
 ]

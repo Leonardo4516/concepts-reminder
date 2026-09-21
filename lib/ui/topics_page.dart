@@ -588,11 +588,180 @@ class _TopicsPageState extends State<TopicsPage> {
 
   int _getQuestionCount(TopicItem topic) {
     final cm = ContentManager();
-    final questions = cm.getQuestionsByLanguage(topic.id.toLowerCase());
+    final allowedSubtopics = widget.settings.activeSubtopics[topic.id.toLowerCase()];
+    final questions = cm.getQuestionsByLanguage(topic.id.toLowerCase(), null, allowedSubtopics);
     if (questions.isNotEmpty) {
       return questions.length;
     }
     return topic.defaultQuestionCount;
+  }
+
+  void _showSubtopicsModal(TopicItem topic) {
+    final cm = ContentManager();
+    final subtopics = cm.getSubtopicsForPack(topic.id);
+    final currentActive = List<String>.from(
+      widget.settings.activeSubtopics[topic.id.toLowerCase()] ?? subtopics.keys.toList(),
+    );
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: const Color(0xFF13161C),
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            final activeSet = currentActive.toSet();
+
+            void toggleSub(String subKey) {
+              if (activeSet.contains(subKey)) {
+                if (activeSet.length > 1) {
+                  activeSet.remove(subKey);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Debe quedar al menos un subtema activo.'),
+                      behavior: SnackBarBehavior.floating,
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                  return;
+                }
+              } else {
+                activeSet.add(subKey);
+              }
+              final newMap = Map<String, List<String>>.from(widget.settings.activeSubtopics);
+              newMap[topic.id.toLowerCase()] = activeSet.toList();
+              widget.onSettingsChanged(widget.settings.copyWith(activeSubtopics: newMap));
+              setModalState(() {
+                currentActive.clear();
+                currentActive.addAll(activeSet);
+              });
+              setState(() {});
+            }
+
+            void selectAll() {
+              final newMap = Map<String, List<String>>.from(widget.settings.activeSubtopics);
+              newMap[topic.id.toLowerCase()] = subtopics.keys.toList();
+              widget.onSettingsChanged(widget.settings.copyWith(activeSubtopics: newMap));
+              setModalState(() {
+                currentActive.clear();
+                currentActive.addAll(subtopics.keys);
+              });
+              setState(() {});
+            }
+
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(28, 20, 28, 36),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 40,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF2E3544),
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: topic.accentColor.withValues(alpha: 0.15),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Icon(topic.icon, color: topic.accentColor, size: 24),
+                      ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              topic.title,
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                            ),
+                            const Text(
+                              'Micro-opciones y subtemas de estudio',
+                              style: TextStyle(fontSize: 13, color: Color(0xFF9CA3AF)),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${activeSet.length} de ${subtopics.length} subtemas activos',
+                        style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600, color: Color(0xFF34D399)),
+                      ),
+                      TextButton.icon(
+                        onPressed: selectAll,
+                        icon: const Icon(Icons.select_all_rounded, size: 16, color: Color(0xFF9CA3AF)),
+                        label: const Text('Activar todos', style: TextStyle(fontSize: 12, color: Color(0xFF9CA3AF))),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Wrap(
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: subtopics.entries.map((entry) {
+                      final isSubActive = activeSet.contains(entry.key);
+                      return FilterChip(
+                        selected: isSubActive,
+                        label: Text(entry.value),
+                        labelStyle: TextStyle(
+                          fontSize: 13,
+                          fontWeight: isSubActive ? FontWeight.w600 : FontWeight.w400,
+                          color: isSubActive ? Colors.white : const Color(0xFF9CA3AF),
+                        ),
+                        selectedColor: const Color(0xFF064E3B),
+                        backgroundColor: const Color(0xFF191D26),
+                        checkmarkColor: const Color(0xFF34D399),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(
+                            color: isSubActive ? const Color(0xFF10B981) : const Color(0xFF282F3D),
+                            width: 1.1,
+                          ),
+                        ),
+                        onSelected: (_) => toggleSub(entry.key),
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF10B981),
+                        foregroundColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                      child: const Text('Guardar Preferencias', style: TextStyle(fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   List<TopicItem> _filterTopics(List<TopicItem> list) {
@@ -645,10 +814,10 @@ class _TopicsPageState extends State<TopicsPage> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF10B981).withOpacity(0.15),
+                      color: const Color(0xFF10B981).withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: const Color(0xFF10B981).withOpacity(0.3),
+                        color: const Color(0xFF10B981).withValues(alpha: 0.3),
                       ),
                     ),
                     child: const Icon(
@@ -689,7 +858,7 @@ class _TopicsPageState extends State<TopicsPage> {
               decoration: BoxDecoration(
                 color: const Color(0xFF1F2937),
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: const Color(0xFF10B981).withOpacity(0.4)),
+                border: Border.all(color: const Color(0xFF10B981).withValues(alpha: 0.4)),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -813,7 +982,7 @@ class _TopicsPageState extends State<TopicsPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? Colors.black.withOpacity(0.25)
+                              ? Colors.black.withValues(alpha: 0.25)
                               : const Color(0xFF374151),
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -985,12 +1154,12 @@ class _TopicsPageState extends State<TopicsPage> {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
           decoration: BoxDecoration(
             color: activeCount > 0
-                ? const Color(0xFF10B981).withOpacity(0.15)
+                ? const Color(0xFF10B981).withValues(alpha: 0.15)
                 : const Color(0xFF374151),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: activeCount > 0
-                  ? const Color(0xFF10B981).withOpacity(0.4)
+                  ? const Color(0xFF10B981).withValues(alpha: 0.4)
                   : Colors.transparent,
             ),
           ),
@@ -1024,7 +1193,7 @@ class _TopicsPageState extends State<TopicsPage> {
             crossAxisCount: crossAxisCount,
             crossAxisSpacing: 18,
             mainAxisSpacing: 18,
-            mainAxisExtent: 220,
+            mainAxisExtent: 255,
           ),
           itemCount: topics.length,
           itemBuilder: (context, index) {
@@ -1039,16 +1208,19 @@ class _TopicsPageState extends State<TopicsPage> {
   }
 
   Widget _buildTopicCard(TopicItem topic, bool isActive, int questionCount) {
+    final subtopics = ContentManager().getSubtopicsForPack(topic.id);
+    final activeSubCount = widget.settings.activeSubtopics[topic.id.toLowerCase()]?.length ?? subtopics.length;
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 220),
       curve: Curves.easeInOut,
       decoration: BoxDecoration(
-        color: isActive ? null : const Color(0xFF1F2937),
+        color: isActive ? null : const Color(0xFF191D26),
         gradient: isActive
             ? const LinearGradient(
                 colors: [
-                  Color(0xFF0F2C22),
-                  Color(0xFF15222E),
+                  Color(0xFF0D251D),
+                  Color(0xFF131D28),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -1056,20 +1228,20 @@ class _TopicsPageState extends State<TopicsPage> {
             : null,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isActive ? const Color(0xFF10B981) : const Color(0xFF374151),
-          width: isActive ? 1.6 : 1.0,
+          color: isActive ? const Color(0xFF10B981) : const Color(0xFF2B3342),
+          width: isActive ? 1.4 : 1.0,
         ),
         boxShadow: isActive
             ? [
                 BoxShadow(
-                  color: const Color(0xFF10B981).withOpacity(0.12),
+                  color: const Color(0xFF10B981).withValues(alpha: 0.1),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
               ]
             : [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
+                  color: Colors.black.withValues(alpha: 0.2),
                   blurRadius: 4,
                   offset: const Offset(0, 2),
                 ),
@@ -1078,164 +1250,177 @@ class _TopicsPageState extends State<TopicsPage> {
       child: Material(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(16),
-        child: InkWell(
-          onTap: () => _toggleTopic(topic),
-          borderRadius: BorderRadius.circular(16),
-          splashColor: const Color(0xFF10B981).withOpacity(0.1),
-          highlightColor: const Color(0xFF10B981).withOpacity(0.05),
-          child: Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Fila Superior: Icono + Categoría + Switch
-                Row(
-                  children: [
-                    Container(
-                      width: 44,
-                      height: 44,
-                      decoration: BoxDecoration(
-                        color: topic.accentColor.withOpacity(isActive ? 0.2 : 0.1),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: topic.accentColor.withOpacity(isActive ? 0.5 : 0.2),
-                        ),
-                      ),
-                      child: Icon(
-                        topic.icon,
-                        color: isActive ? topic.accentColor : Colors.grey.shade400,
-                        size: 24,
+        child: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Fila Superior: Icono + Categoría + Switch
+              Row(
+                children: [
+                  Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      color: topic.accentColor.withValues(alpha: isActive ? 0.2 : 0.1),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: topic.accentColor.withValues(alpha: isActive ? 0.5 : 0.2),
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF374151).withOpacity(0.6),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Text(
-                              topic.categoryName,
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey.shade300,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    child: Icon(
+                      topic.icon,
+                      color: isActive ? topic.accentColor : Colors.grey.shade400,
+                      size: 22,
                     ),
-                    Transform.scale(
-                      scale: 0.85,
-                      child: Switch(
-                        value: isActive,
-                        activeColor: const Color(0xFF10B981),
-                        activeTrackColor: const Color(0xFF065F46),
-                        inactiveThumbColor: Colors.grey.shade400,
-                        inactiveTrackColor: const Color(0xFF374151),
-                        onChanged: (_) => _toggleTopic(topic),
-                      ),
-                    ),
-                  ],
-                ),
-
-                // Título y Descripción
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      topic.title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      topic.categoryName,
                       style: TextStyle(
-                        fontSize: 16.5,
-                        fontWeight: FontWeight.bold,
-                        color: isActive ? Colors.white : Colors.grey.shade200,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      topic.description,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 12.5,
-                        height: 1.35,
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w600,
                         color: Colors.grey.shade400,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  Transform.scale(
+                    scale: 0.85,
+                    child: Switch(
+                      value: isActive,
+                      activeThumbColor: const Color(0xFF10B981),
+                      activeTrackColor: const Color(0xFF065F46),
+                      inactiveThumbColor: Colors.grey.shade400,
+                      inactiveTrackColor: const Color(0xFF374151),
+                      onChanged: (_) => _toggleTopic(topic),
+                    ),
+                  ),
+                ],
+              ),
 
-                // Fila Inferior: Contador de Preguntas y Estado
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
+              // Título y Descripción
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    topic.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 16.5,
+                      fontWeight: FontWeight.bold,
+                      color: isActive ? Colors.white : Colors.grey.shade200,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    topic.description,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      height: 1.35,
+                      color: Colors.grey.shade400,
+                    ),
+                  ),
+                ],
+              ),
+
+              // Micro-opciones (Subtemas button)
+              InkWell(
+                onTap: () => _showSubtopicsModal(topic),
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1F2533),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: const Color(0xFF2E374A)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.tune_rounded, size: 13, color: Color(0xFF34D399)),
+                      const SizedBox(width: 6),
+                      Text(
+                        'Subtemas ($activeSubCount/${subtopics.length})',
+                        style: const TextStyle(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFFE5E7EB),
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      const Icon(Icons.chevron_right, size: 14, color: Colors.grey),
+                    ],
+                  ),
+                ),
+              ),
+
+              // Fila Inferior: Contador de Preguntas y Estado
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.quiz_outlined,
+                        size: 14,
+                        color: isActive ? const Color(0xFF34D399) : Colors.grey.shade500,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        '$questionCount preguntas',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: isActive ? const Color(0xFF34D399) : Colors.grey.shade500,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: isActive
+                          ? const Color(0xFF065F46).withValues(alpha: 0.5)
+                          : const Color(0xFF374151).withValues(alpha: 0.5),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: isActive
+                            ? const Color(0xFF10B981).withValues(alpha: 0.6)
+                            : Colors.transparent,
+                      ),
+                    ),
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
-                          Icons.quiz_outlined,
-                          size: 14,
-                          color: isActive ? const Color(0xFF34D399) : Colors.grey.shade500,
+                        Container(
+                          width: 6,
+                          height: 6,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: isActive ? const Color(0xFF10B981) : Colors.grey.shade500,
+                          ),
                         ),
                         const SizedBox(width: 5),
                         Text(
-                          '$questionCount preguntas',
+                          isActive ? 'Activo' : 'Pausado',
                           style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: isActive ? const Color(0xFF34D399) : Colors.grey.shade500,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: isActive ? const Color(0xFF34D399) : Colors.grey.shade400,
                           ),
                         ),
                       ],
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                      decoration: BoxDecoration(
-                        color: isActive
-                            ? const Color(0xFF065F46).withOpacity(0.5)
-                            : const Color(0xFF374151).withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: isActive
-                              ? const Color(0xFF10B981).withOpacity(0.6)
-                              : Colors.transparent,
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            width: 6,
-                            height: 6,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: isActive ? const Color(0xFF10B981) : Colors.grey.shade500,
-                            ),
-                          ),
-                          const SizedBox(width: 5),
-                          Text(
-                            isActive ? 'Activo' : 'Pausado',
-                            style: TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                              color: isActive ? const Color(0xFF34D399) : Colors.grey.shade400,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

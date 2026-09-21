@@ -9,7 +9,8 @@
       "Convierte la función en un método de clase que recibe 'cls'."
     ],
     "correct_index": 1,
-    "hint": "No depende ni de la instancia ni de la clase en sí."
+    "hint": "No depende ni de la instancia ni de la clase en sí.",
+    "subtopic": "poo"
   },
   {
     "id": "py_002",
@@ -21,7 +22,8 @@
       "Las tuplas solo pueden contener datos de tipo numérico."
     ],
     "correct_index": 2,
-    "hint": "Una vez creada, no puedes modificar los elementos de una tupla."
+    "hint": "Una vez creada, no puedes modificar los elementos de una tupla.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "py_003",
@@ -33,7 +35,8 @@
       "try ... handle"
     ],
     "correct_index": 1,
-    "hint": "En Python la cláusula que captura el error se llama 'except'."
+    "hint": "En Python la cláusula que captura el error se llama 'except'.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "py_004",
@@ -45,7 +48,8 @@
       "Declarar variables globales compartidas por todas las clases."
     ],
     "correct_index": 1,
-    "hint": "Funciona como el constructor de la clase."
+    "hint": "Funciona como el constructor de la clase.",
+    "subtopic": "poo"
   },
   {
     "id": "py_005",
@@ -57,7 +61,8 @@
       "anonymous(x) { return expression; }"
     ],
     "correct_index": 2,
-    "hint": "Se utiliza la palabra reservada 'lambda'."
+    "hint": "Se utiliza la palabra reservada 'lambda'.",
+    "subtopic": "avanzado"
   },
   {
     "id": "py_006",
@@ -69,6 +74,7 @@
       "dict.value(key, default)"
     ],
     "correct_index": 1,
-    "hint": "El método estándar es .get() que devuelve un valor por defecto o None."
+    "hint": "El método estándar es .get() que devuelve un valor por defecto o None.",
+    "subtopic": "fundamentos"
   }
 ]
