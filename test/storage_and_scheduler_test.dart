@@ -226,5 +226,48 @@ void main() {
 
       expect(triggerCount, greaterThanOrEqualTo(2));
     });
+
+    test('validates real streak calculation and session recording', () async {
+      SharedPreferences.setMockInitialValues({});
+      final storage = StorageService();
+
+      // Initially, streak is 0
+      final initialStreak = await storage.getStreak();
+      expect(initialStreak, 0);
+
+      // Record first session today
+      final streakDay1 = await storage.recordStudySession();
+      expect(streakDay1, 1);
+
+      // Subsequent session on the same day maintains streak
+      final sameDayStreak = await storage.recordStudySession();
+      expect(sameDayStreak, 1);
+
+      final currentStreak = await storage.getStreak();
+      expect(currentStreak, 1);
+    });
+
+    test('validates AppSettings new mobile and granular difficulty fields', () {
+      const settings = AppSettings(
+        topicDifficulties: {'java': 'advanced', 'python': 'basic'},
+        hapticsEnabled: true,
+        soundEnabled: false,
+        quietHoursEnabled: true,
+        quietStartHour: 23,
+        quietEndHour: 7,
+      );
+
+      final json = settings.toJson();
+      final fromJson = AppSettings.fromJson(json);
+
+      expect(fromJson.topicDifficulties['java'], 'advanced');
+      expect(fromJson.topicDifficulties['python'], 'basic');
+      expect(fromJson.hapticsEnabled, isTrue);
+      expect(fromJson.soundEnabled, isFalse);
+      expect(fromJson.quietHoursEnabled, isTrue);
+      expect(fromJson.quietStartHour, 23);
+      expect(fromJson.quietEndHour, 7);
+    });
   });
 }
+

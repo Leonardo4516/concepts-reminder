@@ -741,6 +741,123 @@ class _TopicsPageState extends State<TopicsPage> {
                       );
                     }).toList(),
                   ),
+                  const SizedBox(height: 22),
+
+                  // Nivel de Dificultad para este tema
+                  const Text(
+                    'NIVEL DE DIFICULTAD PARA ESTE TEMA',
+                    style: TextStyle(
+                      fontSize: 11.5,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.0,
+                      color: Color(0xFF9CA3AF),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Builder(
+                    builder: (context) {
+                      final currentDiff = widget.settings.topicDifficulties[topic.id.toLowerCase()] ?? 'medium';
+                      final masteryStats = cm.getTopicMasteryStats(topic.id, currentDiff, activeSet.toList());
+                      final bool canPromote = masteryStats['canPromote'] as bool;
+                      final String suggestedDiff = masteryStats['suggestedDifficulty'] as String;
+                      final double masteryPct = (masteryStats['masteryPercent'] as double) * 100;
+
+                      void setTopicDiff(String d) {
+                        final newMap = Map<String, String>.from(widget.settings.topicDifficulties);
+                        newMap[topic.id.toLowerCase()] = d;
+                        widget.onSettingsChanged(widget.settings.copyWith(topicDifficulties: newMap));
+                        setModalState(() {});
+                        setState(() {});
+                      }
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF191E27),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: const Color(0xFF262E3D)),
+                            ),
+                            child: Row(
+                              children: [
+                                _buildDiffTab('basic', 'Fácil', currentDiff, setTopicDiff),
+                                _buildDiffTab('medium', 'Medio', currentDiff, setTopicDiff),
+                                _buildDiffTab('advanced', 'Difícil', currentDiff, setTopicDiff),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Dominio actual: ${masteryPct.toStringAsFixed(0)}%',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: masteryPct >= 70 ? const Color(0xFF34D399) : Colors.grey.shade400,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                '${masteryStats['learned']}/${masteryStats['total']} conceptos repasados',
+                                style: TextStyle(fontSize: 11.5, color: Colors.grey.shade500),
+                              ),
+                            ],
+                          ),
+                          if (canPromote) ...[
+                            const SizedBox(height: 12),
+                            Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF064E3B).withValues(alpha: 0.6),
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: const Color(0xFF10B981)),
+                              ),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.workspace_premium_rounded, color: Color(0xFF34D399), size: 22),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          '¡Excelente dominio alcanzado!',
+                                          style: TextStyle(
+                                            fontSize: 12.5,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Puedes subir a nivel ${suggestedDiff.toUpperCase()} para un mayor desafío.',
+                                          style: const TextStyle(fontSize: 11.5, color: Color(0xFFD1FAE5)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () => setTopicDiff(suggestedDiff),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF10B981),
+                                      foregroundColor: Colors.black,
+                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                      visualDensity: VisualDensity.compact,
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                    ),
+                                    child: const Text('Subir nivel', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ],
+                      );
+                    },
+                  ),
                   const SizedBox(height: 24),
                   SizedBox(
                     width: double.infinity,
@@ -761,6 +878,34 @@ class _TopicsPageState extends State<TopicsPage> {
           },
         );
       },
+    );
+  }
+
+  Widget _buildDiffTab(String diffKey, String label, String currentDiff, ValueChanged<String> onSelect) {
+    final bool isSelected = currentDiff.toLowerCase() == diffKey;
+    return Expanded(
+      child: InkWell(
+        onTap: () => onSelect(diffKey),
+        borderRadius: BorderRadius.circular(9),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: isSelected ? const Color(0xFF064E3B) : Colors.transparent,
+            borderRadius: BorderRadius.circular(9),
+            border: isSelected ? Border.all(color: const Color(0xFF10B981), width: 1) : null,
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 12.5,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+              color: isSelected ? Colors.white : const Color(0xFF9CA3AF),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -1328,35 +1473,77 @@ class _TopicsPageState extends State<TopicsPage> {
                 ],
               ),
 
-              // Micro-opciones (Subtemas button)
-              InkWell(
-                onTap: () => _showSubtopicsModal(topic),
-                borderRadius: BorderRadius.circular(8),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF1F2533),
+              // Micro-opciones (Subtemas button) & Dificultad
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () => _showSubtopicsModal(topic),
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: const Color(0xFF2E374A)),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.tune_rounded, size: 13, color: Color(0xFF34D399)),
-                      const SizedBox(width: 6),
-                      Text(
-                        'Subtemas ($activeSubCount/${subtopics.length})',
-                        style: const TextStyle(
-                          fontSize: 11.5,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFFE5E7EB),
-                        ),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1F2533),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: const Color(0xFF2E374A)),
                       ),
-                      const SizedBox(width: 4),
-                      const Icon(Icons.chevron_right, size: 14, color: Colors.grey),
-                    ],
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.tune_rounded, size: 13, color: Color(0xFF34D399)),
+                          const SizedBox(width: 6),
+                          Text(
+                            'Subtemas ($activeSubCount/${subtopics.length})',
+                            style: const TextStyle(
+                              fontSize: 11.5,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFFE5E7EB),
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          const Icon(Icons.chevron_right, size: 14, color: Colors.grey),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 8),
+                  Builder(
+                    builder: (context) {
+                      final diff = (widget.settings.topicDifficulties[topic.id.toLowerCase()] ?? 'medium').toUpperCase();
+                      Color diffColor;
+                      switch (diff) {
+                        case 'BASIC':
+                          diffColor = const Color(0xFF34D399);
+                          break;
+                        case 'ADVANCED':
+                          diffColor = const Color(0xFFF87171);
+                          break;
+                        case 'MEDIUM':
+                        default:
+                          diffColor = const Color(0xFF60A5FA);
+                      }
+                      return InkWell(
+                        onTap: () => _showSubtopicsModal(topic),
+                        borderRadius: BorderRadius.circular(8),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: diffColor.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: diffColor.withValues(alpha: 0.3)),
+                          ),
+                          child: Text(
+                            diff == 'BASIC' ? 'FÁCIL' : (diff == 'ADVANCED' ? 'DIFÍCIL' : 'MEDIO'),
+                            style: TextStyle(
+                              fontSize: 10.5,
+                              fontWeight: FontWeight.bold,
+                              color: diffColor,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
 
               // Fila Inferior: Contador de Preguntas y Estado

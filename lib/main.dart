@@ -41,6 +41,24 @@ void _triggerReminderQuiz() {
 
   final storage = StorageService();
   storage.loadSettings().then((settings) {
+    // Check quiet hours
+    if (settings.quietHoursEnabled) {
+      final nowHour = DateTime.now().hour;
+      final start = settings.quietStartHour;
+      final end = settings.quietEndHour;
+      bool isQuiet = false;
+      if (start > end) {
+        // e.g. 22 to 8 (crosses midnight)
+        isQuiet = (nowHour >= start || nowHour < end);
+      } else {
+        isQuiet = (nowHour >= start && nowHour < end);
+      }
+      if (isQuiet) {
+        debugPrint("Recordatorio omitido por Horas de Silencio ($nowHour:00 dentro de $start:00-$end:00)");
+        return;
+      }
+    }
+
     final contentManager = ContentManager();
     final activeLangs = settings.activeLanguages;
     final activeSub = settings.activeSubtopics;
@@ -48,10 +66,11 @@ void _triggerReminderQuiz() {
     Question? selectedQuestion;
     for (final lang in activeLangs) {
       final allowed = activeSub[lang.toLowerCase().trim()];
+      final topicDiff = settings.topicDifficulties[lang.toLowerCase().trim()] ?? settings.difficulty;
       selectedQuestion = contentManager.getDueQuestion(
         lang.toLowerCase(),
         false,
-        settings.difficulty,
+        topicDiff,
         allowed,
       );
       if (selectedQuestion != null) break;
@@ -68,6 +87,7 @@ void _triggerReminderQuiz() {
           builder: (context) => QuizScreen(
             question: selectedQuestion!,
             fullScreenLock: settings.fullScreenLock,
+            hapticsEnabled: settings.hapticsEnabled,
           ),
         ),
       );
@@ -292,6 +312,7 @@ class _HomePageState extends State<HomePage> {
   int _totalQuestions = 0;
   int _dueQuestions = 0;
   int _masteredQuestions = 0;
+  int _currentStreak = 0;
 
   @override
   void initState() {
@@ -299,17 +320,21 @@ class _HomePageState extends State<HomePage> {
     _refreshStats();
   }
 
-  void _refreshStats() {
+  void _refreshStats() async {
     final cm = ContentManager();
+    final storage = StorageService();
+    final streak = await storage.getStreak();
+
     int total = 0;
     int due = 0;
     int mastered = 0;
 
     for (final lang in widget.settings.activeLanguages) {
       final allowed = widget.settings.activeSubtopics[lang.toLowerCase().trim()];
-      final questions = cm.getQuestionsByLanguage(lang.toLowerCase(), widget.settings.difficulty, allowed);
+      final topicDiff = widget.settings.topicDifficulties[lang.toLowerCase().trim()] ?? widget.settings.difficulty;
+      final questions = cm.getQuestionsByLanguage(lang.toLowerCase(), topicDiff, allowed);
       total += questions.length;
-      due += cm.getDueQuestions(lang.toLowerCase(), widget.settings.difficulty, allowed).length;
+      due += cm.getDueQuestions(lang.toLowerCase(), topicDiff, allowed).length;
 
       for (final q in questions) {
         final progress = cm.getProgress(q.id);
@@ -319,11 +344,14 @@ class _HomePageState extends State<HomePage> {
       }
     }
 
-    setState(() {
-      _totalQuestions = total;
-      _dueQuestions = due;
-      _masteredQuestions = mastered;
-    });
+    if (mounted) {
+      setState(() {
+        _totalQuestions = total;
+        _dueQuestions = due;
+        _masteredQuestions = mastered;
+        _currentStreak = streak;
+      });
+    }
   }
 
   Future<void> _startFocusedReview() async {
@@ -331,10 +359,11 @@ class _HomePageState extends State<HomePage> {
     Question? q;
     for (final lang in widget.settings.activeLanguages) {
       final allowed = widget.settings.activeSubtopics[lang.toLowerCase().trim()];
+      final topicDiff = widget.settings.topicDifficulties[lang.toLowerCase().trim()] ?? widget.settings.difficulty;
       q = cm.getDueQuestion(
         lang.toLowerCase(),
         false,
-        widget.settings.difficulty,
+        topicDiff,
         allowed,
       );
       if (q != null) break;
@@ -347,6 +376,7 @@ class _HomePageState extends State<HomePage> {
           builder: (context) => QuizScreen(
             question: q!,
             fullScreenLock: widget.settings.fullScreenLock,
+            hapticsEnabled: widget.settings.hapticsEnabled,
           ),
         ),
       );
@@ -405,21 +435,23 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF1B202A),
+                      color: _currentStreak > 0 ? const Color(0xFF1B202A) : const Color(0xFF14171E),
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: const Color(0xFF2C3445)),
+                      border: Border.all(
+                        color: _currentStreak > 0 ? const Color(0xFF2C3445) : const Color(0xFF1E2430),
+                      ),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text('🔥', style: TextStyle(fontSize: 15)),
-                        SizedBox(width: 6),
+                        Text(_currentStreak > 0 ? '🔥' : '🌱', style: const TextStyle(fontSize: 15)),
+                        const SizedBox(width: 6),
                         Text(
-                          '7 días racha',
+                          _currentStreak > 0 ? '$_currentStreak días racha' : 'Comienza tu racha',
                           style: TextStyle(
                             fontSize: 12.5,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFFF3F4F6),
+                            color: _currentStreak > 0 ? const Color(0xFFF3F4F6) : Colors.grey.shade400,
                           ),
                         ),
                       ],
@@ -463,7 +495,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           const SizedBox(height: 3),
                           Text(
-                            'Frecuencia: cada ${widget.settings.frequencyMinutes} min • Nivel ${widget.settings.difficulty.toUpperCase()}',
+                            'Frecuencia: cada ${widget.settings.frequencyMinutes} min • ${widget.settings.activeLanguages.length} temas activos',
                             style: TextStyle(
                               fontSize: 12.5,
                               color: Colors.grey.shade400,
@@ -799,7 +831,7 @@ class SettingsPage extends StatelessWidget {
               ),
               const SizedBox(height: 32),
 
-              // Section 1: Ritmo de Recordatorios (Concept 5 inspired)
+              // Section 1: Ritmo de Recordatorios
               _buildSectionCard(
                 title: 'Frecuencia de Recordatorios',
                 subtitle: 'Cada cuánto tiempo saldrá un concepto de repaso',
@@ -824,55 +856,105 @@ class SettingsPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // Section 2: Modo de Dificultad (Concept 5 inspired segmented)
+              // Section 2: Efectos Hápticos y Sonido (Mobile Ready)
               _buildSectionCard(
-                title: 'Modo de Dificultad',
-                subtitle: 'Ajusta el nivel de desafío conceptual según tu experiencia',
-                icon: Icons.leaderboard_outlined,
+                title: 'Feedback Táctil & Sonido',
+                subtitle: 'Respuesta física al responder preguntas en móvil y escritorio',
+                icon: Icons.vibration_rounded,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF1A1F2A),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: const Color(0xFF283142)),
+                    SwitchListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: const Text(
+                        'Vibración háptica',
+                        style: TextStyle(fontSize: 14.5, fontWeight: FontWeight.w600, color: Colors.white),
                       ),
-                      child: Row(
-                        children: [
-                          _buildDiffSegment('basic', 'Fácil', context),
-                          _buildDiffSegment('medium', 'Medio', context),
-                          _buildDiffSegment('advanced', 'Difícil', context),
-                        ],
+                      subtitle: const Text(
+                        'Vibración sutil al seleccionar respuestas correctas o incorrectas.',
+                        style: TextStyle(fontSize: 12, color: Color(0xFF9CA3AF)),
                       ),
+                      value: settings.hapticsEnabled,
+                      activeThumbColor: const Color(0xFF10B981),
+                      activeTrackColor: const Color(0xFF065F46),
+                      inactiveThumbColor: Colors.grey.shade400,
+                      inactiveTrackColor: const Color(0xFF374151),
+                      onChanged: (val) {
+                        onSettingsChanged(settings.copyWith(hapticsEnabled: val));
+                      },
                     ),
-                    const SizedBox(height: 12),
-                    Text(
-                      _getDifficultyExplanation(settings.difficulty),
-                      style: TextStyle(fontSize: 12.5, color: Colors.grey.shade400),
+                    const Divider(color: Color(0xFF1F2633), height: 16),
+                    SwitchListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: const Text(
+                        'Sonidos de confirmación',
+                        style: TextStyle(fontSize: 14.5, fontWeight: FontWeight.w600, color: Colors.white),
+                      ),
+                      subtitle: const Text(
+                        'Reproduce un tono discreto al acertar un repaso.',
+                        style: TextStyle(fontSize: 12, color: Color(0xFF9CA3AF)),
+                      ),
+                      value: settings.soundEnabled,
+                      activeThumbColor: const Color(0xFF10B981),
+                      activeTrackColor: const Color(0xFF065F46),
+                      inactiveThumbColor: Colors.grey.shade400,
+                      inactiveTrackColor: const Color(0xFF374151),
+                      onChanged: (val) {
+                        onSettingsChanged(settings.copyWith(soundEnabled: val));
+                      },
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
 
-              // Section 3: Comportamiento de Pantalla & Sistema
+              // Section 3: Modo Silencioso / Horas de Estudio
               _buildSectionCard(
-                title: 'Comportamiento en Sistema',
-                subtitle: 'Integración en escritorio y dispositivos móviles',
-                icon: Icons.devices_outlined,
+                title: 'Modo Silencioso / Horas de Sueño',
+                subtitle: 'Pausa los recordatorios automáticos durante tus horas de descanso',
+                icon: Icons.bedtime_outlined,
                 child: Column(
                   children: [
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
                       title: const Text(
-                        'Superposición forzada (Hyprland / Wayland)',
+                        'Pausar recordatorios por horario',
+                        style: TextStyle(fontSize: 14.5, fontWeight: FontWeight.w600, color: Colors.white),
+                      ),
+                      subtitle: Text(
+                        settings.quietHoursEnabled
+                            ? 'Silenciado desde las ${settings.quietStartHour}:00 hasta las ${settings.quietEndHour}:00'
+                            : 'Los recordatorios se emitirán continuamente según tu frecuencia',
+                        style: const TextStyle(fontSize: 12, color: Color(0xFF9CA3AF)),
+                      ),
+                      value: settings.quietHoursEnabled,
+                      activeThumbColor: const Color(0xFF10B981),
+                      activeTrackColor: const Color(0xFF065F46),
+                      inactiveThumbColor: Colors.grey.shade400,
+                      inactiveTrackColor: const Color(0xFF374151),
+                      onChanged: (val) {
+                        onSettingsChanged(settings.copyWith(quietHoursEnabled: val));
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Section 4: Bloqueo de Pantalla y Modo Enfoque
+              _buildSectionCard(
+                title: 'Modo Enfoque & Bloqueo de Pantalla',
+                subtitle: 'Control de atención al momento de responder una pregunta',
+                icon: Icons.fullscreen_rounded,
+                child: Column(
+                  children: [
+                    SwitchListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: const Text(
+                        'Bloqueo de pantalla',
                         style: TextStyle(fontSize: 14.5, fontWeight: FontWeight.w600, color: Colors.white),
                       ),
                       subtitle: const Text(
-                        'Asegura que el recordatorio salte sobre cualquier ventana de trabajo activa.',
+                        'Muestra el cuestionario a pantalla completa y bloquea distracciones hasta responder.',
                         style: TextStyle(fontSize: 12, color: Color(0xFF9CA3AF)),
                       ),
                       value: settings.fullScreenLock,
@@ -974,56 +1056,6 @@ class SettingsPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Widget _buildDiffSegment(String diffKey, String label, BuildContext context) {
-    final bool isSelected = settings.difficulty.toLowerCase() == diffKey;
-    return Expanded(
-      child: InkWell(
-        onTap: () {
-          onSettingsChanged(settings.copyWith(difficulty: diffKey));
-        },
-        borderRadius: BorderRadius.circular(10),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: isSelected ? const Color(0xFF2B364A) : Colors.transparent,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: isSelected
-                ? [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.3),
-                      blurRadius: 4,
-                      offset: const Offset(0, 2),
-                    )
-                  ]
-                : null,
-          ),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-              color: isSelected ? Colors.white : const Color(0xFF9CA3AF),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  String _getDifficultyExplanation(String diff) {
-    switch (diff.toLowerCase()) {
-      case 'basic':
-        return '• Modo Fácil: Recibirás únicamente conceptos básicos e introductorios.';
-      case 'medium':
-        return '• Modo Medio: Recibirás preguntas intermedias y conceptos básicos.';
-      case 'advanced':
-      default:
-        return '• Modo Difícil: Recibirás una combinación de preguntas avanzadas, intermedias y básicas.';
-    }
   }
 }
 

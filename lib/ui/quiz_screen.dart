@@ -8,11 +8,13 @@ import '../core/window_service.dart';
 class QuizScreen extends StatefulWidget {
   final Question question;
   final bool fullScreenLock;
+  final bool hapticsEnabled;
 
   const QuizScreen({
     super.key,
     required this.question,
     this.fullScreenLock = true,
+    this.hapticsEnabled = true,
   });
 
   @override
@@ -57,19 +59,33 @@ class _QuizScreenState extends State<QuizScreen> {
   void _checkAnswer(int index) {
     if (_answered) return;
 
+    final isCorrect = (index == widget.question.correctIndex);
+
+    if (widget.hapticsEnabled) {
+      try {
+        if (isCorrect) {
+          HapticFeedback.lightImpact();
+        } else {
+          HapticFeedback.heavyImpact();
+        }
+      } catch (_) {}
+    }
+
     setState(() {
       _selectedIndex = index;
       _answered = true;
-      _isCorrect = (index == widget.question.correctIndex);
+      _isCorrect = isCorrect;
       _feedbackMessage = _isCorrect
           ? '¡Correcto! Excelente retención.'
           : 'Incorrecto. Revisa el concepto e inténtalo de nuevo.';
     });
 
     ContentManager().recordAnswer(widget.question.id, _isCorrect);
-    StorageService().saveProgressMap(ContentManager().progressMap);
+    final storage = StorageService();
+    storage.saveProgressMap(ContentManager().progressMap);
 
     if (_isCorrect) {
+      storage.recordStudySession();
       Future.delayed(const Duration(milliseconds: 1400), () {
         _exitKioskMode();
         if (mounted) Navigator.of(context).pop();
@@ -86,6 +102,7 @@ class _QuizScreenState extends State<QuizScreen> {
       });
     }
   }
+
 
   void _showHint() {
     showModalBottomSheet(

@@ -561,4 +561,55 @@ class ContentManager {
 
   /// Exposes read-only view of progress map
   Map<String, Progress> get progressMap => Map.unmodifiable(_progressMap);
+
+  /// Calculates mastery stats for a given topic pack:
+  /// Returns a map with 'total', 'learned', 'mastered', 'masteryPercent' (0.0 - 1.0),
+  /// and whether the user is ready to promote to the next difficulty ('canPromote').
+  Map<String, dynamic> getTopicMasteryStats(String packKey, String currentDifficulty, [List<String>? allowedSubtopics]) {
+    final questions = getQuestionsByPack(packKey, currentDifficulty, allowedSubtopics);
+    if (questions.isEmpty) {
+      return {
+        'total': 0,
+        'learned': 0,
+        'mastered': 0,
+        'masteryPercent': 0.0,
+        'canPromote': false,
+        'suggestedDifficulty': currentDifficulty,
+      };
+    }
+
+    int learned = 0;
+    int mastered = 0;
+    for (final q in questions) {
+      final prog = _progressMap[q.id];
+      if (prog != null && prog.repetitions > 0) {
+        learned++;
+        if (prog.intervalDays >= 7) {
+          mastered++;
+        }
+      }
+    }
+
+    final double masteryPercent = learned / questions.length;
+    bool canPromote = false;
+    String suggested = currentDifficulty;
+
+    if (currentDifficulty.toLowerCase() == 'basic' && masteryPercent >= 0.70) {
+      canPromote = true;
+      suggested = 'medium';
+    } else if (currentDifficulty.toLowerCase() == 'medium' && masteryPercent >= 0.75) {
+      canPromote = true;
+      suggested = 'advanced';
+    }
+
+    return {
+      'total': questions.length,
+      'learned': learned,
+      'mastered': mastered,
+      'masteryPercent': masteryPercent,
+      'canPromote': canPromote,
+      'suggestedDifficulty': suggested,
+    };
+  }
 }
+

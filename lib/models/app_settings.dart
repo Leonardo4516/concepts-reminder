@@ -4,6 +4,12 @@ class AppSettings {
   final String difficulty;
   final bool fullScreenLock;
   final Map<String, List<String>> activeSubtopics;
+  final Map<String, String> topicDifficulties;
+  final bool hapticsEnabled;
+  final bool soundEnabled;
+  final bool quietHoursEnabled;
+  final int quietStartHour;
+  final int quietEndHour;
 
   const AppSettings({
     this.frequencyMinutes = 60,
@@ -11,6 +17,12 @@ class AppSettings {
     this.difficulty = 'medium',
     this.fullScreenLock = true,
     this.activeSubtopics = const {},
+    this.topicDifficulties = const {},
+    this.hapticsEnabled = true,
+    this.soundEnabled = true,
+    this.quietHoursEnabled = false,
+    this.quietStartHour = 22,
+    this.quietEndHour = 8,
   });
 
   AppSettings copyWith({
@@ -19,6 +31,12 @@ class AppSettings {
     String? difficulty,
     bool? fullScreenLock,
     Map<String, List<String>>? activeSubtopics,
+    Map<String, String>? topicDifficulties,
+    bool? hapticsEnabled,
+    bool? soundEnabled,
+    bool? quietHoursEnabled,
+    int? quietStartHour,
+    int? quietEndHour,
   }) {
     return AppSettings(
       frequencyMinutes: frequencyMinutes ?? this.frequencyMinutes,
@@ -26,6 +44,12 @@ class AppSettings {
       difficulty: difficulty ?? this.difficulty,
       fullScreenLock: fullScreenLock ?? this.fullScreenLock,
       activeSubtopics: activeSubtopics ?? this.activeSubtopics,
+      topicDifficulties: topicDifficulties ?? this.topicDifficulties,
+      hapticsEnabled: hapticsEnabled ?? this.hapticsEnabled,
+      soundEnabled: soundEnabled ?? this.soundEnabled,
+      quietHoursEnabled: quietHoursEnabled ?? this.quietHoursEnabled,
+      quietStartHour: quietStartHour ?? this.quietStartHour,
+      quietEndHour: quietEndHour ?? this.quietEndHour,
     );
   }
 
@@ -41,6 +65,14 @@ class AppSettings {
       });
     }
 
+    Map<String, String> diffs = {};
+    if (json['topicDifficulties'] != null && json['topicDifficulties'] is Map) {
+      final rawMap = json['topicDifficulties'] as Map;
+      rawMap.forEach((key, value) {
+        diffs[key.toString().toLowerCase()] = value.toString().toLowerCase();
+      });
+    }
+
     return AppSettings(
       frequencyMinutes: json['frequencyMinutes'] as int? ?? 60,
       activeLanguages: (json['activeLanguages'] as List<dynamic>?)
@@ -50,6 +82,12 @@ class AppSettings {
       difficulty: json['difficulty'] as String? ?? 'medium',
       fullScreenLock: json['fullScreenLock'] as bool? ?? true,
       activeSubtopics: subtopics,
+      topicDifficulties: diffs,
+      hapticsEnabled: json['hapticsEnabled'] as bool? ?? true,
+      soundEnabled: json['soundEnabled'] as bool? ?? true,
+      quietHoursEnabled: json['quietHoursEnabled'] as bool? ?? false,
+      quietStartHour: json['quietStartHour'] as int? ?? 22,
+      quietEndHour: json['quietEndHour'] as int? ?? 8,
     );
   }
 
@@ -60,6 +98,12 @@ class AppSettings {
       'difficulty': difficulty,
       'fullScreenLock': fullScreenLock,
       'activeSubtopics': activeSubtopics,
+      'topicDifficulties': topicDifficulties,
+      'hapticsEnabled': hapticsEnabled,
+      'soundEnabled': soundEnabled,
+      'quietHoursEnabled': quietHoursEnabled,
+      'quietStartHour': quietStartHour,
+      'quietEndHour': quietEndHour,
     };
   }
 
@@ -71,6 +115,11 @@ class AppSettings {
           frequencyMinutes == other.frequencyMinutes &&
           difficulty == other.difficulty &&
           fullScreenLock == other.fullScreenLock &&
+          hapticsEnabled == other.hapticsEnabled &&
+          soundEnabled == other.soundEnabled &&
+          quietHoursEnabled == other.quietHoursEnabled &&
+          quietStartHour == other.quietStartHour &&
+          quietEndHour == other.quietEndHour &&
           _listEquals(activeLanguages, other.activeLanguages);
 
   @override
@@ -79,7 +128,13 @@ class AppSettings {
       activeLanguages.fold(0, (prev, element) => prev ^ element.hashCode) ^
       difficulty.hashCode ^
       fullScreenLock.hashCode ^
-      activeSubtopics.hashCode;
+      activeSubtopics.hashCode ^
+      topicDifficulties.hashCode ^
+      hapticsEnabled.hashCode ^
+      soundEnabled.hashCode ^
+      quietHoursEnabled.hashCode ^
+      quietStartHour.hashCode ^
+      quietEndHour.hashCode;
 
   static bool _listEquals<T>(List<T>? a, List<T>? b) {
     if (a == null) return b == null;
@@ -92,6 +147,7 @@ class AppSettings {
 
   @override
   String toString() {
-    return 'AppSettings(frequencyMinutes: $frequencyMinutes, activeLanguages: $activeLanguages, difficulty: $difficulty, fullScreenLock: $fullScreenLock, activeSubtopics: $activeSubtopics)';
+    return 'AppSettings(frequencyMinutes: $frequencyMinutes, activeLanguages: $activeLanguages, topicDifficulties: $topicDifficulties, fullScreenLock: $fullScreenLock, activeSubtopics: $activeSubtopics)';
   }
 }
+
