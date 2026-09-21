@@ -35,7 +35,14 @@ void main() async {
   runApp(ConceptsReminderApp(initialSettings: settings));
 }
 
+bool _isQuizOpen = false;
+
 void _triggerReminderQuiz() {
+  if (_isQuizOpen) {
+    debugPrint("Recordatorio omitido: ya hay un cuestionario en pantalla esperando que el usuario lo resuelva.");
+    return;
+  }
+
   final currentContext = navigatorKey.currentContext;
   if (currentContext == null) return;
 
@@ -82,6 +89,7 @@ void _triggerReminderQuiz() {
     );
 
     if (selectedQuestion != null) {
+      _isQuizOpen = true;
       navigatorKey.currentState?.push(
         MaterialPageRoute(
           builder: (context) => QuizScreen(
@@ -90,7 +98,11 @@ void _triggerReminderQuiz() {
             hapticsEnabled: settings.hapticsEnabled,
           ),
         ),
-      );
+      ).then((_) {
+        _isQuizOpen = false;
+        // El reconteo del próximo recordatorio inicia exactamente cuando el usuario resuelve y cierra la pantalla
+        ReminderScheduler().updateFrequency(settings.frequencyMinutes);
+      });
     }
   });
 }
@@ -269,28 +281,23 @@ class _MainDashboardState extends State<MainDashboard> {
   }
 
   Widget _buildContent() {
-    switch (_selectedIndex) {
-      case 0:
-        return HomePage(
+    return IndexedStack(
+      index: _selectedIndex,
+      children: [
+        HomePage(
           settings: widget.settings,
           onNavigateToTopics: () => _onNavigate(1),
-        );
-      case 1:
-        return TopicsPage(
+        ),
+        TopicsPage(
           settings: widget.settings,
           onSettingsChanged: widget.onSettingsChanged,
-        );
-      case 2:
-        return SettingsPage(
+        ),
+        SettingsPage(
           settings: widget.settings,
           onSettingsChanged: widget.onSettingsChanged,
-        );
-      default:
-        return HomePage(
-          settings: widget.settings,
-          onNavigateToTopics: () => _onNavigate(1),
-        );
-    }
+        ),
+      ],
+    );
   }
 }
 
@@ -913,6 +920,7 @@ class SettingsPage extends StatelessWidget {
                 subtitle: 'Pausa los recordatorios automáticos durante tus horas de descanso',
                 icon: Icons.bedtime_outlined,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SwitchListTile(
                       contentPadding: EdgeInsets.zero,
@@ -922,7 +930,7 @@ class SettingsPage extends StatelessWidget {
                       ),
                       subtitle: Text(
                         settings.quietHoursEnabled
-                            ? 'Silenciado desde las ${settings.quietStartHour}:00 hasta las ${settings.quietEndHour}:00'
+                            ? 'Silenciado desde las ${settings.quietStartHour.toString().padLeft(2, '0')}:00 hasta las ${settings.quietEndHour.toString().padLeft(2, '0')}:00'
                             : 'Los recordatorios se emitirán continuamente según tu frecuencia',
                         style: const TextStyle(fontSize: 12, color: Color(0xFF9CA3AF)),
                       ),
@@ -935,6 +943,100 @@ class SettingsPage extends StatelessWidget {
                         onSettingsChanged(settings.copyWith(quietHoursEnabled: val));
                       },
                     ),
+                    if (settings.quietHoursEnabled) ...[
+                      const Divider(color: Color(0xFF1F2633), height: 20),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Hora de inicio (Dormir)',
+                                  style: TextStyle(fontSize: 12, color: Color(0xFF9CA3AF)),
+                                ),
+                                const SizedBox(height: 6),
+                                InkWell(
+                                  onTap: () async {
+                                    final picked = await showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay(hour: settings.quietStartHour, minute: 0),
+                                      helpText: 'Selecciona hora de inicio de silencio',
+                                    );
+                                    if (picked != null) {
+                                      onSettingsChanged(settings.copyWith(quietStartHour: picked.hour));
+                                    }
+                                  },
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF1A1F2A),
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(color: const Color(0xFF283244)),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '${settings.quietStartHour.toString().padLeft(2, '0')}:00',
+                                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+                                        ),
+                                        const Icon(Icons.access_time_rounded, size: 16, color: Color(0xFF34D399)),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Hora de fin (Despertar)',
+                                  style: TextStyle(fontSize: 12, color: Color(0xFF9CA3AF)),
+                                ),
+                                const SizedBox(height: 6),
+                                InkWell(
+                                  onTap: () async {
+                                    final picked = await showTimePicker(
+                                      context: context,
+                                      initialTime: TimeOfDay(hour: settings.quietEndHour, minute: 0),
+                                      helpText: 'Selecciona hora de fin de silencio',
+                                    );
+                                    if (picked != null) {
+                                      onSettingsChanged(settings.copyWith(quietEndHour: picked.hour));
+                                    }
+                                  },
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF1A1F2A),
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(color: const Color(0xFF283244)),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '${settings.quietEndHour.toString().padLeft(2, '0')}:00',
+                                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+                                        ),
+                                        const Icon(Icons.wb_sunny_outlined, size: 16, color: Color(0xFF34D399)),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ],
                 ),
               ),
@@ -982,13 +1084,14 @@ class SettingsPage extends StatelessWidget {
     required IconData icon,
     required Widget child,
   }) {
-    return Container(
-      padding: const EdgeInsets.all(22),
-      decoration: BoxDecoration(
-        color: const Color(0xFF13171F),
+    return Material(
+      color: const Color(0xFF13171F),
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: const Color(0xFF202633)),
+        side: const BorderSide(color: Color(0xFF202633)),
       ),
+      child: Container(
+        padding: const EdgeInsets.all(22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1025,6 +1128,7 @@ class SettingsPage extends StatelessWidget {
           child,
         ],
       ),
+    ),
     );
   }
 

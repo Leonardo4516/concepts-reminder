@@ -1,67 +1,2102 @@
 [
   {
     "id": "ts_001",
-    "question": "En TypeScript, ¿cuál es la diferencia clave entre una `interface` y un `type` alias?",
+    "question": "¿Para qué sirve el estrechamiento de tipos (type narrowing) con 'typeof'?",
     "options": [
-      "Las interfaces no soportan objetos y los types solo números.",
-      "Las interfaces pueden extenderse mediante declaración múltiple ('declaration merging') y son ideales para contratos de objetos OOP; los type aliases son más flexibles para uniones primitivas, tuplas y tipos mapeados.",
-      "Los types se compilan a código ejecutable en runtime y las interfaces desaparecen.",
-      "No existe diferencia; son 100% intercambiables en todas las situaciones."
+      "Discriminar entre tipos primitivos como string, number o boolean en bloques de control.",
+      "Instanciar una clase secundaria copiando todas sus propiedades de prototipo.",
+      "Convertir variables dinámicas en tipos genéricos inmutables en tiempo de ejecución.",
+      "Verificar si una interfaz hereda de otra estructura mediante introspección estricta."
     ],
-    "correct_index": 1,
-    "hint": "Dos interfaces con el mismo nombre se fusionan automáticamente. Un `type` con el mismo nombre genera un error de duplicidad.",
-    "subtopic": "fundamentos"
+    "correct_index": 0,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "typeof permite a TypeScript acotar el tipo inspeccionando primitivos en ramas condicionales."
   },
   {
     "id": "ts_002",
-    "question": "En el sistema de tipos de TypeScript, ¿en qué se diferencia el tipo `unknown` del tipo `any`?",
+    "question": "¿Cómo funciona el operador 'instanceof' en el estrechamiento de tipos?",
     "options": [
-      "`any` desactiva completamente la verificación de tipos; `unknown` representa un valor de tipo desconocido y exige verificación de tipos previa (type narrowing) antes de operar con él.",
-      "`unknown` solo admite strings y `any` cualquier objeto.",
-      "`any` es el tipo más seguro de TypeScript introducido en la versión 5.",
-      "`unknown` arroja errores fatales en tiempo de ejecución si se le asigna un número."
+      "Revisa si un tipo genérico cumple con una restricción definida con la cláusula extends.",
+      "Comprueba si un objeto fue instanciado por una clase específica mediante su prototipo.",
+      "Valida que una variable contenga todas las firmas de sobrecarga de una función.",
+      "Fuerza la compilación del bloque sin validar el tipado estático del constructor."
     ],
-    "correct_index": 0,
-    "hint": "`unknown` es la contraparte segura de `any`. Te obliga a hacer `typeof x === 'string'` o validaciones antes de invocar métodos.",
-    "subtopic": "fundamentos"
+    "correct_index": 1,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "instanceof evalúa la cadena prototípica de un objeto para refinarlo a una clase concreta."
   },
   {
     "id": "ts_003",
-    "question": "¿Qué representa el tipo `never` en TypeScript y en qué escenario se utiliza?",
+    "question": "¿Qué logra el estrechamiento por igualdad estricta (===) en TypeScript?",
     "options": [
-      "Representa un valor que puede ser nulo o indefinido temporalmente.",
-      "Representa el tipo de valores que nunca ocurren (ej: funciones que arrojan excepciones o entran en bucles infinitos, o comprobaciones exhaustivas de unión).",
-      "Es un sinónimo de `void` que devuelve null.",
-      "Una variable declarada pero que nunca fue leída por el garbage collector."
+      "Transforma una variable de tipo unknown en un tipo primitivo number de inmediato.",
+      "Sobrescribe el tipo de retorno de la función contenedora con el tipo del operando.",
+      "Reduce el tipo de una variable al compararla con un valor literal concreto o null.",
+      "Genera un error de sintaxis si los dos operandos no comparten la misma interfaz."
     ],
-    "correct_index": 1,
-    "hint": "Muy útil para comprobar en un `switch` que todos los casos de una unión discriminada fueron manejados (`const _exhaustiveCheck: never = x;`).",
-    "subtopic": "fundamentos"
+    "correct_index": 2,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "Comparar con === permite al compilador deducir el tipo exacto en la rama verdadera."
   },
   {
     "id": "ts_004",
-    "question": "¿Qué función cumple el tipo de utilidad nativo `Record<K, T>` en TypeScript?",
+    "question": "¿Qué tipo infiere TypeScript para una variable refinada en un bloque 'if (x)'?",
     "options": [
-      "Graba llamadas de red en una base de datos local SQLite.",
-      "Construye un tipo de objeto cuyas claves son del tipo K y cuyos valores son del tipo T.",
-      "Convierte todas las propiedades de un objeto en opcionales.",
-      "Serializa un objeto a formato XML de forma síncrona."
+      "Convierte la variable obligatoriamente en un tipo booleano primitivo puro.",
+      "Promueve la variable a tipo any para permitir invocar cualquier método libremente.",
+      "Descarta únicamente el valor null pero conserva intacto el tipo undefined.",
+      "Elimina los tipos falsy como null, undefined, false, 0 y cadena vacía."
     ],
-    "correct_index": 1,
-    "hint": "Por ejemplo: `Record<string, number>` representa un diccionario con claves de texto y valores numéricos.",
-    "subtopic": "fundamentos"
+    "correct_index": 3,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "El narrowing por veracidad descarta todos los valores evaluados como falsy en JavaScript."
   },
   {
     "id": "ts_005",
-    "question": "¿Para qué se utiliza el operador `keyof` en TypeScript?",
+    "question": "¿Cómo estrecha tipos el operador 'in' en objetos?",
     "options": [
-      "Para abrir archivos protegidos con contraseña en Node.js.",
-      "Produce una unión de tipos literales con los nombres de las claves de un tipo de objeto.",
-      "Elimina una clave de una interfaz en tiempo de compilación.",
-      "Itera sobre los valores de un arreglo en tiempo de ejecución."
+      "Verifica la presencia de una propiedad específica discriminando entre interfaces posibles.",
+      "Calcula el número de elementos contenidos dentro de una tupla de tamaño estático.",
+      "Determina si un método fue compilado en formato CommonJS o ES Modules en disco.",
+      "Obliga al objeto a implementar todas las claves opcionales declaradas en su tipo."
+    ],
+    "correct_index": 0,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "'propiedad in obj' permite a TypeScript distinguir qué miembro de una unión está presente."
+  },
+  {
+    "id": "ts_006",
+    "question": "¿Qué es una unión discriminada (discriminated union) en TypeScript?",
+    "options": [
+      "Un conjunto de tipos primitivos que no pueden combinarse mediante intersecciones.",
+      "Una unión de tipos de objetos que comparten una propiedad literal común que actúa como tag.",
+      "Una tupla de valores constantes que lanza un error al intentar modificar su longitud.",
+      "Una función genérica que rechaza cualquier argumento que no sea un número entero."
     ],
     "correct_index": 1,
-    "hint": "Si `type User = { id: number; name: string }`, entonces `keyof User` es `'id' | 'name'`.",
-    "subtopic": "fundamentos"
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "Las discriminated unions usan un campo literal compartido (tag) para distinguir tipos."
+  },
+  {
+    "id": "ts_007",
+    "question": "¿Cuál es la diferencia primordial entre unión (|) e intersección (&)?",
+    "options": [
+      "La unión solo acepta primitivos; la intersección solo opera sobre clases abstractas.",
+      "La unión congela las propiedades del objeto; la intersección las vuelve reescribibles.",
+      "La unión exige cumplir al menos un tipo; la intersección exige cumplir todos los tipos a la vez.",
+      "No existe diferencia funcional; son símbolos alternativos para la misma operación."
+    ],
+    "correct_index": 2,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "A | B representa valores que satisfacen A o B; A & B exige combinar las propiedades de ambos."
+  },
+  {
+    "id": "ts_008",
+    "question": "¿Por qué el tipo 'unknown' es considerado más seguro que 'any'?",
+    "options": [
+      "No permite asignar ningún valor posterior tras su inicialización en la declaración.",
+      "Se compila en un tipo numérico de coma flotante en el archivo JavaScript final.",
+      "Descarta automáticamente cualquier valor recibido que sea igual a undefined.",
+      "Obliga a realizar comprobaciones de tipo antes de permitir operar con el valor asignado."
+    ],
+    "correct_index": 3,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "unknown requiere estrechar o comprobar el tipo antes de llamar métodos o leer atributos."
+  },
+  {
+    "id": "ts_009",
+    "question": "¿Qué representa el tipo 'never' en el sistema de tipos de TypeScript?",
+    "options": [
+      "Un estado imposible o un valor que jamás puede llegar a ocurrir en el flujo.",
+      "Una variable temporal cuyo valor inicial todavía no ha sido asignado por el usuario.",
+      "Un alias alternativo para el valor null en funciones que no devuelven nada.",
+      "Una función asíncrona que tarda más de diez segundos en resolver su promesa."
+    ],
+    "correct_index": 0,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "never representa la ausencia total de valores posibles o ramas de código inalcanzables."
+  },
+  {
+    "id": "ts_010",
+    "question": "¿Qué diferencia a una aserción de tipo ('as Type') de una anotación estándar?",
+    "options": [
+      "Ejecuta una validación en tiempo de ejecución lanzando una excepción si no coincide.",
+      "Fuerza al compilador a asumir un tipo anulando la inferencia sin alterar el runtime.",
+      "Convierte el valor en tiempo de compilación a una cadena JSON serializada en disco.",
+      "Garantiza que la variable sea inmutable durante toda la ejecución de la app."
+    ],
+    "correct_index": 1,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "La aserción 'as T' es solo para el compilador; no realiza ninguna conversión en runtime."
+  },
+  {
+    "id": "ts_011",
+    "question": "¿Qué función cumple el operador de aserción no nula (!) al final de una expresión?",
+    "options": [
+      "Invierte el valor lógico de la variable de forma idéntica a un operador booleano.",
+      "Lanza un TypeError en tiempo de ejecución si la variable resulta ser indefinida.",
+      "Le indica al compilador que el valor evaluado no es 'null' ni 'undefined'.",
+      "Convierte cualquier función sincrónica en una microtarea prioritaria del motor."
+    ],
+    "correct_index": 2,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "El operador postfix ! elimina null y undefined del tipo sin cheques de runtime."
+  },
+  {
+    "id": "ts_012",
+    "question": "¿Qué produce la aserción 'as const' sobre un objeto literal?",
+    "options": [
+      "Convierte el objeto en una clase nativa de JavaScript protegida con Object.seal.",
+      "Impide que el objeto sea exportado hacia otros módulos del mismo proyecto.",
+      "Genera código JavaScript adicional que valida la estructura en tiempo de ejecución.",
+      "Vuelve todas sus propiedades de solo lectura e infiere sus valores como tipos literales."
+    ],
+    "correct_index": 3,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "'as const' fija literales exactos y marca todas las propiedades anidadas como readonly."
+  },
+  {
+    "id": "ts_013",
+    "question": "¿Qué es un tipo literal en el contexto de TypeScript?",
+    "options": [
+      "Un tipo que representa exactamente un valor concreto específico de string, number o boolean.",
+      "Una variable que solo puede contener fragmentos de código fuente sin procesar.",
+      "Un comentario del código que el compilador interpreta como documentación estática.",
+      "Una expresión matemática que se evalúa de manera diferida durante la ejecución."
+    ],
+    "correct_index": 0,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "Un tipo literal (ej: 'admin' o 404) solo acepta ese valor exacto específico."
+  },
+  {
+    "id": "ts_014",
+    "question": "¿Cuál es la diferencia entre un array tipado (T[]) y una tupla ([T, U])?",
+    "options": [
+      "El array solo admite tipos numéricos; la tupla permite cualquier tipo primitivo.",
+      "El array tiene longitud variable de un tipo; la tupla fija longitud y tipos por posición.",
+      "La tupla es mutable mientras que el array se congela automáticamente al crearse.",
+      "El array genera código en runtime mientras que la tupla solo existe en tiempo de compilación."
+    ],
+    "correct_index": 1,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "Las tuplas definen un número fijo de elementos con tipos específicos para cada índice."
+  },
+  {
+    "id": "ts_015",
+    "question": "¿Qué efecto tiene declarar un array como 'readonly number[]'?",
+    "options": [
+      "Oculta todos los elementos del arreglo para que no puedan ser leídos en consola.",
+      "Permite únicamente añadir elementos al final del array pero nunca al principio.",
+      "Inhabilita métodos mutadores como push, pop, shift o asignación directa por índice.",
+      "Convierte los números almacenados en cadenas de texto inmutables al instante."
+    ],
+    "correct_index": 2,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "readonly en arrays impide reasignar índices y elimina métodos de mutación como push."
+  },
+  {
+    "id": "ts_016",
+    "question": "¿Qué diferencia hay entre una función que retorna 'void' y una que retorna 'undefined'?",
+    "options": [
+      "'void' detiene el Call Stack de JavaScript; 'undefined' cede el control al Event Loop.",
+      "'void' solo puede usarse en constructores; 'undefined' solo en métodos estáticos.",
+      "Son estrictamente idénticos y el compilador los procesa sin ninguna distinción.",
+      "'void' ignora cualquier valor retornado; 'undefined' exige retornar explícitamente undefined."
+    ],
+    "correct_index": 3,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "void permite que la función retorne un valor que será ignorado; undefined exige retorno literal."
+  },
+  {
+    "id": "ts_017",
+    "question": "¿Qué aporta el uso de tipos genéricos en funciones (<T>(arg: T) => T)?",
+    "options": [
+      "Permite capturar y preservar el tipo exacto del argumento suministrado en el retorno.",
+      "Obliga al programador a compilar el código utilizando múltiples hilos de hardware.",
+      "Convierte automáticamente todos los valores de entrada en tipos primitivos string.",
+      "Desactiva las alertas del linter durante la ejecución de pruebas unitarias."
+    ],
+    "correct_index": 0,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "basic",
+    "hint": "Los genéricos parametrizan tipos permitiendo reutilizar código preservando la información de tipos."
+  },
+  {
+    "id": "ts_018",
+    "question": "¿Cuál es la sintaxis básica de un tipo condicional en TypeScript?",
+    "options": [
+      "if (T instanceof U) { type X } else { type Y } mediante bloques de control.",
+      "T extends U ? X : Y (si T es asignable a U adopta el tipo X, de lo contrario adopta Y).",
+      "T is U => X | Y dependiendo de la evaluación en tiempo de ejecución del script.",
+      "switch (T) case U: return X; default: return Y; usando ramas de compilación."
+    ],
+    "correct_index": 1,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "Los conditional types usan el operador ternario con 'extends' para evaluar tipos."
+  },
+  {
+    "id": "ts_019",
+    "question": "¿Qué función desempeña la palabra clave 'infer' en tipos condicionales?",
+    "options": [
+      "Importa dinámicamente un tipo desde una biblioteca externa sin usar require.",
+      "Fuerza al compilador a adivinar el tipo de una variable en modo inseguro.",
+      "Declara una variable de tipo que será deducida dentro de la cláusula 'extends'.",
+      "Convierte una función sincrónica en una firma asíncrona de forma automática."
+    ],
+    "correct_index": 2,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "infer permite extraer y nombrar un tipo interno dentro de una condición extends."
+  },
+  {
+    "id": "ts_020",
+    "question": "¿Cómo operan los tipos condicionales distributivos cuando se les pasa una unión?",
+    "options": [
+      "La unión se evalúa como un todo indivisible arrojando siempre la rama falsa.",
+      "Se genera un error de compilación exigiendo pasar tipos monomórficos individuales.",
+      "Solo se evalúa el primer elemento de la unión descartando el resto en silencio.",
+      "La condición se aplica por separado a cada miembro de la unión combinando los resultados."
+    ],
+    "correct_index": 3,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "Naked type parameters en tipos condicionales se distribuyen automáticamente sobre uniones."
+  },
+  {
+    "id": "ts_021",
+    "question": "¿Cómo se define un Template Literal Type en TypeScript?",
+    "options": [
+      "Utilizando comillas invertidas interpolando otros tipos: `${Prefijo}_${Sufijo}`.",
+      "Invocando la función global String.raw con una lista de interfaces genéricas.",
+      "Declarando un enum cuyos valores sean constantes de texto separadas por comas.",
+      "Aplicando el operador de multiplicación sobre una tupla de cadenas de texto."
+    ],
+    "correct_index": 0,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "Los template literal types crean combinaciones de cadenas a nivel de tipos usando `${T}`."
+  },
+  {
+    "id": "ts_022",
+    "question": "¿Qué produce el operador 'keyof T' sobre una interfaz?",
+    "options": [
+      "Un array en tiempo de ejecución que contiene los nombres de las propiedades en string.",
+      "Una unión de tipos literales que representan los nombres de las claves públicas de T.",
+      "Un número entero que indica la cantidad total de métodos declarados en la clase.",
+      "Un booleano que valida si el tipo contiene al menos una propiedad obligatoria."
+    ],
+    "correct_index": 1,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "keyof extrae una unión de tipos literales con los identificadores de propiedades de T."
+  },
+  {
+    "id": "ts_023",
+    "question": "¿Qué es un tipo de acceso indexado (Indexed Access Type) como T[K]?",
+    "options": [
+      "Una función nativa que busca el índice numérico de un elemento en un arreglo.",
+      "Una sentencia que borra una propiedad del objeto en tiempo de compilación.",
+      "Un mecanismo para consultar y extraer el tipo exacto de una propiedad específica de T.",
+      "Una sintaxis para asignar un valor por defecto a una clave inexistente en T."
+    ],
+    "correct_index": 2,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "T[K] (lookup type) obtiene el tipo de la propiedad K perteneciente al tipo T."
+  },
+  {
+    "id": "ts_024",
+    "question": "¿Qué estructura describe la sintaxis de un tipo mapeado (Mapped Type)?",
+    "options": [
+      "{ map(K => Type) } aplicando una función de transformación sobre cada propiedad.",
+      "interface Mapped<T> { [key]: value } declarada con doble corchete angular.",
+      "type Mapped = Array.prototype.map aplicada sobre una lista de strings literales.",
+      "{ [K in Keys]: Type } para iterar sobre un conjunto de claves y generar propiedades."
+    ],
+    "correct_index": 3,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "Los mapped types iteran claves usando 'in' para proyectar nuevas estructuras de tipos."
+  },
+  {
+    "id": "ts_025",
+    "question": "¿Para qué sirven los modificadores '-readonly' y '-?' en tipos mapeados?",
+    "options": [
+      "Para remover la inmutabilidad y la opcionalidad de las propiedades mapeadas.",
+      "Para ocultar las claves durante la serialización a formato JSON en el navegador.",
+      "Para lanzar una advertencia si la propiedad no ha sido asignada previamente.",
+      "Para convertir los métodos del objeto en funciones puramente estáticas."
+    ],
+    "correct_index": 0,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "El prefijo '-' quita modificadores: -readonly hace mutable y -? hace requerida la propiedad."
+  },
+  {
+    "id": "ts_026",
+    "question": "¿Cómo se realiza el remapeo de claves (Key Remapping) en mapped types?",
+    "options": [
+      "Invocando el método global Object.renameKeys() antes del bloque de declaración.",
+      "Utilizando la cláusula 'as' dentro del encabezado: [K in keyof T as NuevoNombre].",
+      "Asignando una nueva cadena mediante el operador de igualdad doble dentro de la clave.",
+      "Heredando de una clase secundaria que sobreescriba los identificadores originales."
+    ],
+    "correct_index": 1,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "Key remapping con 'as' permite filtrar o transformar nombres de propiedades en mapped types."
+  },
+  {
+    "id": "ts_027",
+    "question": "¿Qué define a un User-Defined Type Guard (predicado de tipo)?",
+    "options": [
+      "Una función que lanza una excepción en caso de que el argumento sea undefined.",
+      "Una aserción 'as any' colocada al comienzo del archivo de configuración de TS.",
+      "Una función cuyo tipo de retorno tiene la forma 'parametro is TipoDeseado'.",
+      "Un decorador de clase que inspecciona los metadatos de reflexión en runtime."
+    ],
+    "correct_index": 2,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "Los predicados 'x is T' instruyen al compilador a estrechar x al tipo T en ramas verdaderas."
+  },
+  {
+    "id": "ts_028",
+    "question": "¿Qué diferencia a una función de aserción ('asserts condicion') de un type guard?",
+    "options": [
+      "Retorna un valor booleano que debe comprobarse obligatoriamente dentro de un if.",
+      "Convierte la variable en un tipo generador que suspende la ejecución con yield.",
+      "Solo puede invocarse en scripts que se ejecuten en servidores con Node.js v18+.",
+      "Si la condición falla arroja un error en runtime y estrecha el tipo en las líneas siguientes."
+    ],
+    "correct_index": 3,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "Las assertion functions estrechan tipos para el resto del ámbito lanzando error si fallan."
+  },
+  {
+    "id": "ts_029",
+    "question": "¿Cuál es la ventaja de usar el operador 'satisfies' frente a anotar el tipo con dos puntos?",
+    "options": [
+      "Valida que el valor cumple el tipo sin perder la inferencia más específica de sus literales.",
+      "Convierte el objeto en una estructura congelada e inmutable de forma permanente.",
+      "Elimina la necesidad de definir interfaces o tipos para las variables del script.",
+      "Comprueba que el objeto tenga métodos asíncronos para todas sus propiedades."
+    ],
+    "correct_index": 0,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "satisfies valida compatibilidad con un tipo pero conserva la inferencia exacta del valor."
+  },
+  {
+    "id": "ts_030",
+    "question": "¿Qué es el patrón de 'Branded Types' (tipos nominales simulados)?",
+    "options": [
+      "Registrar el nombre de la interfaz en una base de datos central de marcas registradas.",
+      "Añadir una propiedad ficticia o símbolo único al tipo para evitar asignaciones accidentales.",
+      "Prohibir que dos archivos del mismo proyecto declaren tipos con nombres parecidos.",
+      "Obligar a que todos los tipos del módulo comiencen obligatoriamente con mayúscula."
+    ],
+    "correct_index": 1,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "Los branded types usan una propiedad phantom (ej: _brand) para lograr tipado nominal."
+  },
+  {
+    "id": "ts_031",
+    "question": "¿Cómo trata TypeScript la varianza en los parámetros de funciones (strictFunctionTypes)?",
+    "options": [
+      "Los parámetros son siempre covariantes permitiendo cualquier subtipo libremente.",
+      "Los parámetros son invariantes exigiendo exactamente la misma referencia de memoria.",
+      "Los parámetros se comportan de forma contravariante en asignaciones de tipos.",
+      "La varianza se ignora por completo tratándose todos los parámetros como tipo any."
+    ],
+    "correct_index": 2,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "Bajo strictFunctionTypes, los parámetros de función son contravariantes (subtipos invertidos)."
+  },
+  {
+    "id": "ts_032",
+    "question": "¿Cómo se garantiza una comprobación exhaustiva (exhaustiveness check) con 'never'?",
+    "options": [
+      "Invocando process.exit() cuando el switch no encuentre ninguna coincidencia válida.",
+      "Lanzando un error genérico sin comprobar el tipo de la variable evaluada.",
+      "Añadiendo un comentario especial de TypeScript que deshabilite las alertas del compilador.",
+      "Asignando la variable a una constante de tipo never en la rama default de un switch."
+    ],
+    "correct_index": 3,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "Asignar a never en el default falla en compilación si quedan miembros de la unión sin cubrir."
+  },
+  {
+    "id": "ts_033",
+    "question": "¿Qué permite un alias de tipo recursivo en TypeScript moderno?",
+    "options": [
+      "Definir estructuras auto-referenciales como árboles o formatos anidados de JSON.",
+      "Ejecutar bucles de cálculo matemático durante la fase de análisis léxico.",
+      "Clonar tipos primitivos hasta agotar la memoria disponible en el equipo.",
+      "Compilar funciones recursivas sin necesidad de especificar un caso base."
+    ],
+    "correct_index": 0,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "Los recursive type aliases permiten modelar árboles, nodos anidados y tipos como JSONValue."
+  },
+  {
+    "id": "ts_034",
+    "question": "¿Cómo se restringen los argumentos de un genérico mediante la cláusula 'extends'?",
+    "options": [
+      "Escribiendo <T implements Restriccion> como si se tratara de una clase abstracta.",
+      "Declarando <T extends Restriccion> para exigir que T posea ciertas propiedades o formas.",
+      "Añadiendo una aserción 'as Restriccion' en cada línea donde se invoque la función.",
+      "Encapsulando la función dentro de un bloque try/catch en el archivo JavaScript final."
+    ],
+    "correct_index": 1,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "medium",
+    "hint": "Generic constraints con extends (<T extends Shape>) restringen qué tipos son aceptables."
+  },
+  {
+    "id": "ts_035",
+    "question": "¿Cómo se evita la distribución de un tipo condicional sobre miembros de una unión?",
+    "options": [
+      "Añadiendo la directiva '// @ts-ignore-distribution' antes de la definición del tipo.",
+      "Declarando el tipo como una interfaz con sobrecargas de funciones en lugar de un type.",
+      "Envolviendo ambos operandos de la comparación en tuplas: [T] extends [U] ? X : Y.",
+      "Separando los miembros de la unión utilizando el operador coma en lugar de la barra."
+    ],
+    "correct_index": 2,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "advanced",
+    "hint": "[T] extends [U] suprime la distribución preservando la unión como un bloque único."
+  },
+  {
+    "id": "ts_036",
+    "question": "¿Por qué un tipo condicional distributivo con 'boolean' se bifurca en dos ramas?",
+    "options": [
+      "Porque el compilador asume que cualquier booleano puede contener el valor undefined.",
+      "Porque los tipos condicionales evalúan las expresiones booleanas en tiempo de ejecución.",
+      "Porque el estándar ECMAScript exige que los booleanos tengan tres estados posibles.",
+      "Porque 'boolean' se define internamente como la unión de tipos literales 'true | false'."
+    ],
+    "correct_index": 3,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "advanced",
+    "hint": "boolean es un alias de 'true | false'; al distribuirse evalúa true y false por separado."
+  },
+  {
+    "id": "ts_037",
+    "question": "¿Qué ocurre si se evalúa un tipo condicional distributivo desnudo pasando 'never' como T?",
+    "options": [
+      "Retorna 'never' de inmediato sin evaluar ninguna de las ramas verdadera ni falsa.",
+      "Evalúa la rama falsa devolviendo el tipo alternativo especificado en la condición.",
+      "Lanza un error de recursión infinita en el analizador sintáctico de TypeScript.",
+      "Se resuelve como tipo 'unknown' al no encontrar ningún miembro en la unión."
+    ],
+    "correct_index": 0,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "advanced",
+    "hint": "never es una unión vacía; una condición distributiva desnuda sobre never retorna never."
+  },
+  {
+    "id": "ts_038",
+    "question": "¿Para qué sirven las anotaciones de varianza explícitas 'in' y 'out' en genéricos (TS 4.7)?",
+    "options": [
+      "Para importar y exportar tipos entre diferentes archivos de declaración de tipos .d.ts.",
+      "Para declarar explícitamente la covarianza (out) o contravarianza (in) optimizando el chequeo.",
+      "Para controlar si los parámetros de la función pueden recibir flujos de entrada o salida.",
+      "Para forzar a que un tipo genérico solo acepte estructuras de datos de tipo stream."
+    ],
+    "correct_index": 1,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "advanced",
+    "hint": "Las anotaciones in/out indican varianza explícita acelerando la comprobación de tipos."
+  },
+  {
+    "id": "ts_039",
+    "question": "¿Cómo implementa internamente la utilidad 'Awaited<T>' el desenvolvimiento de promesas?",
+    "options": [
+      "Invoca el método nativo Promise.resolve() durante la fase de transpilación a código JS.",
+      "Convierte el tipo de retorno en una tupla de valores numéricos de coma flotante.",
+      "Utiliza un tipo condicional recursivo con 'infer' para desenvolver Thenables anidados.",
+      "Aplica una macro del preprocesador que elimina la palabra clave Promise del AST."
+    ],
+    "correct_index": 2,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "advanced",
+    "hint": "Awaited desenvuelve recursivamente Thenables usando conditional types y cláusulas infer."
+  },
+  {
+    "id": "ts_040",
+    "question": "¿Qué limitación de profundidad introdujo TypeScript para evitar bloqueos por recursión?",
+    "options": [
+      "Una cuota estricta que prohíbe tener más de tres tipos anidados en un solo archivo.",
+      "Un temporizador que interrumpe la compilación si un tipo tarda más de 50 milisegundos.",
+      "La obligación de compilar los tipos recursivos usando una versión externa de Babel.",
+      "Un límite de recursión de instanciación con optimización de recursión por cola en TS 4.5+."
+    ],
+    "correct_index": 3,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "advanced",
+    "hint": "TypeScript limita la profundidad de instanciación genérica e incluye tail-call optimization."
+  },
+  {
+    "id": "ts_041",
+    "question": "¿Cómo se comporta 'keyof' cuando un tipo incluye claves de tipo Symbol?",
+    "options": [
+      "Incluye los símbolos en la unión resultante junto con los tipos string y number.",
+      "Descarta silenciosamente los símbolos reteniendo únicamente las cadenas de texto.",
+      "Convierte los símbolos en nombres de cadenas basados en su descripción textual.",
+      "Genera un error de compilación al no admitir símbolos en tipos de objetos indexados."
+    ],
+    "correct_index": 0,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "advanced",
+    "hint": "keyof T produce una unión de string | number | symbol correspondiente a las claves de T."
+  },
+  {
+    "id": "ts_042",
+    "question": "¿Por qué las firmas de métodos en interfaces son bivariantes mientras las propiedades no?",
+    "options": [
+      "Porque los métodos de interfaz se compilan como funciones nativas en lenguaje ensamblador.",
+      "Por compatibilidad histórica con la mutación de arrays; strictFunctionTypes solo aplica a propiedades.",
+      "Porque las propiedades de interfaz no admiten la asignación de funciones de tipo flecha.",
+      "Porque el compilador asume que los métodos nunca pueden recibir argumentos nulos."
+    ],
+    "correct_index": 1,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "advanced",
+    "hint": "Las firmas de método { m(x: T): void } son bivariantes por razones de compatibilidad histórica."
+  },
+  {
+    "id": "ts_043",
+    "question": "¿Cómo se diseña un sistema de eventos fuertemente tipado mediante tipos avanzados?",
+    "options": [
+      "Declarando una clase abstracta global que capture todos los strings como tipo any.",
+      "Creando un enum numérico con todos los eventos y convirtiéndolo a un array plano.",
+      "Mapeando nombres de eventos a firmas de callbacks usando generics y tipos indexados.",
+      "Utilizando un decorador de métodos que valide los argumentos en tiempo de ejecución."
+    ],
+    "correct_index": 2,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "advanced",
+    "hint": "Un EventEmitter tipado usa un mapa genérico EventMap y métodos on<K extends keyof EventMap>."
+  },
+  {
+    "id": "ts_044",
+    "question": "¿Cómo se puede forzar una coincidencia exacta de propiedades excluyendo exceso en genéricos?",
+    "options": [
+      "Añadiendo la directiva 'exact' al principio de la declaración de la función genérica.",
+      "Compilando el proyecto obligatoriamente con el flag experimental '--exactObjectTypes'.",
+      "Envolviendo el argumento de la función en una llamada a Object.preventExtensions().",
+      "Combinando el tipo genérico con una restricción que convierta claves extras en 'never'."
+    ],
+    "correct_index": 3,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "advanced",
+    "hint": "T extends Exact<T, Expected> mapea claves sobrantes al tipo never para impedir excesos."
+  },
+  {
+    "id": "ts_045",
+    "question": "¿Cómo se realiza análisis sintáctico de rutas de texto a nivel de tipos (ej: '/user/:id')?",
+    "options": [
+      "Dividiendo la cadena mediante Template Literal Types recursivos combinados con 'infer'.",
+      "Invocando la función RegExp.prototype.exec durante el proceso de verificación estática.",
+      "Convirtiendo la ruta en un array de caracteres primitivos mediante la API de Node.",
+      "Asignando la ruta a una tupla de números que representen los códigos ASCII del texto."
+    ],
+    "correct_index": 0,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "advanced",
+    "hint": "Template literal types recursivos con infer extraen parámetros como ':id' a nivel de tipos."
+  },
+  {
+    "id": "ts_046",
+    "question": "¿Qué sucede al intersectar tipos primitivos incompatibles como 'string & number'?",
+    "options": [
+      "El compilador elige 'string' por defecto al tener mayor precedencia sintáctica.",
+      "Se reduce automáticamente al tipo 'never', indicando que ningún valor puede satisfacerlo.",
+      "Se convierte en una unión equivalente a 'string | number' para permitir ambos valores.",
+      "Genera un error de sintaxis impidiendo la generación del archivo de salida de JS."
+    ],
+    "correct_index": 1,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "advanced",
+    "hint": "La intersección de tipos primitivos mutuamente excluyentes colapsa al tipo never."
+  },
+  {
+    "id": "ts_047",
+    "question": "¿Cómo funciona el truco de contravarianza para convertir una unión en una intersección?",
+    "options": [
+      "Aplicando el operador de inversión bit a bit sobre la lista de claves del objeto.",
+      "Declarando una interfaz vacía que extienda todos los miembros de la unión a la vez.",
+      "Inyectando los miembros de la unión en los argumentos de funciones y deduciendo con infer.",
+      "Utilizando el método nativo Array.prototype.reduce para combinar las interfaces."
+    ],
+    "correct_index": 2,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "advanced",
+    "hint": "Los parámetros de función son contravariantes; inferir sobre ellos infiere la intersección."
+  },
+  {
+    "id": "ts_048",
+    "question": "¿Qué particularidad presentan los argumentos de sobrecarga de funciones frente a las uniones?",
+    "options": [
+      "Todas las sobrecargas se combinan en una única unión que acepta cualquier combinación.",
+      "Las funciones sobrecargadas se compilan como múltiples funciones separadas en JavaScript.",
+      "El orden de declaración de las sobrecargas es totalmente indiferente para el compilador.",
+      "Las sobrecargas son examinadas secuencialmente por el compilador; la primera en calzar gana."
+    ],
+    "correct_index": 3,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "advanced",
+    "hint": "El compilador resuelve la sobrecarga probando las firmas en riguroso orden de arriba abajo."
+  },
+  {
+    "id": "ts_049",
+    "question": "¿Cómo se modela la aritmética de tuplas a nivel de tipos (ej: sumar 2 + 3)?",
+    "options": [
+      "Creando tuplas con longitud fija mediante recursión y leyendo su propiedad 'length'.",
+      "Invocando el operador matemático de suma dentro de un bloque condicional ternario.",
+      "Utilizando la biblioteca de cálculo simbólico provista por el compilador de TypeScript.",
+      "Definiendo un enum con valores incrementales calculados mediante el preprocesador."
+    ],
+    "correct_index": 0,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "advanced",
+    "hint": "La aritmética a nivel de tipos se simula concatenando tuplas y leyendo T['length']."
+  },
+  {
+    "id": "ts_050",
+    "question": "¿Qué implicación tiene la 'freshness' (frescura) de tipos en la comprobación de objetos?",
+    "options": [
+      "Determina la fecha y hora en que el archivo fue modificado en el sistema de archivos.",
+      "Activa el chequeo de exceso de propiedades únicamente sobre objetos literales directos.",
+      "Obliga a que los objetos sean recolectados por el Garbage Collector en menos de un segundo.",
+      "Informa si una variable fue declarada con 'const' o con la palabra reservada 'let'."
+    ],
+    "correct_index": 1,
+    "subtopic": "tipado_avanzado",
+    "difficulty": "advanced",
+    "hint": "La freshness de tipos literales desencadena el chequeo estricto de exceso de propiedades."
+  },
+  {
+    "id": "ts_051",
+    "question": "¿Cuál es la sintaxis correcta para declarar una interfaz básica en TypeScript?",
+    "options": [
+      "type Persona = interface { nombre: string; edad: number; } combinando ambas palabras.",
+      "def interface Persona(nombre: string, edad: number) similar a las firmas en Python.",
+      "interface Persona { nombre: string; edad: number; } utilizando la palabra interface.",
+      "struct Persona { string nombre; number edad; } utilizando la sintaxis de lenguaje C."
+    ],
+    "correct_index": 2,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "Las interfaces se declaran con 'interface Nombre { ... }' definiendo la forma de objetos."
+  },
+  {
+    "id": "ts_052",
+    "question": "¿Cómo se declara un alias de tipo (type alias) para un objeto?",
+    "options": [
+      "alias Usuario = { id: string; email: string; }; utilizando la etiqueta 'alias'.",
+      "typedef Usuario { id: string; email: string; }; usando la convención de C++.",
+      "interface type Usuario { id: string; email: string; }; mediante declaración mixta.",
+      "type Usuario = { id: string; email: string; }; utilizando la palabra reservada 'type'."
+    ],
+    "correct_index": 3,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "Un type alias se crea con 'type Identificador = ...' asignando cualquier definición de tipo."
+  },
+  {
+    "id": "ts_053",
+    "question": "¿Cómo se define una propiedad opcional dentro de una interfaz?",
+    "options": [
+      "Añadiendo un signo de interrogación '?' antes de los dos puntos: 'telefono?: string;'.",
+      "Asignando el valor 'optional' como el tipo de dato primitivo de la propiedad.",
+      "Envolviendo el nombre de la propiedad entre paréntesis redondos: '(telefono): string;'.",
+      "Colocando la palabra clave 'nullable' después de la definición de los dos puntos."
+    ],
+    "correct_index": 0,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "El signo '?' marca un campo como opcional, equivaliendo a 'Tipo | undefined'."
+  },
+  {
+    "id": "ts_054",
+    "question": "¿Cómo se declara una propiedad de solo lectura en una interfaz?",
+    "options": [
+      "Añadiendo el modificador 'const' antes del identificador de la propiedad.",
+      "Prefijando la propiedad con la palabra 'readonly': 'readonly id: number;'.",
+      "Finalizando la declaración de la propiedad con la directiva '#immutable;'.",
+      "Asignando un valor literal constante en lugar del tipo de dato primitivo."
+    ],
+    "correct_index": 1,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "'readonly' impide la reasignación de una propiedad una vez instanciado el objeto."
+  },
+  {
+    "id": "ts_055",
+    "question": "¿Cómo hereda una interfaz las propiedades de otra interfaz?",
+    "options": [
+      "Utilizando la palabra clave 'implements': 'interface Empleado implements Persona'.",
+      "Utilizando el operador de asignación simple: 'interface Empleado = Persona + { ... }'.",
+      "Utilizando la palabra clave 'extends': 'interface Empleado extends Persona { ... }'.",
+      "Invocando la función global de herencia: 'Object.inherit(Empleado, Persona);'."
+    ],
+    "correct_index": 2,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "Las interfaces usan 'extends' para heredar contratos de una o más interfaces padre."
+  },
+  {
+    "id": "ts_056",
+    "question": "¿Cómo se compone una unión de tipos utilizando type aliases?",
+    "options": [
+      "interface Estado = 'activo' or 'inactivo' or 'pendiente'; con la palabra lógica or.",
+      "type Estado = ['activo', 'inactivo', 'pendiente']; como una lista de strings literales.",
+      "union Estado { 'activo', 'inactivo', 'pendiente' } similar a las enumeraciones de C.",
+      "type Estado = 'activo' | 'inactivo' | 'pendiente'; usando el carácter de barra vertical."
+    ],
+    "correct_index": 3,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "Las uniones se crean con el operador '|' combinando múltiples tipos válidos."
+  },
+  {
+    "id": "ts_057",
+    "question": "¿Cuál es la sintaxis de una firma de índice (index signature) básica?",
+    "options": [
+      "[key: string]: number; permitiendo claves arbitrarias asociadas a valores numéricos.",
+      "keyof this = number; asignando la restricción a todas las propiedades de la clase.",
+      "dictionary<string, number>; invocando una clase genérica nativa del sistema.",
+      "index(string) -> number; definiendo una función de acceso mediante flechas cortas."
+    ],
+    "correct_index": 0,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "Las index signatures '[key: KeyType]: ValueType' admiten claves dinámicas en objetos."
+  },
+  {
+    "id": "ts_058",
+    "question": "¿Cómo se describe una función llamable directamente dentro de una interfaz?",
+    "options": [
+      "Declarando un método con el nombre 'invoke': 'invoke(arg: number): boolean;'.",
+      "Definiendo una firma sin nombre de propiedad: '(arg: number): boolean;'.",
+      "Prefijando la función con el operador de flecha: '=> (arg: number): boolean;'.",
+      "Asignando la interfaz a la clase nativa Function mediante una intersección."
+    ],
+    "correct_index": 1,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "Una firma de llamada directa '(params): Retorno;' hace que la interfaz sea invocable."
+  },
+  {
+    "id": "ts_059",
+    "question": "¿Cómo implementa una clase de TypeScript una interfaz?",
+    "options": [
+      "Utilizando la cláusula 'extends': 'class MiClase extends MiInterfaz { ... }'.",
+      "Utilizando dos puntos: 'class MiClase: MiInterfaz { ... }' como en el lenguaje C#.",
+      "Utilizando la cláusula 'implements': 'class MiClase implements MiInterfaz { ... }'.",
+      "Declarando un constructor que reciba la interfaz como su primer argumento."
+    ],
+    "correct_index": 2,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "Las clases usan 'implements' para garantizar el cumplimiento de una o más interfaces."
+  },
+  {
+    "id": "ts_060",
+    "question": "¿Puede un type alias renombrar un tipo primitivo como string o number?",
+    "options": [
+      "No, los type aliases solo pueden emplearse sobre estructuras de objetos literales.",
+      "Únicamente si el proyecto se compila con soporte para arquitecturas de 64 bits.",
+      "Solo cuando se utiliza dentro de una función con la etiqueta 'declare global'.",
+      "Sí, por ejemplo: 'type ID = string;' para brindar mayor claridad semántica."
+    ],
+    "correct_index": 3,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "Los type aliases pueden representar cualquier tipo válido, incluyendo primitivos."
+  },
+  {
+    "id": "ts_061",
+    "question": "¿Qué sucede al declarar dos interfaces con el mismo nombre en el mismo ámbito?",
+    "options": [
+      "Se fusionan automáticamente combinando todas sus propiedades (Declaration Merging).",
+      "El compilador arroja un error de identificador duplicado deteniendo el proceso.",
+      "La segunda interfaz sobrescribe por completo a la primera descartando sus campos.",
+      "Se genera una unión de tipos anónima que acepta cualquiera de las dos formas."
+    ],
+    "correct_index": 0,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "El declaration merging combina automáticamente múltiples interfaces con igual nombre."
+  },
+  {
+    "id": "ts_062",
+    "question": "¿Se pueden extender múltiples interfaces a la vez en una nueva interfaz?",
+    "options": [
+      "No, TypeScript solo permite herencia simple de interfaces individuales.",
+      "Sí, separándolas con comas: 'interface C extends A, B { ... }'.",
+      "Únicamente si ninguna de las interfaces padres contiene propiedades opcionales.",
+      "Solo si ambas interfaces fueron importadas desde el mismo paquete npm."
+    ],
+    "correct_index": 1,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "Una interfaz puede extender múltiples interfaces padres separadas por comas."
+  },
+  {
+    "id": "ts_063",
+    "question": "¿Qué restricción impone una firma de índice sobre las propiedades explícitas?",
+    "options": [
+      "Las propiedades explícitas deben declararse antes de cualquier método constructor.",
+      "Prohíbe terminantemente la presencia de cualquier propiedad que sea opcional.",
+      "Todas las propiedades explícitas deben retornar un tipo compatible con la firma de índice.",
+      "Fuerza a que todas las propiedades del objeto sean de solo lectura (readonly)."
+    ],
+    "correct_index": 2,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "Las propiedades específicas deben tener tipos asignables al tipo de la index signature."
+  },
+  {
+    "id": "ts_064",
+    "question": "¿Cómo se define una firma de índice de solo lectura en una interfaz?",
+    "options": [
+      "Añadiendo el modificador 'const' dentro de los corchetes: '[const key: string]: string;'.",
+      "Conectando la interfaz con el objeto global mediante Object.freeze().",
+      "Asignando el tipo inmutable 'never' a los valores asociados en el índice.",
+      "Prefijando la firma con 'readonly': 'readonly [key: string]: string;'."
+    ],
+    "correct_index": 3,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "readonly [k: string]: V asegura que las propiedades indexadas no puedan ser mutadas."
+  },
+  {
+    "id": "ts_065",
+    "question": "¿Cómo se combinan dos type aliases en un nuevo tipo utilizando intersección?",
+    "options": [
+      "type Combinado = TipoA & TipoB; exigiendo que el valor cumpla ambas definiciones.",
+      "type Combinado = TipoA + TipoB; sumando algebraicamente sus propiedades.",
+      "type Combinado = TipoA and TipoB; utilizando la conjunción lógica en inglés.",
+      "type Combinado = merge(TipoA, TipoB); mediante una función nativa del compilador."
+    ],
+    "correct_index": 0,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "El operador '&' intersecta tipos exigiendo la satisfacción simultánea de ambos contratos."
+  },
+  {
+    "id": "ts_066",
+    "question": "¿Qué ocurre si dos interfaces fusionadas declaran la misma propiedad con distinto tipo?",
+    "options": [
+      "El compilador crea automáticamente una unión con los dos tipos en conflicto.",
+      "Se produce un error de compilación por conflicto de tipos en la propiedad compartida.",
+      "El tipo declarado en la segunda interfaz tiene prioridad sobre la primera.",
+      "La propiedad en conflicto se convierte silenciosamente en tipo 'any'."
+    ],
+    "correct_index": 1,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "Las interfaces fusionadas deben tener tipos idénticos o compatibles en campos comunes."
+  },
+  {
+    "id": "ts_067",
+    "question": "¿Por qué se usan interfaces para definir la forma de objetos en librerías públicas?",
+    "options": [
+      "Generan archivos JavaScript más pequeños al compilarse en formato binario.",
+      "Evitan que los usuarios puedan inspeccionar las propiedades durante la depuración.",
+      "Permiten a los consumidores extenderlas libremente mediante declaration merging.",
+      "Obligan a que todas las funciones de la librería se ejecuten en paralelo."
+    ],
+    "correct_index": 2,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "hint": "Declaration merging permite a consumidores de una librería enriquecer interfaces existentes."
+  },
+  {
+    "id": "ts_068",
+    "question": "¿Qué sucede al declarar dos type aliases con el mismo nombre en el mismo archivo?",
+    "options": [
+      "Se fusionan automáticamente como uniones de tipos en tiempo de compilación.",
+      "El compilador ignora la primera definición y utiliza únicamente la segunda.",
+      "Se crea un tipo genérico que permite alternar entre ambos de forma dinámica.",
+      "Lanza un error SyntaxError / duplicate identifier; no admiten declaration merging."
+    ],
+    "correct_index": 3,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "A diferencia de las interfaces, los type aliases no pueden redeclararse en el mismo ámbito."
+  },
+  {
+    "id": "ts_069",
+    "question": "¿Cómo se utiliza el Declaration Merging para extender la interfaz Window en el navegador?",
+    "options": [
+      "Declarando 'interface Window { miPropiedad: string; }' en un archivo global.",
+      "Modificando directamente el código fuente descargado de la biblioteca de TypeScript.",
+      "Asignando la propiedad en el prototipo de Function con Object.defineProperty.",
+      "Creando un archivo JSON con los tipos adicionales en la raíz del proyecto."
+    ],
+    "correct_index": 0,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "Redeclarar 'interface Window' añade propiedades al objeto global limpiamente."
+  },
+  {
+    "id": "ts_070",
+    "question": "¿Cómo se declara una firma constructora (construct signature) en una interfaz?",
+    "options": [
+      "Definiendo un método con el nombre 'constructor': 'constructor(): void;'.",
+      "Utilizando la palabra reservada 'new': 'new (args: any[]): MiClase;'.",
+      "Prefijando la cabecera de la interfaz con la palabra 'factory'.",
+      "Asignando una clase estática al prototipo del tipo en cuestión."
+    ],
+    "correct_index": 1,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "'new (...args): T' define que una instancia de esa interfaz puede ser invocada con new."
+  },
+  {
+    "id": "ts_071",
+    "question": "¿Qué es un tipo híbrido (Hybrid Type) en TypeScript?",
+    "options": [
+      "Una interfaz que mezcla código escrito en TypeScript con código en lenguaje C.",
+      "Una tupla que combina números binarios con cadenas de texto hexadecimales.",
+      "Un objeto que puede ser invocado como función y a la vez contiene propiedades.",
+      "Una clase que hereda simultáneamente de dos clases base totalmente distintas."
+    ],
+    "correct_index": 2,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "Los tipos híbridos modelan patrones comunes en JS como funciones con atributos adosados."
+  },
+  {
+    "id": "ts_072",
+    "question": "¿Cuándo se activa la comprobación de exceso de propiedades (Excess Property Checks)?",
+    "options": [
+      "Al pasar una variable existente por referencia a través de múltiples funciones.",
+      "Al compilar archivos con extensión .js sin la directiva de chequeo estricto.",
+      "Al realizar una copia superficial del objeto utilizando el operador spread (...).",
+      "Al asignar directamente un objeto literal nuevo a una variable tipada."
+    ],
+    "correct_index": 3,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "Excess Property Checks aplica a object literals asignados directamente para evitar typos."
+  },
+  {
+    "id": "ts_073",
+    "question": "¿Cómo se puede sortear la comprobación de exceso de propiedades en un objeto literal?",
+    "options": [
+      "Asignando el objeto a una variable intermedia antes de entregarlo a la función.",
+      "Añadiendo comentarios de una sola línea después de cada propiedad del objeto.",
+      "Compilando el proyecto sin instalar las definiciones de Node ni de DOM.",
+      "Convirtiendo el objeto en una tupla de dos elementos mediante una aserción."
+    ],
+    "correct_index": 0,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "Una variable intermedia pierde la 'frescura' de objeto literal, sorteando el chequeo."
+  },
+  {
+    "id": "ts_074",
+    "question": "¿Qué diferencia hay entre el lado estático y el lado de instancia de una clase?",
+    "options": [
+      "El lado estático corre en el servidor y el lado de instancia corre en el navegador.",
+      "La interfaz de instancia modela los métodos normales; el lado estático modela el constructor.",
+      "El lado estático solo permite variables numéricas y el de instancia solo texto.",
+      "No existe diferencia; son dos denominaciones para los métodos privados de la clase."
+    ],
+    "correct_index": 1,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "implements valida la instancia; constructores y miembros static pertenecen al lado estático."
+  },
+  {
+    "id": "ts_075",
+    "question": "¿Cómo se asigna un valor por defecto a un parámetro genérico en una interfaz?",
+    "options": [
+      "interface Contenedor<T default string> { elemento: T; } con la palabra default.",
+      "interface Contenedor<T extends string = 'base'> sin admitir tipos dinámicos.",
+      "interface Contenedor<T = string> { elemento: T; } usando el operador igual.",
+      "Los parámetros genéricos no pueden tener valores por defecto en interfaces."
+    ],
+    "correct_index": 2,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "<T = DefaultType> proporciona un tipo por defecto si el usuario no especifica uno."
+  },
+  {
+    "id": "ts_076",
+    "question": "¿Qué sucede si dos tipos intersectados con '&' tienen una propiedad con primitivos distintos?",
+    "options": [
+      "El compilador crea una unión permitiendo asignar cualquiera de los dos tipos.",
+      "Se genera un error inmediato impidiendo definir el tipo combinado en el código.",
+      "La propiedad adopta el valor 'any' para evitar inconsistencias de tipado.",
+      "El tipo de esa propiedad colapsa a 'never' (ej: string & number = never)."
+    ],
+    "correct_index": 3,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "Intersecciones de primitivos incompatibles en un mismo campo resultan en 'never'."
+  },
+  {
+    "id": "ts_077",
+    "question": "¿Cómo se define una interfaz recursiva para modelar una estructura jerárquica de árbol?",
+    "options": [
+      "interface Nodo { valor: number; hijos: Nodo[]; } referenciándose a sí misma.",
+      "type Nodo = Array<this> obligando al compilador a desapilar los niveles con loop.",
+      "interface Nodo { valor: number; hijos: Array<any>; } sin tipar los descendientes.",
+      "Las interfaces no admiten auto-referencia; debe usarse obligatoriamente una clase."
+    ],
+    "correct_index": 0,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "Las interfaces pueden auto-referenciarse en sus propiedades para modelar grafos y árboles."
+  },
+  {
+    "id": "ts_078",
+    "question": "¿Qué sucede si una interfaz hija redefine una propiedad del padre con un tipo incompatible?",
+    "options": [
+      "La propiedad de la interfaz hija sobrescribe a la del padre sin ninguna validación.",
+      "El compilador genera un error de tipado al no ser el nuevo tipo un subtipo válido.",
+      "Ambas propiedades se combinan en una tupla de valores indexados numéricamente.",
+      "La interfaz padre se actualiza automáticamente adoptando la definición de la hija."
+    ],
+    "correct_index": 1,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "Al extender interfaces, las propiedades sobrescritas deben ser subtipos asignables."
+  },
+  {
+    "id": "ts_079",
+    "question": "¿Por qué los Type Aliases son mejores que las interfaces para definir Uniones o Primitivos?",
+    "options": [
+      "Los type aliases se compilan en archivos JavaScript mucho más rápidos de ejecutar.",
+      "Las interfaces generan fugas de memoria en aplicaciones que manejan miles de datos.",
+      "Las interfaces solo pueden modelar estructuras de objetos o funciones; no uniones directas.",
+      "Los type aliases garantizan que el código sea completamente seguro contra inyecciones."
+    ],
+    "correct_index": 2,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "Las uniones directas (type U = A | B) y primitivos solo se pueden declarar con 'type'."
+  },
+  {
+    "id": "ts_080",
+    "question": "¿Cómo interactúan los modificadores de acceso de TypeScript con las interfaces?",
+    "options": [
+      "Permiten declarar propiedades privadas utilizando la palabra reservada 'private'.",
+      "Fuerzan a que todos los miembros de la interfaz sean protegidos (protected).",
+      "Convierten los campos públicos en campos privados con el prefijo almohadilla (#).",
+      "Las interfaces solo pueden modelar contratos de miembros públicos de una clase."
+    ],
+    "correct_index": 3,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "Las interfaces definen el contrato público; no pueden declarar miembros private o protected."
+  },
+  {
+    "id": "ts_081",
+    "question": "¿Qué ocurre cuando una interfaz extiende un Type Alias de objeto?",
+    "options": [
+      "Hereda sus propiedades exactamente igual que si se tratara de otra interfaz.",
+      "Lanza un error porque las interfaces no pueden interactuar con type aliases.",
+      "Convierte todas las propiedades del type alias en propiedades opcionales.",
+      "Clona el código en un nuevo namespace para aislar las variables del heap."
+    ],
+    "correct_index": 0,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "Una interfaz puede extender cualquier type alias que represente una forma de objeto estática."
+  },
+  {
+    "id": "ts_082",
+    "question": "¿Cómo influyen las interfaces frente a los tipos en los mensajes de error del compilador?",
+    "options": [
+      "Las interfaces ocultan todos los mensajes de advertencia para simplificar la salida.",
+      "Las interfaces suelen imprimir su nombre declarado; los tipos pueden mostrarse anónimos expandidos.",
+      "Los tipos imprimen el código en formato HTML interactivo dentro del editor de código.",
+      "No hay diferencias; los motores de TypeScript tratan ambos identificadores por igual."
+    ],
+    "correct_index": 1,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "TypeScript suele preservar el nombre de las interfaces, haciendo errores más legibles."
+  },
+  {
+    "id": "ts_083",
+    "question": "¿Qué es un 'ambient namespace' y cómo se vincula a interfaces externas?",
+    "options": [
+      "Una función asíncrona que descarga definiciones de tipos desde servidores remotos.",
+      "Un archivo de configuración que altera las variables de entorno de la computadora.",
+      "Un bloque 'declare namespace' que agrupa interfaces y tipos sin generar código JS.",
+      "Un contenedor de estilos que aplica tipado estático sobre archivos de hojas CSS."
+    ],
+    "correct_index": 2,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "Los ambient namespaces declaran tipos de terceros existentes en el entorno global."
+  },
+  {
+    "id": "ts_084",
+    "question": "¿Qué impacto tiene en la transpilación a JS la presencia de interfaces y types?",
+    "options": [
+      "Se transforman en clases vacías de JavaScript para conservar metadatos de depuración.",
+      "Generan objetos congelados con Object.freeze que validan las claves en el arranque.",
+      "Se compilan en funciones de orden superior que verifican los argumentos en runtime.",
+      "Se eliminan por completo (zero-emit); no generan ningún código en el archivo .js final."
+    ],
+    "correct_index": 3,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "hint": "TypeScript borra interfaces y type aliases al emitir JavaScript (type erasure total)."
+  },
+  {
+    "id": "ts_085",
+    "question": "¿Cómo maneja TypeScript interfaces mutuamente recursivas complejas?",
+    "options": [
+      "Difiere la evaluación del tipo resolviendo las referencias de manera perezosa (lazy).",
+      "Lanza un error de recursión circular inmediata al parsear el primer archivo.",
+      "Convierte automáticamente todas las referencias circulares en el tipo 'unknown'.",
+      "Obliga al usuario a envolver las interfaces en funciones auxiliares de callback."
+    ],
+    "correct_index": 0,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "hint": "El compilador evalúa las relaciones recursivas de manera diferida evitando bucles estáticos."
+  },
+  {
+    "id": "ts_086",
+    "question": "¿Cómo afecta el flag del compilador 'noUncheckedIndexedAccess' a las index signatures?",
+    "options": [
+      "Impide declarar firmas de índice en cualquier interfaz del proyecto de software.",
+      "Añade automáticamente '| undefined' al tipo de retorno de cualquier acceso indexado.",
+      "Lanza una excepción en tiempo de ejecución cada vez que se consulte un índice nulo.",
+      "Obliga a que todos los índices numéricos comiencen estrictamente desde el número 0."
+    ],
+    "correct_index": 1,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "hint": "noUncheckedIndexedAccess obliga a manejar la posible ausencia de claves indexadas."
+  },
+  {
+    "id": "ts_087",
+    "question": "¿Qué ocurre si una clase implementa una interfaz pero define un miembro como 'private'?",
+    "options": [
+      "El miembro se vuelve accesible públicamente omitiendo la restricción privada.",
+      "La interfaz se convierte en una clase abstracta sin métodos implementados.",
+      "El compilador genera un error porque los miembros de la interfaz deben ser públicos.",
+      "Se crea un alias en el prototipo que permite invocar el método privado libremente."
+    ],
+    "correct_index": 2,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "hint": "Una interfaz describe la superficie pública; implementar un campo como private causa error."
+  },
+  {
+    "id": "ts_088",
+    "question": "¿Cómo se fusionan sobrecargas de funciones declaradas en múltiples interfaces con el mismo nombre?",
+    "options": [
+      "Se descartan las firmas de la primera interfaz conservando únicamente la última.",
+      "Se genera un error de ambigüedad al no permitir múltiples firmas para un método.",
+      "Las sobrecargas se ordenan aleatoriamente en cada compilación del proyecto.",
+      "Las sobrecargas de declaraciones posteriores se sitúan al principio de la lista de prioridad."
+    ],
+    "correct_index": 3,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "hint": "Al fusionar interfaces, las firmas añadidas en bloques posteriores tienen mayor prioridad."
+  },
+  {
+    "id": "ts_089",
+    "question": "¿Cómo se simula tipado nominal estricto utilizando interfaces y unique symbol?",
+    "options": [
+      "Declarando una interfaz con una propiedad computada indexada por un unique symbol privado.",
+      "Asignando una clave de texto con el nombre del autor original de la biblioteca.",
+      "Heredando de una clase abstracta que contenga un método con la directiva '#nominal'.",
+      "Bloqueando las mutaciones del objeto con el método nativo Object.seal de JavaScript."
+    ],
+    "correct_index": 0,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "hint": "Propiedades con unique symbol crean marcas nominales irreproducibles por otros objetos."
+  },
+  {
+    "id": "ts_090",
+    "question": "¿Por qué la sintaxis de métodos en interfaces permite parámetros bivariantes?",
+    "options": [
+      "Porque el compilador de TypeScript compila los métodos directamente en WebAssembly.",
+      "Por razones pragmáticas de diseño; { fn(x: T): void } permite compatibilidad con arrays mutables.",
+      "Porque las funciones flecha no admiten la comprobación de tipos contravariantes.",
+      "Porque el estándar ECMAScript prohíbe el uso de parámetros de solo lectura."
+    ],
+    "correct_index": 1,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "hint": "Las firmas de método preservan bivariancia para no romper asignaciones clásicas en TS."
+  },
+  {
+    "id": "ts_091",
+    "question": "¿Qué sucede si una interfaz genérica fusionada intenta cambiar las restricciones de un tipo?",
+    "options": [
+      "La restricción más flexible se adopta automáticamente para ambas declaraciones.",
+      "El parámetro genérico se transforma en una unión con ambas restricciones combinadas.",
+      "Genera un error de compilación; los parámetros genéricos deben coincidir en nombre y límites.",
+      "Se compilan dos versiones separadas de la interfaz según el contexto de uso."
+    ],
+    "correct_index": 2,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "hint": "Al fusionar interfaces genéricas, los parámetros de tipo y restricciones deben coincidir."
+  },
+  {
+    "id": "ts_092",
+    "question": "¿Cómo se diseña una interfaz para tipar componentes polimórficos de interfaz gráfica?",
+    "options": [
+      "Declarando una interfaz que herede de todos los nodos del DOM simultáneamente.",
+      "Asignando el tipo 'any' a todas las propiedades que reciban callbacks de usuario.",
+      "Creando un archivo de estilos CSS que defina los nombres de las clases del componente.",
+      "Combinando tipos genéricos restringidos a tags de elementos con props específicas (as prop)."
+    ],
+    "correct_index": 3,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "hint": "Componentes polimórficos usan genéricos <E extends React.ElementType> con sus props."
+  },
+  {
+    "id": "ts_093",
+    "question": "¿Cómo se verifica el tipo del constructor de una clase utilizando interfaces separadas?",
+    "options": [
+      "Definiendo una interfaz para la instancia y otra separada con 'new (...args)' para el constructor.",
+      "Declarando el constructor con la palabra 'implements' en el encabezado de la clase.",
+      "Asignando el tipo de retorno de la clase a una tupla de dos funciones de callback.",
+      "Utilizando el decorador '@constructor' para enlazar los prototipos dinámicamente."
+    ],
+    "correct_index": 0,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "hint": "Se separan: una interfaz describe las instancias y otra (con new) describe el constructor."
+  },
+  {
+    "id": "ts_094",
+    "question": "¿Cómo se modela una firma de índice de símbolos en una interfaz de TypeScript?",
+    "options": [
+      "[key: Symbol.all]: TipoDato; registrando todos los símbolos globales en el objeto.",
+      "[key: symbol]: TipoDato; permitiendo indexar el objeto con símbolos dinámicos.",
+      "symbols<T>: TipoDato; invocando un método auxiliar de la biblioteca estándar.",
+      "Las firmas de índice no admiten símbolos bajo ninguna configuración del compilador."
+    ],
+    "correct_index": 1,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "hint": "TypeScript soporta firmas de índice con tipo 'symbol' desde versiones recientes."
+  },
+  {
+    "id": "ts_095",
+    "question": "¿Cuál es la diferencia arquitectónica fundamental entre Abstract Classes e Interfaces?",
+    "options": [
+      "Las abstract classes no pueden tener métodos genéricos; las interfaces sí los admiten.",
+      "Las interfaces permiten herencia múltiple de implementación; las clases abstractas no.",
+      "Las abstract classes pueden contener implementación real y emiten código JS; interfaces no.",
+      "Las interfaces se ejecutan en tiempo de ejecución validando datos recibidos por API."
+    ],
+    "correct_index": 2,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "hint": "Abstract classes proveen código reutilizable y existen en runtime; interfaces son solo tipos."
+  },
+  {
+    "id": "ts_096",
+    "question": "¿Qué sucede cuando una función genérica recibe un objeto con exceso de propiedades?",
+    "options": [
+      "Lanza un error SyntaxError antes de iniciar la compilación de las dependencias.",
+      "Borra las propiedades sobrantes del objeto antes de pasarlo como parámetro real.",
+      "Convierte la variable en una estructura inmutable para prevenir futuras mutaciones.",
+      "El compilador no detecta el exceso si T se infiere libremente absorbiendo las claves extra."
+    ],
+    "correct_index": 3,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "hint": "La inferencia genérica amplía T para incluir las propiedades extra, eludiendo el chequeo."
+  },
+  {
+    "id": "ts_097",
+    "question": "¿Cómo se modela un contrato dual síncrono y asíncrono con sobrecargas de interfaz?",
+    "options": [
+      "Declarando sobrecargas donde una versión retorna T y otra retorna Promise<T> según el flag.",
+      "Asignando una tupla [T, Promise<T>] como el único tipo de retorno admitido.",
+      "Creando dos procesos separados de Node.js que compartan el mismo puerto TCP.",
+      "Utilizando un tipo condicional que inspeccione si el Event Loop está desocupado."
+    ],
+    "correct_index": 0,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "hint": "Sobrecargas de interfaz pueden alternar el retorno síncrono o Promise según sus parámetros."
+  },
+  {
+    "id": "ts_098",
+    "question": "¿Cómo resuelve TypeScript el 'problema del diamante' en la herencia de interfaces?",
+    "options": [
+      "Lanza un error inmediato impidiendo que una interfaz extienda dos padres emparentados.",
+      "Si la propiedad común es idéntica la hereda sin problemas; si difiere exige reconciliación.",
+      "Duplica la propiedad en memoria creando dos campos con nombres numerados.",
+      "Elige aleatoriamente el valor del padre que haya sido importado en primer lugar."
+    ],
+    "correct_index": 1,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "hint": "Si una propiedad compartida tiene tipos compatibles se hereda; si colisiona, da error."
+  },
+  {
+    "id": "ts_099",
+    "question": "¿Qué es un parámetro de tipo fantasma (phantom type parameter) en una interfaz genérica?",
+    "options": [
+      "Un tipo de dato invisible que se compila exclusivamente en la memoria caché del editor.",
+      "Una interfaz que se destruye tan pronto finaliza la evaluación del primer método.",
+      "Un genérico que no se utiliza en ninguna propiedad del cuerpo, usado para validación lógica.",
+      "Un parámetro que genera un error de advertencia en el linter por falta de uso."
+    ],
+    "correct_index": 2,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "hint": "Los phantom types no intervienen en las propiedades pero aportan seguridad al tipado."
+  },
+  {
+    "id": "ts_100",
+    "question": "¿Por qué las interfaces no admiten el operador de mapeo directo '{ [K in T]: U }'?",
+    "options": [
+      "Porque provocarían bucles infinitos en el sistema de recolección de basura del motor.",
+      "Porque las interfaces solo pueden contener funciones y jamás tipos primitivos.",
+      "Porque los navegadores antiguos no soportan la lectura de llaves con operadores 'in'.",
+      "Porque los mapped types son exclusivos de la sintaxis de Type Aliases por diseño formal."
+    ],
+    "correct_index": 3,
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "hint": "Mapped types solo pueden crearse con 'type', no con la sintaxis de 'interface'."
+  },
+  {
+    "id": "ts_101",
+    "question": "¿Cuál es el propósito del tipo utilitario 'Partial<T>' en TypeScript?",
+    "options": [
+      "Transforma todas las propiedades del tipo T en propiedades opcionales.",
+      "Elimina la mitad de las propiedades del objeto de manera aleatoria.",
+      "Convierte todas las propiedades en tipos primitivos de texto inmutables.",
+      "Permite invocar los métodos del objeto de forma parcialmente asíncrona."
+    ],
+    "correct_index": 0,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "basic",
+    "hint": "Partial<T> añade '?' a cada propiedad de T, haciéndolas todas opcionales."
+  },
+  {
+    "id": "ts_102",
+    "question": "¿Qué efecto tiene aplicar 'Required<T>' sobre una interfaz?",
+    "options": [
+      "Fuerza a que todas las propiedades sean inicializadas con valores numéricos mayores a cero.",
+      "Convierte todas las propiedades en obligatorias eliminando los modificadores opcionales.",
+      "Impide que el objeto sea modificado o extendido una vez instanciado en runtime.",
+      "Requiere que el objeto sea exportado obligatoriamente como el módulo default."
+    ],
+    "correct_index": 1,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "basic",
+    "hint": "Required<T> remueve '?' de todas las propiedades volviéndolas estrictamente requeridas."
+  },
+  {
+    "id": "ts_103",
+    "question": "¿Qué garantiza la utilidad 'Readonly<T>'?",
+    "options": [
+      "Oculta las propiedades para que no aparezcan en la consola de depuración del browser.",
+      "Permite que el objeto sea leído únicamente desde el hilo principal del sistema.",
+      "Hace que todas las propiedades del tipo no puedan ser reasignadas una vez creadas.",
+      "Transforma todos los métodos en funciones puras sin efectos secundarios de I/O."
+    ],
+    "correct_index": 2,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "basic",
+    "hint": "Readonly<T> añade el modificador 'readonly' a todas las propiedades de T."
+  },
+  {
+    "id": "ts_104",
+    "question": "¿Para qué se utiliza el tipo utilitario 'Record<Keys, Type>'?",
+    "options": [
+      "Grabar el historial de mutaciones de un objeto en una base de datos relacional.",
+      "Convertir una estructura de datos JSON en un array plano de números binarios.",
+      "Declarar una interfaz de solo lectura que contenga exactamente un método getter.",
+      "Crear un tipo de objeto cuyas claves pertenezcan a Keys y cuyos valores sean de tipo Type."
+    ],
+    "correct_index": 3,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "basic",
+    "hint": "Record<K, T> construye un mapa de propiedades donde las claves son K y los valores son T."
+  },
+  {
+    "id": "ts_105",
+    "question": "¿Qué realiza la utilidad 'Pick<T, Keys>'?",
+    "options": [
+      "Construye un tipo seleccionando un subconjunto de propiedades específicas de T.",
+      "Selecciona aleatoriamente una propiedad del objeto en tiempo de compilación.",
+      "Elimina las propiedades seleccionadas dejando únicamente las no especificadas.",
+      "Convierte las propiedades indicadas en métodos de callback asíncronos."
+    ],
+    "correct_index": 0,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "basic",
+    "hint": "Pick<T, K> extrae de T únicamente las propiedades especificadas en K."
+  },
+  {
+    "id": "ts_106",
+    "question": "¿Cuál es la función del tipo utilitario 'Omit<T, Keys>'?",
+    "options": [
+      "Reemplaza los valores de las claves indicadas por el valor primitivo null.",
+      "Construye un tipo tomando todas las propiedades de T y descartando las indicadas en Keys.",
+      "Oculta las propiedades seleccionadas de la inspección del autocompletado en el IDE.",
+      "Lanza un error de compilación si el objeto intenta acceder a las claves omitidas."
+    ],
+    "correct_index": 1,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "basic",
+    "hint": "Omit<T, K> elimina de T las claves especificadas en K conservando el resto."
+  },
+  {
+    "id": "ts_107",
+    "question": "¿Qué diferencia hay entre 'Exclude<UnionType, ExcludedMembers>' y 'Omit'?",
+    "options": [
+      "Exclude solo admite tipos numéricos; Omit opera exclusivamente sobre strings.",
+      "Exclude elimina campos en tiempo de ejecución; Omit solo actúa en tiempo de desarrollo.",
+      "Exclude opera sobre miembros de una Unión; Omit opera sobre propiedades de un Objeto.",
+      "No hay diferencia; son dos denominaciones alternativas para la misma función interna."
+    ],
+    "correct_index": 2,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "basic",
+    "hint": "Exclude<T, U> descarta tipos de una unión; Omit<T, K> descarta propiedades de un objeto."
+  },
+  {
+    "id": "ts_108",
+    "question": "¿Qué hace el tipo utilitario 'Extract<Type, Union>'?",
+    "options": [
+      "Extrae el valor del primer elemento almacenado en una tupla de valores constantes.",
+      "Convierte los valores de una enumeración en un array plano de strings literales.",
+      "Descarga definiciones de tipos desde un repositorio centralizado de npm.",
+      "Extrae de Type todos los miembros de la unión que sean asignables a Union."
+    ],
+    "correct_index": 3,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "basic",
+    "hint": "Extract<T, U> filtra una unión quedándose solo con los miembros asignables a U."
+  },
+  {
+    "id": "ts_109",
+    "question": "¿Qué realiza la utilidad 'NonNullable<T>'?",
+    "options": [
+      "Construye un tipo excluyendo 'null' y 'undefined' del tipo T suministrado.",
+      "Obliga a que todas las cadenas de texto tengan al menos un carácter visible.",
+      "Convierte cualquier valor falsy en el valor booleano true de forma automática.",
+      "Lanza una excepción si alguna propiedad del objeto es evaluada como cero."
+    ],
+    "correct_index": 0,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "basic",
+    "hint": "NonNullable<T> descarta null y undefined del conjunto de tipos de T."
+  },
+  {
+    "id": "ts_110",
+    "question": "¿Qué extrae el tipo utilitario 'ReturnType<T>'?",
+    "options": [
+      "El número de sentencias 'return' presentes en el cuerpo del código fuente.",
+      "El tipo que devuelve una función de tipo T al ser invocada.",
+      "El tiempo promedio en milisegundos que tarda la función en entregar su resultado.",
+      "Una promesa que envuelve el resultado de la función independientemente de su tipo."
+    ],
+    "correct_index": 1,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "basic",
+    "hint": "ReturnType<T> obtiene el tipo de retorno declarado o inferido de una función T."
+  },
+  {
+    "id": "ts_111",
+    "question": "¿Qué extrae el tipo utilitario 'Parameters<T>'?",
+    "options": [
+      "Un objeto con los nombres y valores de los argumentos pasados en la llamada.",
+      "La cantidad máxima de parámetros que la CPU puede procesar en una sola instrucción.",
+      "Una tupla con los tipos de todos los parámetros que recibe la función de tipo T.",
+      "Un booleano que indica si la función admite argumentos por defecto opcionales."
+    ],
+    "correct_index": 2,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "basic",
+    "hint": "Parameters<T> extrae los tipos de los argumentos de una función en una tupla."
+  },
+  {
+    "id": "ts_112",
+    "question": "¿Para qué sirve el tipo utilitario nativo 'Awaited<T>'?",
+    "options": [
+      "Pausa la compilación del proyecto hasta que los paquetes npm terminen de descargarse.",
+      "Convierte una función sincrónica tradicional en un generador asíncrono con yield.",
+      "Comprueba si una función async contiene al menos una instrucción 'await' válida.",
+      "Desenvuelve el tipo de una Promise (incluso anidadas) para obtener el valor resuelto."
+    ],
+    "correct_index": 3,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "basic",
+    "hint": "Awaited<T> desenvuelve recursivamente tipos Promise o Thenable obteniendo el resultado final."
+  },
+  {
+    "id": "ts_113",
+    "question": "¿Qué transformaciones aplican las utilidades 'Uppercase<S>' y 'Lowercase<S>'?",
+    "options": [
+      "Convierten los tipos literales de string a mayúsculas o minúsculas a nivel de tipos.",
+      "Transforman dinámicamente las cadenas de texto en memoria durante la ejecución.",
+      "Modifican los nombres de los archivos del sistema operativo a mayúsculas sostenidas.",
+      "Validan que el usuario haya escrito su contraseña con letras mayúsculas y minúsculas."
+    ],
+    "correct_index": 0,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "basic",
+    "hint": "Uppercase y Lowercase son utilidades intrínsecas que alteran strings a nivel de tipos."
+  },
+  {
+    "id": "ts_114",
+    "question": "¿Qué hacen 'Capitalize<S>' y 'Uncapitalize<S>'?",
+    "options": [
+      "Calculan la longitud del string y la retornan como un tipo literal numérico entero.",
+      "Convierten el primer carácter del tipo literal a mayúscula o minúscula respectivamente.",
+      "Invierten el orden de todas las letras del string comenzando desde el final.",
+      "Verifican si la primera letra coincide con las reglas gramaticales del idioma inglés."
+    ],
+    "correct_index": 1,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "basic",
+    "hint": "Capitalize / Uncapitalize modifican únicamente la primera letra de un literal string."
+  },
+  {
+    "id": "ts_115",
+    "question": "¿Cuándo es preferible utilizar 'Pick' en lugar de 'Omit'?",
+    "options": [
+      "Cuando se desconoce la cantidad de propiedades que contendrá el objeto final.",
+      "Cuando todas las propiedades del objeto son de tipo booleano o numérico.",
+      "Cuando el conjunto de propiedades deseadas es pequeño comparado con el objeto completo.",
+      "Cuando se necesita asegurar que el objeto sea serializado en formato XML."
+    ],
+    "correct_index": 2,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "basic",
+    "hint": "Pick es más seguro y mantenible si solo necesitas un par de campos de un tipo grande."
+  },
+  {
+    "id": "ts_116",
+    "question": "¿Qué produce 'Exclude<'a' | 'b' | 'c', 'a'>'?",
+    "options": [
+      "Un objeto vacío sin ninguna propiedad declarada en su estructura.",
+      "El tipo primitivo 'never' al detectar una sustracción de literales.",
+      "Una tupla conteniendo los elementos en orden inverso: ['c', 'b'].",
+      "La unión literal ''b' | 'c'', descartando el miembro 'a' del conjunto."
+    ],
+    "correct_index": 3,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "basic",
+    "hint": "Exclude remueve 'a' de la unión original, dando como resultado 'b' | 'c'."
+  },
+  {
+    "id": "ts_117",
+    "question": "¿Cómo está implementado internamente el tipo utilitario 'Partial<T>'?",
+    "options": [
+      "type Partial<T> = { [P in keyof T]?: T[P]; }; mediante un tipo mapeado con '?' opcional.",
+      "type Partial<T> = T extends object ? T | undefined : never; usando condicionales.",
+      "type Partial<T> = Object.assign({}, T); copiando las propiedades en un objeto vacío.",
+      "type Partial<T> = { [P in T]: any }; asignando tipo dinámico a todas las claves."
+    ],
+    "correct_index": 0,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "medium",
+    "hint": "Partial<T> se define mapeando keyof T y añadiendo el modificador '?' a cada propiedad."
+  },
+  {
+    "id": "ts_118",
+    "question": "¿Cómo está implementado internamente 'Required<T>'?",
+    "options": [
+      "type Required<T> = { [P in keyof T]: NonNullable<T[P]>; }; sin alterar los modificadores.",
+      "type Required<T> = { [P in keyof T]-?: T[P]; }; eliminando el modificador de opcionalidad.",
+      "type Required<T> = T & { [P in keyof T]: object }; forzando valores de tipo referencia.",
+      "type Required<T> = Exclude<T, undefined>; aplicando la exclusión sobre el objeto completo."
+    ],
+    "correct_index": 1,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "medium",
+    "hint": "Required<T> usa el prefijo '-?' en un mapped type para despojar a los campos de la opcionalidad."
+  },
+  {
+    "id": "ts_119",
+    "question": "¿Cómo se implementa internamente 'Readonly<T>'?",
+    "options": [
+      "type Readonly<T> = Object.freeze<T>; invocando el método nativo de inmutabilidad.",
+      "type Readonly<T> = { [P in keyof T as `readonly_${P}`]: T[P] }; renombrando las claves.",
+      "type Readonly<T> = { readonly [P in keyof T]: T[P]; }; prefijando con 'readonly'.",
+      "type Readonly<T> = T extends Function ? T : const T; mediante aserción condicional."
+    ],
+    "correct_index": 2,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "medium",
+    "hint": "Readonly<T> mapea las propiedades añadiendo la palabra clave readonly a cada una."
+  },
+  {
+    "id": "ts_120",
+    "question": "¿Cómo se implementa 'Record<K extends keyof any, T>' en TypeScript?",
+    "options": [
+      "type Record<K, T> = Array<[K, T]>; creando una lista de tuplas clave-valor en memoria.",
+      "type Record<K, T> = Map<K, T>; instanciando la clase nativa de colecciones de ES6.",
+      "type Record<K, T> = { key: K; value: T; }; mediante una estructura de nodo simple.",
+      "type Record<K extends keyof any, T> = { [P in K]: T; }; iterando sobre las claves K."
+    ],
+    "correct_index": 3,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "medium",
+    "hint": "Record mapea [P in K]: T donde K está restringido a claves válidas (keyof any)."
+  },
+  {
+    "id": "ts_121",
+    "question": "¿Cómo se define 'Pick<T, K extends keyof T>' internamente?",
+    "options": [
+      "type Pick<T, K extends keyof T> = { [P in K]: T[P]; }; mapeando sobre el subconjunto K.",
+      "type Pick<T, K> = T extends K ? T : never; mediante un tipo condicional distributivo.",
+      "type Pick<T, K> = { [P in keyof T]: P extends K ? T[P] : never }; sin filtrar claves.",
+      "type Pick<T, K> = Omit<T, Exclude<keyof T, K>>; mediante doble inversión de claves."
+    ],
+    "correct_index": 0,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "medium",
+    "hint": "Pick itera directamente sobre las claves K (subconjunto de keyof T) proyectando su tipo."
+  },
+  {
+    "id": "ts_122",
+    "question": "¿Cómo se define 'Omit<T, K extends keyof any>' combinando otras utilidades?",
+    "options": [
+      "type Omit<T, K> = { [P in keyof T]: P extends K ? never : T[P] }; conservando la clave.",
+      "type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>; mediante Pick y Exclude.",
+      "type Omit<T, K> = Extract<T, K>; invirtiendo la selección de los miembros de la unión.",
+      "type Omit<T, K> = T - K; restando algebraicamente los identificadores de propiedades."
+    ],
+    "correct_index": 1,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "medium",
+    "hint": "Omit<T, K> selecciona con Pick aquellas claves que resultan de Exclude<keyof T, K>."
+  },
+  {
+    "id": "ts_123",
+    "question": "¿Cómo se implementa internamente 'Exclude<T, U>' mediante tipos condicionales?",
+    "options": [
+      "type Exclude<T, U> = U extends T ? T : never; evaluando la asignabilidad inversa.",
+      "type Exclude<T, U> = T & Not<U>; utilizando una operación lógica de negación binaria.",
+      "type Exclude<T, U> = T extends U ? never : T; descartando los tipos asignables a U.",
+      "type Exclude<T, U> = { [K in T]: K extends U ? never : K }[T]; mediante acceso indexado."
+    ],
+    "correct_index": 2,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "medium",
+    "hint": "Al ser condicional distributivo, evalúa cada miembro de T: si extiende U entrega never, si no T."
+  },
+  {
+    "id": "ts_124",
+    "question": "¿Cómo se implementa internamente 'Extract<T, U>'?",
+    "options": [
+      "type Extract<T, U> = T extends U ? never : T; descartando las coincidencias de tipo.",
+      "type Extract<T, U> = Pick<T, keyof U>; proyectando las propiedades comunes de ambos.",
+      "type Extract<T, U> = T | U; uniendo los conjuntos de tipos en una sola estructura.",
+      "type Extract<T, U> = T extends U ? T : never; conservando los tipos asignables a U."
+    ],
+    "correct_index": 3,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "medium",
+    "hint": "Extract conserva los miembros que satisfacen la condición 'T extends U'."
+  },
+  {
+    "id": "ts_125",
+    "question": "¿Cómo se implementa 'NonNullable<T>' utilizando tipos condicionales o intersecciones?",
+    "options": [
+      "type NonNullable<T> = T extends null | undefined ? never : T; (o también 'T & {}').",
+      "type NonNullable<T> = Exclude<T, boolean>; descartando los valores lógicos falsos.",
+      "type NonNullable<T> = Required<T>[keyof T]; leyendo las propiedades no opcionales.",
+      "type NonNullable<T> = T extends object ? T : never; descartando todos los primitivos."
+    ],
+    "correct_index": 0,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "medium",
+    "hint": "NonNullable descarta null y undefined ya sea vía condicional o intersectando con {}."
+  },
+  {
+    "id": "ts_126",
+    "question": "¿Cómo extrae 'ReturnType<T>' el valor de retorno usando 'infer'?",
+    "options": [
+      "type ReturnType<T> = T['return']; leyendo una propiedad interna reservada del motor.",
+      "type ReturnType<T> = T extends (...args: any[]) => infer R ? R : any; deduciendo R.",
+      "type ReturnType<T> = T extends Function ? T(never) : void; ejecutando la función en seco.",
+      "type ReturnType<T> = typeof T extends () => infer R ? R : never; mediante doble typeof."
+    ],
+    "correct_index": 1,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "medium",
+    "hint": "ReturnType empareja la firma de función infiriendo R en la posición de retorno."
+  },
+  {
+    "id": "ts_127",
+    "question": "¿Cómo extrae 'Parameters<T>' los argumentos de una función?",
+    "options": [
+      "type Parameters<T> = T['arguments']; consultando el objeto arguments de la función.",
+      "type Parameters<T> = keyof T; obteniendo una unión con los nombres de los parámetros.",
+      "type Parameters<T> = T extends (...args: infer P) => any ? P : never; deduciendo la tupla P.",
+      "type Parameters<T> = Array<T>; convirtiendo la función en una lista de tipos genéricos."
+    ],
+    "correct_index": 2,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "medium",
+    "hint": "Parameters deduce la tupla de argumentos capturando (...args: infer P)."
+  },
+  {
+    "id": "ts_128",
+    "question": "¿Para qué se utilizan 'ConstructorParameters<T>' e 'InstanceType<T>'?",
+    "options": [
+      "Para convertir una función ordinaria en un constructor de clases nativo de ES6.",
+      "Para verificar si una clase ha implementado todos sus métodos en tiempo de compilación.",
+      "Para impedir que una clase abstracta sea instanciada mediante el operador new.",
+      "Para extraer la tupla de argumentos del constructor y el tipo resultante de una clase."
+    ],
+    "correct_index": 3,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "medium",
+    "hint": "ConstructorParameters extrae argumentos de 'new (...)'; InstanceType extrae la instancia producida."
+  },
+  {
+    "id": "ts_129",
+    "question": "¿Cómo se crea un tipo utilitario personalizado 'ValueOf<T>' para leer los valores de un objeto?",
+    "options": [
+      "type ValueOf<T> = T[keyof T]; indexando el tipo T por todas sus claves posibles.",
+      "type ValueOf<T> = Object.values(T); utilizando la función nativa de JavaScript.",
+      "type ValueOf<T> = keyof T extends infer K ? K : never; leyendo las claves del tipo.",
+      "type ValueOf<T> = T extends any[] ? T[number] : string; limitándolo a arreglos."
+    ],
+    "correct_index": 0,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "medium",
+    "hint": "T[keyof T] consulta todos los tipos asociados a las propiedades de T."
+  },
+  {
+    "id": "ts_130",
+    "question": "¿Cómo se crea un tipo utilitario 'Mutable<T>' para eliminar el modificador readonly?",
+    "options": [
+      "type Mutable<T> = { [P in keyof T]+mutable: T[P]; }; con la etiqueta mutable explícita.",
+      "type Mutable<T> = { -readonly [P in keyof T]: T[P]; }; utilizando el prefijo '-readonly'.",
+      "type Mutable<T> = Clone<T>; generando una copia superficial desprotegida del tipo.",
+      "type Mutable<T> = Object.unfreeze(T); aplicando un método del entorno de ejecución."
+    ],
+    "correct_index": 1,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "medium",
+    "hint": "'-readonly' en un tipo mapeado elimina la restricción de solo lectura de todas las claves."
+  },
+  {
+    "id": "ts_131",
+    "question": "¿Cómo se implementa un tipo utilitario básico 'DeepPartial<T>'?",
+    "options": [
+      "type DeepPartial<T> = Partial<Partial<T>>; aplicando la utilidad dos veces seguidas.",
+      "type DeepPartial<T> = { [P in keyof T]: any }; degradando los tipos internos a any.",
+      "type DeepPartial<T> = { [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P]; };",
+      "type DeepPartial<T> = T extends Array<infer U> ? U : Partial<T>; solo para arreglos."
+    ],
+    "correct_index": 2,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "medium",
+    "hint": "DeepPartial recursiona sobre propiedades que son objetos aplicando DeepPartial anidado."
+  },
+  {
+    "id": "ts_132",
+    "question": "¿Qué limitación tiene la utilidad estándar 'Readonly<T>' respecto a objetos anidados?",
+    "options": [
+      "Solo funciona en entornos con Node.js y falla al compilar aplicaciones de navegador.",
+      "Convierte los arrays internos en tuplas inmutables de longitud fija de forma automática.",
+      "Impide que el objeto sea enviado como argumento a través de la red en formato JSON.",
+      "Es superficial (shallow); no congela las propiedades de los objetos contenidos internamente."
+    ],
+    "correct_index": 3,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "medium",
+    "hint": "Readonly es superficial: protege las propiedades de primer nivel, pero objetos anidados son mutables."
+  },
+  {
+    "id": "ts_133",
+    "question": "¿Cómo se implementa 'DeepReadonly<T>' manejando primitivos, funciones y arrays?",
+    "options": [
+      "type DeepReadonly<T> = T extends Function ? T : T extends object ? { readonly [K in keyof T]: DeepReadonly<T[K]> } : T;",
+      "type DeepReadonly<T> = Readonly<T> & Object.freeze<T>; combinando tipos con métodos de JS.",
+      "type DeepReadonly<T> = { readonly [K in keyof T]: T[K] }; aplicando la utilidad nativa una sola vez.",
+      "type DeepReadonly<T> = T extends Array<any> ? readonly T[] : Readonly<T>; limitándolo a listas."
+    ],
+    "correct_index": 0,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "DeepReadonly debe excluir funciones de la mutación y recursionar sobre objetos y arrays."
+  },
+  {
+    "id": "ts_134",
+    "question": "¿Cómo se construye un tipo 'Path<T>' que genere rutas por puntos ('usuario.perfil.nombre')?",
+    "options": [
+      "Invocando la biblioteca estándar de resolución de rutas de Node.js mediante importación.",
+      "Utilizando tipos recursivos y Template Literal Types para concatenar claves: `${K}.${Path<T[K]>}`.",
+      "Concatenando las cadenas de texto del array retornado por Object.keys(T) en runtime.",
+      "Definiendo una firma de índice que acepte cualquier combinación de caracteres alfanuméricos."
+    ],
+    "correct_index": 1,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "Template literal types recursivos exploran claves de objetos anidados formando 'a.b.c'."
+  },
+  {
+    "id": "ts_135",
+    "question": "¿Cómo se implementa 'KeysOfType<T, SelectedType>' para filtrar claves por tipo de valor?",
+    "options": [
+      "type KeysOfType<T, V> = Extract<keyof T, V>; extrayendo la coincidencia de nombres de claves.",
+      "type KeysOfType<T, V> = Pick<T, V>; seleccionando el tipo directamente mediante la utilidad Pick.",
+      "type KeysOfType<T, V> = { [K in keyof T]: T[K] extends V ? K : never }[keyof T];",
+      "type KeysOfType<T, V> = keyof T extends V ? T : never; evaluando el objeto completo como un todo."
+    ],
+    "correct_index": 2,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "Se mapean las claves a su propio nombre o never según su valor, e indexa por [keyof T]."
+  },
+  {
+    "id": "ts_136",
+    "question": "¿Cómo se calcula el tipo de diferencia de objetos 'Diff<T, U>' (claves exclusivas de T)?",
+    "options": [
+      "type Diff<T, U> = T - U; restando algebraicamente los tipos en tiempo de compilación.",
+      "type Diff<T, U> = Exclude<T, U>; aplicando la exclusión directamente sobre los objetos.",
+      "type Diff<T, U> = { [K in keyof T]: T[K] extends U[K] ? never : T[K] }; comparando valores.",
+      "type Diff<T, U> = Omit<T, keyof U>; eliminando de T todas las propiedades presentes en U."
+    ],
+    "correct_index": 3,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "Omit<T, keyof U> retiene en T únicamente las propiedades que no existen en el tipo U."
+  },
+  {
+    "id": "ts_137",
+    "question": "¿Cómo se extraen las claves estrictamente opcionales de un tipo 'OptionalKeys<T>'?",
+    "options": [
+      "type OptionalKeys<T> = { [K in keyof T]-?: {} extends Pick<T, K> ? K : never }[keyof T];",
+      "type OptionalKeys<T> = Extract<keyof T, undefined>; filtrando claves que contengan undefined.",
+      "type OptionalKeys<T> = keyof Partial<T>; obteniendo todas las claves del tipo parcializado.",
+      "type OptionalKeys<T> = { [K in keyof T]: T[K] extends undefined ? K : never }[keyof T];"
+    ],
+    "correct_index": 0,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "Un campo es opcional si {} es asignable a Pick<T, K>; se extrae con este patrón indexado."
+  },
+  {
+    "id": "ts_138",
+    "question": "¿Cómo se extraen las claves estrictamente requeridas 'RequiredKeys<T>'?",
+    "options": [
+      "type RequiredKeys<T> = keyof Required<T>; leyendo todas las claves del tipo requerido.",
+      "type RequiredKeys<T> = { [K in keyof T]-?: {} extends Pick<T, K> ? never : K }[keyof T];",
+      "type RequiredKeys<T> = Exclude<keyof T, undefined>; excluyendo el tipo undefined de la unión.",
+      "type RequiredKeys<T> = { [K in keyof T]: T[K] extends NonNullable<T[K]> ? K : never }[keyof T];"
+    ],
+    "correct_index": 1,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "Si {} no es asignable a Pick<T, K>, la propiedad es estrictamente obligatoria."
+  },
+  {
+    "id": "ts_139",
+    "question": "¿Cómo se convierte una tupla en una unión de sus elementos 'TupleToUnion<T>'?",
+    "options": [
+      "type TupleToUnion<T> = keyof T; extrayendo las claves del array como una unión de strings.",
+      "type TupleToUnion<T> = T extends [infer Head, ...infer Tail] ? Head & TupleToUnion<Tail> : never;",
+      "type TupleToUnion<T extends any[]> = T[number]; indexando el array por el tipo number.",
+      "type TupleToUnion<T> = Array.prototype.values(T); invocando el iterador del arreglo en JS."
+    ],
+    "correct_index": 2,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "T[number] indexa una tupla o array por todos sus índices numéricos produciendo la unión."
+  },
+  {
+    "id": "ts_140",
+    "question": "¿Cómo funciona el truco de contravarianza para implementar 'UnionToIntersection<U>'?",
+    "options": [
+      "type UnionToIntersection<U> = U extends any ? U & U : never; intersectando cada miembro consigo mismo.",
+      "type UnionToIntersection<U> = { [K in keyof U]: U[K] }; mapeando la unión a un objeto unificado.",
+      "type UnionToIntersection<U> = (infer I) extends U ? I : never; deduciendo I como subtipo común.",
+      "type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;"
+    ],
+    "correct_index": 3,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "Distribuir en el parámetro de una función aprovecha la contravarianza: infer produce la intersección."
+  },
+  {
+    "id": "ts_141",
+    "question": "¿Cómo se diseña un 'StrictOmit<T, K extends keyof T>' que valide que K exista en T?",
+    "options": [
+      "type StrictOmit<T, K extends keyof T> = Omit<T, K>; restringiendo explícitamente K con extends keyof T.",
+      "type StrictOmit<T, K> = K in keyof T ? Omit<T, K> : never; mediante una comprobación condicional simple.",
+      "type StrictOmit<T, K> = { [P in keyof T as P extends K ? never : P]: T[P] }; sin restricciones previas.",
+      "type StrictOmit<T, K> = Pick<T, Exclude<keyof any, K>>; usando el conjunto universal de claves."
+    ],
+    "correct_index": 0,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "El Omit estándar permite claves que no existen en T (keyof any); restringir con keyof T previene typos."
+  },
+  {
+    "id": "ts_142",
+    "question": "¿Cómo se implementa 'Promisify<T>' para convertir todos los métodos de un objeto a Promesas?",
+    "options": [
+      "type Promisify<T> = { [K in keyof T]: Promise<T[K]> }; envolviendo todas las propiedades directamente.",
+      "type Promisify<T> = { [K in keyof T]: T[K] extends (...args: infer A) => infer R ? (...args: A) => Promise<R> : T[K] };",
+      "type Promisify<T> = Async<T>; aplicando la utilidad global de asincronía del compilador de TS.",
+      "type Promisify<T> = { [K in keyof T]: T[K] extends Promise<any> ? T[K] : Awaited<T[K]> };"
+    ],
+    "correct_index": 1,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "Promisify detecta funciones con infer y reescribe su retorno a Promise<R> conservando argumentos."
+  },
+  {
+    "id": "ts_143",
+    "question": "¿Cómo se define un 'Flatten<T>' recursivo para aplanar arrays anidados multidimensionales?",
+    "options": [
+      "type Flatten<T> = T[number][number]; indexando dos veces sobre los elementos numéricos del array.",
+      "type Flatten<T> = Array.prototype.flat(T); llamando al método nativo de aplanado en compilación.",
+      "type Flatten<T> = T extends Array<infer E> ? Flatten<E> : T; desenvolviendo arrays hasta el tipo base.",
+      "type Flatten<T> = T extends [infer Head, ...infer Tail] ? Head : never; obteniendo solo la cabeza."
+    ],
+    "correct_index": 2,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "Flatten recursiona si T es un Array desenvolviendo sus elementos hasta alcanzar no-arrays."
+  },
+  {
+    "id": "ts_144",
+    "question": "¿Cómo se modela el tipo 'Curry<F>' para curificar una función de aridad variable?",
+    "options": [
+      "type Curry<F> = F extends (a: infer A, b: infer B) => infer R ? (a: A) => (b: B) => R : never; limitado solo a dos argumentos fijos.",
+      "type Curry<F> = (...args: Parameters<F>) => ReturnType<F>; envolviendo los argumentos en una tupla plana sin transformarla en cadena.",
+      "type Curry<F> = { [K in keyof F]: F[K] extends Function ? Curry<F[K]> : F[K] }; curificando recursivamente los métodos de un objeto.",
+      "type Curry<F> = F extends (...args: infer A) => infer R ? A extends [infer First, ...infer Rest] ? (arg: First) => Curry<(...args: Rest) => R> : R : never;"
+    ],
+    "correct_index": 3,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "Curry consume la tupla de parámetros uno a uno recursivamente retornando cadenas de funciones."
+  },
+  {
+    "id": "ts_145",
+    "question": "¿Cómo se implementa un tipo 'DeepRequired<T>' que haga obligatorios todos los niveles anidados?",
+    "options": [
+      "type DeepRequired<T> = { [P in keyof T]-?: T[P] extends object ? DeepRequired<T[P]> : T[P]; };",
+      "type DeepRequired<T> = Required<Required<T>>; aplicando la utilidad Required de manera consecutiva.",
+      "type DeepRequired<T> = { [P in keyof T]: NonNullable<T[P]> }; removiendo null de primer orden.",
+      "type DeepRequired<T> = T extends Array<infer U> ? DeepRequired<U>[] : Required<T>; para arrays."
+    ],
+    "correct_index": 0,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "DeepRequired usa '-?' en cada nivel y recursiona sobre aquellas propiedades que son objetos."
+  },
+  {
+    "id": "ts_146",
+    "question": "¿Cómo se crea 'RequireAtLeastOne<T, Keys extends keyof T>' para exigir al menos un campo?",
+    "options": [
+      "type RequireAtLeastOne<T, K extends keyof T = keyof T> = Partial<T> & { [P in K]-?: T[P] }; pero no restringe las claves restantes en la unión.",
+      "type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> & { [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>> }[Keys];",
+      "type RequireAtLeastOne<T, K extends keyof T = keyof T> = T | { [P in K]?: never }; permitiendo únicamente el tipo completo o el objeto vacío.",
+      "type RequireAtLeastOne<T, K extends keyof T = keyof T> = { [P in K]: P extends keyof T ? T[P] : never }; sin generar la unión distributiva."
+    ],
+    "correct_index": 1,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "RequireAtLeastOne forma una unión indexada donde al menos una clave es Required y las demás Partial."
+  },
+  {
+    "id": "ts_147",
+    "question": "¿Cómo se implementa el operador de exclusión mutua de objetos 'ExclusiveOr<T, U>' (XOR)?",
+    "options": [
+      "type XOR<T, U> = (T | U) & ~(T & U); utilizando operadores de lógica de bits a nivel de tipos.",
+      "type XOR<T, U> = T extends U ? never : U extends T ? never : T | U; mediante condicionales dobles.",
+      "type XOR<T, U> = (T | U) extends object ? (T & Without<U, T>) | (U & Without<T, U>) : T | U;",
+      "type XOR<T, U> = Omit<T & U, keyof T & keyof U>; eliminando las propiedades comunes del objeto."
+    ],
+    "correct_index": 2,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "XOR asegura que o bien T está presente con las claves de U en never, o U con las de T en never."
+  },
+  {
+    "id": "ts_148",
+    "question": "¿Cómo se extrae un valor anidado con 'DeepPick<T, Path>' utilizando una ruta separada por puntos?",
+    "options": [
+      "type DeepPick<T, P extends string> = T[P]; indexando directamente con el string completo sin descomponer los delimitadores de punto.",
+      "type DeepPick<T, P extends string> = Pick<T, Extract<keyof T, P>>; limitando la búsqueda al primer nivel e ignorando los niveles hijos.",
+      "type DeepPick<T, P extends string> = P extends keyof T ? T[P] : never; descartando cualquier ruta que contenga puntos anidados en su clave.",
+      "type DeepPick<T, P extends string> = P extends `${infer Head}.${infer Tail}` ? { [K in Head]: DeepPick<T[Head], Tail> } : { [K in P]: T[P] };"
+    ],
+    "correct_index": 3,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "DeepPick divide la ruta con Template Literals (Head.Tail) y anida objetos reconstruyendo el camino."
+  },
+  {
+    "id": "ts_149",
+    "question": "¿Cómo se crea un tipo 'DeepNonNullable<T>' que elimine null y undefined recursivamente?",
+    "options": [
+      "type DeepNonNullable<T> = T extends object ? { [K in keyof T]: DeepNonNullable<NonNullable<T[K]>> } : NonNullable<T>;",
+      "type DeepNonNullable<T> = NonNullable<T>; aplicando la utilidad nativa sin recursionar en objetos.",
+      "type DeepNonNullable<T> = { [K in keyof T]-?: T[K] extends null ? never : T[K] }; solo en primer nivel.",
+      "type DeepNonNullable<T> = T extends null | undefined ? never : { [K in keyof T]: T[K] }; sin bajar niveles."
+    ],
+    "correct_index": 0,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "DeepNonNullable aplica NonNullable a cada nivel y recursiona si la propiedad es un objeto."
+  },
+  {
+    "id": "ts_150",
+    "question": "¿Cómo preserva un tipo mapeado los modificadores 'readonly' y '?' al transformar valores?",
+    "options": [
+      "Exige escribir explícitamente '+readonly' y '+?' en todos los tipos mapeados que se declaren.",
+      "La sintaxis homomórfica '[K in keyof T]: NuevoTipo' copia automáticamente los modificadores de T.",
+      "Obliga a utilizar la biblioteca Reflect para copiar los descriptores de propiedades en runtime.",
+      "Los modificadores siempre se pierden en los mapped types debiendo declararse de nuevo manualmente."
+    ],
+    "correct_index": 1,
+    "subtopic": "utilidades_tipos",
+    "difficulty": "advanced",
+    "hint": "Los mapped types homomórficos ([K in keyof T]) preservan modificadores readonly y ? del tipo T."
   }
 ]

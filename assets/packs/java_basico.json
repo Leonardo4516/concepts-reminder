@@ -1,352 +1,2102 @@
 [
   {
     "id": "java_001",
-    "subtopic": "fundamentos",
-    "difficulty": "basic",
-    "question": "¿Cuál es la clase raíz de toda la jerarquía de objetos en el lenguaje Java?",
+    "question": "¿Cuál es la clase raíz universal de toda la jerarquía de tipos por referencia en Java?",
     "options": [
-      "java.lang.Object, de la cual heredan directa o indirectamente todas las clases.",
-      "java.lang.Class, encargada de almacenar los metadatos de reflexión en la JVM.",
-      "java.lang.System, que administra los flujos estándar de entrada y salida nativos.",
-      "java.lang.Root, utilizada como marcador abstracto en el compilador javac."
+      "java.lang.Object",
+      "java.lang.Class",
+      "java.lang.System",
+      "java.lang.Root"
     ],
     "correct_index": 0,
-    "hint": "En Java, java.lang.Object es la superclase universal de la que descienden todas las clases."
+    "hint": "En Java, java.lang.Object es la superclase última de la que descienden todas las clases directa o indirectamente.",
+    "subtopic": "fundamentos",
+    "difficulty": "basic"
   },
   {
     "id": "java_002",
-    "subtopic": "fundamentos",
-    "difficulty": "basic",
-    "question": "¿Cuál es la diferencia fundamental entre el operador '==' y el método '.equals()' en Java?",
+    "question": "¿Cuál es el tamaño en bits y el rango general de un tipo primitivo 'int' en Java?",
     "options": [
-      "'==' compara el contenido lógico de los objetos; '.equals()' compara punteros físicos en memoria.",
-      "'==' compara igualdad de referencias en memoria; '.equals()' compara el contenido de los objetos.",
-      "'==' sólo funciona entre tipos primitivos; '.equals()' sólo funciona entre variables numéricas.",
-      "'==' evalúa el código hash del objeto; '.equals()' comprueba si ambas variables son de tipo nulo."
+      "16 bits sin signo para enteros cortos.",
+      "32 bits con signo en complemento a dos.",
+      "64 bits de precisión variable según la JVM.",
+      "128 bits optimizado para coma fija."
     ],
     "correct_index": 1,
-    "hint": "'==' evalúa si dos referencias apuntan a la misma dirección física en memoria Heap; .equals() evalúa igualdad lógica."
+    "hint": "El tipo 'int' en Java siempre ocupa exactamente 32 bits (4 bytes) con signo.",
+    "subtopic": "fundamentos",
+    "difficulty": "basic"
   },
   {
     "id": "java_003",
-    "subtopic": "fundamentos",
-    "difficulty": "basic",
-    "question": "¿Cuál es la firma canónica exacta del punto de entrada principal (main) de una aplicación Java?",
+    "question": "¿Cuál es el valor predeterminado de una variable booleana de instancia no inicializada en una clase Java?",
     "options": [
-      "public void static main(String[] args), admitiendo orden indistinto de modificadores de método.",
-      "static public int main(String args[]), devolviendo el código numérico de salida al sistema.",
-      "public static void main(String[] args), requerida por el cargador de clases de la JVM.",
-      "protected static void main(String... args), restringiendo la invocación al mismo paquete raíz."
+      "true",
+      "null",
+      "false",
+      "0"
     ],
     "correct_index": 2,
-    "hint": "La JVM busca estrictamente 'public static void main(String[] args)' para iniciar la ejecución."
+    "hint": "Los campos booleanos primitivos de instancia se inicializan por defecto con 'false'.",
+    "subtopic": "fundamentos",
+    "difficulty": "basic"
   },
   {
     "id": "java_004",
-    "subtopic": "fundamentos",
-    "difficulty": "medium",
-    "question": "¿Qué ocurre internamente en la JVM cuando se concatenan múltiples Strings usando el operador '+' dentro de un bucle?",
+    "question": "¿Qué palabra clave se usa para definir una constante en Java cuyo valor no puede reasignarse?",
     "options": [
-      "Reutiliza el mismo espacio en el String Pool sin asignar ningún objeto adicional en el Heap.",
-      "Convierte automáticamente el bucle en una llamada estática a StringBuffer optimizada por hilo.",
-      "Produce una fuga de memoria permanente que no puede ser limpiada por el recolector de basura.",
-      "Crea múltiples objetos intermedios en memoria Heap degradando el rendimiento salvo usar StringBuilder."
+      "const",
+      "immutable",
+      "static_val",
+      "final"
     ],
     "correct_index": 3,
-    "hint": "Concatenar con '+' dentro de bucles crea instancias intermedias de StringBuilder y String; se debe usar un StringBuilder explícito fuera del bucle."
+    "hint": "'final' aplicado a una variable impide que se le asigne un nuevo valor tras su inicialización.",
+    "subtopic": "fundamentos",
+    "difficulty": "basic"
   },
   {
     "id": "java_005",
-    "subtopic": "fundamentos",
-    "difficulty": "basic",
-    "question": "¿Qué excepción en tiempo de ejecución se lanza si se intenta invocar un método sobre una referencia nula?",
+    "question": "¿Cuál es la firma exacta del método de punto de entrada principal (main) de una aplicación Java tradicional?",
     "options": [
-      "NullPointerException, una excepción no comprobada (unchecked) que hereda de RuntimeException.",
-      "NullReferenceException, una excepción comprobada (checked) que obliga a usar bloques try-catch.",
-      "IllegalArgumentException, generada cuando los parámetros pasados al método no son válidos.",
-      "IllegalStateException, indicando que el entorno de ejecución se encuentra en un estado corrupto."
+      "public static void main(String[] args)",
+      "public void static main(String args)",
+      "static public int main(String[] args)",
+      "protected static void main(String... args)"
     ],
     "correct_index": 0,
-    "hint": "NullPointerException se produce cuando se intenta desreferenciar una variable que apunta a null."
+    "hint": "La JVM busca estrictamente 'public static void main(String[] args)' para arrancar la aplicación.",
+    "subtopic": "fundamentos",
+    "difficulty": "basic"
   },
   {
     "id": "java_006",
-    "subtopic": "poo",
-    "difficulty": "basic",
-    "question": "¿Qué efecto tiene aplicar la palabra clave 'final' a una clase en Java?",
+    "question": "¿Cuál es la diferencia entre los operadores lógicos '&&' y '&' en Java?",
     "options": [
-      "Convierte todos los métodos de la clase en métodos estáticos accesibles sin instanciación.",
-      "Impide que la clase pueda ser extendida o heredada por cualquier otra subclase en el proyecto.",
-      "Obliga a que todos los atributos de la clase sean inmutables y definidos en tiempo de carga.",
-      "Provoca que las instancias de la clase se alojen directamente en el Stack en lugar del Heap."
+      "'&&' opera a nivel de bits mientras '&' evalúa únicamente valores lógicos booleanos.",
+      "'&&' evalúa en cortocircuito deteniéndose si el primer operando es falso; '&' evalúa siempre ambos.",
+      "'&&' solo funciona en bucles 'while' mientras '&' se usa en sentencias condicionales 'if'.",
+      "'&&' lanza excepciones si hay valores nulos mientras '&' convierte nulos a falsos."
     ],
     "correct_index": 1,
-    "hint": "Una clase declarada como 'final' (como java.lang.String) no puede tener clases hijas."
+    "hint": "El operador de cortocircuito '&&' no evalúa el segundo operando si el primero ya determina el resultado.",
+    "subtopic": "fundamentos",
+    "difficulty": "basic"
   },
   {
     "id": "java_007",
-    "subtopic": "poo",
-    "difficulty": "medium",
-    "question": "¿En qué se diferencia una interfaz de una clase abstracta a partir de Java 8?",
+    "question": "¿Dónde se asignan los objetos creados con la palabra clave 'new' en la arquitectura de memoria de Java?",
     "options": [
-      "Las clases abstractas permiten herencia múltiple, mientras que las interfaces se restringen a herencia simple.",
-      "Las interfaces solo permiten variables de instancia mutables, mientras las clases abstractas usan constantes.",
-      "Las interfaces admiten métodos con implementación mediante default y static, pero no tienen estado de instancia.",
-      "Las clases abstractas no pueden definir constructores, mientras que las interfaces poseen constructores públicos."
+      "En el Call Stack de cada hilo.",
+      "En la memoria Metaspace estática.",
+      "En la memoria Heap (montículo).",
+      "En el Program Counter Register."
     ],
     "correct_index": 2,
-    "hint": "Desde Java 8 las interfaces admiten 'default methods' y métodos estáticos, pero no pueden mantener variables de instancia (estado mutable)."
+    "hint": "Todas las instancias de objetos residen en el Heap, mientras que las variables locales y llamadas a métodos usan el Stack.",
+    "subtopic": "fundamentos",
+    "difficulty": "basic"
   },
   {
     "id": "java_008",
-    "subtopic": "poo",
-    "difficulty": "medium",
-    "question": "¿Qué palabra clave se utiliza en una subclase para invocar explícitamente el constructor de la superclase?",
+    "question": "¿Qué método de la clase 'String' devuelve la cantidad de caracteres que contiene la cadena?",
     "options": [
-      "this(), permitiendo invocar constructores sobrecargados de cualquier clase del mismo paquete.",
-      "parent(), delegando la inicialización al primer ancestro que implemente la interfaz raíz.",
-      "base(), enlazando dinámicamente los argumentos con los parámetros del constructor ancestral.",
-      "super(), debiendo ser estrictamente la primera instrucción ejecutable dentro del constructor hijo."
+      "size()",
+      "count()",
+      "getLength()",
+      "length()"
     ],
     "correct_index": 3,
-    "hint": "super(...) debe ser la primera línea del constructor de la clase hija para inicializar la clase padre."
+    "hint": "En arrays se usa la propiedad '.length', pero en instancias de 'String' es el método '.length()'.",
+    "subtopic": "fundamentos",
+    "difficulty": "basic"
   },
   {
     "id": "java_009",
-    "subtopic": "poo",
-    "difficulty": "advanced",
-    "question": "¿Cómo resuelve la JVM el polimorfismo dinámico en tiempo de ejecución al invocar un método sobreescrito?",
+    "question": "¿Qué modificador de acceso permite visibilidad únicamente dentro de la misma clase?",
     "options": [
-      "Mediante una tabla virtual de métodos (vtable) asociada a la clase concreta real de la instancia.",
-      "Inspeccionando el código fuente en disco en tiempo real para determinar la jerarquía del objeto.",
-      "Evaluando únicamente el tipo declarado de la referencia de variable en la fase de compilación.",
-      "Ejecutando un script dinámico que analiza las anotaciones presentes en el archivo .class cargado."
+      "private",
+      "protected",
+      "default",
+      "package-private"
     ],
     "correct_index": 0,
-    "hint": "El despacho dinámico utiliza una vtable (virtual method table) que enlaza el método implementado por la clase concreta del objeto en tiempo de ejecución."
+    "hint": "'private' oculta el miembro para cualquier código fuera de la clase donde fue declarado.",
+    "subtopic": "fundamentos",
+    "difficulty": "basic"
   },
   {
     "id": "java_010",
-    "subtopic": "poo",
-    "difficulty": "basic",
-    "question": "¿Qué modificador de acceso permite la visibilidad de un miembro en la misma clase, subclases y clases del mismo paquete?",
+    "question": "¿Qué tipo primitivo se usa en Java para almacenar un solo carácter Unicode de 16 bits?",
     "options": [
-      "package-private (default), permitiendo acceso exclusivamente a las subclases en otros paquetes.",
-      "protected, permitiendo acceso en el mismo paquete y en subclases situadas en cualquier paquete.",
-      "public, restringiendo la visibilidad únicamente a las clases que implementen la misma interfaz.",
-      "private, permitiendo el acceso en cualquier clase siempre que compartan el mismo módulo raíz."
+      "byte",
+      "char",
+      "rune",
+      "string8"
     ],
     "correct_index": 1,
-    "hint": "'protected' da visibilidad al mismo paquete y a todas las subclases (incluso si están en otros paquetes)."
+    "hint": "El tipo 'char' en Java ocupa 16 bits y representa un punto de código UTF-16.",
+    "subtopic": "fundamentos",
+    "difficulty": "basic"
   },
   {
     "id": "java_011",
-    "subtopic": "colecciones",
-    "difficulty": "medium",
-    "question": "¿Cuál es la diferencia de rendimiento principal entre ArrayList y LinkedList en Java para lecturas por índice?",
+    "question": "¿Qué significa que la clase 'String' sea inmutable en Java?",
     "options": [
-      "ArrayList requiere recorrer punteros en O(N); LinkedList ofrece acceso en tiempo constante O(1).",
-      "Ambas estructuras requieren tiempo logarítmico O(log N) apoyándose en árboles Rojo-Negro balanceados.",
-      "ArrayList ofrece acceso en tiempo constante O(1); LinkedList requiere recorrer punteros en O(N).",
-      "ArrayList almacena referencias contiguas en Stack; LinkedList almacena nodos distribuidos en registros."
+      "Que no se puede crear más de una referencia apuntando al mismo texto.",
+      "Que los métodos de String no pueden retornar ninguna otra cadena diferente.",
+      "Que una vez creado el objeto String, su secuencia interna de caracteres no puede alterarse.",
+      "Que las cadenas solo se pueden almacenar en archivos estáticos de lectura."
     ],
     "correct_index": 2,
-    "hint": "ArrayList está respaldada por un array contiguo, permitiendo acceso O(1) con get(i). LinkedList requiere recorrer desde la cabeza o cola (O(N))."
+    "hint": "Cualquier método como '.replace()' o '.concat()' crea un nuevo objeto String; nunca modifica el original.",
+    "subtopic": "fundamentos",
+    "difficulty": "medium"
   },
   {
     "id": "java_012",
-    "subtopic": "colecciones",
-    "difficulty": "medium",
-    "question": "¿Cómo maneja HashMap en Java las colisiones de hash a partir de Java 8 cuando una cubeta se satura?",
+    "question": "¿Cuál es la diferencia fundamental entre 'StringBuilder' y 'StringBuffer' en Java?",
     "options": [
-      "Duplica inmediatamente la longitud del array descartando los elementos redundantes en memoria.",
-      "Aplica sondeo lineal secuencial sobre las siguientes posiciones contiguas del array de cubetas.",
-      "Lanza una excepción ConcurrentModificationException obligando al desarrollador a rehashear.",
-      "Transforma la lista enlazada de la cubeta en un árbol Rojo-Negro balanceado cuando supera 8 elementos."
+      "'StringBuilder' solo admite caracteres ASCII mientras 'StringBuffer' admite Unicode.",
+      "'StringBuffer' es inmutable mientras 'StringBuilder' permite modificar su contenido.",
+      "'StringBuilder' se aloja en el Stack mientras 'StringBuffer' se guarda en Metaspace.",
+      "'StringBuffer' es seguro para subprocesos (sincronizado); 'StringBuilder' no está sincronizado y es más rápido."
     ],
     "correct_index": 3,
-    "hint": "En Java 8, si una cubeta contiene más de 8 elementos (TREEIFY_THRESHOLD) y la tabla es grande, la lista enlazada se convierte en un árbol Rojo-Negro (O(log N))."
+    "hint": "'StringBuilder' es preferible en entornos monohilo por carecer de la sobrecarga de sincronización de StringBuffer.",
+    "subtopic": "fundamentos",
+    "difficulty": "medium"
   },
   {
     "id": "java_013",
-    "subtopic": "colecciones",
-    "difficulty": "basic",
-    "question": "¿Cuál de las siguientes interfaces del Java Collections Framework no permite elementos duplicados?",
+    "question": "¿Qué es el 'Integer Cache' en la máquina virtual de Java (JVM)?",
     "options": [
-      "java.util.Set, cuyos contratos como HashSet y TreeSet garantizan la unicidad estricta de sus miembros.",
-      "java.util.List, que permite almacenar elementos duplicados indexados por su posición entera ordinal.",
-      "java.util.Queue, diseñada para procesar secuencias de datos bajo políticas FIFO admitiendo repeticiones.",
-      "java.util.Vector, una colección sincronizada que almacena elementos duplicados de forma thread-safe."
+      "Un caché que reutiliza instancias de Integer para valores numéricos comprendidos entre -128 y 127.",
+      "Un registro del microprocesador reservado para operaciones matemáticas rápidas.",
+      "Un buffer temporal que almacena los resultados de multiplicaciones complejas.",
+      "Una tabla hash en disco que guarda números enteros creados en la sesión."
     ],
     "correct_index": 0,
-    "hint": "Set modela el concepto matemático de conjunto y no permite elementos duplicados."
+    "hint": "Invocaciones a 'Integer.valueOf(x)' devuelven referencias cacheadas para el rango de -128 a 127.",
+    "subtopic": "fundamentos",
+    "difficulty": "medium"
   },
   {
     "id": "java_014",
-    "subtopic": "colecciones",
-    "difficulty": "advanced",
-    "question": "¿Por qué es crucial implementar adecuadamente 'hashCode()' siempre que se sobreescribe 'equals()' en Java?",
+    "question": "¿Cómo se define el mecanismo de 'autoboxing' en Java?",
     "options": [
-      "Para permitir que el recolector de basura calcule el tamaño exacto del objeto en memoria Heap.",
-      "Para asegurar que dos objetos considerados iguales devuelvan siempre el mismo hash en tablas hash.",
-      "Para evitar que el compilador emita advertencias de tipos genéricos no comprobados en compilación.",
-      "Para garantizar que los objetos puedan ser serializados automáticamente a través de sockets TCP."
+      "La serialización de un objeto hacia un flujo binario para guardarlo en disco.",
+      "La conversión automática que realiza el compilador entre un tipo primitivo y su clase envoltorio correspondiente.",
+      "El empaquetado de múltiples variables en una tupla de datos genérica.",
+      "La instanciación automática de subclases durante la carga de un módulo."
     ],
     "correct_index": 1,
-    "hint": "El contrato de Object exige que si a.equals(b), entonces a.hashCode() == b.hashCode(), indispensable para HashSet y HashMap."
+    "hint": "Por ejemplo, asignar 'int x = 5' a 'Integer y = x;' es autoboxing gestionado por el compilador.",
+    "subtopic": "fundamentos",
+    "difficulty": "medium"
   },
   {
     "id": "java_015",
-    "subtopic": "concurrencia",
-    "difficulty": "medium",
-    "question": "¿Qué garantiza la palabra clave 'synchronized' en Java cuando se aplica a un método o bloque de código?",
+    "question": "¿Cómo se pasan los parámetros en los métodos de Java: por valor o por referencia?",
     "options": [
-      "Ejecución del método en un núcleo dedicado de la CPU sin compartir memoria con otros procesos activos.",
-      "Inmutabilidad permanente de todos los parámetros recibidos por el método durante la invocación.",
-      "Exclusión mutua y visibilidad de memoria adquiriendo el monitor intrínseco (lock) del objeto receptor.",
-      "Conversión automática de la tarea en una corutina no bloqueante gestionada por el runtime de Java."
+      "Los primitivos se pasan por valor y los objetos siempre por referencia directa.",
+      "Java utiliza paso por referencia para todas las variables declaradas con 'var'.",
+      "Java es estrictamente paso por valor en todos los casos (copia el valor primitivo o el valor de la referencia).",
+      "Se pasa por valor únicamente si el parámetro está anotado con '@ValParam'."
     ],
     "correct_index": 2,
-    "hint": "synchronized adquiere el cerrojo intrínseco del objeto, asegurando que un solo hilo acceda al bloque y estableciendo una barrera de memoria."
+    "hint": "En Java todo es paso por valor; cuando pasas un objeto, se copia el valor del puntero o referencia en la pila.",
+    "subtopic": "fundamentos",
+    "difficulty": "medium"
   },
   {
     "id": "java_016",
-    "subtopic": "concurrencia",
-    "difficulty": "advanced",
-    "question": "¿Qué problema resuelve la palabra clave 'volatile' al declarar una variable compartida entre hilos en Java?",
+    "question": "¿Qué interfaz debe implementar un recurso para poder ser gestionado por un bloque 'try-with-resources'?",
     "options": [
-      "Garantiza atomicidad completa en operaciones compuestas como los incrementos aritméticos (contador++).",
-      "Mantiene la variable almacenada permanentemente en el disco de estado sólido para persistencia segura.",
-      "Convierte la variable en un hilo independiente que se ejecuta en segundo plano como un daemon thread.",
-      "Asegura visibilidad inmediata de las escrituras entre hilos y previene el reordenamiento de instrucciones."
+      "java.lang.Disposable",
+      "java.io.Flushable",
+      "java.lang.ManageableResource",
+      "java.lang.AutoCloseable (o java.io.Closeable)"
     ],
     "correct_index": 3,
-    "hint": "'volatile' garantiza visibilidad (las lecturas/escrituras van directo a memoria principal, evitando cachés de CPU locales), pero no garantiza atomicidad de operaciones compuestas."
+    "hint": "El bloque 'try-with-resources' invoca automáticamente '.close()' sobre objetos que implementan AutoCloseable.",
+    "subtopic": "fundamentos",
+    "difficulty": "medium"
   },
   {
     "id": "java_017",
-    "subtopic": "concurrencia",
-    "difficulty": "medium",
-    "question": "¿Cuál es la principal ventaja de utilizar la interfaz ExecutorService en lugar de instanciar hilos 'new Thread()' manualmente?",
+    "question": "¿Cuál es la diferencia entre excepciones comprobadas (checked) y no comprobadas (unchecked) en Java?",
     "options": [
-      "Reutiliza hilos mediante un Thread Pool evitando la sobrecarga recurrente de creación y destrucción de hilos.",
-      "Permite que las tareas se ejecuten directamente sobre la tarjeta gráfica (GPU) acelerando el procesamiento.",
-      "Elimina la posibilidad de bloqueos mutuos (deadlocks) al verificar formalmente el código de las tareas.",
-      "Garantiza que ninguna tarea pueda lanzar excepciones de tipo RuntimeException durante su ejecución."
+      "Las checked (subclases de Exception no Runtime) exigen 'try-catch' o declararse con 'throws'; las unchecked heredan de RuntimeException.",
+      "Las checked detienen la JVM de inmediato; las unchecked solo emiten una alerta en consola.",
+      "Las unchecked son detectadas por el compilador; las checked solo se descubren en ejecución.",
+      "Las checked no pueden contener mensajes descriptivos ni trazas de pila."
     ],
     "correct_index": 0,
-    "hint": "Crear hilos de sistema operativo es costoso; ExecutorService administra un pool de hilos reutilizables y encola el trabajo eficientemente."
+    "hint": "Checked obliga al desarrollador a gestionarlas explícitamente en tiempo de compilación.",
+    "subtopic": "fundamentos",
+    "difficulty": "medium"
   },
   {
     "id": "java_018",
-    "subtopic": "concurrencia",
-    "difficulty": "advanced",
-    "question": "¿Qué característica distingue a los Virtual Threads (Hilos Virtuales) introducidos formalmente en Java 21?",
+    "question": "¿Qué palabra clave se introdujo en Java moderno para retornar un valor desde una expresión 'switch'?",
     "options": [
-      "Son hilos que ejecutan código JavaScript transpilado en paralelo dentro de la misma máquina virtual.",
-      "Son hilos ligeros administrados por la JVM que no bloquean hilos del SO durante operaciones bloqueantes de E/S.",
-      "Son procesos de sistema operativo independientes que no comparten la memoria Heap de la aplicación.",
-      "Son temporizadores de hardware de alta resolución diseñados para telecomunicaciones en tiempo real."
+      "return",
+      "yield",
+      "emit",
+      "output"
     ],
     "correct_index": 1,
-    "hint": "Los Virtual Threads (Project Loom) son administrados por la JVM sobre un pool carrier de hilos del SO; cuando un hilo virtual se bloquea en I/O, el hilo de SO es liberado para otras tareas."
+    "hint": "En las expresiones switch de Java 14+, 'yield valor;' devuelve el resultado evaluado de una rama de bloque.",
+    "subtopic": "fundamentos",
+    "difficulty": "medium"
   },
   {
     "id": "java_019",
-    "subtopic": "javafx",
-    "difficulty": "basic",
-    "question": "En la jerarquía visual de JavaFX, ¿cuál es el contenedor de nivel superior que representa la ventana física?",
+    "question": "¿Qué delimitador sintáctico introducido en Java 15 define bloques de texto multilínea (Text Blocks)?",
     "options": [
-      "Scene, que dibuja los componentes nativos directamente en el búfer de pantalla del sistema operativo.",
-      "Pane, que actúa como lienzo de dibujo vectorial para gráficos tridimensionales de alta fidelidad.",
-      "Stage, el cual encapsula la ventana del sistema operativo y contiene el objeto contenedor Scene.",
-      "Node, que representa el componente visual primitivo del cual heredan los marcos de ventanas físicas."
+      "Tres comillas simples (''' ... ''')",
+      "Acento grave doble (`` ... ``)",
+      "Tres comillas dobles (\"\"\" ... \"\"\")",
+      "Barras inclinadas triples (/// ... ///)"
     ],
     "correct_index": 2,
-    "hint": "En JavaFX, Stage es la ventana principal proporcionada por la plataforma y aloja una Scene (el árbol de nodos visuales)."
+    "hint": "Los Text Blocks simplifican cadenas largas como JSON, SQL o HTML sin necesidad de escapar comillas o añadir '\\n'.",
+    "subtopic": "fundamentos",
+    "difficulty": "medium"
   },
   {
     "id": "java_020",
-    "subtopic": "javafx",
-    "difficulty": "medium",
-    "question": "¿En qué hilo de ejecución deben realizarse obligatoriamente las modificaciones a los nodos del Scene Graph en JavaFX?",
+    "question": "¿Qué sucede en una conversión de estrechamiento (narrowing primitive conversion) como '(byte) 300'?",
     "options": [
-      "En el hilo principal public static void main(), antes de que comience el bucle de eventos del sistema.",
-      "En cualquier hilo de fondo generado por un ExecutorService sin requerir ninguna sincronización.",
-      "En un hilo demonio exclusivo administrado por el controlador gráfico de hardware de la GPU.",
-      "En el JavaFX Application Thread, pudiendo delegar tareas en él con Platform.runLater(Runnable)."
+      "Lanza una excepción de tipo 'ArithmeticOverflowException' en tiempo de ejecución.",
+      "La JVM redondea el valor automáticamente al máximo valor permitido por el tipo byte (127).",
+      "El compilador sustituye el valor por cero para prevenir corrupción de datos.",
+      "Se truncan los bits más significativos, provocando desbordamiento y un valor numérico diferente."
     ],
     "correct_index": 3,
-    "hint": "Al igual que la mayoría de frameworks de UI, el Scene Graph de JavaFX no es thread-safe y debe actualizarse en el 'JavaFX Application Thread' (usando Platform.runLater si estás en un hilo secundario)."
+    "hint": "Al convertir un int de 32 bits a byte de 8 bits sin comprobación, se descartan los 24 bits superiores.",
+    "subtopic": "fundamentos",
+    "difficulty": "medium"
   },
   {
     "id": "java_021",
-    "subtopic": "javafx",
-    "difficulty": "medium",
-    "question": "¿Qué formato basado en XML se utiliza en JavaFX para definir vistas y desacoplarlas de la lógica de negocio?",
+    "question": "¿Cuáles son las tres fases secuenciales en el ciclo de vida del cargado de clases por la JVM?",
     "options": [
-      "FXML, permitiendo construir interfaces gráficas declarativas vinculadas con clases controladoras mediante @FXML.",
-      "XAML, utilizado para compilar código C# y ensamblados nativos de la plataforma Windows Presentation.",
-      "QML, un lenguaje declarativo basado en prototipos de JavaScript para interfaces fluidas de Qt.",
-      "CSS, empleado exclusivamente para definir la geometría y eventos de pulsación de los botones gráficos."
+      "Loading (Carga), Linking (Vinculación: Verificación, Preparación, Resolución) e Initialization (Inicialización).",
+      "Compilation (Compilación), Interpretation (Interpretación) y Execution (Ejecución).",
+      "Allocation (Asignación), GC Compaction (Compactación) y Deallocation (Liberación).",
+      "Parsing (Análisis léxico), Bytecode Emission (Emisión) y Native Assembly (Ensamblado)."
     ],
     "correct_index": 0,
-    "hint": "FXML es el lenguaje XML declarativo de JavaFX para diseñar interfaces (compatible con SceneBuilder) y conectarlas a controladores Java."
+    "hint": "La JVM carga el bytecode (.class), verifica y resuelve referencias en linking, y ejecuta los inicializadores estáticos.",
+    "subtopic": "fundamentos",
+    "difficulty": "advanced"
   },
   {
     "id": "java_022",
-    "subtopic": "javafx",
-    "difficulty": "basic",
-    "question": "¿Qué método del ciclo de vida de la clase javafx.application.Application debe sobreescribirse obligatoriamente?",
+    "question": "¿Qué estructura de memoria sustituyó al antiguo 'PermGen' a partir de Java 8 para almacenar metadatos de clases?",
     "options": [
-      "init(), donde se asigna obligatoriamente la memoria RAM reservada para el procesamiento visual.",
-      "start(Stage primaryStage), donde se inicializa la interfaz gráfica y se muestra la ventana principal.",
-      "stop(), el cual contiene la lógica requerida para liberar los descriptores de archivos de la base.",
-      "render(), encargado de llamar directamente a las librerías DirectX u OpenGL para renderizado de píxeles."
+      "DirectMemory, ubicado dentro del Young Generation del Heap.",
+      "Metaspace, ubicado en la memoria nativa del sistema operativo.",
+      "OffHeapSpace, gestionado por el recolector de basura de la JVM.",
+      "VirtualHeap, almacenado en el archivo de paginación del disco."
     ],
     "correct_index": 1,
-    "hint": "start(Stage primaryStage) es el método abstracto fundamental del ciclo de vida de una Application en JavaFX."
+    "hint": "Metaspace utiliza memoria nativa fuera del Heap de Java y crece dinámicamente según la necesidad de metadatos.",
+    "subtopic": "fundamentos",
+    "difficulty": "advanced"
   },
   {
     "id": "java_023",
-    "subtopic": "javafx",
-    "difficulty": "advanced",
-    "question": "¿En qué consiste el mecanismo de 'Properties & Data Binding' característico de JavaFX?",
+    "question": "¿Qué rol cumple el compilador JIT (Just-In-Time) con respecto a los compiladores C1 y C2?",
     "options": [
-      "Comprime los archivos FXML en memoria binaria acelerando la carga inicial de los componentes visuales.",
-      "Permite vincular métodos de Java directamente con llamadas a procedimientos almacenados en SQL.",
-      "Permite sincronizar automáticamente el valor de una propiedad UI con otra mediante observadores reactivos.",
-      "Genera interfaces de usuario responsivas recalculando el diseño en un hilo secundario asíncrono."
+      "C1 genera bytecode intermedio y C2 traduce el código a ensamblador de 16 bits.",
+      "C1 interpreta código en el servidor y C2 almacena la aplicación en memoria ROM.",
+      "C1 (Client) compila rápido con optimizaciones básicas; C2 (Server) optimiza agresivamente código caliente a lenguaje máquina nativo.",
+      "C1 analiza la sintaxis estática y C2 detecta fugas de memoria en tiempo de diseño."
     ],
     "correct_index": 2,
-    "hint": "Las Properties (StringProperty, IntegerProperty, etc.) implementan el patrón Observer y permiten binding unidireccional y bidireccional entre datos y componentes visuales."
+    "hint": "La compilación escalonada (tiered compilation) combina C1 para un arranque rápido y C2 para rendimiento óptimo prolongado.",
+    "subtopic": "fundamentos",
+    "difficulty": "advanced"
   },
   {
     "id": "java_024",
-    "subtopic": "javafx",
-    "difficulty": "medium",
-    "question": "¿Cómo se estilizan visualmente los componentes de una aplicación JavaFX para aplicar temas modernos o oscuros?",
+    "question": "¿Qué efecto tiene el modificador 'transient' sobre un campo de una clase en Java?",
     "options": [
-      "Modificando directamente el código fuente binario de los archivos JAR de la librería de JavaFX.",
-      "Escribiendo scripts en lenguaje Python que inyectan propiedades visuales en el Scene Graph de la ventana.",
-      "Declarando etiquetas HTML5 con hojas de estilo SASS compiladas en tiempo de ejecución por la JVM.",
-      "Mediante archivos CSS estándar que utilizan prefijos propietarios '-fx-' (por ejemplo, -fx-background-color)."
+      "Evita que la variable sea leída por subprocesos concurrentes sin cerraduras.",
+      "Informa al Garbage Collector que destruya la variable inmediatamente tras su lectura.",
+      "Garantiza que la variable se mantenga en registros de la CPU sin escribirse en RAM.",
+      "Indica al mecanismo de serialización estándar de Java que ignore el campo al guardar el objeto."
     ],
     "correct_index": 3,
-    "hint": "JavaFX utiliza CSS con prefijo '-fx-' para estilizar componentes, fondos, fuentes y bordes de los nodos."
+    "hint": "Los campos 'transient' no se serializan al usar 'ObjectOutputStream'.",
+    "subtopic": "fundamentos",
+    "difficulty": "advanced"
   },
   {
     "id": "java_025",
-    "subtopic": "fundamentos",
-    "difficulty": "advanced",
-    "question": "¿Cuál es la función del 'Just-In-Time Compiler' (JIT) dentro de la máquina virtual de Java (JVM)?",
+    "question": "¿Qué es la técnica de 'Escape Analysis' efectuada por el compilador JIT en Java?",
     "options": [
-      "Compila en tiempo de ejecución los bloques de bytecode frecuentemente ejecutados (hot spots) a código máquina nativo.",
-      "Traduce código fuente Java (.java) a bytecode (.class) en el momento exacto en que se inicia la aplicación.",
-      "Optimiza el uso de la memoria Heap eliminando los objetos que carecen de referencias activas en el Stack.",
-      "Verifica que los archivos .class cargados satisfagan las restricciones de seguridad del SecurityManager."
+      "Determina si el alcance de un objeto escapa al método; si no escapa, puede asignarlo en la pila (Stack Allocation) o eliminar cerraduras.",
+      "Detecta si un atacante intenta inyectar código en el heap a través de punteros nulos.",
+      "Monitorea la velocidad de salida de paquetes por la interfaz de red para evitar saturación.",
+      "Analiza los logs de error para prevenir caídas catastróficas por excepciones no capturadas."
     ],
     "correct_index": 0,
-    "hint": "El compilador JIT (HotSpot) detecta código caliente y lo compila dinámicamente a código de máquina nativo para máxima velocidad."
+    "hint": "Si un objeto no escapa de un método, el JIT puede descomponerlo en escalares y evitar la asignación en el Heap.",
+    "subtopic": "fundamentos",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_026",
+    "question": "¿Qué es el 'Type Erasure' (borrado de tipos) en el sistema de genéricos de Java?",
+    "options": [
+      "El borrado de variables no utilizadas por parte del recolector de basura al inicio.",
+      "La eliminación de los argumentos de tipos genéricos en tiempo de compilación, reemplazándolos por sus límites o por Object.",
+      "La imposibilidad de invocar métodos polimórficos desde interfaces dinámicas.",
+      "La reescritura de firmas de métodos en tiempo de ejecución para cambiar tipos primitivos."
+    ],
+    "correct_index": 1,
+    "hint": "En bytecode no existen tipos genéricos paramétricos directos como 'List<String>'; son tratados como 'List' con casteos generados.",
+    "subtopic": "fundamentos",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_027",
+    "question": "¿Qué jerarquía siguen los ClassLoaders estándar en la arquitectura tradicional de Java?",
+    "options": [
+      "Root ClassLoader -> Thread ClassLoader -> JVM ClassLoader.",
+      "System ClassLoader -> User ClassLoader -> Custom ClassLoader.",
+      "Bootstrap ClassLoader -> Platform/Extension ClassLoader -> Application/System ClassLoader.",
+      "Native ClassLoader -> Virtual ClassLoader -> Core ClassLoader."
+    ],
+    "correct_index": 2,
+    "hint": "El modelo de delegación parental consulta primero al cargador padre antes de que el cargador hijo intente leer la clase.",
+    "subtopic": "fundamentos",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_028",
+    "question": "¿Para qué sirve la clase 'java.lang.invoke.VarHandle' introducida en Java 9?",
+    "options": [
+      "Permite crear variables globales compartidas entre procesos distintos del sistema operativo.",
+      "Actúa como un recolector de basura manual para liberar punteros específicos al instante.",
+      "Genera dinámicamente archivos .class en tiempo de ejecución sin compilar.",
+      "Provee operaciones de acceso a variables de bajo nivel con semántica de memoria similar a sun.misc.Unsafe y java.util.concurrent.atomic."
+    ],
+    "correct_index": 3,
+    "hint": "VarHandle reemplaza de forma segura las operaciones atómicas y vallas de memoria que antes dependían de la API interna 'Unsafe'.",
+    "subtopic": "fundamentos",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_029",
+    "question": "¿Qué restricción impone el modificador 'strictfp' en versiones previas a Java 17?",
+    "options": [
+      "Exige que todas las operaciones de coma flotante sigan estrictamente la norma IEEE 754 sin variaciones entre CPUs.",
+      "Impide que los punteros apunten a direcciones fuera de la tabla de páginas del proceso.",
+      "Obliga a que todos los métodos matemáticos se ejecuten en hardware dedicado con GPU.",
+      "Fuerza la comprobación estricta de límites en arreglos sin permitir optimizaciones JIT."
+    ],
+    "correct_index": 0,
+    "hint": "'strictfp' garantizaba resultados bit a bit idénticos en operaciones flotantes en diferentes arquitecturas de procesador.",
+    "subtopic": "fundamentos",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_030",
+    "question": "¿Cómo opera la recolección de basura 'Generational Garbage Collection' en la JVM?",
+    "options": [
+      "Elimina objetos según el orden alfabético de sus nombres de clase registrados en el paquete.",
+      "Separa objetos según su longevidad en Young Gen (Eden, Survivor spaces) y Old Gen, asumiendo que la mayoría muere joven.",
+      "Divide el Heap en diez segmentos iguales y limpia uno por cada segundo transcurrido.",
+      "Descarga a disco todos los objetos que tengan más de un hilo activo en su contexto."
+    ],
+    "correct_index": 1,
+    "hint": "La hipótesis generacional se basa en que la gran mayoría de objetos se vuelven inalcanzables poco después de ser creados.",
+    "subtopic": "fundamentos",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_031",
+    "question": "¿Qué pilar de la Programación Orientada a Objetos oculta el estado interno y expone métodos públicos para interactuar con él?",
+    "options": [
+      "Polimorfismo",
+      "Herencia",
+      "Encapsulamiento",
+      "Ligadura dinámica"
+    ],
+    "correct_index": 2,
+    "hint": "El encapsulamiento protege los atributos de la clase haciéndolos privados y usando getters/setters.",
+    "subtopic": "poo",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_032",
+    "question": "¿Qué palabra clave se usa para que una clase herede de otra clase en Java?",
+    "options": [
+      "implements",
+      "inherits",
+      "subclass",
+      "extends"
+    ],
+    "correct_index": 3,
+    "hint": "En Java las clases se extienden con 'extends'; solo se permite heredar de una única superclase directa.",
+    "subtopic": "poo",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_033",
+    "question": "¿Qué palabra clave se usa para implementar una o varias interfaces en una clase Java?",
+    "options": [
+      "implements",
+      "extends",
+      "using",
+      "conforms"
+    ],
+    "correct_index": 0,
+    "hint": "Una clase usa 'implements' seguido de una lista separada por comas de interfaces.",
+    "subtopic": "poo",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_034",
+    "question": "¿Qué palabra clave permite hacer referencia a la instancia del objeto actual dentro de sus propios métodos?",
+    "options": [
+      "self",
+      "this",
+      "current",
+      "super"
+    ],
+    "correct_index": 1,
+    "hint": "'this' apunta al objeto sobre el cual se invoca el método o constructor actual.",
+    "subtopic": "poo",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_035",
+    "question": "¿Qué palabra clave se usa para invocar el constructor o métodos de la superclase?",
+    "options": [
+      "base",
+      "parent",
+      "super",
+      "root"
+    ],
+    "correct_index": 2,
+    "hint": "'super()' invoca el constructor de la clase padre en la primera línea de un constructor derivado.",
+    "subtopic": "poo",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_036",
+    "question": "¿Cuál es la diferencia entre sobrecarga (overloading) y sobrescritura (overriding) de métodos?",
+    "options": [
+      "Sobrecarga requiere herencia obligatoria; sobrescritura ocurre dentro de una sola clase sin jerarquía.",
+      "Sobrecarga se evalúa en tiempo de ejecución; sobrescritura se resuelve en tiempo de compilación.",
+      "Sobrecarga cambia el tipo de retorno sin cambiar parámetros; sobrescritura solo añade excepciones.",
+      "Sobrecarga ocurre con métodos de igual nombre y distinta firma en la misma clase; sobrescritura redefine un método padre en una subclase."
+    ],
+    "correct_index": 3,
+    "hint": "Sobrecarga = firmas distintas en compilación; Sobrescritura = misma firma adaptada en la subclase.",
+    "subtopic": "poo",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_037",
+    "question": "¿Para qué se utiliza la anotación '@Override' en un método en Java?",
+    "options": [
+      "Para que el compilador valide que el método efectivamente sobrescribe un método existente de la superclase o interfaz.",
+      "Para permitir que el método acepte cualquier número de argumentos variables de forma dinámica.",
+      "Para convertir automáticamente el método en una operación asíncrona no bloqueante.",
+      "Para evitar que las subclases posteriores puedan modificar la lógica de este método."
+    ],
+    "correct_index": 0,
+    "hint": "'@Override' genera un error de compilación si el método no coincide exactamente con ninguno en la jerarquía superior.",
+    "subtopic": "poo",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_038",
+    "question": "¿Qué ocurre si una clase concreta no implementa todos los métodos abstractos de su superclase?",
+    "options": [
+      "La JVM genera implementaciones vacías por defecto de cada método no resuelto.",
+      "Se produce un error de compilación a menos que la propia subclase se declare también como 'abstract'.",
+      "El programa compila pero arroja 'AbstractMethodError' únicamente al llamar a esos métodos.",
+      "Los métodos no implementados se eliminan de la tabla virtual de la clase."
+    ],
+    "correct_index": 1,
+    "hint": "Toda clase concreta que herede de una clase abstracta debe proveer cuerpo a todos los métodos abstractos.",
+    "subtopic": "poo",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_039",
+    "question": "¿Puede una clase en Java heredar directamente de dos o más superclases mediante 'extends'?",
+    "options": [
+      "Sí, siempre y cuando ninguna de las dos superclases posea atributos con el mismo nombre.",
+      "Sí, pero requiere añadir la palabra clave 'multiple' antes de la declaración de la clase.",
+      "No, Java solo admite herencia simple para clases; la herencia múltiple de tipo se logra mediante interfaces.",
+      "Sí, pero solo si ambas superclases son abstractas y carecen de constructores."
+    ],
+    "correct_index": 2,
+    "hint": "Para evitar el problema del diamante y ambigüedades de estado, Java prohíbe 'extends A, B'.",
+    "subtopic": "poo",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_040",
+    "question": "¿Qué define el polimorfismo en Java?",
+    "options": [
+      "La regla que exige que cada clase deba contener al menos dos constructores públicos.",
+      "La conversión estricta de todos los tipos numéricos a valores flotantes de doble precisión.",
+      "La facultad de renombrar dinámicamente métodos durante la depuración en caliente.",
+      "La capacidad de un objeto de adoptar múltiples formas y responder según su tipo concreto en ejecución."
+    ],
+    "correct_index": 3,
+    "hint": "Una referencia 'Animal a = new Perro()' ejecutará 'a.hacerSonido()' invocando la versión de Perro.",
+    "subtopic": "poo",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_041",
+    "question": "¿Qué novedad introdujo Java 8 en las interfaces para permitir métodos con código sin romper implementaciones existentes?",
+    "options": [
+      "Métodos predeterminados (default methods) y métodos estáticos.",
+      "Variables de instancia mutables protegidas.",
+      "Constructores parametrizados de interfaz.",
+      "Destructores explícitos con llamada a close."
+    ],
+    "correct_index": 0,
+    "hint": "La palabra clave 'default' en un método de interfaz permite proveer una implementación base.",
+    "subtopic": "poo",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_042",
+    "question": "¿Cómo se resuelve la colisión si una clase implementa dos interfaces que definen el mismo método 'default'?",
+    "options": [
+      "El compilador escoge aleatoriamente la interfaz que fue declarada primero en la cláusula implements.",
+      "La clase debe sobrescribir obligatoriamente el método y puede invocar la versión deseada con 'Interfaz.super.metodo()'.",
+      "La clase compila sin problemas y ejecuta concurrentemente ambas implementaciones a la vez.",
+      "La clase es forzada a convertirse en una clase abstracta sin permitir instanciación."
+    ],
+    "correct_index": 1,
+    "hint": "El desarrollador debe resolver la ambigüedad explícitamente redefiniendo el método conflictivo.",
+    "subtopic": "poo",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_043",
+    "question": "¿Cuál es el contrato fundamental entre los métodos 'equals()' y 'hashCode()' de la clase Object?",
+    "options": [
+      "Si dos objetos tienen el mismo 'hashCode()', deben ser obligatoriamente iguales según 'equals()'.",
+      "El valor de 'hashCode()' debe ser un número entero positivo siempre menor a 1000.",
+      "Si dos objetos son iguales según 'equals()', deben producir obligatoriamente el mismo 'hashCode()'.",
+      "Ambos métodos deben sobrescribirse solo si la clase implementa la interfaz Serializable."
+    ],
+    "correct_index": 2,
+    "hint": "Dos objetos 'equals' DEBEN tener igual hashCode. Lo opuesto no es obligatorio (pueden ocurrir colisiones).",
+    "subtopic": "poo",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_044",
+    "question": "¿Qué característica distingue a una 'static nested class' de una 'inner class' no estática en Java?",
+    "options": [
+      "La nested estática solo puede contener métodos abstractos; la inner class solo métodos finales.",
+      "La nested estática no puede ser instanciada con 'new'; la inner class se instancia automáticamente.",
+      "La nested estática reside en el archivo JAR mientras la inner class se compila en memoria nativa.",
+      "La nested estática no posee referencia implícita a la instancia de la clase externa; la inner class no estática sí."
+    ],
+    "correct_index": 3,
+    "hint": "Una inner class no estática retiene una referencia al objeto externo que la creó ('OuterClass.this').",
+    "subtopic": "poo",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_045",
+    "question": "¿Qué es una interfaz funcional (@FunctionalInterface) en Java?",
+    "options": [
+      "Una interfaz que declara exactamente un único método abstracto, apta para ser implementada con expresiones Lambda.",
+      "Una interfaz que solo contiene funciones matemáticas puras sin efectos secundarios.",
+      "Una interfaz que no permite métodos estáticos ni métodos predeterminados de ningún tipo.",
+      "Una interfaz que ejecuta sus operaciones en subprocesos aislados del sistema operativo."
+    ],
+    "correct_index": 0,
+    "hint": "Las interfaces con un solo método abstracto (SAM: Single Abstract Method) son compatibles con Lambdas.",
+    "subtopic": "poo",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_046",
+    "question": "¿Qué genera automáticamente el compilador al declarar un 'record' en Java 16+?",
+    "options": [
+      "Getters con prefijo 'get', setters mutables con prefijo 'set' y constructor vacío por defecto.",
+      "Campos finales privados, constructor canónico, getters con el nombre del campo, y métodos equals, hashCode y toString.",
+      "Una base de datos SQLite embebida en memoria para indexar todas sus instancias.",
+      "Copia automática de todos los registros en archivos temporales formateados en JSON."
+    ],
+    "correct_index": 1,
+    "hint": "Los 'record' son portadores de datos inmutables y concisos; los getters no llevan el prefijo 'get'.",
+    "subtopic": "poo",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_047",
+    "question": "¿Qué es un constructor compacto (compact constructor) dentro de un 'record' en Java?",
+    "options": [
+      "Un constructor que comprime los atributos en formato zip para reducir memoria.",
+      "Un constructor que solo puede llamarse desde clases que pertenezcan al mismo paquete.",
+      "Un constructor sin lista formal de parámetros destinado a validar y normalizar datos antes de la asignación.",
+      "Un constructor privado que impide instanciar el record de forma directa."
+    ],
+    "correct_index": 2,
+    "hint": "La sintaxis 'public MiRecord { Objects.requireNonNull(...); }' evita escribir asignaciones redundantes.",
+    "subtopic": "poo",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_048",
+    "question": "¿Qué tipo de copia realiza por defecto el método '.clone()' de la clase Object?",
+    "options": [
+      "Deep copy (copia profunda): clona recursivamente todos los objetos y colecciones anidadas.",
+      "Copia estática: convierte todas las variables del nuevo objeto en miembros estáticos de clase.",
+      "Copia inmutable: congela el objeto original e impide cualquier edición futura.",
+      "Shallow copy (copia superficial): duplica el objeto pero copia solo las referencias de los objetos contenidos."
+    ],
+    "correct_index": 3,
+    "hint": "Una copia superficial comparte los objetos anidados con el original; para duplicarlos se requiere clonación profunda manual.",
+    "subtopic": "poo",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_049",
+    "question": "¿Qué modificador de acceso permite Java 9 en las interfaces además de public y default?",
+    "options": [
+      "private (tanto métodos de instancia como estáticos privados).",
+      "protected para subclases directas.",
+      "package-private para clases vecinas.",
+      "internal para módulos de la aplicación."
+    ],
+    "correct_index": 0,
+    "hint": "Java 9 añadió métodos privados en interfaces para evitar duplicación de código entre métodos default.",
+    "subtopic": "poo",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_050",
+    "question": "¿Cómo se comporta un 'enum' en Java en comparación con los enums basados en enteros de C/C++?",
+    "options": [
+      "En Java son simples alias numéricos de enteros de 32 bits sin tipo de dato propio.",
+      "En Java los enums son tipos de clase completos con seguridad estática que pueden tener campos, constructores y métodos.",
+      "En Java los enums solo pueden almacenar cadenas alfanuméricas de longitud constante.",
+      "En Java los enums no pueden ser utilizados en sentencias de control 'switch-case'."
+    ],
+    "correct_index": 1,
+    "hint": "Los enums en Java heredan de java.lang.Enum y son clases robustas y tipadas.",
+    "subtopic": "poo",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_051",
+    "question": "¿Qué es el retorno covariante (covariant return type) al sobrescribir un método en una subclase?",
+    "options": [
+      "La capacidad de devolver múltiples tipos distintos simultáneamente usando genéricos abiertos.",
+      "La obligación de que el método sobrescrito retorne un tipo primitivo idéntico al padre.",
+      "La posibilidad de que el método sobrescrito devuelva un subtipo más específico que el declarado en el método padre.",
+      "La conversión automática del valor de retorno en un Optional cuando es nulo."
+    ],
+    "correct_index": 2,
+    "hint": "Si la superclase declara 'public Animal get()', la subclase puede declarar 'public Perro get()'.",
+    "subtopic": "poo",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_052",
+    "question": "¿Qué regla de visibilidad debe respetarse estrictamente al sobrescribir un método en Java?",
+    "options": [
+      "El método sobrescrito debe reducir obligatoriamente la visibilidad a private o package.",
+      "El método sobrescrito puede cambiar la visibilidad de forma totalmente arbitraria sin restricciones.",
+      "El método sobrescrito debe ser obligatoriamente marcado como public en todos los casos.",
+      "El método sobrescrito no puede reducir la visibilidad del método padre (solo puede mantenerla o ampliarla)."
+    ],
+    "correct_index": 3,
+    "hint": "Si el método padre es 'protected', el hijo puede ser 'protected' o 'public', pero jamás 'private'.",
+    "subtopic": "poo",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_053",
+    "question": "¿Qué regla rige las excepciones comprobadas (checked) al sobrescribir un método en una subclase?",
+    "options": [
+      "No puede declarar excepciones comprobadas nuevas ni más amplias que las declaradas por el método original.",
+      "Debe declarar obligatoriamente al menos una nueva excepción comprobada adicional.",
+      "Puede declarar cualquier excepción comprobada sin importar la firma de la superclase.",
+      "No puede declarar ninguna excepción de tipo unchecked o RuntimeException."
+    ],
+    "correct_index": 0,
+    "hint": "La subclase solo puede declarar las mismas excepciones checked, subtipos de ellas o ninguna excepción.",
+    "subtopic": "poo",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_054",
+    "question": "¿Qué introduce la característica 'sealed classes' en Java 17?",
+    "options": [
+      "Impide que los objetos de la clase sean recolectados por el Garbage Collector en ejecución.",
+      "Permite restringir qué clases o interfaces pueden extenderla o implementarla usando la cláusula 'permits'.",
+      "Cifra la lógica de la clase con un certificado digital para impedir desensamblado.",
+      "Obliga a que todos los métodos de la clase sean implementados en librerías nativas en C."
+    ],
+    "correct_index": 1,
+    "hint": "'public sealed class Forma permits Circulo, Cuadrado' define una jerarquía cerrada exhaustiva.",
+    "subtopic": "poo",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_055",
+    "question": "¿Qué permite el Pattern Matching para 'instanceof' introducido en Java 16?",
+    "options": [
+      "Ejecutar expresiones regulares nativas sobre el nombre de la clase evaluada.",
+      "Comprobar si dos tipos genéricos son equivalentes en tiempo de ejecución.",
+      "Comprobar el tipo y declarar y vincular la variable local casteada en una sola expresión.",
+      "Desestructurar automáticamente arreglos multidimensionales en variables escalares."
+    ],
+    "correct_index": 2,
+    "hint": "Se escribe 'if (obj instanceof String s)' y 's' queda disponible con tipo String sin requerir casteo manual.",
+    "subtopic": "poo",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_056",
+    "question": "¿Cuál es el orden cronológico de inicialización cuando se instancia una subclase en Java?",
+    "options": [
+      "Constructor hijo, constructor padre, bloques estáticos y finalmente inicializadores de variables.",
+      "Constructor padre, constructor hijo y después todos los bloques estáticos en paralelo.",
+      "Inicializadores de instancia del hijo, constructor del hijo y luego la superclase.",
+      "Bloques estáticos padre/hijo (en carga), inicializadores de instancia y constructor padre, y luego inicializadores y constructor hijo."
+    ],
+    "correct_index": 3,
+    "hint": "Primero se inicializa el estado estático al cargar las clases, luego se construye la superclase y finalmente la subclase.",
+    "subtopic": "poo",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_057",
+    "question": "¿Qué son los 'métodos puente' (bridge methods) generados por el compilador de Java?",
+    "options": [
+      "Métodos sintéticos creados por javac para preservar el polimorfismo y el borrado de tipos con retornos covariantes o genéricos.",
+      "Métodos de conexión directa con sockets TCP para invocación de métodos remotos (RMI).",
+      "Métodos auxiliares que conectan la máquina virtual con controladores de tarjetas gráficas.",
+      "Funciones que enlazan hilos virtuales con hilos de plataforma del sistema operativo."
+    ],
+    "correct_index": 0,
+    "hint": "Los bridge methods permiten que llamadas polimórficas con tipos borrados en bytecode invoquen el método específico.",
+    "subtopic": "poo",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_058",
+    "question": "¿Por qué todos los métodos no estáticos, no privados y no finales son virtuales por defecto en Java?",
+    "options": [
+      "Porque se compilan en memoria virtual swap en lugar de memoria física del sistema.",
+      "Porque se resuelven en tiempo de ejecución mediante la tabla virtual (vtable) según el objeto receptor real.",
+      "Porque requieren la presencia de una máquina virtual cliente para ejecutarse sin fallas.",
+      "Porque solo pueden ser invocados mediante reflection dinámica o proxies de Java."
+    ],
+    "correct_index": 1,
+    "hint": "En Java todo método de instancia accesible es virtual y admite ligadura dinámica (dynamic dispatch).",
+    "subtopic": "poo",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_059",
+    "question": "¿En qué consiste el principio 'Composition over Inheritance' (Composición sobre Herencia) en diseño OOP?",
+    "options": [
+      "Obligar a que toda clase herede de al menos tres superclases abstractas distintas.",
+      "Combinar todos los métodos de varias interfaces en un único archivo de código fuente.",
+      "Preferir componer clases con objetos que implementan comportamientos en lugar de acoplar jerarquías rígidas con 'extends'.",
+      "Prohibir el uso de interfaces y usar herencia estricta en todos los componentes."
+    ],
+    "correct_index": 2,
+    "hint": "La composición ofrece flexibilidad, reduce acoplamiento y evita fragilidades derivadas de cambios en superclases.",
+    "subtopic": "poo",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_060",
+    "question": "¿Qué ocurre si un constructor invoca un método sobrescribible (no final, no privado) durante la construcción del objeto?",
+    "options": [
+      "El compilador genera un error de sintaxis impidiendo compilar la superclase.",
+      "La JVM aborta la ejecución inmediatamente con una excepción 'ConstructorViolationException'.",
+      "El método se ejecuta dos veces: una con la lógica del padre y otra con la lógica del hijo.",
+      "Se ejecutará la versión de la subclase antes de que los campos del hijo hayan sido inicializados, causando bugs sutiles o NPE."
+    ],
+    "correct_index": 3,
+    "hint": "Es un antipatrón conocido: invocar métodos polimórficos en constructores accede al estado no inicializado del hijo.",
+    "subtopic": "poo",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_061",
+    "question": "¿Cuál es la interfaz raíz de la jerarquía de colecciones principales (List, Set, Queue) en Java?",
+    "options": [
+      "java.util.Collection",
+      "java.util.Map",
+      "java.lang.IterableOnly",
+      "java.util.Aggregate"
+    ],
+    "correct_index": 0,
+    "hint": "'Collection' agrupa a List, Set y Queue. Nota: Map no hereda de Collection.",
+    "subtopic": "colecciones",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_062",
+    "question": "¿Cuál es la principal diferencia entre una 'List' y un 'Set' en el framework de colecciones?",
+    "options": [
+      "'List' solo almacena enteros; 'Set' puede almacenar cualquier tipo de objeto.",
+      "'List' es una colección ordenada que admite elementos duplicados; 'Set' no admite duplicados.",
+      "'Set' mantiene siempre orden alfabético estricto; 'List' desordena los elementos.",
+      "'List' no puede ser iterada con bucles; 'Set' solo se recorre mediante streams."
+    ],
+    "correct_index": 1,
+    "hint": "Las Listas preservan el orden posicional y repeticiones; los Sets garantizan unicidad de elementos.",
+    "subtopic": "colecciones",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_063",
+    "question": "¿Cuál es la estructura de datos subyacente utilizada por 'ArrayList' en Java?",
+    "options": [
+      "Una lista doblemente enlazada con punteros a nodo anterior y posterior.",
+      "Un árbol binario auto-balanceado de tipo Red-Black.",
+      "Un arreglo (array) dinámico redimensionable en memoria contigua.",
+      "Una tabla de dispersión hash con listas de colisión encadenadas."
+    ],
+    "correct_index": 2,
+    "hint": "'ArrayList' almacena sus elementos en un 'Object[]' interno que crece según se agregan elementos.",
+    "subtopic": "colecciones",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_064",
+    "question": "¿Cuál es la complejidad temporal promedio de acceder a un elemento por su índice en un 'ArrayList'?",
+    "options": [
+      "O(n) tiempo lineal.",
+      "O(log n) tiempo logarítmico.",
+      "O(n^2) tiempo cuadrático.",
+      "O(1) tiempo constante."
+    ],
+    "correct_index": 3,
+    "hint": "El acceso indexado a un arreglo directo es una operación aritmética de memoria instantánea O(1).",
+    "subtopic": "colecciones",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_065",
+    "question": "¿Qué interfaz representa una estructura de pares clave-valor en Java?",
+    "options": [
+      "java.util.Map",
+      "java.util.PairCollection",
+      "java.util.DictionaryBase",
+      "java.util.LookupTable"
+    ],
+    "correct_index": 0,
+    "hint": "Map<K, V> asocia claves únicas con valores respectivos.",
+    "subtopic": "colecciones",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_066",
+    "question": "¿Qué implementación de 'Set' no garantiza ningún orden específico de iteración de sus elementos?",
+    "options": [
+      "TreeSet",
+      "HashSet",
+      "LinkedHashSet",
+      "PrioritySet"
+    ],
+    "correct_index": 1,
+    "hint": "'HashSet' se basa en los códigos hash de los objetos, por lo que el orden de recorrido es indeterminado.",
+    "subtopic": "colecciones",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_067",
+    "question": "¿Qué métodos fundamentales de la interfaz 'Iterator' se usan para recorrer una colección secuencialmente?",
+    "options": [
+      "hasMore() y getMore()",
+      "valid() y current()",
+      "hasNext() y next()",
+      "advance() y read()"
+    ],
+    "correct_index": 2,
+    "hint": "'hasNext()' verifica si quedan elementos e 'next()' recupera el siguiente elemento del iterador.",
+    "subtopic": "colecciones",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_068",
+    "question": "¿Qué método introducido en Java 9 crea de forma concisa una lista inmutable de elementos?",
+    "options": [
+      "Arrays.newImmutableList(...)",
+      "Collections.staticList(...)",
+      "List.fromArray(...)",
+      "List.of(e1, e2, ...)"
+    ],
+    "correct_index": 3,
+    "hint": "'List.of()' retorna una lista no modificable que arroja UnsupportedOperationException si se intenta mutar.",
+    "subtopic": "colecciones",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_069",
+    "question": "¿Qué método se utiliza para agregar un elemento al final de una colección de tipo 'List'?",
+    "options": [
+      "add(E e)",
+      "append(E e)",
+      "push(E e)",
+      "insert(E e)"
+    ],
+    "correct_index": 0,
+    "hint": "El método estándar en el framework de colecciones para insertar elementos es '.add()'.",
+    "subtopic": "colecciones",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_070",
+    "question": "¿Qué estructura de datos subyacente implementa 'LinkedList' en Java?",
+    "options": [
+      "Un arreglo circular de capacidad estática fija.",
+      "Una lista doblemente enlazada (doubly-linked list).",
+      "Un montículo binario de nodos de prioridad.",
+      "Una matriz bidimensional dispersa en heap."
+    ],
+    "correct_index": 1,
+    "hint": "'LinkedList' implementa List y Deque usando nodos enlazados con referencias anterior y siguiente.",
+    "subtopic": "colecciones",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_071",
+    "question": "¿Cuál es la diferencia entre 'Comparable<T>' y 'Comparator<T>' en Java?",
+    "options": [
+      "'Comparable' solo funciona con números; 'Comparator' ordena cadenas de texto exclusivamente.",
+      "'Comparator' modifica el código fuente de la clase; 'Comparable' crea clases anónimas.",
+      "'Comparable' define el orden natural en la clase propia con compareTo; 'Comparator' define estrategias de orden externas con compare.",
+      "'Comparable' lanza excepciones en caso de empate; 'Comparator' descarta los duplicados."
+    ],
+    "correct_index": 2,
+    "hint": "Usa Comparable cuando la clase sabe ordenarse a sí misma; usa Comparator para ordenamientos personalizados o múltiples.",
+    "subtopic": "colecciones",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_072",
+    "question": "¿Qué garantiza la clase 'LinkedHashMap' sobre el orden de sus elementos?",
+    "options": [
+      "Ordena las claves alfabéticamente según su código de orden natural ascendente.",
+      "Garantiza un orden aleatorio renovado tras cada invocación del recolector de basura.",
+      "Mantiene los elementos ordenados según el valor en memoria del recolector de basura.",
+      "Mantiene el orden de inserción de las claves (o el orden de acceso si se configura para caché LRU)."
+    ],
+    "correct_index": 3,
+    "hint": "'LinkedHashMap' mantiene una lista doblemente enlazada que atraviesa todas sus entradas.",
+    "subtopic": "colecciones",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_073",
+    "question": "¿Qué excepción se lanza si se modifica estructuralmente una colección mientras se itera con un bucle 'for-each'?",
+    "options": [
+      "ConcurrentModificationException",
+      "IllegalStateException",
+      "IndexOutOfBoundsException",
+      "CollectionCorruptedException"
+    ],
+    "correct_index": 0,
+    "hint": "Los iteradores estándar de Java son 'fail-fast' y arrojan esta excepción si detectan modificaciones concurrentes.",
+    "subtopic": "colecciones",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_074",
+    "question": "¿Cuál es la forma segura de eliminar un elemento durante la iteración tradicional sin lanzar excepciones?",
+    "options": [
+      "Llamar a 'collection.remove(item)' directamente dentro del bucle for-each.",
+      "Utilizar el método 'iterator.remove()' provisto por el iterador explícito.",
+      "Asignar 'null' al elemento evaluado dentro de una sentencia if.",
+      "Usar un bloque 'synchronized' envolviendo la lista durante el bucle for-each."
+    ],
+    "correct_index": 1,
+    "hint": "'iterator.remove()' actualiza el contador de modificaciones interno (expectedModCount) de forma segura.",
+    "subtopic": "colecciones",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_075",
+    "question": "¿Qué estructura de datos utiliza 'TreeSet' internamente para mantener sus elementos ordenados?",
+    "options": [
+      "Una tabla hash con sondeo lineal abierto (open addressing).",
+      "Un array dinámico ordenado con algoritmo Quicksort en cada inserción.",
+      "Un árbol Red-Black (árbol binario de búsqueda auto-balanceado mediante TreeMap).",
+      "Una cola de prioridad basada en un montículo binario indexado."
+    ],
+    "correct_index": 2,
+    "hint": "'TreeSet' delega en un 'NavigableMap' (típicamente TreeMap), logrando operaciones O(log n).",
+    "subtopic": "colecciones",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_076",
+    "question": "¿Cuál es la diferencia entre una operación intermedia y una terminal en la Stream API de Java?",
+    "options": [
+      "Las intermedias modifican la colección original; las terminales generan una copia inmutable.",
+      "Las intermedias se ejecutan sincrónicamente; las terminales corren siempre en hilos virtuales.",
+      "Las intermedias solo admiten números; las terminales procesan objetos arbitrarios.",
+      "Las intermedias retornan otro Stream y son perezosas (lazy); las terminales producen un resultado y cierran el pipeline."
+    ],
+    "correct_index": 3,
+    "hint": "Operaciones como '.filter()' o '.map()' son intermedias; '.collect()' o '.forEach()' son terminales.",
+    "subtopic": "colecciones",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_077",
+    "question": "¿Qué método del Collector agrupa los elementos de un Stream por un criterio en un 'Map<K, List<V>>'?",
+    "options": [
+      "Collectors.groupingBy(funcionClasificadora)",
+      "Collectors.partitionBy(funcionClasificadora)",
+      "Collectors.toMapGrouping(funcionClasificadora)",
+      "Collectors.aggregateByKey(funcionClasificadora)"
+    ],
+    "correct_index": 0,
+    "hint": "'Collectors.groupingBy' es análogo a la cláusula GROUP BY en SQL.",
+    "subtopic": "colecciones",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_078",
+    "question": "¿Cuál es el propósito fundamental de la clase 'Optional<T>' en Java?",
+    "options": [
+      "Obligar al compilador a crear variables primitivas de tamaño reducido.",
+      "Representar formalmente la posible ausencia de un valor de retorno para evitar NullPointerException.",
+      "Servir como contenedor seguro para transmitir datos binarios por sockets de red.",
+      "Permitir que un método retorne dos valores diferentes simultáneamente."
+    ],
+    "correct_index": 1,
+    "hint": "'Optional' es un tipo de retorno que explicita que el resultado puede estar vacío, incentivando métodos funcionales.",
+    "subtopic": "colecciones",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_079",
+    "question": "¿Qué implementa la estructura 'PriorityQueue' en Java?",
+    "options": [
+      "Una lista FIFO estricta donde el primer elemento en entrar es siempre el primero en salir.",
+      "Una pila LIFO de alta velocidad optimizada para acceso directo al último nodo.",
+      "Una cola basada en un montículo binario (heap) que procesa elementos según su prioridad natural o Comparator.",
+      "Una tabla hash donde las claves son números enteros del 1 al 10."
+    ],
+    "correct_index": 2,
+    "hint": "El elemento con menor valor (o mayor prioridad según el comparador) se sitúa siempre al frente (head).",
+    "subtopic": "colecciones",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_080",
+    "question": "¿Qué ocurre si se pasa un elemento 'null' a los métodos de fábrica 'List.of()' o 'Set.of()' en Java 9+?",
+    "options": [
+      "El elemento nulo es ignorado silenciosamente y la colección se crea sin él.",
+      "Se crea una colección válida que contiene el valor null en la posición indicada.",
+      "La colección reemplaza el null por un objeto vacío del tipo inferido.",
+      "Lanza inmediatamente un NullPointerException en tiempo de ejecución."
+    ],
+    "correct_index": 3,
+    "hint": "Las colecciones no modificables creadas con '.of()' prohíben explícitamente elementos nulos.",
+    "subtopic": "colecciones",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_081",
+    "question": "¿Qué transformación interna realiza 'HashMap' en Java 8 cuando un bucket supera el umbral de 8 colisiones (TREEIFY_THRESHOLD)?",
+    "options": [
+      "Convierte la lista enlazada del bucket en un árbol Red-Black equilibrado para mejorar la búsqueda a O(log n).",
+      "Duplica inmediatamente el tamaño del arreglo interno descartando los datos duplicados.",
+      "Lanza una excepción de tipo 'HashCollisionLimitExceededException' no comprobada.",
+      "Descarga las claves excedentes a una tabla temporal en memoria secundaria."
+    ],
+    "correct_index": 0,
+    "hint": "Esta optimización previene ataques de Denegación de Servicio (DoS) causados por colisiones intencionadas de hash.",
+    "subtopic": "colecciones",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_082",
+    "question": "¿Cuál es el factor de carga (load factor) por defecto de un 'HashMap' en Java y cuál es su significado?",
+    "options": [
+      "0.50; significa que se redimensiona a la mitad de su tamaño cada vez que se borra una clave.",
+      "0.75; significa que el mapa duplica su capacidad cuando el 75% de sus cubetas se encuentran ocupadas.",
+      "1.00; significa que se redimensiona únicamente cuando todos los buckets tienen colisión.",
+      "0.25; significa que reserva el 25% de la memoria Heap para metadatos del recolector."
+    ],
+    "correct_index": 1,
+    "hint": "0.75 ofrece un equilibrio estadístico óptimo entre costo temporal de búsqueda y consumo de espacio en memoria.",
+    "subtopic": "colecciones",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_083",
+    "question": "¿Qué regla mnemotécnica resume el uso de comodines genéricos de covarianza y contravarianza en Java?",
+    "options": [
+      "COCO: Consumer Object, Producer Class.",
+      "SAFE: Super Always, Final Extends.",
+      "PECS: Producer Extends, Consumer Super.",
+      "LIFO: Last In, First Output."
+    ],
+    "correct_index": 2,
+    "hint": "Si una colección produce datos usa '? extends T'; si la colección consume y almacena datos usa '? super T'.",
+    "subtopic": "colecciones",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_084",
+    "question": "¿Por qué 'EnumSet' es notablemente más eficiente que otras implementaciones de Set en Java?",
+    "options": [
+      "Porque compila sus valores en lenguaje ensamblador dentro del archivo de clases .class.",
+      "Porque no reside en el Heap sino directamente en la memoria caché L1 del procesador.",
+      "Porque descarta automáticamente el uso del recolector de basura.",
+      "Porque almacena sus elementos internamente como una máscara de bits (bit vector) sobre tipos primitivos como 'long'."
+    ],
+    "correct_index": 3,
+    "hint": "Para enums con hasta 64 constantes ('RegularEnumSet'), todas las operaciones de conjunto se resuelven en un solo bitfield.",
+    "subtopic": "colecciones",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_085",
+    "question": "¿Qué sucede si se muta un objeto que ha sido utilizado como clave dentro de un 'HashMap' alterando su 'hashCode'?",
+    "options": [
+      "El objeto queda huérfano en un bucket erróneo y no podrá recuperarse con 'map.get(clave)', provocando fuga de memoria lógica.",
+      "El HashMap detecta el cambio automáticamente y reubica la entrada en el bucket correcto.",
+      "La JVM arroja inmediatamente una excepción 'ConcurrentModificationException'.",
+      "El mapa descarta la entrada automáticamente llamando a su método finalize."
+    ],
+    "correct_index": 0,
+    "hint": "Las claves en un HashMap deben ser inmutables para garantizar que su hashCode permanezca invariante tras la inserción.",
+    "subtopic": "colecciones",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_086",
+    "question": "¿Cuál es la diferencia fundamental entre 'Collections.unmodifiableList(list)' y 'List.copyOf(list)' en Java?",
+    "options": [
+      "El primero crea un clon profundo de todos los objetos; el segundo solo crea una referencia nula.",
+      "El primero es una vista no modificable sobre la lista original (ve cambios de ella); el segundo crea una copia inmutable independiente.",
+      "El primero arroja error si la lista contiene cadenas; el segundo permite modificar los elementos internos.",
+      "El primero se almacena en el Metaspace y el segundo en el Stack de cada subproceso."
+    ],
+    "correct_index": 1,
+    "hint": "Si la lista subyacente a 'unmodifiableList' cambia externamente, la vista refleja dichos cambios; 'List.copyOf' es inmune.",
+    "subtopic": "colecciones",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_087",
+    "question": "¿Qué pool de hilos utiliza por defecto la invocación de 'parallelStream()' en una colección?",
+    "options": [
+      "Un pool específico creado localmente por cada invocación del método parallel.",
+      "El ThreadPoolExecutor del recolector de basura de la máquina virtual.",
+      "El ForkJoinPool.commonPool() compartido por toda la JVM.",
+      "El hilo principal de despacho de eventos de la aplicación."
+    ],
+    "correct_index": 2,
+    "hint": "Operaciones bloqueantes prolongadas dentro de un parallelStream pueden agotar los hilos de todo el commonPool de la JVM.",
+    "subtopic": "colecciones",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_088",
+    "question": "¿Qué interfaz introducida en Java 8 permite dividir secuencias de datos para procesamiento en paralelo en Streams?",
+    "options": [
+      "java.util.ForkSplitter",
+      "java.util.ParallelIterator",
+      "java.util.SegmentDivider",
+      "java.util.Spliterator"
+    ],
+    "correct_index": 3,
+    "hint": "'Spliterator' (splitable iterator) permite particionar elementos mediante 'trySplit()' para consumo distribuido.",
+    "subtopic": "colecciones",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_089",
+    "question": "¿Cómo calcula 'ArrayList' su nuevo tamaño cuando se supera la capacidad máxima de su arreglo interno?",
+    "options": [
+      "Aumenta su capacidad en un 50% aproximadamente ('nuevaCapacidad = viejaCapacidad + (viejaCapacidad >> 1)').",
+      "Duplica exactamente la capacidad multiplicándola por dos (100% adicional).",
+      "Incrementa la capacidad sumando exactamente 10 casillas fijas en cada expansión.",
+      "Calcula el tamaño multiplicando la cantidad de elementos por un factor de tres."
+    ],
+    "correct_index": 0,
+    "hint": "El factor de crecimiento a 1.5x amortiza el costo de copiado del array garantizando inserción en tiempo constante amortizado O(1).",
+    "subtopic": "colecciones",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_090",
+    "question": "¿Qué métodos distinguen a la interfaz 'NavigableMap' como extensión avanzada de 'SortedMap'?",
+    "options": [
+      "Métodos de ordenamiento criptográfico como signKey() y encryptMap().",
+      "Métodos de búsqueda direccional por proximidad como lowerKey(), floorKey(), ceilingKey() y higherKey().",
+      "Métodos de paralelismo como parallelPut() y concurrentGet().",
+      "Métodos de persistencia a disco como flushToDisk() y commitMap()."
+    ],
+    "correct_index": 1,
+    "hint": "'NavigableMap' permite encontrar la entrada más cercana por arriba o por abajo a una clave proporcionada.",
+    "subtopic": "colecciones",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_091",
+    "question": "¿Cuáles son las dos formas estándar en Java clásico para definir el código a ejecutar en un nuevo hilo?",
+    "options": [
+      "Implementar Serializable o heredar de ObjectOutputStream.",
+      "Extender de ProcessBuilder o implementar ForkHandler.",
+      "Extender de la clase Thread o implementar la interfaz Runnable.",
+      "Declarar la clase con la palabra clave 'concurrent'."
+    ],
+    "correct_index": 2,
+    "hint": "Implementar Runnable es generalmente preferido ya que preserva la única herencia de clase disponible en Java.",
+    "subtopic": "concurrencia",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_092",
+    "question": "¿Qué método debe invocarse para iniciar la ejecución concurrente de un hilo de tipo 'Thread'?",
+    "options": [
+      "run()",
+      "execute()",
+      "launch()",
+      "start()"
+    ],
+    "correct_index": 3,
+    "hint": "Llamar a '.run()' ejecuta el método en el hilo actual; '.start()' solicita a la JVM crear un nuevo hilo de ejecución.",
+    "subtopic": "concurrencia",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_093",
+    "question": "¿Qué método estático de 'Thread' pone en pausa el subproceso actual durante un tiempo en milisegundos?",
+    "options": [
+      "Thread.sleep(milisegundos)",
+      "Thread.pause(milisegundos)",
+      "Thread.wait(milisegundos)",
+      "Thread.delay(milisegundos)"
+    ],
+    "correct_index": 0,
+    "hint": "'Thread.sleep()' suspende la ejecución y puede arrojar una 'InterruptedException'.",
+    "subtopic": "concurrencia",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_094",
+    "question": "¿Qué método permite que un subproceso espere hasta que otro subproceso específico termine su ejecución?",
+    "options": [
+      "hilo.waitComplete()",
+      "hilo.join()",
+      "hilo.awaitFinish()",
+      "hilo.blockUntilDone()"
+    ],
+    "correct_index": 1,
+    "hint": "'join()' bloquea al hilo invocador hasta que el hilo sobre el que se llama finaliza su ciclo de vida.",
+    "subtopic": "concurrencia",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_095",
+    "question": "¿Qué palabra clave en Java se utiliza para definir regiones de código con exclusión mutua mediante cerraduras intrínsecas?",
+    "options": [
+      "atomic",
+      "locked",
+      "synchronized",
+      "mutex"
+    ],
+    "correct_index": 2,
+    "hint": "'synchronized' adquiere el monitor intrínseco de un objeto para asegurar que solo un hilo acceda a la vez.",
+    "subtopic": "concurrencia",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_096",
+    "question": "¿Cuál es la diferencia entre la interfaz 'Runnable' y la interfaz 'Callable<V>'?",
+    "options": [
+      "'Runnable' solo se usa en clientes; 'Callable' solo se ejecuta en servidores empresariales.",
+      "'Callable' se ejecuta obligatoriamente en la GPU; 'Runnable' se ejecuta en la CPU.",
+      "'Runnable' es síncrono por defecto; 'Callable' solo admite números enteros como retorno.",
+      "'Runnable' no retorna valor y no declara excepciones comprobadas; 'Callable' retorna un valor y puede lanzar excepciones."
+    ],
+    "correct_index": 3,
+    "hint": "'Callable<V>' cuenta con el método 'V call() throws Exception' que permite devolver resultados tipados.",
+    "subtopic": "concurrencia",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_097",
+    "question": "¿Qué interfaz representa el resultado diferido de una computación asíncrona enviada a un ExecutorService?",
+    "options": [
+      "java.util.concurrent.Future<V>",
+      "java.util.concurrent.Promise<V>",
+      "java.util.concurrent.AsyncTask<V>",
+      "java.util.concurrent.Deferred<V>"
+    ],
+    "correct_index": 0,
+    "hint": "'Future<V>' permite consultar si la tarea terminó con '.isDone()' y obtener el resultado con '.get()'.",
+    "subtopic": "concurrencia",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_098",
+    "question": "¿De qué clase se heredan los métodos 'wait()', 'notify()' y 'notifyAll()' en Java?",
+    "options": [
+      "java.lang.Thread",
+      "java.lang.Object",
+      "java.util.concurrent.Lock",
+      "java.lang.System"
+    ],
+    "correct_index": 1,
+    "hint": "Cada objeto en Java posee un monitor intrínseco, por lo que los métodos de espera y notificación pertenecen a Object.",
+    "subtopic": "concurrencia",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_099",
+    "question": "¿Qué condición obligatoria debe cumplirse antes de llamar a 'objeto.wait()'?",
+    "options": [
+      "El objeto debe ser inmutable y estar marcado con la palabra clave final.",
+      "El hilo debe tener prioridad máxima establecida con Thread.MAX_PRIORITY.",
+      "El hilo actual debe poseer el monitor del objeto estando dentro de un bloque o método 'synchronized' sobre ese objeto.",
+      "El recolector de basura debe haber finalizado su ciclo de limpieza previo."
+    ],
+    "correct_index": 2,
+    "hint": "Llamar a 'wait()' sin poseer el monitor del objeto lanza inmediatamente 'IllegalMonitorStateException'.",
+    "subtopic": "concurrencia",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_100",
+    "question": "¿Cuáles son los estados que puede adoptar un hilo según la enumeración 'Thread.State' en Java?",
+    "options": [
+      "INIT, RUNNING, SLEEPING, PAUSED, DEAD, STOPPED.",
+      "CREATED, ACTIVE, PASSIVE, SUSPENDED, KILLED, EXITED.",
+      "STARTING, PROCESSING, WAITING_IO, FINISHED, ABORTED, DESTROYED.",
+      "NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING, TERMINATED."
+    ],
+    "correct_index": 3,
+    "hint": "Esta enumeración representa el ciclo de vida completo de un hilo en la JVM.",
+    "subtopic": "concurrencia",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_101",
+    "question": "¿Qué dos garantías principales provee la palabra clave 'volatile' al aplicarse sobre una variable en Java?",
+    "options": [
+      "Garantiza visibilidad de memoria entre hilos (lecturas/escrituras directas en RAM) y prohíbe reordenamiento de instrucciones.",
+      "Garantiza atomicidad completa en operaciones compuestas como 'i++' y previene bloqueos.",
+      "Bloquea el objeto para que solo un hilo pueda acceder a él de manera concurrente.",
+      "Copia automáticamente la variable en disco para asegurar persistencia ante fallos."
+    ],
+    "correct_index": 0,
+    "hint": "'volatile' no otorga atomicidad en operaciones de incremento compuestas ('check-then-act'), solo visibilidad inmediata.",
+    "subtopic": "concurrencia",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_102",
+    "question": "¿Qué servicio del paquete 'java.util.concurrent' desacopla la creación y administración de hilos de la ejecución de tareas?",
+    "options": [
+      "ThreadManagerService",
+      "ExecutorService",
+      "ConcurrencyDispatcher",
+      "TaskWorkerSupervisor"
+    ],
+    "correct_index": 1,
+    "hint": "'ExecutorService' gestiona pools de hilos reutilizables como los provistos por la clase 'Executors'.",
+    "subtopic": "concurrencia",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_103",
+    "question": "¿Qué mecanismo se emplea para detener de forma cooperativa y limpia un hilo que se encuentra bloqueado o en ejecución?",
+    "options": [
+      "Invocación del método deprecado 'hilo.stop()' que aborta el hilo de forma forzosa.",
+      "Llamar a 'System.gc()' para forzar la recolección del objeto Thread de la memoria.",
+      "Llamar a 'hilo.interrupt()' y comprobar periódicamente 'Thread.currentThread().isInterrupted()'.",
+      "Modificar la prioridad del hilo a cero para que el planificador del SO lo elimine."
+    ],
+    "correct_index": 2,
+    "hint": "La interrupción es una solicitud voluntaria: el hilo comprueba su flag de interrupción o captura InterruptedException.",
+    "subtopic": "concurrencia",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_104",
+    "question": "¿Qué operaciones de hardware aprovechan clases atómicas como 'AtomicInteger' para lograr concurrencia sin cerraduras?",
+    "options": [
+      "Cerraduras pesadas gestionadas por semáforos del kernel del sistema operativo.",
+      "Interrupciones de software generadas periódicamente por el temporizador de la BIOS.",
+      "Algoritmos de dispersión criptográfica que encriptan el valor numérico en el Heap.",
+      "Instrucciones a nivel de CPU CAS (Compare-And-Swap)."
+    ],
+    "correct_index": 3,
+    "hint": "CAS actualiza el valor de memoria atómicamente solo si coincide con el valor esperado previamente leído.",
+    "subtopic": "concurrencia",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_105",
+    "question": "¿Qué sincronizador de concurrencia permite que uno o más hilos esperen hasta que un contador descendente alcance el valor cero?",
+    "options": [
+      "java.util.concurrent.CountDownLatch",
+      "java.util.concurrent.CyclicBarrier",
+      "java.util.concurrent.Exchanger",
+      "java.util.concurrent.Phaser"
+    ],
+    "correct_index": 0,
+    "hint": "Con 'CountDownLatch', los hilos decrementan el contador con 'countDown()' y otros esperan con 'await()'. No es reutilizable.",
+    "subtopic": "concurrencia",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_106",
+    "question": "¿Cuál es la diferencia principal entre 'CountDownLatch' y 'CyclicBarrier'?",
+    "options": [
+      "'CountDownLatch' solo admite un hilo; 'CyclicBarrier' admite un número ilimitado de hilos concurrentes.",
+      "'CountDownLatch' no es reutilizable una vez que llega a cero; 'CyclicBarrier' puede reiniciarse y usarse en ciclos sucesivos.",
+      "'CyclicBarrier' se utiliza en redes remotas; 'CountDownLatch' opera solo en arquitecturas locales.",
+      "'CountDownLatch' bloquea a los emisores; 'CyclicBarrier' descarta a los hilos sobrantes."
+    ],
+    "correct_index": 1,
+    "hint": "CyclicBarrier permite que un grupo de hilos espere repetidamente a que todos lleguen a un punto común de sincronización.",
+    "subtopic": "concurrencia",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_107",
+    "question": "¿Qué clase del paquete concurrente controla el acceso a un número finito de permisos (permits) sobre un recurso compartido?",
+    "options": [
+      "java.util.concurrent.ResourceGuard",
+      "java.util.concurrent.TokenBucket",
+      "java.util.concurrent.Semaphore",
+      "java.util.concurrent.GateKeeper"
+    ],
+    "correct_index": 2,
+    "hint": "'Semaphore' inicializado con N permisos permite N hilos simultáneos mediante 'acquire()' y 'release()'.",
+    "subtopic": "concurrencia",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_108",
+    "question": "¿Qué ventaja clave proporciona 'ReentrantLock' frente al uso del bloque tradicional 'synchronized'?",
+    "options": [
+      "No consume ninguna memoria Heap al no requerir instanciar un objeto de bloqueo.",
+      "Se desbloquea automáticamente tras un milisegundo sin necesidad de invocar unlock.",
+      "Permite que múltiples hilos escriban exactamente sobre la misma variable en el mismo instante.",
+      "Permite intentos de bloqueo no bloqueantes con 'tryLock()', soporte de equidad (fairness) y cancelación por interrupción."
+    ],
+    "correct_index": 3,
+    "hint": "'ReentrantLock' otorga control fino y flexibilidad, aunque requiere liberar la cerradura obligatoriamente en un bloque 'finally'.",
+    "subtopic": "concurrencia",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_109",
+    "question": "¿Cómo logra 'ConcurrentHashMap' un alto rendimiento en accesos concurrentes en Java?",
+    "options": [
+      "Evita el bloqueo global, aplicando sincronización a nivel de cubeta individual o nodo con operaciones CAS y locks mínimos.",
+      "Realiza una copia completa de toda la tabla en cada operación de lectura o escritura.",
+      "Bloquea toda la estructura mediante una única cerradura reentrante durante cualquier llamada.",
+      "Convierte todas las lecturas y escrituras en peticiones asíncronas almacenadas en un archivo."
+    ],
+    "correct_index": 0,
+    "hint": "A diferencia de Collections.synchronizedMap, múltiples hilos pueden leer y escribir en buckets distintos sin interferencia.",
+    "subtopic": "concurrencia",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_110",
+    "question": "¿Qué ocurre si no se llama a '.shutdown()' en un 'ExecutorService' al finalizar su ciclo de vida?",
+    "options": [
+      "El sistema operativo cierra la máquina virtual forzosamente liberando todos los recursos.",
+      "Los hilos del pool pueden seguir activos como subprocesos no demonio, impidiendo que la JVM finalice normalmente.",
+      "El procesador sufre una sobrecarga permanente elevando la temperatura de los núcleos.",
+      "Los datos generados por las tareas asíncronas se corrompen en el disco duro."
+    ],
+    "correct_index": 1,
+    "hint": "Los hilos de un pool estándar son non-daemon y mantienen vivo el proceso de la JVM a menos que se apaguen.",
+    "subtopic": "concurrencia",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_111",
+    "question": "¿Qué son los Virtual Threads (Hilos Virtuales) introducidos de forma definitiva en Java 21 (Proyecto Loom)?",
+    "options": [
+      "Hilos que se ejecutan enteramente en servidores en la nube sin consumir CPU física local.",
+      "Procesos secundarios del sistema operativo creados con llamadas nativas POSIX 'fork()'.",
+      "Hilos ligeros administrados por la JVM que se mapean dinámicamente sobre hilos de plataforma (carrier threads) del sistema operativo.",
+      "Hilos simulados que solo operan durante pruebas unitarias sin realizar tareas reales."
+    ],
+    "correct_index": 2,
+    "hint": "Los hilos virtuales permiten crear millones de tareas concurrentes con consumo de memoria mínimo sin saturar hilos del SO.",
+    "subtopic": "concurrencia",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_112",
+    "question": "¿Qué es el fenómeno de 'Pinning' en los Virtual Threads de Java?",
+    "options": [
+      "El anclaje de un hilo virtual a un núcleo específico de hardware para maximizar la caché.",
+      "La pérdida irreversible de la referencia del hilo virtual dentro de la tabla del Garbage Collector.",
+      "La duplicación involuntaria de la pila de llamadas al consumir un flujo de datos asíncrono.",
+      "La fijación temporal del hilo virtual al hilo carrier del SO al ejecutar bloques 'synchronized' o código nativo (JNI)."
+    ],
+    "correct_index": 3,
+    "hint": "Cuando ocurre pinning, el carrier thread se bloquea y no puede atender a otros hilos virtuales; se recomienda usar ReentrantLock.",
+    "subtopic": "concurrencia",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_113",
+    "question": "¿Qué algoritmo de balanceo de carga utiliza 'ForkJoinPool' para maximizar el uso de los núcleos de CPU?",
+    "options": [
+      "Work-Stealing (Robo de trabajo): los hilos ociosos roban tareas de la cola de trabajo de hilos ocupados.",
+      "Round-Robin estricto con reasignación basada en prioridades fijas de hardware.",
+      "First-Come First-Served con cola centralizada bloqueante protegida por mutex.",
+      "Random Dropping: descarta aleatoriamente tareas secundarias para evitar sobrecarga."
+    ],
+    "correct_index": 0,
+    "hint": "En ForkJoinPool, cada worker thread tiene un deque; si su deque queda vacío, roba tareas de la cola de otro hilo.",
+    "subtopic": "concurrencia",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_114",
+    "question": "¿Qué método de 'CompletableFuture<T>' encadena otra tarea asíncrona dependiente consumiendo el resultado anterior de forma funcional?",
+    "options": [
+      "applyNext(Function<T, R> fn)",
+      "thenApply(Function<T, R> fn)",
+      "chainAsync(Function<T, R> fn)",
+      "dispatchNext(Function<T, R> fn)"
+    ],
+    "correct_index": 1,
+    "hint": "'thenApply' transforma el valor del futuro cuando este completa, de forma no bloqueante.",
+    "subtopic": "concurrencia",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_115",
+    "question": "¿Por qué el uso de 'ThreadLocal' en aplicaciones que emplean Thread Pools puede provocar fugas de memoria o errores lógicos?",
+    "options": [
+      "Porque ThreadLocal destruye el heap de la máquina virtual al finalizar cada subproceso.",
+      "Porque el Garbage Collector no puede recolectar ningún objeto que haya usado 'ThreadLocal'.",
+      "Porque los hilos del pool son reutilizados y, si no se limpia con '.remove()', retienen valores residuales y referencias al ClassLoader.",
+      "Porque ThreadLocal convierte automáticamente el subproceso en un hilo demonio huérfano."
+    ],
+    "correct_index": 2,
+    "hint": "Es fundamental llamar a 'threadLocal.remove()' en un bloque 'finally' tras terminar la petición.",
+    "subtopic": "concurrencia",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_116",
+    "question": "¿En qué escenario resulta óptimo utilizar 'CopyOnWriteArrayList' frente a colecciones sincronizadas?",
+    "options": [
+      "Sistemas con millones de inserciones continuas por segundo y lecturas esporádicas.",
+      "Sistemas de procesamiento de datos por lotes que no requieren acceso concurrente.",
+      "Aplicaciones con escasa memoria RAM donde cada clonación debe ser evitada a toda costa.",
+      "Sistemas con una frecuencia masiva de operaciones de lectura y una cantidad mínima o infrecuente de escrituras."
+    ],
+    "correct_index": 3,
+    "hint": "Las lecturas no requieren cerraduras y son ultrarrápidas, pero cada escritura crea una copia completa del arreglo interno.",
+    "subtopic": "concurrencia",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_117",
+    "question": "¿Cuál es la causa clásica de un 'Deadlock' (interbloqueo) entre dos o más subprocesos?",
+    "options": [
+      "Adquisición circular de múltiples bloqueos en órdenes contrarios por distintos subprocesos simultáneamente.",
+      "La falta de espacio suficiente en el Stack para alojar nuevas variables locales de tipo primitivo.",
+      "La ejecución ininterrumpida de un bucle 'while (true)' sin pausas temporales de sleep.",
+      "El agotamiento de la memoria Swap del sistema operativo anfitrión por llamadas a Streams."
+    ],
+    "correct_index": 0,
+    "hint": "Si el hilo 1 toma el lock A y espera el lock B, mientras el hilo 2 toma el lock B y espera el lock A, se produce un deadlock.",
+    "subtopic": "concurrencia",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_118",
+    "question": "¿Qué ventaja aporta 'StampedLock' frente a 'ReentrantReadWriteLock' en Java 8+?",
+    "options": [
+      "Garantiza que ningún hilo escriba en disco sin antes firmar digitalmente los datos.",
+      "Soporta lecturas optimistas no bloqueantes mediante 'tryOptimisticRead()' que validan si hubo escritura posterior.",
+      "Permite que múltiples hilos escritores modifiquen el mismo registro sin sincronización.",
+      "Se bloquea de forma indefinida hasta que el sistema operativo conceda un sello de tiempo."
+    ],
+    "correct_index": 1,
+    "hint": "Si la lectura optimista valida que no hubo escritura mediante 'validate(stamp)', se evita el costo de una cerradura de lectura.",
+    "subtopic": "concurrencia",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_119",
+    "question": "¿Qué caracteriza a una 'BlockingQueue' como 'ArrayBlockingQueue' en el patrón Productor-Consumidor?",
+    "options": [
+      "Arroja una excepción irrecuperable de desbordamiento si se ingresa un elemento cuando está vacía.",
+      "Solo admite elementos de tipo String con longitudes inferiores a 256 bytes.",
+      "Los métodos 'put()' bloquean si la cola está llena y 'take()' bloquea si la cola está vacía hasta que haya elementos.",
+      "Descarta automáticamente los elementos más antiguos sin avisar al consumidor."
+    ],
+    "correct_index": 2,
+    "hint": "'put()' y 'take()' gestionan la sincronización de flujo entre productores y consumidores de manera transparente.",
+    "subtopic": "concurrencia",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_120",
+    "question": "¿Qué establece la relación 'happens-before' en el Java Memory Model (JMM)?",
+    "options": [
+      "La estimación temporal en nanosegundos calculada por el JIT para compilar un método.",
+      "El tiempo mínimo que debe esperar un hilo antes de solicitar un bloqueo reentrante.",
+      "El orden de carga alfabética de las bibliotecas dinámicas compartidas por el sistema.",
+      "Un orden formal que garantiza que las escrituras de memoria realizadas por un hilo sean visibles con certeza para otro hilo."
+    ],
+    "correct_index": 3,
+    "hint": "Sin una relación happens-before (vía volatile, synchronized, locks o Thread.start), el compilador o la CPU pueden reordenar accesos.",
+    "subtopic": "concurrencia",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_121",
+    "question": "¿Cuál es la clase base que debe extender la clase principal de una aplicación JavaFX?",
+    "options": [
+      "javafx.application.Application",
+      "javafx.stage.StageApp",
+      "javafx.scene.SceneController",
+      "java.awt.WindowApp"
+    ],
+    "correct_index": 0,
+    "hint": "Toda aplicación JavaFX inicia extendiendo 'Application' y sobrescribiendo su método abstracto 'start'.",
+    "subtopic": "javafx",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_122",
+    "question": "¿Qué método abstracto de 'Application' es el punto de entrada principal del ciclo de vida gráfico?",
+    "options": [
+      "init(Scene mainScene)",
+      "start(Stage primaryStage)",
+      "run(Stage stage)",
+      "execute(Window root)"
+    ],
+    "correct_index": 1,
+    "hint": "'start(Stage primaryStage)' es llamado por la plataforma JavaFX con la ventana principal configurada.",
+    "subtopic": "javafx",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_123",
+    "question": "En la metáfora teatral de JavaFX, ¿qué representa el 'Stage' y qué representa la 'Scene'?",
+    "options": [
+      "'Stage' es el botón de la interfaz; 'Scene' es el color de fondo de toda la pantalla.",
+      "'Stage' representa el archivo CSS; 'Scene' representa el código compilado en bytecode.",
+      "'Stage' representa la ventana externa principal; 'Scene' es el contenedor del árbol de contenido visual interno.",
+      "'Stage' es la barra de tareas del sistema operativo; 'Scene' es el icono de la ventana."
+    ],
+    "correct_index": 2,
+    "hint": "El Stage (escenario/ventana) contiene la Scene (escena con el grafo de nodos de la UI).",
+    "subtopic": "javafx",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_124",
+    "question": "¿Cuál es la estructura jerárquica de árbol que organiza todos los elementos visuales en una aplicación JavaFX?",
+    "options": [
+      "Document Object Model nativo",
+      "Widget Layout Matrix",
+      "Render Frame Queue",
+      "Scene Graph (Grafo de Escena)"
+    ],
+    "correct_index": 3,
+    "hint": "El Scene Graph se compone de un nodo raíz (Root), nodos rama (Parent/Layout Panes) y nodos hoja (Controles/Shapes).",
+    "subtopic": "javafx",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_125",
+    "question": "¿Cómo se inicia la ejecución de una aplicación JavaFX desde el método 'main' estándar?",
+    "options": [
+      "Application.launch(args);",
+      "Application.startApp(args);",
+      "Stage.showMain(args);",
+      "Scene.bootstrap(args);"
+    ],
+    "correct_index": 0,
+    "hint": "'launch(args)' inicializa la infraestructura de JavaFX, crea el Application Thread y llama a init() y start().",
+    "subtopic": "javafx",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_126",
+    "question": "¿Cuáles son los métodos del ciclo de vida de una aplicación JavaFX en orden de invocación?",
+    "options": [
+      "load(), render(), destroy().",
+      "init(), start(Stage primaryStage) y stop().",
+      "onCreate(), onStart(), onDestroy().",
+      "setup(), display(), close()."
+    ],
+    "correct_index": 1,
+    "hint": "'init()' corre en un hilo de inicialización; 'start()' corre en el JavaFX Thread; 'stop()' corre al cerrar la app.",
+    "subtopic": "javafx",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_127",
+    "question": "¿Qué control de diseño básico (Layout Pane) organiza sus componentes hijos en una sola columna vertical?",
+    "options": [
+      "HBox",
+      "StackPane",
+      "VBox",
+      "FlowPane"
+    ],
+    "correct_index": 2,
+    "hint": "'VBox' apila verticalmente los nodos hijos, mientras que 'HBox' los organiza horizontalmente.",
+    "subtopic": "javafx",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_128",
+    "question": "¿Qué método se utiliza en un 'Button' para definir la acción a ejecutar cuando el usuario hace clic sobre él?",
+    "options": [
+      "button.setOnClickListener(e -> { ... });",
+      "button.addClickHandler(e -> { ... });",
+      "button.bindClickEvent(e -> { ... });",
+      "button.setOnAction(e -> { ... });"
+    ],
+    "correct_index": 3,
+    "hint": "'setOnAction' asigna un EventHandler para responder a los eventos de activación del botón.",
+    "subtopic": "javafx",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_129",
+    "question": "¿Cuál es el control básico de JavaFX diseñado para la entrada de texto editable en una sola línea?",
+    "options": [
+      "TextField",
+      "TextArea",
+      "Label",
+      "TextFlow"
+    ],
+    "correct_index": 0,
+    "hint": "'TextField' permite ingresar una sola línea de texto; 'TextArea' está pensado para entradas multilínea.",
+    "subtopic": "javafx",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_130",
+    "question": "¿Cuál es el hilo único y exclusivo responsable de renderizar componentes y despachar eventos de usuario en JavaFX?",
+    "options": [
+      "Main Daemon Thread",
+      "JavaFX Application Thread",
+      "AWT Event Dispatch Thread (EDT)",
+      "Render Worker Thread"
+    ],
+    "correct_index": 1,
+    "hint": "Cualquier modificación a los nodos vivos del Scene Graph debe realizarse estrictamente en el JavaFX Application Thread.",
+    "subtopic": "javafx",
+    "difficulty": "basic"
+  },
+  {
+    "id": "java_131",
+    "question": "¿Qué lenguaje basado en XML se utiliza en JavaFX para definir de forma declarativa la estructura visual de la interfaz?",
+    "options": [
+      "XAML",
+      "FXHTML",
+      "FXML",
+      "UML-UI"
+    ],
+    "correct_index": 2,
+    "hint": "FXML separa la estructura visual definida en XML de la lógica controladora escrita en Java.",
+    "subtopic": "javafx",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_132",
+    "question": "¿Qué clase se encarga de parsear y cargar archivos '.fxml' para generar el árbol de objetos de la interfaz?",
+    "options": [
+      "javafx.fxml.FXMLParser",
+      "javafx.scene.SceneInflater",
+      "javafx.ui.ViewLoader",
+      "javafx.fxml.FXMLLoader"
+    ],
+    "correct_index": 3,
+    "hint": "'FXMLLoader.load(getClass().getResource(\"vista.fxml\"))' carga el FXML y retorna el nodo raíz.",
+    "subtopic": "javafx",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_133",
+    "question": "¿Para qué sirve la anotación '@FXML' en los campos y métodos de una clase controladora?",
+    "options": [
+      "Permite al FXMLLoader inyectar referencias a controles definidos en el FXML y vincular métodos de eventos privados.",
+      "Convierte el campo en un elemento estático compartido por todas las ventanas abiertas.",
+      "Verifica en tiempo de compilación que el archivo CSS no contenga errores de sintaxis.",
+      "Indica que el método debe ejecutarse exclusivamente en un hilo secundario de red."
+    ],
+    "correct_index": 0,
+    "hint": "'@FXML' vincula elementos que tienen 'fx:id' en el documento XML con variables de la clase controladora.",
+    "subtopic": "javafx",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_134",
+    "question": "¿Qué interfaz puede implementar un controlador JavaFX para recibir notificación automática tras cargarse su FXML?",
+    "options": [
+      "javafx.scene.OnReadyListener",
+      "javafx.fxml.Initializable",
+      "javafx.application.LifecycleListener",
+      "javafx.ui.PostLoadable"
+    ],
+    "correct_index": 1,
+    "hint": "Provee el método 'initialize(URL location, ResourceBundle resources)' ejecutado tras inyectar todos los campos @FXML.",
+    "subtopic": "javafx",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_135",
+    "question": "¿Qué prefijo utilizan las reglas de estilo propietarias de JavaFX en archivos CSS?",
+    "options": [
+      "-jfx-",
+      "-java-",
+      "-fx-",
+      "-ui-"
+    ],
+    "correct_index": 2,
+    "hint": "Propiedades como el color de fondo o el tamaño de letra usan sintaxis como '-fx-background-color' o '-fx-font-size'.",
+    "subtopic": "javafx",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_136",
+    "question": "¿Qué panel de distribución organiza a sus hijos en cinco áreas: Top, Bottom, Left, Right y Center?",
+    "options": [
+      "GridPane",
+      "AnchorPane",
+      "TilePane",
+      "BorderPane"
+    ],
+    "correct_index": 3,
+    "hint": "'BorderPane' es uno de los contenedores más usados para estructurar cabecera, pie, barra lateral y centro.",
+    "subtopic": "javafx",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_137",
+    "question": "¿Qué mecanismo en JavaFX sincroniza automáticamente el cambio de valor de una propiedad con otra?",
+    "options": [
+      "Data Binding (Enlace de propiedades con 'bind' o 'bindBidirectional')",
+      "Event Bubbling sincrónico",
+      "Polling automático de hilos de fondo",
+      "Reflexión reactiva de campos de instancia"
+    ],
+    "correct_index": 0,
+    "hint": "Por ejemplo, 'label.textProperty().bind(slider.valueProperty().asString())' actualiza el texto según se mueva el slider.",
+    "subtopic": "javafx",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_138",
+    "question": "¿Qué tipo de lista especializada se requiere para que controles como 'TableView' o 'ListView' detecten cambios automáticamente?",
+    "options": [
+      "java.util.concurrent.CopyOnWriteArrayList",
+      "javafx.collections.ObservableList (creada con FXCollections.observableArrayList())",
+      "java.util.Collections.synchronizedList",
+      "javafx.scene.control.WidgetArrayList"
+    ],
+    "correct_index": 1,
+    "hint": "'ObservableList' dispara eventos de notificación a los oyentes de la UI cuando se agregan, borran o modifican elementos.",
+    "subtopic": "javafx",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_139",
+    "question": "¿Qué clase estándar se utiliza en JavaFX para presentar cuadros de diálogo modales con mensajes o confirmaciones?",
+    "options": [
+      "javax.swing.JOptionPane",
+      "javafx.stage.ModalDialogBox",
+      "javafx.scene.control.Alert",
+      "javafx.scene.MessagePopUp"
+    ],
+    "correct_index": 2,
+    "hint": "'Alert alert = new Alert(AlertType.INFORMATION); alert.showAndWait();' muestra un diálogo preconstruido.",
+    "subtopic": "javafx",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_140",
+    "question": "¿Qué panel de distribución coloca sus componentes en una cuadrícula flexible de filas y columnas?",
+    "options": [
+      "FlowPane",
+      "StackPane",
+      "SplitPane",
+      "GridPane"
+    ],
+    "correct_index": 3,
+    "hint": "'GridPane.add(nodo, colIndex, rowIndex)' posiciona controles en coordenadas específicas de la cuadrícula.",
+    "subtopic": "javafx",
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_141",
+    "question": "¿Qué método estático debe emplearse para ejecutar una actualización visual en la UI desde un subproceso en segundo plano?",
+    "options": [
+      "Platform.runLater(Runnable runnable)",
+      "Application.postTask(Runnable runnable)",
+      "Scene.updateSafe(Runnable runnable)",
+      "Stage.dispatchSync(Runnable runnable)"
+    ],
+    "correct_index": 0,
+    "hint": "'Platform.runLater' encola la tarea para ser procesada de forma segura por el JavaFX Application Thread.",
+    "subtopic": "javafx",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_142",
+    "question": "¿Qué clase abstracta de 'javafx.concurrent' está diseñada para ejecutar tareas de larga duración en fondo exponiendo propiedades de progreso y estado observables?",
+    "options": [
+      "javafx.concurrent.AsyncWorker<V>",
+      "javafx.concurrent.Task<V>",
+      "javafx.application.BackgroundAction<V>",
+      "javafx.scene.concurrent.UIJob<V>"
+    ],
+    "correct_index": 1,
+    "hint": "'Task<V>' implementa RunnableFuture y provee propiedades como 'progressProperty()' y métodos como 'updateProgress()'.",
+    "subtopic": "javafx",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_143",
+    "question": "¿Cuál es la diferencia entre un 'Event Filter' y un 'Event Handler' en la cadena de despacho de eventos de JavaFX?",
+    "options": [
+      "Los Filters modifican los datos del evento; los Handlers solo permiten visualizarlos en la consola.",
+      "Los Handlers solo responden al teclado; los Filters procesan únicamente eventos de ratón.",
+      "Los Filters se ejecutan durante la fase de captura descendente (raíz a hoja); los Handlers durante la fase de burbujeo ascendente (hoja a raíz).",
+      "Los Filters corren en hilos de fondo; los Handlers se ejecutan en el hilo de renderizado."
+    ],
+    "correct_index": 2,
+    "hint": "En la captura el evento viaja del Scene al nodo objetivo; en el burbujeo (bubbling) asciende del objetivo hacia la raíz.",
+    "subtopic": "javafx",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_144",
+    "question": "¿Qué clase de animación permite orquestar cambios visuales de propiedades interpoladas a lo largo de fotogramas clave (KeyFrames)?",
+    "options": [
+      "javafx.animation.FrameSequence",
+      "javafx.scene.Animator",
+      "javafx.animation.MotionDispatcher",
+      "javafx.animation.Timeline"
+    ],
+    "correct_index": 3,
+    "hint": "'Timeline' ejecuta una secuencia de 'KeyFrame' que modifican 'KeyValue' a lo largo del tiempo con interpoladores.",
+    "subtopic": "javafx",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_145",
+    "question": "¿Qué control gráfico ofrece un lienzo de renderizado directo en 2D inmediato mediante un 'GraphicsContext'?",
+    "options": [
+      "javafx.scene.canvas.Canvas",
+      "javafx.scene.shape.DrawSurface",
+      "javafx.scene.image.BitmapPainter",
+      "javafx.scene.layout.DirectPane"
+    ],
+    "correct_index": 0,
+    "hint": "'Canvas' permite dibujar primitivas 2D en modo inmediato con comandos imperativos (ej. gc.fillRect), sin crear nodos en el Scene Graph.",
+    "subtopic": "javafx",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_146",
+    "question": "¿Cómo se busca un nodo en el Scene Graph mediante un selector CSS en tiempo de ejecución?",
+    "options": [
+      "nodoPadre.findCssElement(\"selector\")",
+      "nodoPadre.lookup(\"#idDelNodo\") o nodoPadre.lookup(\".nombreClase\")",
+      "nodoPadre.queryNodeByStyle(\"selector\")",
+      "nodoPadre.selectVisual(\"selector\")"
+    ],
+    "correct_index": 1,
+    "hint": "El método 'lookup()' devuelve el primer nodo que coincida con la consulta CSS especificada.",
+    "subtopic": "javafx",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_147",
+    "question": "¿Qué clases se combinan para crear componentes UI personalizados desacoplando la lógica de la representación visual (Skin)?",
+    "options": [
+      "Widget y VisualRenderer",
+      "Component y ViewDelegate",
+      "Control y SkinBase (o la interfaz Skin)",
+      "UIElement y LookAndFeel"
+    ],
+    "correct_index": 2,
+    "hint": "JavaFX separa la clase 'Control' (estado y eventos) del 'Skin' (árbol de nodos de representación visual y CSS).",
+    "subtopic": "javafx",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_148",
+    "question": "¿Qué módulo debe requerirse en 'module-info.java' para usar los controles gráficos y layouts de JavaFX en Java modular (JPMS)?",
+    "options": [
+      "requires javafx.all;",
+      "requires java.desktop.fx;",
+      "requires javafx.gui.core;",
+      "requires javafx.controls;"
+    ],
+    "correct_index": 3,
+    "hint": "'javafx.controls' contiene Button, Label, TableView y los Layout Panes principales, y depende a su vez de 'javafx.graphics'.",
+    "subtopic": "javafx",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_149",
+    "question": "¿Qué efecto visual de post-procesamiento en tiempo real añade una sombra proyectada alrededor de cualquier nodo?",
+    "options": [
+      "javafx.scene.effect.DropShadow",
+      "javafx.scene.effect.BlurShadow",
+      "javafx.scene.effect.OuterGlow",
+      "javafx.scene.effect.ProjectionFilter"
+    ],
+    "correct_index": 0,
+    "hint": "'node.setEffect(new DropShadow())' aplica una sombra calculada por GPU sobre la silueta del nodo.",
+    "subtopic": "javafx",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "java_150",
+    "question": "¿Qué método debe invocarse sobre un 'Node' si se modifica un atributo de cálculo que requiere recalcular el tamaño y posición de sus hijos?",
+    "options": [
+      "node.invalidateRendering()",
+      "node.requestLayout()",
+      "node.refreshCoordinates()",
+      "node.triggerRepaint()"
+    ],
+    "correct_index": 1,
+    "hint": "'requestLayout()' marca el nodo y sus ancestros como sucios (dirty) para que el layout pass recalcule la disposición en el siguiente pulso.",
+    "subtopic": "javafx",
+    "difficulty": "advanced"
   }
 ]

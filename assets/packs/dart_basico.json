@@ -1,80 +1,2102 @@
 [
   {
     "id": "dart_001",
-    "question": "¿Qué significa que Dart cuente con 'Sound Null Safety' (seguridad estricta ante nulos)?",
+    "question": "¿Qué palabra clave se utiliza en Dart para definir una clase que no puede ser instanciada directamente?",
     "options": [
-      "Que el sistema de tipos garantiza en tiempo de compilación que una variable no nulable (sin '?') nunca podrá contener un valor 'null' en tiempo de ejecución.",
-      "Que todas las variables se inicializan automáticamente con la cadena vacía '' si son nulas.",
-      "Que la palabra clave 'null' fue eliminada por completo del lenguaje.",
-      "Que los punteros a memoria se liberan manualmente para evitar fugas."
+      "abstract",
+      "interface",
+      "virtual",
+      "sealed_only"
     ],
     "correct_index": 0,
-    "hint": "'Soundness' garantiza que si el tipo es int, nunca será null; optimizando el código generado para el runtime.",
-    "subtopic": "fundamentos"
+    "hint": "Las clases abstractas definen una interfaz común para otras subclases sin permitir instancias directas.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
   },
   {
     "id": "dart_002",
-    "question": "¿Cómo maneja Dart la concurrencia y el paralelismo a través de Isolates?",
+    "question": "¿Cómo se define un atributo privado para que solo sea accesible dentro de la misma biblioteca o archivo?",
     "options": [
-      "Los Isolates comparten toda la memoria heap y requieren bloqueos con mutexes.",
-      "Cada Isolate posee su propia memoria y un bucle de eventos (Event Loop) independiente; no comparten estado y se comunican exclusivamente enviando mensajes por puertos (SendPort/ReceivePort).",
-      "Dart no soporta hilos ni paralelismo; corre exclusivamente en un único hilo síncrono.",
-      "Los Isolates solo se pueden ejecutar en aplicaciones móviles Android y no en Flutter Desktop."
+      "Usando la palabra clave 'private' antes del tipo.",
+      "Añadiendo un guión bajo (_) al inicio de su nombre.",
+      "Añadiendo el modificador 'internal' al miembro.",
+      "Colocando la anotación '@protected' en la variable."
     ],
     "correct_index": 1,
-    "hint": "Al no compartir memoria (isolated), los Isolates eliminan problemas clásicos de concurrencia como race conditions o deadlocks por bloqueo de memoria.",
-    "subtopic": "fundamentos"
+    "hint": "En Dart no existen palabras clave como private o protected; la privacidad está delimitada por la biblioteca mediante el prefijo '_'.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
   },
   {
     "id": "dart_003",
-    "question": "¿Cuál es la función de un 'Mixin' en Dart y con qué palabra clave se incorpora a una clase?",
+    "question": "¿Qué sintaxis de constructor en Dart asigna automáticamente un argumento a un campo de instancia?",
     "options": [
-      "Permite reutilizar código y comportamiento en múltiples jerarquías de clases sin usar herencia múltiple, mediante la palabra clave 'with'.",
-      "Sirve para definir variables globales inmutables mediante la palabra clave 'mixin'.",
-      "Permite sobrecargar operadores aritméticos usando la palabra clave 'implements'.",
-      "Es una función asíncrona que retorna streams mediante la palabra clave 'yield*'."
+      "Constructor usando la palabra clave 'self.campo'.",
+      "Constructor que ejecuta 'super.bind(campo)'.",
+      "Constructor con azúcar sintáctico usando 'this.campo'.",
+      "Constructor obligatoriamente marcado como 'factory'."
     ],
-    "correct_index": 0,
-    "hint": "En Dart: `class Auto extends Vehiculo with Conducible, Motorizado`.",
-    "subtopic": "fundamentos"
+    "correct_index": 2,
+    "hint": "Usar 'ClassName(this.campo)' asigna el valor al campo antes de que se ejecute el cuerpo del constructor.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
   },
   {
     "id": "dart_004",
-    "question": "¿Para qué se utilizan los 'Extension Methods' introducidos en Dart 2.7?",
+    "question": "¿Cuál es la palabra clave para heredar de una clase base en Dart?",
     "options": [
-      "Para añadir nuevos métodos o propiedades a tipos y clases existentes (incluso de librerías externas) sin necesidad de modificar el código original ni crear subclases.",
-      "Para aumentar el tamaño máximo de memoria disponible para la máquina virtual de Dart.",
-      "Para convertir funciones síncronas en microprocesadores de bajo consumo.",
-      "Para forzar la compilación en tiempo de ejecución (JIT) en compilaciones de producción AOT."
+      "implements",
+      "inherits",
+      "with",
+      "extends"
     ],
-    "correct_index": 0,
-    "hint": "Permiten escribir `extension StringParsing on String { int toInt() => int.parse(this); }`.",
-    "subtopic": "fundamentos"
+    "correct_index": 3,
+    "hint": "'extends' establece una relación de herencia simple y reutiliza la implementación padre.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
   },
   {
     "id": "dart_005",
-    "question": "¿Qué beneficio de rendimiento y memoria aportan los constructores 'const' en clases inmutables en Flutter/Dart?",
+    "question": "¿Qué palabra clave se usa para indicar que una clase adopta la interfaz de otra sin heredar su código?",
     "options": [
-      "Permiten la canonicalización: instancias idénticas con los mismos valores constantes en tiempo de compilación comparten la misma única referencia en memoria (evitando instanciaciones repetidas).",
-      "Aumentan el ancho de banda de red al descargar paquetes de pub.dev.",
-      "Evitan que Flutter renderice la pantalla cuando el usuario toca un botón.",
-      "Transforman la clase en un objeto dinámico que puede cambiar de tipo en runtime."
+      "implements",
+      "extends",
+      "with",
+      "interface"
     ],
     "correct_index": 0,
-    "hint": "En Flutter, usar widgets `const` permite al framework saltarse la reconstrucción de subárboles de widgets inmutables.",
-    "subtopic": "fundamentos"
+    "hint": "En Dart cada clase define implícitamente una interfaz; 'implements' obliga a redefinir todos sus miembros.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
   },
   {
     "id": "dart_006",
-    "question": "En el Event Loop de Dart, ¿cómo interactúan la cola de Microtasks y la cola de Eventos?",
+    "question": "¿Cómo se definen los parámetros nombrados opcionales en una función o constructor en Dart?",
     "options": [
-      "Las microtasks tienen prioridad absoluta y se vacían por completo antes de que se procese el siguiente evento de la Event queue (como I/O, timers o clics).",
-      "La cola de eventos siempre se procesa primero antes de cualquier microtask.",
-      "Ambas colas son idénticas y se ejecutan en hilos paralelos del sistema operativo.",
-      "Dart no utiliza colas; procesa el código únicamente mediante interrupciones de hardware."
+      "Encerrándolos entre corchetes [ ] en la definición.",
+      "Encerrándolos entre llaves { } en la lista de parámetros.",
+      "Usando la palabra clave 'named' antes del parámetro.",
+      "Separando los parámetros con punto y coma (;)."
+    ],
+    "correct_index": 1,
+    "hint": "Las llaves { } definen parámetros nombrados, mientras que los corchetes [ ] definen parámetros posicionales opcionales.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_007",
+    "question": "¿Qué palabra clave se requiere para que un parámetro nombrado no admita valores ausentes en null safety?",
+    "options": [
+      "mandatory",
+      "final",
+      "required",
+      "non_null"
+    ],
+    "correct_index": 2,
+    "hint": "'required' exige al llamador proporcionar ese argumento nombrado al invocar el método o constructor.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_008",
+    "question": "¿Qué anotación se recomienda al redefinir un método de la superclase en una subclase de Dart?",
+    "options": [
+      "@overload",
+      "@redefine",
+      "@super",
+      "@override"
+    ],
+    "correct_index": 3,
+    "hint": "'@override' informa al analizador y al compilador que se tiene la intención de sobrescribir un método padre.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_009",
+    "question": "¿Cómo se invoca el constructor de la superclase desde la lista de inicialización de un constructor?",
+    "options": [
+      "Usando ': super(...)' después de los parámetros del constructor.",
+      "Llamando a 'this.super(...)' en la primera línea del cuerpo.",
+      "Ejecutando 'parent.init(...)' dentro del bloque de código.",
+      "Escribiendo 'super.constructor(...)' antes del nombre de la clase."
     ],
     "correct_index": 0,
-    "hint": "scheduleMicrotask() programa tareas que se ejecutan antes del siguiente evento regular del loop.",
-    "subtopic": "fundamentos"
+    "hint": "La invocación a la superclase se realiza en la lista de inicialización precedida por dos puntos (:).",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_010",
+    "question": "¿Cuál es la característica principal de una variable declarada con 'final' en Dart?",
+    "options": [
+      "Debe conocerse obligatoriamente en tiempo de compilación.",
+      "Solo puede asignarse una vez y su valor se fija en tiempo de ejecución.",
+      "Puede ser reasignada únicamente dentro del mismo paquete.",
+      "Solo puede contener tipos primitivos como enteros y flotantes."
+    ],
+    "correct_index": 1,
+    "hint": "'final' permite asignar el valor una única vez en tiempo de ejecución, a diferencia de 'const' que exige valor en compilación.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_011",
+    "question": "¿Cómo se declara un getter explícito en una clase de Dart?",
+    "options": [
+      "Prefijando el nombre del método con la palabra 'getter'.",
+      "Definiendo un método sin parámetros anotado con '@read'.",
+      "Usando la palabra clave 'get' entre el tipo de retorno y el nombre.",
+      "Creando una función pública que empiece siempre con 'read_'."
+    ],
+    "correct_index": 2,
+    "hint": "La sintaxis es: 'Tipo get nombre => expresion;' o usando un bloque de código regular.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_012",
+    "question": "¿Cómo se declara un setter explícito en una clase de Dart?",
+    "options": [
+      "Usando la palabra 'mutator' con un parámetro de tipo dinámico.",
+      "Definiendo un método void que comience con 'write_'.",
+      "Sobrescribiendo el operador '=' de la clase contenedora.",
+      "Usando la palabra clave 'set' con exactamente un parámetro."
+    ],
+    "correct_index": 3,
+    "hint": "La sintaxis es: 'set nombre(Tipo valor) { ... }' y acepta exactamente un parámetro.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_013",
+    "question": "¿Qué sintaxis se utiliza para definir un constructor nombrado en una clase de Dart?",
+    "options": [
+      "NombreClase.identificador(...)",
+      "constructor NombreClase(...)",
+      "init Identificador(...)",
+      "new NombreClase:identificador(...)"
+    ],
+    "correct_index": 0,
+    "hint": "Dart no tiene sobrecarga de constructores con el mismo nombre; utiliza constructores nombrados con 'Clase.nombre'.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_014",
+    "question": "¿Qué tipo de datos en Dart es la raíz común no nula de todos los objetos en el sistema de tipos?",
+    "options": [
+      "dynamic",
+      "Object",
+      "Class",
+      "Root"
+    ],
+    "correct_index": 1,
+    "hint": "'Object' es la clase base de todas las clases no nulas en Dart.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_015",
+    "question": "¿Para qué sirve la palabra clave 'static' en un miembro de una clase?",
+    "options": [
+      "Impide que el valor del miembro sea modificado en ejecución.",
+      "Garantiza que el método se ejecute en un hilo secundario.",
+      "Hace que el miembro pertenezca a la clase y no a instancias individuales.",
+      "Convierte el miembro en una constante en tiempo de compilación."
+    ],
+    "correct_index": 2,
+    "hint": "Los miembros estáticos se acceden directamente mediante el nombre de la clase sin crear un objeto.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_016",
+    "question": "¿Qué tipo numérico en Dart abarca tanto enteros como valores de punto flotante?",
+    "options": [
+      "number",
+      "digit",
+      "decimal",
+      "num"
+    ],
+    "correct_index": 3,
+    "hint": "'num' es la superclase de 'int' y 'double'.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_017",
+    "question": "¿Cuál es la función del operador 'is' en Dart?",
+    "options": [
+      "Verifica si un objeto es una instancia de un tipo específico en tiempo de ejecución.",
+      "Realiza una copia por valor del objeto evaluado.",
+      "Compara la igualdad por referencia entre dos variables.",
+      "Convierte forzosamente el tipo sin validación de tipo."
+    ],
+    "correct_index": 0,
+    "hint": "'objeto is Tipo' devuelve un booleano y activa la promoción de tipo automática si es verdadero.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_018",
+    "question": "¿Qué ventaja principal ofrece un constructor marcado con la palabra clave 'const'?",
+    "options": [
+      "Convierte automáticamente todos los métodos de la clase en asíncronos.",
+      "Crea instancias canónicas idénticas en memoria fijadas en tiempo de compilación.",
+      "Permite que las variables de instancia sean modificadas sin restricción.",
+      "Acelera la recolección de basura destruyendo el objeto de inmediato."
+    ],
+    "correct_index": 1,
+    "hint": "Si se instancian dos objetos con 'const' y los mismos valores, referencian exactamente el mismo espacio en memoria.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_019",
+    "question": "¿Cuál es el propósito de un constructor 'factory' en Dart?",
+    "options": [
+      "Obligar a la clase a generar código nativo antes de la ejecución.",
+      "Prevenir que otras clases puedan heredar o implementar dicha clase.",
+      "Controlar la creación devolviendo una instancia nueva, en caché o de una subclase.",
+      "Permitir instanciar la clase sin especificar valores en sus campos."
+    ],
+    "correct_index": 2,
+    "hint": "A diferencia de un constructor generativo, un constructor factory no crea automáticamente una nueva instancia de la clase actual; puede retornar instancias existentes.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_020",
+    "question": "¿Qué palabra clave se usa para reutilizar código de múltiples clases mediante 'mixins'?",
+    "options": [
+      "uses",
+      "include",
+      "mixinof",
+      "with"
+    ],
+    "correct_index": 3,
+    "hint": "Una clase aplica uno o más mixins usando la cláusula 'with MixinA, MixinB'.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_021",
+    "question": "¿Cómo se restringe qué clases pueden utilizar un mixin determinado?",
+    "options": [
+      "Declarando el mixin con la cláusula 'on' seguida de la superclase requerida.",
+      "Anotando el mixin con '@requires' y el tipo de dato.",
+      "Marcando el mixin con la palabra clave 'extends'.",
+      "Haciendo el mixin abstracto mediante 'abstract mixin'."
+    ],
+    "correct_index": 0,
+    "hint": "'mixin Caminante on Animal' asegura que solo clases que hereden de Animal puedan usar el mixin.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_022",
+    "question": "¿Qué hace el operador de cascada (..) en Dart?",
+    "options": [
+      "Concatena dos listas inmutables en una nueva colección.",
+      "Permite encadenar múltiples llamadas a métodos o asignaciones sobre el mismo objeto.",
+      "Verifica la igualdad estructural profunda de dos instancias.",
+      "Evalúa si una expresión es verdadera antes de continuar."
+    ],
+    "correct_index": 1,
+    "hint": "El operador cascada ejecuta operaciones sobre el receptor y devuelve el propio receptor, no el resultado del método.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_023",
+    "question": "¿Qué función de Dart se usa para determinar si dos referencias apuntan exactamente al mismo objeto en memoria?",
+    "options": [
+      "a.isSameReference(b)",
+      "a.pointerEquals(b)",
+      "identical(a, b)",
+      "Object.sameMemory(a, b)"
+    ],
+    "correct_index": 2,
+    "hint": "'identical()' evalúa si dos referencias apuntan a la misma ubicación en memoria, ignorando sobrecargas de '=='.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_024",
+    "question": "¿Cómo se sobrecarga un operador como la suma (+) en una clase de Dart?",
+    "options": [
+      "Creando una función global llamada 'operator_plus(a, b)'.",
+      "Implementando la interfaz 'Addable' de dart:core.",
+      "Anotando el método regular con '@operator(\"+\")'.",
+      "Definiendo un método con la firma 'TipoRetorno operator +(Parametro otro)'."
+    ],
+    "correct_index": 3,
+    "hint": "En Dart los operadores se definen como métodos con la palabra clave 'operator' seguida del símbolo.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_025",
+    "question": "¿Para qué sirve la palabra clave 'covariant' en los parámetros de un método sobrescrito?",
+    "options": [
+      "Permite estrechar el tipo del parámetro a un subtipo válido sin error del analizador.",
+      "Garantiza que el parámetro sea inmutable en toda la jerarquía.",
+      "Obliga al parámetro a ser evaluado en un hilo de trabajo aislado.",
+      "Convierte el parámetro en un genérico abierto de tipo dinámico."
+    ],
+    "correct_index": 0,
+    "hint": "'covariant' le indica al analizador estático que permita reemplazar un tipo de parámetro por un subtipo más específico.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_026",
+    "question": "¿Qué característica introducida en Dart 2.17 permite a los enums tener constructores, atributos y métodos?",
+    "options": [
+      "Enum Structs",
+      "Enhanced Enums",
+      "Algebraic Enums",
+      "Object Enums"
+    ],
+    "correct_index": 1,
+    "hint": "Los enums mejorados (Enhanced Enums) permiten definir campos 'final', métodos e implementar interfaces.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_027",
+    "question": "¿Cómo se añaden métodos a una clase existente sin modificar su código fuente ni heredar de ella?",
+    "options": [
+      "Usando decoradores de prototipo dinámicos.",
+      "Implementando un parche de biblioteca con 'external'.",
+      "Declarando un 'extension' sobre el tipo de destino.",
+      "Sobrescribiendo el cargador de clases en tiempo de ejecución."
+    ],
+    "correct_index": 2,
+    "hint": "'extension NombreExtension on ClaseBase { ... }' permite agregar funcionalidad adicional de manera estática.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_028",
+    "question": "En Dart 3, ¿qué restricción impone el modificador 'base class' fuera de su biblioteca?",
+    "options": [
+      "Permite implementarla con 'implements', pero prohíbe extenderla con 'extends'.",
+      "Prohíbe tanto extender como implementar la clase en cualquier contexto.",
+      "Impide crear subclases que contengan constructores públicos.",
+      "Permite extender la clase con 'extends', pero prohíbe implementarla con 'implements'."
+    ],
+    "correct_index": 3,
+    "hint": "'base' preserva la integridad de la implementación base obligando a que toda subclase herede su comportamiento.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_029",
+    "question": "En Dart 3, ¿qué restricción impone el modificador 'interface class' fuera de su biblioteca?",
+    "options": [
+      "Permite implementarla con 'implements', pero prohíbe extenderla con 'extends'.",
+      "Permite extender la clase pero prohíbe crear instancias directas.",
+      "Convierte automáticamente todos los métodos de la clase en virtuales puros.",
+      "Exige que todas las subclases sean declaradas en un mismo archivo."
+    ],
+    "correct_index": 0,
+    "hint": "'interface class' permite definir contratos que otros pueden implementar pero sin heredar código base.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_030",
+    "question": "En Dart 3, ¿qué restricción impone el modificador 'final class' fuera de su biblioteca?",
+    "options": [
+      "Solo permite extenderla si la subclase es marcada con 'abstract'.",
+      "Prohíbe tanto extenderla ('extends') como implementarla ('implements') o mezclarla ('with').",
+      "Impide crear más de una sola instancia de la clase en memoria.",
+      "Convierte todas las propiedades en inmutables en tiempo de compilación."
+    ],
+    "correct_index": 1,
+    "hint": "'final class' sella completamente la jerarquía de herencia fuera del archivo donde se declara.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_031",
+    "question": "En Dart 3, ¿cuál es el beneficio principal de declarar una 'sealed class'?",
+    "options": [
+      "Cifra el bytecode compilado para prevenir ingeniería inversa.",
+      "Evita que la clase consuma memoria en el heap durante su ejecución.",
+      "Permite al compilador verificar exhaustividad en sentencias y expresiones switch.",
+      "Permite que la clase herede de múltiples superclases simultáneamente."
+    ],
+    "correct_index": 2,
+    "hint": "Una 'sealed class' solo puede tener subtipos en la misma biblioteca, permitiendo pattern matching exhaustivo sin cláusula default obligatoria.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_032",
+    "question": "¿Qué son los Records introducidos en Dart 3?",
+    "options": [
+      "Clases mutables diseñadas para almacenar registros de bases de datos.",
+      "Estructuras de memoria baja pensadas exclusivamente para interoperabilidad C.",
+      "Un tipo de lista dinámica que no admite elementos repetidos.",
+      "Tipos agregados inmutables y anónimos que agrupan valores heterogéneos."
+    ],
+    "correct_index": 3,
+    "hint": "Los Records permiten agrupar múltiples valores de forma tipada, compacta e inmutable, como '(int, String)'.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_033",
+    "question": "¿Cómo se accede al primer campo posicional de un Record anónimo en Dart 3 como '(10, 'hola')'?",
+    "options": [
+      "Usando el getter sintáctico '$1'.",
+      "Usando la propiedad indexada '[0]'.",
+      "Llamando al método 'firstValue()'.",
+      "Accediendo mediante la clave '#1'."
+    ],
+    "correct_index": 0,
+    "hint": "Los campos posicionales de un Record se acceden a través de getters generados con '$1', '$2', etc.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_034",
+    "question": "¿Qué sintaxis permite redirigir un constructor a otro constructor de la misma clase?",
+    "options": [
+      "Constructor(args) { self.redirect(args); }",
+      "Constructor(args) : this.otroConstructor(args);",
+      "Constructor(args) : super(args);",
+      "Constructor(args) => ClassName.otro(args);"
+    ],
+    "correct_index": 1,
+    "hint": "La redirección de constructores se logra en la lista de inicialización con ': this(...)'.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_035",
+    "question": "¿Qué método especial de 'Object' puede sobrescribirse para interceptar llamadas a métodos o getters no definidos?",
+    "options": [
+      "handleMissingMethod(MethodCall call)",
+      "catchUndefined(Symbol name, List args)",
+      "noSuchMethod(Invocation invocation)",
+      "dispatchFallback(dynamic target)"
+    ],
+    "correct_index": 2,
+    "hint": "Sobrescribir 'noSuchMethod' permite interceptar invocaciones dinámicas no declaradas en la clase.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_036",
+    "question": "¿Qué método especial permite que una instancia de clase pueda ser invocada directamente como si fuera una función?",
+    "options": [
+      "El método 'invoke()'.",
+      "El método 'execute()'.",
+      "El operador 'operator ()'.",
+      "El método 'call()'."
+    ],
+    "correct_index": 3,
+    "hint": "Cualquier clase que defina un método 'call' se convierte en una clase llamable (callable class): 'instancia()'.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_037",
+    "question": "¿Cuál es la regla fundamental de consistencia al sobrescribir el operador '==' en Dart?",
+    "options": [
+      "Debe sobrescribirse también el getter 'hashCode' para que objetos iguales tengan el mismo hash.",
+      "Debe implementarse obligatoriamente la interfaz 'Comparable'.",
+      "Debe retornarse siempre un valor numérico entre -1 y 1.",
+      "Debe anotarse el método con '@immutable' obligatoriamente."
+    ],
+    "correct_index": 0,
+    "hint": "Si dos objetos son iguales según '==', deben generar idéntico valor en 'hashCode' para operar correctamente en Sets y Maps.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_038",
+    "question": "¿Cómo resuelve Dart el orden de ejecución en clases que incorporan múltiples mixins con la cláusula 'with'?",
+    "options": [
+      "Mediante resolución aleatoria basada en la firma de los métodos.",
+      "Mediante linealización de clases de izquierda a derecha (el último mixin tiene prioridad de resolución).",
+      "Dando prioridad exclusiva a la superclase original sobre todos los mixins.",
+      "Generando un error de ambigüedad en tiempo de compilación."
+    ],
+    "correct_index": 1,
+    "hint": "La linealización crea una jerarquía encadenada donde el último mixin especificado sobrescribe a los anteriores.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_039",
+    "question": "¿Cuál es una limitación intrínseca de los 'mixins' tradicionales en Dart en cuanto a su inicialización?",
+    "options": [
+      "No pueden contener variables de instancia con valores iniciales.",
+      "No pueden definir métodos abstractos para que la subclase los implemente.",
+      "No pueden declarar constructores generativos propios.",
+      "No pueden acceder a los métodos públicos de la clase que los adopta."
+    ],
+    "correct_index": 2,
+    "hint": "Los mixins no pueden definir constructores, lo que impide parametrizar su inicialización directa.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_040",
+    "question": "¿En qué orden exacto se ejecutan las distintas partes de inicialización de un constructor derivado?",
+    "options": [
+      "Cuerpo del constructor padre, cuerpo del hijo y lista de inicialización.",
+      "Lista de inicialización del padre, lista del hijo y ambos cuerpos a la vez.",
+      "Cuerpo del hijo, lista de inicialización del hijo y finalmente la superclase.",
+      "Lista de inicialización de la subclase, constructor de la superclase y cuerpo del constructor de la subclase."
+    ],
+    "correct_index": 3,
+    "hint": "Primero se evalúan los inicializadores del hijo, luego se transfiere control a la superclase, y al final corre el bloque '{ }' del hijo.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_041",
+    "question": "¿Qué ocurre si una clase intenta usar herencia múltiple directa mediante 'extends ClaseA, ClaseB'?",
+    "options": [
+      "Genera un error de sintaxis en compilación, ya que Dart solo permite herencia simple directa.",
+      "La clase hereda los miembros de ambas resolviendo colisiones con orden alfabético.",
+      "Se compila correctamente siempre que ClaseB no tenga métodos abstractos.",
+      "El compilador convierte automáticamente ClaseB en un singleton."
+    ],
+    "correct_index": 0,
+    "hint": "Dart prohíbe la herencia múltiple por 'extends'; el polimorfismo múltiple se logra con 'implements' o 'with'.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_042",
+    "question": "¿Qué palabra clave se usa para declarar la firma de una función externa implementada en C o nativo?",
+    "options": [
+      "native",
+      "external",
+      "foreign",
+      "ffi_export"
+    ],
+    "correct_index": 1,
+    "hint": "'external' separa la declaración de la función de su implementación nativa vinculada vía Dart FFI.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_043",
+    "question": "¿Cuál es la diferencia fundamental entre el tipo 'dynamic' y el tipo 'Object?' en Dart?",
+    "options": [
+      "'Object?' permite invocar cualquier método inexistente sin advertencias de compilación.",
+      "'dynamic' solo admite valores primitivos y no objetos instanciados.",
+      "'dynamic' apaga las comprobaciones estáticas de tipo, mientras que 'Object?' exige verificación de tipos segura.",
+      "'Object?' ocupa el doble de memoria en tiempo de ejecución."
+    ],
+    "correct_index": 2,
+    "hint": "Con 'dynamic' el compilador asume cualquier llamada como válida en estático; con 'Object?' se requiere casteo o comprobación.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_044",
+    "question": "¿Qué permite la cláusula 'mixin class' introducida en Dart 3?",
+    "options": [
+      "Definir un mixin que puede tener herencia múltiple de tres superclases.",
+      "Generar una clase abstracta sin métodos concretos de forma obligatoria.",
+      "Compilar el mixin en un proceso de background separado.",
+      "Definir una clase que puede usarse simultáneamente como clase regular y como mixin."
+    ],
+    "correct_index": 3,
+    "hint": "'mixin class' define un tipo utilizable tanto con 'extends' como con 'with', sujeto a no tener constructores con argumentos.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_045",
+    "question": "¿Cómo se restringe un parámetro de tipo genérico <T> para que sea obligatoriamente comparable?",
+    "options": [
+      "<T extends Comparable<T>>",
+      "<T implements Comparable<T>>",
+      "<T with Comparable<T>>",
+      "<T : Comparable<T>>"
+    ],
+    "correct_index": 0,
+    "hint": "En Dart los límites de genéricos siempre utilizan la palabra clave 'extends', incluso si el tipo es una interfaz abstracta.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_046",
+    "question": "¿Qué significa la canonicalización de instancias 'const' en Dart?",
+    "options": [
+      "Que todos los objetos se transforman en cadenas JSON estáticas en el binario.",
+      "Que el compilador reutiliza la misma dirección de memoria para objetos 'const' con propiedades idénticas.",
+      "Que el objeto se destruye inmediatamente tras el primer acceso para liberar espacio.",
+      "Que se realiza una sincronización en disco cada vez que se accede a un atributo."
+    ],
+    "correct_index": 1,
+    "hint": "Dart canonicia los objetos constantes, garantizando unicidad de referencia en memoria para expresiones idénticas.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_047",
+    "question": "¿Cómo se realiza la desestructuración de un Record con campos con nombre ({int x, int y}) en una asignación?",
+    "options": [
+      "final {x, y} = record;",
+      "final (x: x, y: y) := record;",
+      "final (:x, :y) = record;",
+      "final [x, y] = record.fields;"
+    ],
+    "correct_index": 2,
+    "hint": "Dart 3 introduce la sintaxis corta '(:x, :y)' para desestructurar registros con nombre deduciendo las variables locales.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_048",
+    "question": "¿Qué función de utilidad en Dart permite invocar dinámicamente una función con argumentos posicionales y nombrados?",
+    "options": [
+      "funcion.callWithMap(argumentos)",
+      "Reflect.invokeFunction(funcion, args)",
+      "Dynamic.dispatch(funcion, params)",
+      "Function.apply(funcion, argumentosPosicionales, argumentosNombrados)"
+    ],
+    "correct_index": 3,
+    "hint": "'Function.apply' acepta la función, una lista de argumentos posicionales y un mapa con argumentos nombrados.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_049",
+    "question": "¿Cuál es el tipo de datos en Dart que representa la ausencia de cualquier tipo y es el tipo base absoluto (bottom type)?",
+    "options": [
+      "Never",
+      "void",
+      "Null",
+      "Nothing"
+    ],
+    "correct_index": 0,
+    "hint": "'Never' es el bottom type en Dart; representa una computación que nunca termina o que siempre arroja una excepción.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_050",
+    "question": "¿Qué es un constructor redirector de fábrica (factory redirecting constructor)?",
+    "options": [
+      "Un constructor que envía los parámetros a un servidor remoto mediante HTTP.",
+      "Un constructor 'factory' que delega directamente a otro constructor usando '= NombreClase'.",
+      "Un constructor que crea un hilo de trabajo y devuelve el resultado diferido.",
+      "Un constructor que no permite ser llamado más de una vez en la aplicación."
+    ],
+    "correct_index": 1,
+    "hint": "La sintaxis 'factory Interfaz(...) = Implementacion;' crea un constructor redirector de fábrica de forma concisa.",
+    "subtopic": "fundamentos_oop",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_051",
+    "question": "¿Qué principio central define el sistema Sound Null Safety de Dart?",
+    "options": [
+      "Todas las variables pueden contener null libremente sin errores de compilación.",
+      "Las comprobaciones de null solo se realizan durante la ejecución del programa.",
+      "Los tipos son no nulleables por defecto a menos que se indiquen explícitamente como nulleables.",
+      "El valor 'null' se convierte automáticamente en cero o cadena vacía."
+    ],
+    "correct_index": 2,
+    "hint": "En Dart moderno una variable no puede ser 'null' a menos que se le añada el sufijo '?' en su tipo.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_052",
+    "question": "¿Qué operador se añade a un tipo para permitir que almacene un valor nulo (por ejemplo, un String nulleable)?",
+    "options": [
+      "El operador exclamación (!) antes del nombre del tipo.",
+      "El asterisco (*) al declarar la variable.",
+      "La palabra clave 'nullable' precediendo al tipo.",
+      "El operador interrogación (?) tras el nombre del tipo."
+    ],
+    "correct_index": 3,
+    "hint": "Escribir 'String?' indica al compilador que la variable puede contener una cadena o el valor 'null'.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_053",
+    "question": "¿Qué función cumple el operador de aserción nula (!) o 'bang operator'?",
+    "options": [
+      "Indica al compilador que una expresión nulleable no es nula, lanzando excepción si lo es.",
+      "Convierte silenciosamente un valor nulo en un objeto vacío.",
+      "Ignora la ejecución de la siguiente instrucción si el valor es nulo.",
+      "Comprueba si dos referencias nulas comparten el mismo tipo."
+    ],
+    "correct_index": 0,
+    "hint": "El operador '!' fuerza la conversión de 'T?' a 'T' en tiempo de compilación y arroja un error en tiempo de ejecución si es nulo.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_054",
+    "question": "¿Qué realiza el operador de acceso condicional (?.) en 'objeto?.metodo()'?",
+    "options": [
+      "Lanza una excepción controlada si el objeto resulta ser nulo.",
+      "Ejecuta el método si el objeto no es nulo; si es nulo, devuelve null sin lanzar error.",
+      "Reinicia el objeto con sus valores por defecto antes de invocar el método.",
+      "Espera de forma asíncrona hasta que el objeto deje de ser nulo."
+    ],
+    "correct_index": 1,
+    "hint": "El operador de navegación segura corta la llamada si el receptor es null y produce null como resultado.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_055",
+    "question": "¿Qué hace el operador de coalescencia nula (??) en la expresión 'a ?? b'?",
+    "options": [
+      "Comprueba si ambas expresiones son simultáneamente nulas.",
+      "Lanza una excepción si cualquiera de las dos variables es nula.",
+      "Devuelve 'a' si no es nulo; de lo contrario, evalúa y devuelve 'b'.",
+      "Concatena ambos valores siempre que ninguno sea nulo."
+    ],
+    "correct_index": 2,
+    "hint": "El operador '??' permite proporcionar un valor alternativo o fallback cuando la expresión izquierda es nula.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_056",
+    "question": "¿Qué acción realiza el operador de asignación de coalescencia nula (??=) en 'x ??= y'?",
+    "options": [
+      "Sobrescribe 'x' con 'y' independientemente del valor actual de 'x'.",
+      "Asigna null a 'x' en caso de que 'y' contenga un valor válido.",
+      "Verifica la igualdad de ambos y lanza un error si difieren.",
+      "Asigna el valor 'y' a 'x' únicamente si 'x' es actualmente nulo."
+    ],
+    "correct_index": 3,
+    "hint": "'x ??= y' preserva el valor de 'x' si ya está inicializado; solo asigna 'y' cuando 'x' es null.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_057",
+    "question": "¿Qué palabra clave se usa para indicar que una variable no nulleable se inicializará más tarde antes de su uso?",
+    "options": [
+      "late",
+      "lazy",
+      "defer",
+      "pending"
+    ],
+    "correct_index": 0,
+    "hint": "'late' asegura al analizador estático que la variable tendrá un valor no nulo asignado antes de ser leída.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_058",
+    "question": "¿Qué ocurre si intentas compilar un código donde asignas 'null' a una variable de tipo 'int' no nulleable?",
+    "options": [
+      "Se compila pero lanza una excepción 'NullThrownError' al iniciar.",
+      "Se produce un error de compilación estática que impide compilar la aplicación.",
+      "La variable toma automáticamente el valor entero por defecto (0).",
+      "El compilador emite una advertencia leve pero genera el ejecutable."
+    ],
+    "correct_index": 1,
+    "hint": "En Sound Null Safety es un error de compilación asignar 'null' a un tipo no nulleable.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_059",
+    "question": "¿Cómo se accede de forma segura al índice de una lista nulleable o con índice nulo usando null-aware en Dart?",
+    "options": [
+      "lista.[?indice]",
+      "lista.[indice]?",
+      "lista?[indice]",
+      "lista.safeGet(indice)"
+    ],
+    "correct_index": 2,
+    "hint": "El operador '?[' evalúa primero si la colección es nula antes de intentar acceder al índice.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_060",
+    "question": "¿Cómo opera la cascada null-aware (?..) en Dart?",
+    "options": [
+      "Convierte el resultado de cada método encadenado en un tipo nulleable.",
+      "Captura cualquier excepción generada durante las operaciones encadenadas.",
+      "Detiene la ejecución del hilo principal si un método devuelve null.",
+      "Inicia la secuencia de operaciones en cascada solo si el receptor objetivo no es nulo."
+    ],
+    "correct_index": 3,
+    "hint": "Si la instancia inicial es null, el operador '?..' descarta toda la cadena de operaciones sin provocar error.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_061",
+    "question": "¿Qué ocurre si se lee una variable marcada como 'late' sin haberla inicializado previamente?",
+    "options": [
+      "Lanza un error en tiempo de ejecución del tipo 'LateInitializationError'.",
+      "Devuelve 'null' silenciosamente sin alertar al desarrollador.",
+      "Bloquea el hilo de ejecución esperando una asignación concurrente.",
+      "Devuelve el valor por defecto del tipo de dato correspondiente."
+    ],
+    "correct_index": 0,
+    "hint": "El acceso a una variable 'late' no asignada desencadena un fallo en tiempo de ejecución inmediato.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_062",
+    "question": "¿Cuál es el tipo de datos en Dart que solo puede contener el valor 'null'?",
+    "options": [
+      "Nil",
+      "Null",
+      "None",
+      "Void"
+    ],
+    "correct_index": 1,
+    "hint": "'Null' es una clase en Dart que posee una única instancia posible: el valor 'null'.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_063",
+    "question": "¿Qué es la promoción de tipos (type promotion) en el contexto de null safety en Dart?",
+    "options": [
+      "La conversión automática de enteros a números flotantes en cálculos.",
+      "La elevación de una clase hija a su clase padre en herencia.",
+      "El compilador estrecha automáticamente un tipo de 'T?' a 'T' tras verificar que no es nulo.",
+      "El incremento de prioridad de ejecución de una función asíncrona."
+    ],
+    "correct_index": 2,
+    "hint": "Si se evalúa 'if (x != null)', dentro de ese bloque Dart promueve la variable 'x' de 'T?' a 'T'.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_064",
+    "question": "¿Cuál es el valor por defecto de una variable no inicializada de tipo 'String?' en Dart?",
+    "options": [
+      "Cadena vacía (\"\")",
+      "Error de compilación",
+      "undefined",
+      "null"
+    ],
+    "correct_index": 3,
+    "hint": "Las variables de tipo nulleable que no se inicializan explícitamente adquieren el valor 'null' por defecto.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_065",
+    "question": "¿Qué comando de la CLI de Dart se diseñó originalmente para migrar proyectos antiguos a null safety?",
+    "options": [
+      "dart migrate",
+      "dart upgrade --null-safe",
+      "dart fix --null-safety",
+      "dart compile --sound-null"
+    ],
+    "correct_index": 0,
+    "hint": "'dart migrate' analizaba el código antiguo y presentaba una interfaz web interactiva para agregar '?' y 'late'.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_066",
+    "question": "¿Qué significa que la seguridad contra nulos de Dart sea 'Sound' (sólida)?",
+    "options": [
+      "Significa que el compilador produce sonidos de aviso cuando hay advertencias.",
+      "Garantiza que una expresión de tipo no nulo nunca puede evaluar a 'null' en tiempo de ejecución.",
+      "Significa que todas las excepciones de puntero nulo se transforman en logs.",
+      "Garantiza que el uso de memoria RAM se reduce en un cincuenta por ciento."
+    ],
+    "correct_index": 1,
+    "hint": "En Sound Null Safety no hay fisuras: el sistema de tipos garantiza a nivel de compilador y runtime que 'T' jamás será null.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_067",
+    "question": "¿Cómo se define un parámetro posicional opcional con valor por defecto?",
+    "options": [
+      "(int valor : 0)",
+      "{int valor = 0} required",
+      "[int valor = 0]",
+      "<int valor default 0>"
+    ],
+    "correct_index": 2,
+    "hint": "Los parámetros posicionales opcionales se encierran entre corchetes '[ ]' y admiten valores por defecto con '='.",
+    "subtopic": "null_safety",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_068",
+    "question": "¿Por qué un campo público de una clase no suele beneficiarse de la promoción de tipos automática tras un 'if (campo != null)'?",
+    "options": [
+      "Porque los campos de clase no residen en el espacio de memoria heap.",
+      "Porque el recolector de basura descarta campos de clase durante sentencias if.",
+      "Porque Dart prohíbe el uso de operadores de comparación sobre propiedades de clase.",
+      "Porque otro hilo o un getter sobreescrito podría modificar su valor entre la comprobación y el uso."
+    ],
+    "correct_index": 3,
+    "hint": "Dart no puede garantizar que un getter público no devuelva un valor distinto en llamadas subsiguientes; se recomienda copiar a variable local.",
+    "subtopic": "null_safety",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_069",
+    "question": "¿Qué comportamiento especial presenta una variable marcada como 'late final' en Dart?",
+    "options": [
+      "Se inicializa perezosamente en su primer acceso y solo puede asignarse una única vez.",
+      "Puede asignarse múltiples veces siempre y cuando se haga dentro de un bucle.",
+      "Debe ser destruida manualmente por el desarrollador para evitar memory leaks.",
+      "Solo acepta asignaciones en tiempo de compilación con expresiones constantes."
+    ],
+    "correct_index": 0,
+    "hint": "Una variable 'late final' permite diferir la asignación, pero arrojará error si se intenta reasignar una segunda vez.",
+    "subtopic": "null_safety",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_070",
+    "question": "¿Qué hace el operador 'spread null-aware' (...?) al manipular colecciones en Dart?",
+    "options": [
+      "Elimina automáticamente todos los elementos nulos dentro de una lista.",
+      "Desempaqueta los elementos de una colección solo si la colección no es nula.",
+      "Lanza una excepción si encuentra un elemento nulo dentro del conjunto.",
+      "Convierte una colección de tipo dinámico a una colección inmutable."
+    ],
+    "correct_index": 1,
+    "hint": "Si la colección a expandir es 'null', el operador '...?' simplemente no añade ningún elemento sin provocar error.",
+    "subtopic": "null_safety",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_071",
+    "question": "¿Cuál es la diferencia fundamental entre 'List<String?>' y 'List<String>?'?",
+    "options": [
+      "Ambas declaraciones son exactamente equivalentes para el analizador estático.",
+      "La primera prohíbe añadir elementos nulos; la segunda obliga a que la lista esté vacía.",
+      "La primera es una lista no nula con elementos nulleables; la segunda es una lista que puede ser nula.",
+      "La primera se almacena en el stack y la segunda se asigna siempre en el heap."
+    ],
+    "correct_index": 2,
+    "hint": "En 'List<String?>' la referencia de la lista nunca es null pero admite 'null' dentro; en 'List<String>?' la lista misma puede ser null.",
+    "subtopic": "null_safety",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_072",
+    "question": "¿Cómo se efectúa una evaluación perezosa de un campo costoso mediante null safety?",
+    "options": [
+      "Usando la palabra reservada 'lazy' delante del nombre del tipo.",
+      "Envolviendo la variable en una función de tipo 'Future.lazy()'.",
+      "Declarando el campo dentro de un bloque 'defer { ... }'.",
+      "Marcándolo como 'late' junto con su inicializador en la declaración del campo."
+    ],
+    "correct_index": 3,
+    "hint": "Un campo declarado como 'late final recurso = _calcularCostoso();' solo ejecuta la función al ser leído por primera vez.",
+    "subtopic": "null_safety",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_073",
+    "question": "¿Qué ocurre si evaluamos la expresión 'int x = valor ?? (throw Exception(\"Invalido\"))'?",
+    "options": [
+      "Se compila válidamente: si 'valor' no es nulo se asigna; si es nulo se lanza la excepción sin error de tipos.",
+      "Falla la compilación porque 'throw' no puede utilizarse como operando derecho de '??'.",
+      "Se produce una advertencia porque 'throw' siempre retorna un entero nulo.",
+      "La expresión asigna un valor cero y pospone el lanzamiento del error."
+    ],
+    "correct_index": 0,
+    "hint": "La expresión 'throw' tiene tipo estático 'Never', el cual es subtipo de cualquier tipo, permitiendo usarlo a la derecha de '??'.",
+    "subtopic": "null_safety",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_074",
+    "question": "¿Qué papel desempeña el tipo 'Never' en las funciones que finalizan el programa o abortan la ejecución?",
+    "options": [
+      "Indica que la función se ejecutará en un bucle infinito que nunca consume CPU.",
+      "Indica al analizador que el flujo de control nunca continúa tras invocar dicha función.",
+      "Marca la función como obsoleta para futuras versiones del framework.",
+      "Permite que la función retorne un valor numérico arbitrario si ocurre un error."
+    ],
+    "correct_index": 1,
+    "hint": "Al retornar 'Never', el analizador sabe que el código posterior a la llamada es inalcanzable (dead code), facilitando promociones de tipo.",
+    "subtopic": "null_safety",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_075",
+    "question": "¿Cuál es la forma recomendada en Dart para promover un getter público a no nulleable dentro de un método?",
+    "options": [
+      "Usar repetidamente el operador de aserción '!' en cada línea de código.",
+      "Marcar el getter con la palabra clave 'synchronized' a nivel de clase.",
+      "Asignar su valor a una variable local y verificar la nulabilidad de dicha variable local.",
+      "Cambiar la visibilidad del getter a pública estática obligatoriamente."
+    ],
+    "correct_index": 2,
+    "hint": "Copiando a una variable local final ('final valor = miGetter; if (valor != null) ...'), Dart garantiza la estabilidad y promueve el tipo.",
+    "subtopic": "null_safety",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_076",
+    "question": "¿Qué significa el patrón null-check (?) en el pattern matching de Dart 3?",
+    "options": [
+      "Fuerza al patrón a retornar null si la condición no coincide exactamente.",
+      "Ignora todas las excepciones producidas durante la desestructuración.",
+      "Asigna automáticamente null a todas las variables no vinculadas.",
+      "Comprueba que el valor entrante no sea nulo antes de emparejar el subpatrón."
+    ],
+    "correct_index": 3,
+    "hint": "El subpatrón 'case valor?:' solo coincide si la expresión evaluada no es nula.",
+    "subtopic": "null_safety",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_077",
+    "question": "¿Qué significa el patrón null-assert (!) en el pattern matching de Dart 3?",
+    "options": [
+      "Empareja el valor afirmando que no es nulo, lanzando excepción si resulta ser nulo.",
+      "Niega lógicamente el resultado de la comparación en el switch.",
+      "Filtra únicamente los valores nulos omitiendo los elementos válidos.",
+      "Convierte el tipo del valor a un booleano en tiempo de ejecución."
+    ],
+    "correct_index": 0,
+    "hint": "Al igual que el operador '!', el patrón null-assert 'case valor!:' asume valor no nulo y arroja error si es null.",
+    "subtopic": "null_safety",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_078",
+    "question": "¿Qué ocurre al realizar una aserción 'x as String' cuando 'x' contiene el valor 'null'?",
+    "options": [
+      "Devuelve una cadena vacía (\"\") para evitar interrumpir la ejecución.",
+      "Lanza un error de casteo de tipos 'TypeError' en tiempo de ejecución.",
+      "Retorna null sin advertencias al ser un subtipo aceptado en casteo.",
+      "Convierte la variable 'x' en un tipo dinámico automáticamente."
+    ],
+    "correct_index": 1,
+    "hint": "Puesto que 'String' no es nulleable, 'null as String' falla con TypeError. Debería ser 'x as String?'.",
+    "subtopic": "null_safety",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_079",
+    "question": "¿Cómo se encadenan múltiples alternativas con coalescencia nula en una sola expresión?",
+    "options": [
+      "final resultado = coalesce(a, b, c, valorPorDefecto);",
+      "final resultado = a || b || c || valorPorDefecto;",
+      "final resultado = a ?? b ?? c ?? valorPorDefecto;",
+      "final resultado = a ?: b ?: c ?: valorPorDefecto;"
+    ],
+    "correct_index": 2,
+    "hint": "El operador '??' es asociativo por la derecha y evalúa en cortocircuito hasta hallar el primer operando no nulo.",
+    "subtopic": "null_safety",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_080",
+    "question": "¿Cómo promueve Dart los tipos en expresiones ternarias como 'condicion ? valorA : valorB'?",
+    "options": [
+      "No promueve tipos bajo ninguna circunstancia dentro de operadores ternarios.",
+      "Obliga a que ambas ramas tengan exactamente el mismo tipo nulleable.",
+      "Convierte el resultado de ambas ramas a tipo dynamic.",
+      "Promueve las variables locales evaluadas en la rama verdadera si la condición valida no-nulidad."
+    ],
+    "correct_index": 3,
+    "hint": "Dart cuenta con análisis de flujo inteligente que promueve variables locales validadas en la primera rama del operador ternario.",
+    "subtopic": "null_safety",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_081",
+    "question": "¿Qué ocurre si una función declara un tipo de retorno 'String' pero termina sin sentencia 'return' explícita?",
+    "options": [
+      "El compilador genera un error estático porque la función retornaría 'null' implícitamente.",
+      "La función retorna una cadena vacía de manera predeterminada.",
+      "El programa compila y retorna un código numérico cero.",
+      "La función arroja una advertencia leve pero compila correctamente."
+    ],
+    "correct_index": 0,
+    "hint": "Dado que el final implícito de una función devuelve 'null' y 'String' no es nulleable, el compilador prohíbe la omisión del return.",
+    "subtopic": "null_safety",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_082",
+    "question": "¿Qué sucede con la promoción de tipo de una variable local si esta es reasignada dentro de una función anónima (closure)?",
+    "options": [
+      "La variable queda bloqueada como de solo lectura de forma irrevocable.",
+      "Dart desactiva la promoción de tipo de la variable local para evitar accesos inconsistentes.",
+      "El closure es cancelado de inmediato por el analizador estático.",
+      "El analizador promueve la variable al tipo Object más general."
+    ],
+    "correct_index": 1,
+    "hint": "Si una variable local es mutada dentro de un closure, el analizador no puede asegurar su estado en el flujo externo y anula la promoción.",
+    "subtopic": "null_safety",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_083",
+    "question": "¿Cómo se declara un parámetro genérico <T> que garantice ser no nulleable?",
+    "options": [
+      "<T non-null>",
+      "<T extends Any>",
+      "<T extends Object>",
+      "<T : not null>"
+    ],
+    "correct_index": 2,
+    "hint": "Por defecto, un parámetro genérico '<T>' equivale a '<T extends Object?>'; para exigir no-nulidad se limita a '<T extends Object>'.",
+    "subtopic": "null_safety",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_084",
+    "question": "¿Cuál es la diferencia entre los tipos de función '(void Function()?)' y '(void Function(String?)'?",
+    "options": [
+      "Ambas son exactamente equivalentes y se comportan igual al ser invocadas.",
+      "El primero no permite retornar valores; el segundo siempre retorna null.",
+      "El primero requiere parámetros obligatorios y el segundo es opcional.",
+      "El primero es una variable de función que puede ser nula; el segundo es una función que acepta un argumento nulleable."
+    ],
+    "correct_index": 3,
+    "hint": "La posición del signo '?' determina si la nulabilidad aplica a la referencia de la función misma o al parámetro que esta recibe.",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_085",
+    "question": "¿Qué optimización clave efectúa el compilador AOT de Dart gracias al Sound Null Safety?",
+    "options": [
+      "Elimina las comprobaciones defensivas de 'null' en código máquina para tipos no nulleables.",
+      "Comprime las imágenes y assets embebidos en el binario final.",
+      "Paraleliza la ejecución de todas las funciones no nulleables en hilos distintos.",
+      "Convierte todas las llamadas a métodos en operaciones de bajo nivel sin stack."
+    ],
+    "correct_index": 0,
+    "hint": "Al garantizar solidez (soundness), el compilador sabe con total certeza que los tipos no nulos nunca contendrán null, suprimiendo comprobaciones redundantes.",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_086",
+    "question": "En la jerarquía del sistema de tipos de Dart, ¿cuál es la cúspide (top type) absoluta que contiene a todos los valores posibles?",
+    "options": [
+      "Object",
+      "Object?",
+      "dynamic",
+      "void"
+    ],
+    "correct_index": 1,
+    "hint": "'Object?' engloba tanto a todos los objetos derivados de 'Object' como al valor 'null', constituyendo el top type del sistema.",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_087",
+    "question": "¿Por qué el uso indiscriminado del operador de aserción '!' es considerado un antipatrón en bases de código Dart?",
+    "options": [
+      "Porque degrada severamente la recolección de basura acumulando punteros huérfanos.",
+      "Porque incrementa en un cincuenta por ciento el tamaño del ejecutable compilado.",
+      "Porque anula la seguridad estática y puede provocar caídas en producción si la hipótesis falla.",
+      "Porque impide el uso de herramientas de depuración y breakpoints en el IDE."
+    ],
+    "correct_index": 2,
+    "hint": "El operador '!' elude el análisis estático; si el valor es null en ejecución, arrojará un error no controlado en runtime.",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_088",
+    "question": "¿Cómo interactúa una cláusula de guardia temprana (guard clause) con la promoción de tipos en Dart?",
+    "options": [
+      "Requiere obligatoriamente un bloque 'else' explícito para poder promover el tipo.",
+      "Dart solo promueve si la cláusula de guardia arroja un error numérico.",
+      "No se produce ninguna promoción a menos que se use una variable auxiliar.",
+      "Si se evalúa 'if (item == null) return;', Dart promueve automáticamente 'item' a no nulleable en las líneas siguientes."
+    ],
+    "correct_index": 3,
+    "hint": "El análisis de flujo de control deduce que las líneas posteriores solo son alcanzables si 'item' no era nulo.",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_089",
+    "question": "Al sobrescribir un método de una superclase, ¿cuál es la regla de subtipeado válida respecto a la nulabilidad del valor de retorno?",
+    "options": [
+      "La subclase puede estrechar el tipo retornando un subtipo no nulleable ('String' en vez de 'String?').",
+      "La subclase debe ampliar forzosamente el retorno a un tipo más permisivo o nulleable.",
+      "La subclase está estrictamente obligada a devolver exactamente la misma nulabilidad sin variación.",
+      "La subclase solo puede retornar tipos genéricos abiertos."
+    ],
+    "correct_index": 0,
+    "hint": "Covarianza en retornos: una subclase puede devolver un tipo más específico (por ejemplo, 'T' en lugar de 'T?').",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_090",
+    "question": "Al sobrescribir un método de una superclase, ¿cuál es la regla de subtipeado respecto a la nulabilidad de los parámetros?",
+    "options": [
+      "La subclase debe restringir el parámetro para que sea estrictamente no nulleable.",
+      "La subclase puede ampliar el tipo del parámetro aceptando un tipo nulleable ('String?' en vez de 'String').",
+      "La subclase no puede recibir parámetros que admitan valores nulos.",
+      "La subclase debe alterar el orden de los parámetros en la firma."
+    ],
+    "correct_index": 1,
+    "hint": "Contravarianza en parámetros: un método sustituto puede aceptar un rango de entradas más amplio (por ejemplo, 'T?' en lugar de 'T').",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_091",
+    "question": "¿Cómo afecta el tipo 'dynamic' a las garantías de Sound Null Safety?",
+    "options": [
+      "Asegura que ninguna variable dinámica pueda tomar el valor null.",
+      "Detiene la ejecución del compilador si se encuentra una asignación nula.",
+      "Elude las comprobaciones estáticas de nulabilidad y permite invocar cualquier miembro en tiempo de compilación.",
+      "Promueve dinámicamente cualquier tipo a un valor numérico seguro."
+    ],
+    "correct_index": 2,
+    "hint": "'dynamic' apaga el sistema de tipos en compilación; si una variable 'dynamic' contiene null e invocas un método, fallará en runtime.",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_092",
+    "question": "¿Qué ocurre si una expresión condicional con cortocircuito evalúa 'if (x != null && x.length > 0)'?",
+    "options": [
+      "Falla en compilación porque no se puede usar '&&' con variables nulleables.",
+      "Se evalúan ambas condiciones a la vez, causando una excepción si 'x' es nulo.",
+      "Dart exige colocar 'x!' obligatoriamente tras el operador '&&'.",
+      "Dart promueve 'x' en la segunda parte del '&&', haciendo que 'x.length' sea completamente seguro."
+    ],
+    "correct_index": 3,
+    "hint": "Gracias al cortocircuito, la parte derecha de '&&' solo se evalúa si 'x != null' es verdadero, permitiendo la promoción.",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_093",
+    "question": "¿Cuál es la complejidad de evaluar nulabilidad en tipos como 'Map<String?, List<int?>?>?'?",
+    "options": [
+      "Implica verificar la nulabilidad del Map, de sus claves, de la lista asociada y de los elementos enteros contenidos.",
+      "No es una estructura válida en Dart ya que los genéricos no admiten más de un nivel de nulabilidad.",
+      "Dart convierte automáticamente todas las interrogaciones internas en tipos no nulos obligatorios.",
+      "El recolector de basura descarta las colecciones con más de dos niveles de tipos nulleables."
+    ],
+    "correct_index": 0,
+    "hint": "Cada nivel requiere su propia comprobación defensiva o manejo con operadores null-aware específicos.",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_094",
+    "question": "¿Qué diferencia existe entre Sound Null Safety de Dart y el sistema de nulabilidad de TypeScript?",
+    "options": [
+      "TypeScript rechaza tipos no nulos mientras que Dart los hace obligatorios en todas las variables.",
+      "Dart garantiza solidez estricta tanto en compilación como en runtime; TypeScript solo verifica en tiempo de compilación.",
+      "Dart permite que cualquier tipo no nulo tome valor nulo en modo producción sin avisos.",
+      "No existe ninguna diferencia; ambos usan idéntico motor de ejecución compartida."
+    ],
+    "correct_index": 1,
+    "hint": "En TypeScript el código generado en JavaScript pierde la información de tipos; en Dart las garantías persisten en el binario final.",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_095",
+    "question": "¿Qué sucede con las variables de nivel superior (top-level) no nulleables que no se inicializan de inmediato?",
+    "options": [
+      "Se inicializan por defecto como punteros nulos sin requerir ninguna palabra clave.",
+      "El compilador las inicializa automáticamente invocando su constructor por defecto.",
+      "Deben marcarse explícitamente como 'late' o inicializarse con un valor en su declaración.",
+      "Provocan un bloqueo en la carga de la biblioteca hasta que el usuario ingrese un valor."
+    ],
+    "correct_index": 2,
+    "hint": "Una variable top-level no nulleable no puede quedar sin inicializar sin 'late', ya que no posee constructor para asignarla.",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_096",
+    "question": "¿Cómo se comporta la inferencia de tipos al declarar 'var lista = [1, null, 3];'?",
+    "options": [
+      "Infiere 'List<dynamic>' descartando el tipo entero por seguridad.",
+      "Genera un error de compilación por mezclar enteros con valores nulos.",
+      "Infiere 'List<int>' y descarta el elemento nulo de la colección.",
+      "Infiere el tipo 'List<int?>' al detectar la presencia de enteros y un valor nulo."
+    ],
+    "correct_index": 3,
+    "hint": "El analizador calcula el mínimo tipo común no nulo y, al incluir null, lo ensancha a 'int?'.",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_097",
+    "question": "¿Por qué un campo 'late' que referencia 'this' es válido en su inicializador pero un campo regular no lo es?",
+    "options": [
+      "Porque los campos 'late' se evalúan perezosamente tras completarse la construcción de la instancia.",
+      "Porque los campos 'late' residen en un espacio estático ajeno a la instancia del objeto.",
+      "Porque el analizador convierte 'this' en una función sincrónica dentro de campos 'late'.",
+      "Porque Dart crea una copia temporal del objeto antes de llamar al constructor."
+    ],
+    "correct_index": 0,
+    "hint": "Al ser evaluado bajo demanda tras la construcción, 'this' ya está completamente inicializado y disponible para el campo 'late'.",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_098",
+    "question": "¿Qué garantiza el modificador 'late final' en términos de inmutabilidad y ciclo de vida?",
+    "options": [
+      "Que la variable se limpiará de la memoria inmediatamente después de su primera lectura.",
+      "Que la variable se computará una única vez bajo demanda y nunca más podrá ser sobreescrita.",
+      "Que el valor de la variable se sincronizará automáticamente con el almacenamiento local.",
+      "Que el analizador permitirá reasignaciones si el nuevo valor es de tipo idéntico."
+    ],
+    "correct_index": 1,
+    "hint": "Provee lazy evaluation combinado con inmutabilidad estricta tras la primera asignación.",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_099",
+    "question": "¿Cómo se desestructura de forma segura un Record que posee campos nulleables utilizando patrones con guardas?",
+    "options": [
+      "if (record == (String nombre, int? edad) where edad.isNotNull()) { ... }",
+      "when (record is (nombre, edad) -> edad != null) { ... }",
+      "if (record case (final String nombre, final int? edad) when edad != null) { ... }",
+      "switch (record) { case (nombre, edad) if !edad.isNull: ... }"
+    ],
+    "correct_index": 2,
+    "hint": "La cláusula 'when' actúa como condición de guarda adicional tras validar la estructura del patrón del Record.",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_100",
+    "question": "¿Qué sucede si una clase abstracta declara un getter 'String?' y una subclase lo implementa como 'String'?",
+    "options": [
+      "Genera un error de firma incompatible al cambiar la nulabilidad del tipo.",
+      "La subclase debe declarar el método con la anotación '@unsafeOverride'.",
+      "Dart obliga a la subclase a retornar siempre un valor constante.",
+      "Es una sobrescritura completamente válida y legal debido a la covarianza de tipos de retorno."
+    ],
+    "correct_index": 3,
+    "hint": "Retornar un subtipo más estricto ('String' es subtipo de 'String?') cumple cabalmente con el contrato de la superclase.",
+    "subtopic": "null_safety",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_101",
+    "question": "¿Qué clase en Dart representa una computación diferida que producirá un valor o un error en el futuro?",
+    "options": [
+      "Future",
+      "Promise",
+      "DeferredTask",
+      "AsyncAction"
+    ],
+    "correct_index": 0,
+    "hint": "'Future<T>' es el tipo fundamental para manejar operaciones asíncronas únicas en Dart.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_102",
+    "question": "¿Qué palabra clave se usa para marcar una función cuyo cuerpo contendrá operaciones asíncronas con 'await'?",
+    "options": [
+      "awaitable",
+      "async",
+      "future",
+      "synchronized"
+    ],
+    "correct_index": 1,
+    "hint": "Una función marcada con 'async' retorna automáticamente un Future y habilita el uso de 'await' en su interior.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_103",
+    "question": "¿Qué hace la palabra clave 'await' al anteponerse a una expresión de tipo Future?",
+    "options": [
+      "Bloquea por completo el hilo principal del sistema operativo hasta recibir respuesta.",
+      "Ejecuta el Future inmediatamente en un nuevo isolate en paralelo.",
+      "Suspende la ejecución de la función actual hasta que el Future se resuelva o falle.",
+      "Cancela el Future si este no responde en menos de un milisegundo."
+    ],
+    "correct_index": 2,
+    "hint": "'await' suspende la ejecución dentro de la función asíncrona sin bloquear el Event Loop de Dart.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_104",
+    "question": "¿Cómo se capturan errores producidos en un bloque de código asíncrono con 'await'?",
+    "options": [
+      "Registrando una función en 'Future.globalCatch()'.",
+      "Usando la palabra clave 'recover' tras la llamada asíncrona.",
+      "Anotando la función contenedora con '@catchesErrors'.",
+      "Envolviendo la llamada en un bloque estándar 'try-catch'."
+    ],
+    "correct_index": 3,
+    "hint": "Con async/await, el manejo de excepciones se unifica utilizando la sintaxis convencional de 'try-catch'.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_105",
+    "question": "¿Qué método estático de Future permite esperar a que una lista de futuros se completen todos con éxito?",
+    "options": [
+      "Future.wait([...])",
+      "Future.all([...])",
+      "Future.join([...])",
+      "Future.combine([...])"
+    ],
+    "correct_index": 0,
+    "hint": "'Future.wait' recibe un iterable de futuros y retorna un Future con una lista de resultados cuando todos concluyen.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_106",
+    "question": "¿Cómo se crea un Future que finalice tras una pausa temporal determinada?",
+    "options": [
+      "Future.sleep(Duration(...))",
+      "Future.delayed(Duration(...), () => valor)",
+      "Thread.delayFuture(Duration(...))",
+      "Future.pause(Duration(...))"
+    ],
+    "correct_index": 1,
+    "hint": "'Future.delayed' programa una tarea para ejecutarse transcurrido el tiempo indicado por una instancia de Duration.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_107",
+    "question": "¿Cómo se crea un Future ya resuelto inmediatamente con un valor conocido?",
+    "options": [
+      "Future.resolved(resultado)",
+      "Future.of(resultado)",
+      "Future.value(resultado)",
+      "Future.instant(resultado)"
+    ],
+    "correct_index": 2,
+    "hint": "'Future.value' devuelve un Future completado de forma inmediata con el valor provisto.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_108",
+    "question": "¿Cómo se crea un Future que falle inmediatamente con un error?",
+    "options": [
+      "Future.failed(objetoError)",
+      "Future.throw(objetoError)",
+      "Future.rejected(objetoError)",
+      "Future.error(objetoError)"
+    ],
+    "correct_index": 3,
+    "hint": "'Future.error' genera un Future en estado de fallo con la excepción especificada.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_109",
+    "question": "¿Qué clase en Dart representa una secuencia continua y asíncrona de eventos o datos a lo largo del tiempo?",
+    "options": [
+      "Stream",
+      "Flow",
+      "ObservableSeq",
+      "EventPipe"
+    ],
+    "correct_index": 0,
+    "hint": "Un 'Stream<T>' es el equivalente asíncrono de un 'Iterable<T>', emitiendo cero o más valores a través del tiempo.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_110",
+    "question": "¿Qué bucle especial permite iterar sobre los elementos emitidos por un Stream a medida que van llegando?",
+    "options": [
+      "for each async (item in stream) { ... }",
+      "await for (var item in stream) { ... }",
+      "async for (var item of stream) { ... }",
+      "while (stream.hasNext()) { ... }"
+    ],
+    "correct_index": 1,
+    "hint": "'await for' consume un stream evento tras evento dentro de una función marcada con 'async'.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_111",
+    "question": "¿Qué método permite suscribirse a un Stream mediante funciones callback?",
+    "options": [
+      "stream.subscribe((data) { ... })",
+      "stream.observe((data) { ... })",
+      "stream.listen((data) { ... })",
+      "stream.onEvent((data) { ... })"
+    ],
+    "correct_index": 2,
+    "hint": "El método 'listen()' suscribe un oyente al stream y retorna una 'StreamSubscription'.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_112",
+    "question": "¿Cuál es la principal diferencia entre un Stream de suscripción simple y un Broadcast Stream?",
+    "options": [
+      "El de suscripción simple emite infinitos eventos; el Broadcast se detiene en el primero.",
+      "El de suscripción simple se ejecuta en C++; el Broadcast corre exclusivamente en la JVM.",
+      "El de suscripción simple no maneja errores; el Broadcast descarta datos perdidos.",
+      "El de suscripción simple solo admite un oyente; el Broadcast Stream admite múltiples oyentes simultáneos."
+    ],
+    "correct_index": 3,
+    "hint": "Un Stream estándar solo puede ser escuchado por un único suscriptor; con 'asBroadcastStream()' se permite multi-escucha.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_113",
+    "question": "¿Qué modificador de función y palabra clave se utilizan para crear un generador asíncrono de Stream?",
+    "options": [
+      "Modificador 'async*' y palabra clave 'yield'.",
+      "Modificador 'sync*' y palabra clave 'return'.",
+      "Modificador 'generator' y palabra clave 'emit'.",
+      "Modificador 'async' y palabra clave 'produce'."
+    ],
+    "correct_index": 0,
+    "hint": "Una función 'Stream<T> miGenerador() async*' utiliza 'yield valor;' para emitir elementos progresivamente.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_114",
+    "question": "¿Qué modificador de función se utiliza para crear un generador sincrónico que retorne un 'Iterable'?",
+    "options": [
+      "async*",
+      "sync*",
+      "iterable*",
+      "yield*"
+    ],
+    "correct_index": 1,
+    "hint": "Las funciones marcadas con 'sync*' producen secuencias 'Iterable<T>' evaluadas de manera perezosa mediante 'yield'.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_115",
+    "question": "¿Qué palabra clave se usa en un generador 'async*' para delegar y emitir todos los eventos de otro Stream completo?",
+    "options": [
+      "emitAll",
+      "yieldAll",
+      "yield*",
+      "streamAll"
+    ],
+    "correct_index": 2,
+    "hint": "'yield* otroStream;' reenvía cada uno de los eventos emitidos por el segundo stream hacia el flujo actual.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_116",
+    "question": "¿Qué método transforma un Stream de suscripción simple en un Stream que admite varios oyentes?",
+    "options": [
+      "stream.toMulticast()",
+      "stream.enableMultiListen()",
+      "stream.shareReplay()",
+      "stream.asBroadcastStream()"
+    ],
+    "correct_index": 3,
+    "hint": "'asBroadcastStream()' envuelve el stream original para distribuir sus eventos a cualquier número de oyentes.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "basic"
+  },
+  {
+    "id": "dart_117",
+    "question": "¿Cuáles son las dos colas principales de tareas gestionadas por el Event Loop de Dart?",
+    "options": [
+      "La Microtask Queue y la Event Queue.",
+      "La Priority Queue y la Background Queue.",
+      "La UI Queue y la Network Queue.",
+      "La Stack Queue y la Heap Queue."
+    ],
+    "correct_index": 0,
+    "hint": "El Event Loop procesa continuamente la cola de microtareas (Microtask Queue) antes de tomar un evento de la Event Queue.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_118",
+    "question": "¿Qué prioridad de ejecución existe entre la Microtask Queue y la Event Queue?",
+    "options": [
+      "La Event Queue tiene prioridad estricta sobre la Microtask Queue.",
+      "La Microtask Queue tiene mayor prioridad y se vacía por completo antes de atender la Event Queue.",
+      "Ambas colas alternan tareas con un algoritmo Round-Robin equitativo.",
+      "Se procesan de forma concurrente en hilos físicos separados."
+    ],
+    "correct_index": 1,
+    "hint": "Dart siempre ejecuta todas las microtareas pendientes antes de procesar el siguiente evento de la cola general.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_119",
+    "question": "¿Qué función de 'dart:async' programa la ejecución inmediata de una tarea en la cola de microtareas?",
+    "options": [
+      "Future.scheduleNow(() { ... })",
+      "EventLoop.postMicrotask(() { ... })",
+      "scheduleMicrotask(() { ... })",
+      "Isolate.current.queueMicrotask(() { ... })"
+    ],
+    "correct_index": 2,
+    "hint": "'scheduleMicrotask' inserta una acción directamente en la Microtask Queue para ejecutarse antes de otros eventos de I/O.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_120",
+    "question": "¿Qué clase de 'dart:async' se utiliza para controlar manualmente la finalización y resultado de un Future?",
+    "options": [
+      "FutureController<T>",
+      "DeferredPromise<T>",
+      "AsyncProducer<T>",
+      "Completer<T>"
+    ],
+    "correct_index": 3,
+    "hint": "Un 'Completer' permite crear un Future y resolverlo posteriormente desde cualquier lugar mediante 'complete()' o 'completeError()'.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_121",
+    "question": "¿Qué clase permite crear y controlar manualmente un Stream, inyectándole eventos de datos o errores?",
+    "options": [
+      "StreamController<T>",
+      "StreamManager<T>",
+      "EventEmitter<T>",
+      "StreamDispatcher<T>"
+    ],
+    "correct_index": 0,
+    "hint": "'StreamController' expone un 'sink' para agregar eventos y un 'stream' para que los consumidores se suscriban.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_122",
+    "question": "¿Cómo se cancela una suscripción activa a un Stream para evitar fugas de memoria?",
+    "options": [
+      "Invocando 'stream.unsubscribe()' directamente.",
+      "Llamando al método 'cancel()' de la 'StreamSubscription' obtenida.",
+      "Asignando 'null' a la referencia del Stream original.",
+      "Llamando a 'StreamController.dispose()'."
+    ],
+    "correct_index": 1,
+    "hint": "'subscription.cancel()' desconecta el oyente del stream y libera los recursos asociados a la escucha.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_123",
+    "question": "¿Qué métodos de 'StreamSubscription' permiten pausar y reanudar la recepción de eventos temporalmente?",
+    "options": [
+      "subscription.stop() y subscription.start()",
+      "subscription.sleep() y subscription.wake()",
+      "subscription.pause() y subscription.resume()",
+      "subscription.hold() y subscription.release()"
+    ],
+    "correct_index": 2,
+    "hint": "Estos métodos controlan el flujo de entrega de eventos al oyente según su capacidad de procesamiento.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_124",
+    "question": "¿Qué método funcional de Stream transforma cada evento emitido en un nuevo valor?",
+    "options": [
+      "stream.apply((evento) => transformar(evento))",
+      "stream.convert((evento) => transformar(evento))",
+      "stream.select((evento) => transformar(evento))",
+      "stream.map((evento) => transformar(evento))"
+    ],
+    "correct_index": 3,
+    "hint": "Al igual que en listas, '.map()' proyecta los elementos de un Stream a través de una función de mapeo.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_125",
+    "question": "¿Qué método descarta eventos de un Stream que no cumplan con un predicado booleano dado?",
+    "options": [
+      "stream.where((evento) => condicion(evento))",
+      "stream.filter((evento) => condicion(evento))",
+      "stream.match((evento) => condicion(evento))",
+      "stream.retain((evento) => condicion(evento))"
+    ],
+    "correct_index": 0,
+    "hint": "En Dart los Streams y los Iterables usan el método '.where()' para el filtrado de datos.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_126",
+    "question": "¿Qué método de Stream acumula progresivamente los valores emitidos usando un valor semilla inicial?",
+    "options": [
+      "stream.aggregate(inicial, (acumulado, elemento) => ...)",
+      "stream.fold(inicial, (acumulado, elemento) => ...)",
+      "stream.collect(inicial, (acumulado, elemento) => ...)",
+      "stream.combine(inicial, (acumulado, elemento) => ...)"
+    ],
+    "correct_index": 1,
+    "hint": "'.fold()' reduce los eventos del stream a un único Future que contiene el resultado acumulado final.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_127",
+    "question": "¿Por qué es crucial llamar a 'controller.close()' cuando ya no se emitirán más eventos por un StreamController?",
+    "options": [
+      "Para obligar al sistema operativo a eliminar el archivo temporal del stream.",
+      "Porque de no hacerlo el recolector de basura detiene todos los isolates.",
+      "Para emitir el evento 'done', completar bucles 'await for' y liberar recursos de los oyentes.",
+      "Para cifrar los eventos previamente transmitidos a los suscriptores."
+    ],
+    "correct_index": 2,
+    "hint": "Cerrar el controller notifica a los consumidores que el flujo ha concluido exitosamente y concluye las suscripciones.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_128",
+    "question": "¿Qué operador de Future permite definir un tiempo límite antes de lanzar una 'TimeoutException'?",
+    "options": [
+      "future.limit(Duration(...))",
+      "future.deadline(Duration(...))",
+      "future.expireAfter(Duration(...))",
+      "future.timeout(Duration(...))"
+    ],
+    "correct_index": 3,
+    "hint": "'.timeout()' arroja TimeoutException si el futuro no resuelve dentro de la ventana de tiempo estipulada.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_129",
+    "question": "¿Qué resultado devuelve 'Future.any([...])'?",
+    "options": [
+      "Un Future que completa con el valor o error del primer futuro de la lista que termine.",
+      "Un Future con una lista de todos los futuros resueltos en orden cronológico.",
+      "Un valor booleano indicando si algún futuro terminó con éxito.",
+      "Un Stream continuo que va emitiendo cada resultado a medida que llega."
+    ],
+    "correct_index": 0,
+    "hint": "'Future.any' corre una carrera entre múltiples futuros y adopta el resultado del primero que concluya.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_130",
+    "question": "¿Cuál es la característica arquitectónica distintiva de los 'Isolates' en Dart frente a los hilos convencionales?",
+    "options": [
+      "Los isolates se ejecutan únicamente en servidores backend y no en clientes.",
+      "Cada isolate tiene su propia memoria heap independiente y no comparte estado directamente con otros.",
+      "Los isolates acceden a la misma memoria RAM compartida mediante variables volátiles.",
+      "Los isolates están limitados a ejecutar operaciones sincrónicas puras."
+    ],
+    "correct_index": 1,
+    "hint": "Al no compartir memoria, los isolates erradican problemas clásicos de concurrencia como condiciones de carrera en variables.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_131",
+    "question": "¿Qué método simplificado introducido en Dart moderno permite ejecutar una función pesada en un isolate de fondo y obtener el resultado?",
+    "options": [
+      "Isolate.executeBackground(() => calculoPesado())",
+      "computeSync(() => calculoPesado())",
+      "Isolate.run(() => calculoPesado())",
+      "Thread.spawnAsync(() => calculoPesado())"
+    ],
+    "correct_index": 2,
+    "hint": "'Isolate.run()' genera un isolate temporal, ejecuta la función, transfiere el valor de retorno y cierra el isolate.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_132",
+    "question": "¿Cómo se comunican dos isolates persistentes en Dart?",
+    "options": [
+      "Leyendo y escribiendo en variables estáticas marcadas con '@shared'.",
+      "Mediante bloques de sincronización con cerraduras de tipo mutex en memoria.",
+      "Compartiendo punteros de memoria mediante estructuras unsafe.",
+      "Enviando mensajes a través de puertos de comunicación ('ReceivePort' y 'SendPort')."
+    ],
+    "correct_index": 3,
+    "hint": "El paso de mensajes por puertos es el mecanismo nativo de interoperabilidad entre isolates en Dart.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_133",
+    "question": "¿Qué ocurre si una tarea sincrónica realiza un cálculo excesivamente largo en el isolate principal?",
+    "options": [
+      "Bloquea el Event Loop, provocando congelamiento de la interfaz de usuario y caída de fotogramas.",
+      "Dart migra automáticamente la computación pesada a una GPU externa.",
+      "El motor divide la tarea en microtareas de forma automática sin bloquear.",
+      "Se interrumpe la tarea con una excepción 'ComputationTimeoutException'."
+    ],
+    "correct_index": 0,
+    "hint": "Como el isolate principal es de un solo hilo, un cálculo sincrónico pesado retrasa el procesamiento de eventos de renderizado.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "medium"
+  },
+  {
+    "id": "dart_134",
+    "question": "¿Qué ocurre si una microtarea programa recursivamente otra microtarea de forma indefinida en Dart?",
+    "options": [
+      "El recolector de basura suspende el hilo y purga las microtareas sobrantes.",
+      "Provoca inanición (starvation) del Event Loop, impidiendo atender la Event Queue y la UI.",
+      "El motor balancea la carga convirtiendo las microtareas en eventos de I/O.",
+      "Lanza un error inmediato de tipo 'StackOverflowError' en tiempo de compilación."
+    ],
+    "correct_index": 1,
+    "hint": "Dado que las microtareas tienen prioridad absoluta, un ciclo ininterrumpido monopoliza el hilo e impide procesar eventos normales.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_135",
+    "question": "¿Para qué se utiliza la función 'runZonedGuarded' en la gestión de asincronía en Dart?",
+    "options": [
+      "Para encriptar las transacciones de red asíncronas en un canal seguro.",
+      "Para forzar a que todas las llamadas asíncronas se ejecuten de manera sincrónica.",
+      "Para ejecutar código en una Zona aislada y capturar de forma global errores asíncronos no controlados.",
+      "Para compartir memoria RAM entre múltiples procesos de sistema operativo."
+    ],
+    "correct_index": 2,
+    "hint": "'runZonedGuarded' establece una zona de ejecución con un manejador central de excepciones que captura fallos no interceptados por try-catch.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_136",
+    "question": "¿Qué mecanismo se emplea para transformar y manipular los eventos y errores de un Stream de manera personalizada?",
+    "options": [
+      "StreamModifier.custom() aplicado con 'stream.modify(...)'.",
+      "StreamAdapter.bind() aplicado con 'stream.pipeTo(...)'.",
+      "EventPipeline.filter() aplicado con 'stream.connect(...)'.",
+      "StreamTransformer.fromHandlers() aplicado con 'stream.transform(...)'."
+    ],
+    "correct_index": 3,
+    "hint": "'StreamTransformer' permite interceptar eventos 'data', 'error' y 'done' para modular flujos complejos.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_137",
+    "question": "Por defecto, ¿cómo se transmiten los objetos entre isolates al enviarse mediante un 'SendPort'?",
+    "options": [
+      "Se copia el grafo de objetos mediante serialización interna profunda (deep copy de memoria).",
+      "Se pasa la dirección del puntero de memoria compartida sin duplicar el objeto.",
+      "Se convierten siempre en cadenas JSON formateadas en texto plano.",
+      "Solo se permite enviar tipos primitivos de un byte sin estructuras anidadas."
+    ],
+    "correct_index": 0,
+    "hint": "La mayoría de objetos se copian íntegramente al cruzar la frontera del isolate, manteniendo la independencia de memoria.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_138",
+    "question": "¿Qué clase optimizada permite transferir grandes bloques de memoria binaria entre isolates sin realizar copias costosas?",
+    "options": [
+      "SharedMemoryBlock",
+      "TransferableTypedData",
+      "ZeroCopyBuffer",
+      "DirectByteBuffer"
+    ],
+    "correct_index": 1,
+    "hint": "'TransferableTypedData' cede la propiedad de la memoria de un isolate al otro instantáneamente sin duplicar bytes.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_139",
+    "question": "¿Son cancelables de forma nativa las instancias de 'Future' en el núcleo de Dart (dart:core)?",
+    "options": [
+      "Sí, invocando el método nativo 'future.cancel()' disponible en toda promesa.",
+      "Sí, siempre que la función asíncrona no haya ejecutado ningún bloque 'try'.",
+      "No, un Future estándar no es cancelable; se requieren tokens o wrappers como 'CancelableOperation'.",
+      "Sí, pero únicamente si el Future fue creado con 'Future.delayed'."
+    ],
+    "correct_index": 2,
+    "hint": "Una vez iniciado, un Future de Dart continuará hasta completar; el paquete 'async' provee 'CancelableOperation' para simular cancelación.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_140",
+    "question": "¿Qué sucede con una excepción no capturada lanzada dentro de un Stream en comparación con un Future?",
+    "options": [
+      "El Stream detiene inmediatamente el proceso del sistema operativo sin posibilidad de captura.",
+      "El Stream silencia el error y reintenta la emisión automáticamente diez veces.",
+      "La excepción se almacena en disco y el Stream se convierte en una lista vacía.",
+      "El Stream emite un evento de error a los suscriptores; si nadie escucha errores, cae en la Zona actual."
+    ],
+    "correct_index": 3,
+    "hint": "Un Stream maneja errores como eventos de primer orden en su tubería; los listeners deben declararse con 'onError'.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_141",
+    "question": "¿Qué ocurre si una función marcada con 'async*' contiene llamadas a 'yield' pero nadie se suscribe a su Stream?",
+    "options": [
+      "El cuerpo de la función no se ejecuta hasta que haya un suscriptor activo (ejecución perezosa).",
+      "La función se ejecuta completamente en memoria y almacena los datos en un buffer infinito.",
+      "Lanza de inmediato una excepción 'UnlistenedStreamException' al ser invocada.",
+      "Ejecuta únicamente las líneas sincrónicas anteriores al primer 'yield' y se descarta."
+    ],
+    "correct_index": 0,
+    "hint": "Los generadores de stream 'async*' son perezosos (cold streams): su cómputo solo arranca cuando un oyente inicia la escucha.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_142",
+    "question": "¿Qué riesgo existe si no se cancelan las instancias de 'StreamSubscription' en componentes con ciclo de vida corto?",
+    "options": [
+      "Corrupción del sistema de archivos donde reside el código de la aplicación.",
+      "Fuga de memoria (memory leak), ya que el Stream retiene una referencia al callback del oyente.",
+      "Desbordamiento inmediato de la pila de llamadas (Stack Overflow).",
+      "Cierre abrupto de la máquina virtual de Dart con código de error de I/O."
+    ],
+    "correct_index": 1,
+    "hint": "El Stream mantiene la referencia al callback y a su entorno léxico, impidiendo la recolección por parte del Garbage Collector.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_143",
+    "question": "¿Para qué sirven las propiedades 'onListen' y 'onCancel' en el constructor de 'StreamController'?",
+    "options": [
+      "Para autenticar mediante credenciales de seguridad a los suscriptores externos.",
+      "Para medir el tiempo de respuesta de las peticiones HTTP asociadas al canal.",
+      "Para iniciar o pausar la producción de recursos costosos según haya oyentes activos o no.",
+      "Para transformar automáticamente el flujo de datos a cadenas hexadecimales."
+    ],
+    "correct_index": 2,
+    "hint": "Permiten administrar el ciclo de vida del productor: encender sensores o conexiones al escuchar y apagarlos al cancelar.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_144",
+    "question": "¿Cómo procesa 'Future.forEach' una colección en relación con la concurrencia?",
+    "options": [
+      "Ejecuta todos los futuros concurrentemente en paralelo aprovechando todos los núcleos de CPU.",
+      "Ejecuta los elementos en orden inverso ignorando las dependencias de datos.",
+      "Agrupa los elementos en lotes de diez futuros simultáneos de manera predeterminada.",
+      "Procesa los elementos de forma estrictamente secuencial, esperando a que cada futuro termine antes de iniciar el siguiente."
+    ],
+    "correct_index": 3,
+    "hint": "'Future.forEach' itera secuencialmente: no pasa al siguiente elemento hasta que el callback asíncrono actual finaliza.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_145",
+    "question": "¿Qué clase del paquete 'package:async' permite leer eventos de un Stream de manera pull y con lookahead?",
+    "options": [
+      "StreamQueue",
+      "StreamReader",
+      "StreamIteratorAdvanced",
+      "AsyncStreamBuffer"
+    ],
+    "correct_index": 0,
+    "hint": "'StreamQueue' permite solicitar eventos bajo demanda ('hasNext', 'next') e inspeccionar eventos futuros con 'peek'.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_146",
+    "question": "¿Qué diferencia existe en la programación de tareas entre 'Future.microtask(f)' y 'Future(f)'?",
+    "options": [
+      "'Future.microtask' crea un nuevo isolate; 'Future(f)' se ejecuta en el isolate principal.",
+      "'Future.microtask' añade la tarea a la Microtask Queue; 'Future(f)' la añade a la Event Queue.",
+      "'Future.microtask' nunca devuelve valor de retorno; 'Future(f)' siempre devuelve datos.",
+      "Ambos son sinónimos exactos y utilizan la misma cola interna sin diferencias."
+    ],
+    "correct_index": 1,
+    "hint": "El constructor por defecto 'Future(f)' programa un evento en la Event Queue; 'Future.microtask' va a la cola prioritaria.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_147",
+    "question": "¿Cómo se define el concepto de 'backpressure' en flujos de datos asíncronos de Streams?",
+    "options": [
+      "La presión ejercida por el sistema operativo sobre la CPU al compilar código máquina.",
+      "El retraso involuntario generado por la latencia en transmisiones satelitales.",
+      "La estrategia de control de flujo cuando un productor emite datos más rápido de lo que el consumidor puede procesar.",
+      "La sobrecarga generada al serializar tipos complejos a través de puertos de isolate."
+    ],
+    "correct_index": 2,
+    "hint": "El backpressure regula el ritmo del emisor (o almacena/descarta eventos) para no saturar la memoria del consumidor.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_148",
+    "question": "¿Qué sucede con el flujo de un 'await' cuando se ejecuta dentro del isolate principal de Dart?",
+    "options": [
+      "Suspende el hilo a nivel del kernel con un semáforo de bloqueo 'pthread_cond_wait'.",
+      "Duplica el tamaño del stack de ejecución para mantener activos los registros de hardware.",
+      "Convierte todas las llamadas pendientes en llamadas de bajo nivel sincrónicas.",
+      "Guarda la continuación de la función como un microtask y cede el control al Event Loop para atender otras tareas."
+    ],
+    "correct_index": 3,
+    "hint": "La suspensión de 'await' es no bloqueante: la continuación se programa como microtarea al resolverse el futuro.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_149",
+    "question": "¿Qué efecto tiene invocar 'StreamController.add()' de forma síncrona en un controller creado con 'sync: true'?",
+    "options": [
+      "Notifica a los oyentes inmediatamente en el mismo turno de ejecución antes de retornar de 'add()'.",
+      "Pospone la entrega de eventos hasta el siguiente ciclo completo del Event Loop.",
+      "Obliga al controller a ejecutarse exclusivamente dentro de un worker thread nativo.",
+      "Bloquea permanentemente el controller impidiendo añadir eventos subsiguientes."
+    ],
+    "correct_index": 0,
+    "hint": "Los sync controllers disparan eventos sincrónicamente a los listeners, requiriendo extrema precaución con la reentrada.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "dart_150",
+    "question": "¿Cómo se maneja la terminación limpia de un Isolate creado con 'Isolate.spawn()'?",
+    "options": [
+      "Llamando a 'isolate.dispose()' y esperando la recolección de basura del sistema.",
+      "Enviándole un mensaje de apagado o invocando 'isolate.kill(priority: Isolate.beforeNextEvent)'.",
+      "Cerrando el hilo principal del sistema operativo desde la línea de comandos.",
+      "Asignando 'null' a todas las variables compartidas del puerto de entrada."
+    ],
+    "correct_index": 1,
+    "hint": "'isolate.kill()' permite terminar el isolate de forma controlada o inmediata según la prioridad asignada.",
+    "subtopic": "asincronia_streams",
+    "difficulty": "advanced"
   }
 ]

@@ -586,14 +586,20 @@ class _TopicsPageState extends State<TopicsPage> {
     );
   }
 
+  final Map<String, int> _questionCountCache = {};
+
   int _getQuestionCount(TopicItem topic) {
+    final cacheKey = '${topic.id}_${widget.settings.activeSubtopics[topic.id.toLowerCase()]?.join(',')}';
+    if (_questionCountCache.containsKey(cacheKey)) {
+      return _questionCountCache[cacheKey]!;
+    }
+
     final cm = ContentManager();
     final allowedSubtopics = widget.settings.activeSubtopics[topic.id.toLowerCase()];
     final questions = cm.getQuestionsByLanguage(topic.id.toLowerCase(), null, allowedSubtopics);
-    if (questions.isNotEmpty) {
-      return questions.length;
-    }
-    return topic.defaultQuestionCount;
+    final count = questions.isNotEmpty ? questions.length : topic.defaultQuestionCount;
+    _questionCountCache[cacheKey] = count;
+    return count;
   }
 
   void _showSubtopicsModal(TopicItem topic) {

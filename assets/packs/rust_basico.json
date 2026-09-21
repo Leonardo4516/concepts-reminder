@@ -1,67 +1,2102 @@
 [
   {
     "id": "rust_001",
-    "question": "En el modelo de memoria de Rust, ¿cuál es la regla primordial del sistema de Posesión (Ownership)?",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Cuál es la primera regla fundamental del sistema de ownership en Rust?",
     "options": [
-      "Cada valor puede tener múltiples propietarios en paralelo sin restricciones.",
-      "Cada valor en Rust tiene un único propietario (owner) a la vez, y cuando el propietario sale de ámbito (scope), el valor se libera de memoria automáticamente.",
-      "Todos los valores deben asignarse con punteros nulos inicializados en cero.",
-      "El Garbage Collector rastrea las variables en un ciclo de 10 milisegundos."
+      "Cada valor en Rust tiene un único propietario (owner) a la vez.",
+      "Cada valor puede tener múltiples propietarios compartidos por defecto.",
+      "Los valores primitivos carecen de propietario y viven en memoria estática.",
+      "El propietario de un valor debe ser siempre una estructura global."
     ],
-    "correct_index": 1,
-    "hint": "Rust no tiene Garbage Collector ni liberación manual de memoria (free/malloc); la memoria se gestiona mediante Ownership y RAII en tiempo de compilación.",
-    "subtopic": "fundamentos"
+    "correct_index": 0,
+    "hint": "En Rust: 1) Cada valor tiene un owner, 2) Solo puede haber un owner a la vez, 3) Cuando el owner sale del scope, el valor se libera."
   },
   {
     "id": "rust_002",
-    "question": "¿Cuáles son las dos reglas fundamentales del Préstamo (Borrowing) y las referencias en Rust?",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Qué sucede cuando el propietario (owner) de un valor sale de su ámbito (scope)?",
     "options": [
-      "Puedes tener cualquier número de referencias mutables (`&mut T`) al mismo tiempo.",
-      "En cualquier momento dado, puedes tener o bien una o más referencias inmutables (`&T`), O BIEN exactamente una referencia mutable (`&mut T`), pero nunca ambas simultáneamente.",
-      "Las referencias nunca pueden durar más de 10 líneas de código.",
-      "Las referencias mutables no pueden modificar los datos a los que apuntan."
+      "El valor permanece en memoria hasta que el recolector de basura lo barra.",
+      "El valor se destruye automáticamente liberando su memoria (drop).",
+      "El valor se transfiere automáticamente a la función llamadora superior.",
+      "Se genera una advertencia de compilación por variables huérfanas."
     ],
     "correct_index": 1,
-    "hint": "Esta regla garantiza en tiempo de compilación la ausencia de 'Data Races' (condiciones de carrera por mutación concurrente de memoria).",
-    "subtopic": "fundamentos"
+    "hint": "Cuando una variable que posee un recurso sale de su scope, Rust invoca automáticamente la función drop."
   },
   {
     "id": "rust_003",
-    "question": "¿Cómo maneja Rust los valores ausentes y los errores sin utilizar punteros nulos (`null`) ni excepciones tradicionales?",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Qué ocurre cuando se asigna una variable de tipo String a otra (let s2 = s1;)?",
     "options": [
-      "Mediante los enums genéricos estándar `Option<T>` (Some(T) / None) y `Result<T, E>` (Ok(T) / Err(E)) junto con Pattern Matching exhaustivo.",
-      "Arrojando excepciones con `try ... catch` similares a Java.",
-      "Devolviendo números negativos (-1) para todos los errores.",
-      "Finalizando el proceso del sistema operativo inmediatamente sin reportar mensajes."
+      "Se realiza una copia profunda (deep copy) de todos los bytes en el montículo.",
+      "Ambas variables comparten la propiedad simultáneamente mediante punteros.",
+      "La propiedad (ownership) se mueve a s2, e invalidando el uso futuro de s1.",
+      "Se produce un error de compilación exigiendo el uso de referencias prestadas."
     ],
-    "correct_index": 0,
-    "hint": "El creador de 'null' lo llamó su 'error del billón de dólares'. Rust elimina null forzando a declarar explícitamente `Option<T>`.",
-    "subtopic": "fundamentos"
+    "correct_index": 2,
+    "hint": "Los tipos sin el trait Copy aplican semántica de movimiento (move): s1 transfiere los datos a s2 y queda invalidada."
   },
   {
     "id": "rust_004",
-    "question": "¿Qué garantizan los 'Tiempos de Vida' (Lifetimes `'a`) en Rust?",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Qué trait permite que un tipo se duplique por copia bit a bit en lugar de moverse?",
     "options": [
-      "La velocidad a la que el CPU procesa las instrucciones en GHz.",
-      "Aseguran al compilador que las referencias serán válidas durante todo el tiempo en que sean utilizadas, impidiendo 'Dangling Pointers' (punteros colgantes).",
-      "La cantidad de días que un paquete de crates.io puede permanecer instalado.",
-      "El tiempo máximo que una tarea asíncrona de Tokio puede dormir con sleep."
+      "El trait Clone, que obliga a realizar copias profundas explícitas en código.",
+      "El trait Duplicate, utilizado por estructuras dinámicas en el montículo.",
+      "El trait Transfer, que define los protocolos de asignación de variables.",
+      "El trait Copy, implementado por tipos escalares primitivos como enteros."
     ],
-    "correct_index": 1,
-    "hint": "Los lifetimes son anotaciones para el Borrow Checker que evitan que una referencia apunte a memoria que ya fue liberada.",
-    "subtopic": "fundamentos"
+    "correct_index": 3,
+    "hint": "Los tipos que implementan Copy (como i32, bool, char) se copian automáticamente en lugar de moverse."
   },
   {
     "id": "rust_005",
-    "question": "¿Cuál es la función de un 'Trait' en Rust?",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Cómo se crea una referencia inmutable prestada (borrow) a una variable 'x'?",
     "options": [
-      "Definir funcionalidad abstracta compartida (similar a una interfaz en otros lenguajes) que un tipo concreto puede implementar.",
-      "Crear hilos de ejecución en el kernel de Linux.",
-      "Gestionar la conexión a bases de datos relacionales.",
-      "Compilar código de Rust a binario WebAssembly sin dependencias."
+      "Utilizando la sintaxis '&x' antepuesta al identificador de la variable.",
+      "Utilizando la sintaxis '*x' para obtener el puntero de solo lectura.",
+      "Utilizando la palabra clave 'ref x' exclusivamente en asignaciones.",
+      "Invocando al método intrínseco 'x.borrow()' del módulo de memoria."
     ],
     "correct_index": 0,
-    "hint": "Los Traits permiten polimorfismo paramétrico y despacho estático (monomorfización) o dinámico (`dyn Trait`).",
-    "subtopic": "fundamentos"
+    "hint": "El símbolo '&' crea una referencia de préstamo inmutable hacia el valor."
+  },
+  {
+    "id": "rust_006",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Cuántas referencias mutables (&mut T) a un mismo valor pueden coexistir simultáneamente?",
+    "options": [
+      "Cualquier número ilimitado, siempre que no existan hilos concurrentes.",
+      "Exactamente una sola referencia mutable en un ámbito temporal dado.",
+      "Hasta dos referencias, una para lectura y otra para escritura activa.",
+      "Tantas como núcleos de procesamiento posea la máquina en ejecución."
+    ],
+    "correct_index": 1,
+    "hint": "Regla de oro del borrow checker: puedes tener cualquier número de referencias inmutables O exactamente una mutable."
+  },
+  {
+    "id": "rust_007",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Pueden coexistir referencias inmutables (&T) y una referencia mutable (&mut T) al mismo dato?",
+    "options": [
+      "Sí, siempre que las referencias inmutables solo lean antes de la mutación.",
+      "Sí, el compilador sincroniza automáticamente los accesos mediante cerrojos.",
+      "No, no se permite ninguna referencia inmutable si existe una mutable activa.",
+      "Solo si la estructura objetivo reside completamente en la pila (stack)."
+    ],
+    "correct_index": 2,
+    "hint": "Rust prohíbe tener simultáneamente referencias inmutables y mutables para prevenir data races e inconsistencias."
+  },
+  {
+    "id": "rust_008",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Qué componente del compilador de Rust garantiza en compilación que no haya punteros colgantes?",
+    "options": [
+      "El Recolector de Basura (Garbage Collector) en tiempo de ejecución.",
+      "El Administrador de Pila (Stack Manager) durante la fase de enlazado.",
+      "El Analizador Léxico (Lexer) durante la tokenización de los fuentes.",
+      "El Borrow Checker (comprobador de préstamos) integrado en rustc."
+    ],
+    "correct_index": 3,
+    "hint": "El Borrow Checker valida estáticamente en tiempo de compilación todas las reglas de propiedad, préstamos y tiempos de vida."
+  },
+  {
+    "id": "rust_009",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Cuál es la diferencia fundamental entre el tipo String y el tipo &str en Rust?",
+    "options": [
+      "String posee sus datos en el heap; &str es una vista prestada inmutable de bytes.",
+      "String es de tamaño fijo en la pila; &str es una estructura redimensionable.",
+      "String solo admite codificación ASCII; &str admite caracteres Unicode UTF-8.",
+      "String no implementa Drop; &str libera la memoria al finalizar el bloque."
+    ],
+    "correct_index": 0,
+    "hint": "String es un búfer de texto dinámico en el heap con ownership; &str es un string slice prestado."
+  },
+  {
+    "id": "rust_010",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Qué método se invoca explícitamente para duplicar en memoria heap un valor tipo String?",
+    "options": [
+      "El método '.copy()', que duplica el descriptor sin tocar el montículo.",
+      "El método '.clone()', implementado a través del trait estándar Clone.",
+      "El método '.duplicate()', reservado para estructuras complejas del heap.",
+      "El método '.replicate()', que genera una nueva instancia en la memoria."
+    ],
+    "correct_index": 1,
+    "hint": ".clone() realiza una duplicación profunda (deep copy) de los datos y asigna nueva memoria en el heap."
+  },
+  {
+    "id": "rust_011",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Qué ocurre si intentas usar una variable después de que su valor ha sido movido?",
+    "options": [
+      "El programa compila pero arroja una excepción de puntero nulo al correr.",
+      "La variable devuelve un valor por defecto inicializado a ceros lógicos.",
+      "El compilador genera un error estático impidiendo compilar el programa.",
+      "El sistema operativo detiene el proceso arrojando una señal de segfault."
+    ],
+    "correct_index": 2,
+    "hint": "Rust previene el uso tras movimiento (use-after-move) estáticamente en tiempo de compilación."
+  },
+  {
+    "id": "rust_012",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Cómo se declara una referencia mutable a una variable 'v' declarada con 'let mut v = 10;'?",
+    "options": [
+      "Utilizando la expresión 'mut &v' anteponiendo la mutabilidad al puntero.",
+      "Utilizando la expresión 'var &v' de acuerdo a las palabras reservadas.",
+      "Invocando al método 'v.as_mut()' para registrar el acceso mutable.",
+      "Utilizando la expresión '&mut v' para crear el préstamo exclusivo."
+    ],
+    "correct_index": 3,
+    "hint": "&mut v crea una referencia mutable que permite modificar el dato original."
+  },
+  {
+    "id": "rust_013",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Qué sucede cuando se pasa un argumento por valor a una función sin implementar Copy?",
+    "options": [
+      "La propiedad del valor se transfiere a la función y el llamador ya no puede usarlo.",
+      "La función recibe una referencia implícita de solo lectura hacia los datos.",
+      "Se crea automáticamente una copia en el montículo para no afectar al llamador.",
+      "El compilador exige que la función retorne obligatoriamente el mismo parámetro."
+    ],
+    "correct_index": 0,
+    "hint": "Pasar por valor transfiere el ownership (move); al finalizar la función, el valor es destruido a menos que se devuelva."
+  },
+  {
+    "id": "rust_014",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Qué ocurre si se intenta mutar una variable declarada simplemente con 'let x = 5;'?",
+    "options": [
+      "La variable se muta con normalidad reasignando su posición en la pila.",
+      "El compilador emite un error indicando que las variables son inmutables por defecto.",
+      "Se produce un pánico en tiempo de ejecución al escribir en memoria protegida.",
+      "El valor se duplica en una nueva posición temporal sin alterar el original."
+    ],
+    "correct_index": 1,
+    "hint": "En Rust todas las variables son inmutables de forma predeterminada; para modificarlas se debe usar 'let mut'."
+  },
+  {
+    "id": "rust_015",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Qué función o macro estándar permite liberar un valor manualmente antes de salir del scope?",
+    "options": [
+      "La macro free!(), que desasigna los punteros de memoria directamente.",
+      "El método x.destroy(), que limpia los campos asignados en el montículo.",
+      "La función std::mem::drop(), que toma propiedad del valor y lo destruye.",
+      "La instrucción delete(x), que notifica al asignador de memoria virtual."
+    ],
+    "correct_index": 2,
+    "hint": "std::mem::drop(x) consume el ownership de x, haciendo que su destructor Drop se ejecute inmediatamente."
+  },
+  {
+    "id": "rust_016",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Qué representa la sintaxis de slice '&arreglo[1..3]' en Rust?",
+    "options": [
+      "Un nuevo arreglo independiente clonado y alojado en la memoria del heap.",
+      "Un iterador consumible que extrae los elementos de forma destructiva.",
+      "Una tupla con los punteros de inicio y fin de la memoria del proceso.",
+      "Una referencia prestada a un subconjunto contiguo de elementos del arreglo."
+    ],
+    "correct_index": 3,
+    "hint": "Los slices son vistas prestadas contiguas compuestas por un puntero al inicio y una longitud."
+  },
+  {
+    "id": "rust_017",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "basic",
+    "question": "¿Qué problema común de gestión de memoria en C/C++ elimina por completo el borrow checker?",
+    "options": [
+      "Los punteros colgantes (dangling pointers) y desreferencias de memoria liberada.",
+      "La fragmentación externa de la memoria virtual en arquitecturas multinúcleo.",
+      "La imposibilidad de ejecutar código ensamblador inline dentro de funciones.",
+      "El tiempo de arranque prolongado provocado por la carga dinámica de librerías."
+    ],
+    "correct_index": 0,
+    "hint": "Rust garantiza estáticamente la ausencia de dangling pointers: las referencias nunca pueden sobrevivir a sus datos."
+  },
+  {
+    "id": "rust_018",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Qué son las Non-Lexical Lifetimes (NLL) introducidas en Rust 2018?",
+    "options": [
+      "La eliminación completa de todas las anotaciones de tiempo de vida en traits.",
+      "La capacidad del borrow checker de terminar un préstamo en su último uso real.",
+      "Un mecanismo dinámico para rastrear referencias vivas en tiempo de ejecución.",
+      "La posibilidad de extender los tiempos de vida más allá de la función main."
+    ],
+    "correct_index": 1,
+    "hint": "NLL permite que el borrow checker entienda que un préstamo termina tras su última utilización, no al final del bloque {}."
+  },
+  {
+    "id": "rust_019",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Qué es una anotación explícita de lifetime como ''a' en la firma de una función?",
+    "options": [
+      "Una directiva que especifica los milisegundos que el dato residirá en memoria.",
+      "Un parámetro que asigna una región de memoria fija en el montículo del sistema.",
+      "Una indicación al compilador sobre la relación genérica entre tiempos de vida.",
+      "Una anotación de depuración que no influye en las decisiones del compilador."
+    ],
+    "correct_index": 2,
+    "hint": "Los lifetimes genéricos ('a) no cambian la duración real; describen relaciones entre referencias para el borrow checker."
+  },
+  {
+    "id": "rust_020",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Qué regla de elisión de lifetimes (lifetime elision) se aplica a funciones con un solo argumento de referencia?",
+    "options": [
+      "La salida recibe obligatoriamente el tiempo de vida estático ''static'.",
+      "El compilador prohíbe retornar referencias si no se escribe ''a' explícitamente.",
+      "La salida se convierte en un puntero crudo sin seguimiento de compilador.",
+      "Se asigna el mismo lifetime anónimo tanto al argumento de entrada como a la salida."
+    ],
+    "correct_index": 3,
+    "hint": "Regla de elisión: si hay un solo parámetro de entrada por referencia, su lifetime se asigna a todos los valores de salida."
+  },
+  {
+    "id": "rust_021",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Qué regla de elisión se aplica si uno de los argumentos de entrada es '&self' o '&mut self'?",
+    "options": [
+      "El lifetime de self se asigna a todas las referencias retornadas por el método.",
+      "Se exige anotar un lifetime distinto para cada campo retornado por el struct.",
+      "El método no puede retornar referencias a campos internos de la estructura.",
+      "El valor de retorno adopta el tiempo de vida del módulo donde fue declarado."
+    ],
+    "correct_index": 0,
+    "hint": "En métodos con &self/&mut self, el lifetime de self se asigna por defecto a todas las referencias de salida."
+  },
+  {
+    "id": "rust_022",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Qué significado tiene el tiempo de vida especial ''static' en una referencia '&'static T'?",
+    "options": [
+      "El valor reside exclusivamente en la pila de llamadas del hilo principal de ejecución.",
+      "El valor referenciado tiene la capacidad de vivir durante toda la ejecución del programa.",
+      "El valor es inmutable y no puede ser desreferenciado por funciones externas al módulo.",
+      "El valor fue asignado mediante una llamada al sistema mmap con permisos de solo lectura."
+    ],
+    "correct_index": 1,
+    "hint": "'static indica que el dato vive durante todo el ciclo del programa (como literales de cadena compilados en el binario)."
+  },
+  {
+    "id": "rust_023",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Qué ocurre si una estructura almacena un campo que es una referencia, ej: 'struct Ref<'a> { texto: &'a str }'?",
+    "options": [
+      "La estructura debe implementar obligatoriamente el trait Drop para liberar el campo.",
+      "El campo se convierte automáticamente en una copia profunda cada vez que se usa.",
+      "La estructura debe declarar el parámetro de lifetime para asegurar que no sobreviva al dato.",
+      "El compilador impide instanciar la estructura dentro de funciones genéricas."
+    ],
+    "correct_index": 2,
+    "hint": "Cualquier struct que almacene referencias debe declarar parámetros de lifetime para evitar que sobreviva a lo referenciado."
+  },
+  {
+    "id": "rust_024",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Qué es un 'reborrow' (représtamo) de una referencia mutable en Rust?",
+    "options": [
+      "Clonar los datos apuntados por la referencia mutable creando una copia en el heap.",
+      "Convertir permanentemente una referencia mutable en una inmutable sin retorno posible.",
+      "Compartir la referencia mutable entre múltiples hilos usando primitivas del kernel.",
+      "Prestar temporalmente el acceso exclusivo a partir de una referencia mutable ya existente."
+    ],
+    "correct_index": 3,
+    "hint": "Un reborrow permite usar temporalmente una referencia mutable sin moverla, suspendiéndola hasta que el subpréstamo termine."
+  },
+  {
+    "id": "rust_025",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Cómo permite 'Option::take(&mut self)' extraer el valor de un Option dentro de una estructura mutable?",
+    "options": [
+      "Reemplaza el contenido por None y retorna el valor original con pleno ownership.",
+      "Clona el valor interno de la estructura dejando la opción intacta en el struct.",
+      "Genera un puntero crudo al interior de la variante Some omitiendo verificaciones.",
+      "Mueve el struct completo fuera de su ubicación en la memoria del montículo."
+    ],
+    "correct_index": 0,
+    "hint": "opt.take() es el modismo estándar para mover un valor fuera de una referencia mutable, dejando None en su lugar."
+  },
+  {
+    "id": "rust_026",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Qué función de la librería estándar intercambia dos valores en memoria sin clonar?",
+    "options": [
+      "La función std::mem::replace_all(&mut a, &mut b), que copia los datos usando la pila.",
+      "La función std::mem::swap(&mut a, &mut b), que intercambia sus contenidos directamente.",
+      "El método a.exchange_with(&mut b), que sincroniza los campos entre ambas instancias.",
+      "La función std::mem::move_between(&mut a, &mut b), que reubica las páginas de memoria."
+    ],
+    "correct_index": 1,
+    "hint": "std::mem::swap intercambia los valores de dos ubicaciones mutables sin ninguna asignación ni clonación de memoria."
+  },
+  {
+    "id": "rust_027",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Qué sucede si un tipo implementa el trait Drop y se intenta implementar Copy en él?",
+    "options": [
+      "El compilador genera código para invocar el destructor Drop en cada asignación Copy.",
+      "El método drop() se deshabilita automáticamente prevaleciendo la copia bit a bit.",
+      "El compilador rechaza el código: los tipos que implementan Drop no pueden ser Copy.",
+      "El programa compila con éxito pero genera una advertencia de incompatibilidad."
+    ],
+    "correct_index": 2,
+    "hint": "Rust prohíbe explícitamente que un tipo sea a la vez Copy y Drop, ya que una copia trivial colisionaría con la limpieza única."
+  },
+  {
+    "id": "rust_028",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Por qué no es posible invocar manualmente el método 'x.drop()' en Rust?",
+    "options": [
+      "Porque el método drop() está marcado con visibilidad privada en la biblioteca estándar.",
+      "Porque los métodos de traits mágicos solo pueden llamarse mediante reflexión dinámica.",
+      "Porque drop() exige parámetros de inicialización que el usuario no puede suministrar.",
+      "Porque provocaría una doble liberación (double free) cuando x salga formalmente de su scope."
+    ],
+    "correct_index": 3,
+    "hint": "Llamar a x.drop() directamente causaría que el destructor se ejecutara dos veces; se debe usar std::mem::drop(x)."
+  },
+  {
+    "id": "rust_029",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Qué permite la técnica de 'partial move' (movimiento parcial) en structs y tuplas?",
+    "options": [
+      "Mover un campo que no implementa Copy mientras los demás campos siguen accesibles.",
+      "Mover la mitad de los bytes de un array para procesarlos concurrentemente en hilos.",
+      "Dividir una estructura en dos fragmentos independientes asignados en el montículo.",
+      "Destruir campos individuales de una estructura invocando destructores selectivos."
+    ],
+    "correct_index": 0,
+    "hint": "Un partial move transfiere el ownership de campos específicos; los campos restantes siguen siendo válidos en el llamador."
+  },
+  {
+    "id": "rust_030",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Cuál es el propósito del trait 'AsRef<T>' en el diseño de APIs de Rust?",
+    "options": [
+      "Garantizar que una estructura implemente un destructor personalizado con drop.",
+      "Permitir conversiones genéricas y económicas de referencias prestadas sin clonar.",
+      "Convertir cualquier referencia inmutable en un puntero crudo desreferenciable.",
+      "Forzar la copia bit a bit de estructuras complejas a través de la memoria de pila."
+    ],
+    "correct_index": 1,
+    "hint": "AsRef<T> abstrae tipos que pueden ser vistos como una referencia prestada &T (ej: AsRef<str> acepta String y &str)."
+  },
+  {
+    "id": "rust_031",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Qué relación expresa el límite de subtipado de lifetimes 'where 'a: 'b' en Rust?",
+    "options": [
+      "El lifetime 'a finaliza estrictamente antes de que comience el ciclo de 'b.",
+      "Ambos lifetimes son completamente independientes y no guardan relación alguna.",
+      "El lifetime 'a sobrevive al menos tanto tiempo como el lifetime 'b ('a es más largo).",
+      "El compilador debe fusionar ambos lifetimes en un único identificador temporal."
+    ],
+    "correct_index": 2,
+    "hint": "'a: 'b se lee ''a sobrevive a 'b' (outlives); cualquier dato válido durante 'a es válido al menos durante 'b."
+  },
+  {
+    "id": "rust_032",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Por qué no es posible retornar una referencia local desde una función, ej: 'fn f() -> &i32'?",
+    "options": [
+      "Porque el tamaño de un entero de 32 bits es menor que el tamaño del puntero de retorno.",
+      "Porque las funciones en Rust exigen obligatoriamente retornar tipos con el trait Clone.",
+      "Porque el compilador traslada el valor automáticamente al hilo secundario de ejecución.",
+      "Porque la variable local en la pila se destruye al retornar, creando un puntero colgante."
+    ],
+    "correct_index": 3,
+    "hint": "Retornar una referencia a una variable local violaría el principio de seguridad: la variable se descarta al salir del frame."
+  },
+  {
+    "id": "rust_033",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Cómo afecta el uso de 'ref' en patrones de 'match' frente a no usarlo?",
+    "options": [
+      "Vincula el identificador como una referencia prestada en lugar de mover el valor.",
+      "Obliga al compilador a clonar el valor coincidente en un nuevo bloque de heap.",
+      "Convierte la variable evaluada en una referencia mutable de forma permanente.",
+      "Indica que el patrón es opcional y puede ser ignorado si no coincide el tipo."
+    ],
+    "correct_index": 0,
+    "hint": "En pattern matching, 'ref x' enlaza x por referencia (&T) en vez de tomar ownership por movimiento."
+  },
+  {
+    "id": "rust_034",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "medium",
+    "question": "¿Qué función cumple 'std::mem::replace(&mut dest, src)'?",
+    "options": [
+      "Compara ambos valores e intercambia únicamente si src es mayor que el valor en dest.",
+      "Coloca src en dest y retorna el valor previo que residía en dest con pleno ownership.",
+      "Sobreescribe dest eliminando su valor anterior sin ejecutar su destructor drop.",
+      "Clona los datos de src hacia dest devolviendo una referencia de solo lectura."
+    ],
+    "correct_index": 1,
+    "hint": "std::mem::replace permite extraer un valor de una referencia mutable reemplazándolo por otro sin violar el borrow checker."
+  },
+  {
+    "id": "rust_035",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "advanced",
+    "question": "¿Qué son los Higher-Rank Trait Bounds (HRTB) declarados con la sintaxis 'for<'a>'?",
+    "options": [
+      "Fuerzan al compilador a ejecutar un bucle for estático durante la fase de macros.",
+      "Asignan lifetimes específicos a cada iteración de un generador de colecciones.",
+      "Permiten expresar que un trait bound se cumple para cualquier tiempo de vida posible.",
+      "Permiten extender el tiempo de vida de referencias locales más allá de su función."
+    ],
+    "correct_index": 2,
+    "hint": "HRTB (for<'a> F: Fn(&'a T)) indica que el predicado de trait es válido para absolutamente cualquier lifetime 'a."
+  },
+  {
+    "id": "rust_036",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "advanced",
+    "question": "¿Por qué una referencia mutable '&mut T' es invariante respecto a su tipo de parámetro T?",
+    "options": [
+      "Porque el compilador de Rust no admite polimorfismo sobre estructuras mutables en heap.",
+      "Porque las referencias mutables se representan con el doble de bytes que las inmutables.",
+      "Para permitir que múltiples hilos modifiquen la dirección física del puntero en caché.",
+      "Para evitar que se escriba un subtipo con un lifetime más corto dentro de la referencia."
+    ],
+    "correct_index": 3,
+    "hint": "Si &mut T fuera covariante, se podría almacenar un valor con un lifetime más corto en una referencia que vive más, causando UB."
+  },
+  {
+    "id": "rust_037",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "advanced",
+    "question": "¿Qué modelo formal utiliza la herramienta Miri para verificar la validez de los préstamos?",
+    "options": [
+      "El modelo Stacked Borrows (y más recientemente Tree Borrows) sobre punteros y aliasing.",
+      "El modelo Hoare Logic asistido por verificación formal de teoremas matemáticos Z3.",
+      "El modelo de autómata finito determinista sobre grafos de llamadas estáticos del AST.",
+      "El análisis dinámico de fallos de segmentación capturando señales del sistema Unix."
+    ],
+    "correct_index": 0,
+    "hint": "Stacked Borrows y Tree Borrows definen las reglas formales de punteros, aliasing y mutabilidad que Miri valida en MIR."
+  },
+  {
+    "id": "rust_038",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "advanced",
+    "question": "¿Qué problema surge al intentar construir una estructura auto-referencial pura en safe Rust?",
+    "options": [
+      "El compilador no puede calcular el tamaño estático en bytes mediante el trait Sized.",
+      "Al moverse la estructura, los punteros internos apuntarían a la memoria antigua inválida.",
+      "El recolector de basura entra en un ciclo recursivo infinito que agota la memoria RAM.",
+      "Las funciones inline no pueden resolver las direcciones relativas de los saltos de código."
+    ],
+    "correct_index": 1,
+    "hint": "Mover un struct auto-referencial deja los punteros internos apuntando al espacio previo en stack, causando UB al desreferenciar."
+  },
+  {
+    "id": "rust_039",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la diferencia entre un 'early-bound' lifetime y un 'late-bound' lifetime en Rust?",
+    "options": [
+      "Early-bound se evalúa en el parser; late-bound se procesa durante el enlazado binario.",
+      "Early-bound aplica exclusivamente a constantes estáticas; late-bound a variables en heap.",
+      "Early-bound se define en la definición del tipo/función; late-bound al invocar la función.",
+      "Early-bound no permite inferencia; late-bound infiere siempre el tiempo de vida ''static'."
+    ],
+    "correct_index": 2,
+    "hint": "Late-bound lifetimes son genéricos sobre cada llamada (como en llamadas a funciones ordinarias); early-bound se fijan en la instancia."
+  },
+  {
+    "id": "rust_040",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "advanced",
+    "question": "¿Qué efecto tiene invocar 'Box::leak(b)' sobre un puntero en el montículo?",
+    "options": [
+      "Provoca un fallo de memoria irrecuperable al liberar el bloque mientras está en uso.",
+      "Transfiere la propiedad del bloque al recolector de basura del sistema operativo.",
+      "Convierte la memoria del montículo en un segmento ejecutable para código dinámico.",
+      "Libera la gestión del destructor y retorna una referencia mutable con lifetime ''static'."
+    ],
+    "correct_index": 3,
+    "hint": "Box::leak evita que el destructor se ejecute y devuelve &'static mut T, útil para crear datos de vida ilimitada en runtime."
+  },
+  {
+    "id": "rust_041",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "advanced",
+    "question": "¿Qué representa el tiempo de vida anónimo 'std::marker::PhantomData<&'a T>' en un struct?",
+    "options": [
+      "Indica al compilador que el struct actúa lógicamente como si poseyera una referencia &'a T.",
+      "Reserva espacio en memoria física para almacenar un puntero invisible de sincronización.",
+      "Fuerza a que la estructura sea asignada exclusivamente en páginas protegidas del SO.",
+      "Desactiva el comprobador de préstamos para todos los métodos de dicha estructura."
+    ],
+    "correct_index": 0,
+    "hint": "PhantomData<&'a T> informa al compilador sobre varianza y propiedad sin ocupar espacio físico en tiempo de ejecución (ZST)."
+  },
+  {
+    "id": "rust_042",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "advanced",
+    "question": "¿Por qué el compilador exige que los tipos que se envían entre hilos implementen 'Send'?",
+    "options": [
+      "Para obligar a que la estructura contenga únicamente tipos numéricos primitivos básicos.",
+      "Para garantizar que la transferencia de ownership a otro hilo sea completamente segura.",
+      "Porque el sistema operativo requiere registrar las transferencias en su despachador.",
+      "Para serializar automáticamente la estructura en un flujo binario para su transporte."
+    ],
+    "correct_index": 1,
+    "hint": "Send indica que la propiedad del tipo puede transferirse con seguridad a través de los límites de un hilo."
+  },
+  {
+    "id": "rust_043",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "advanced",
+    "question": "¿Qué ocurre si un tipo implementa Drop pero intenta desestructurarse por campos, ej: 'let S { a, b } = s;'?",
+    "options": [
+      "El destructor Drop se ejecuta parcialmente sobre cada campo desestructurado en orden.",
+      "Los campos se clonan automáticamente en nuevas variables ignorando la implementación.",
+      "El compilador prohíbe el pattern matching por valor si el tipo implementa el trait Drop.",
+      "Se genera una advertencia estática pero el programa permite la ejecución del bloque."
+    ],
+    "correct_index": 2,
+    "hint": "No se puede desestructurar por valor un tipo con Drop porque impediría ejecutar su destructor drop(&mut self) coherentemente."
+  },
+  {
+    "id": "rust_044",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "advanced",
+    "question": "¿Qué garantiza el trait 'Sync' en relación con las referencias prestadas entre hilos?",
+    "options": [
+      "T es Sync si implementa un cerrojo mutex a nivel de registros del procesador central.",
+      "T es Sync si puede transferir su ownership de forma asíncrona mediante un canal mpsc.",
+      "T es Sync si todos sus campos son inmutables y no residen en la memoria del heap.",
+      "T es Sync si y solo si una referencia compartida inmutable '&T' es segura de enviar (Send)."
+    ],
+    "correct_index": 3,
+    "hint": "La definición formal es: T: Sync <=> &T: Send. Significa que múltiples hilos pueden acceder concurrentemente a &T sin data races."
+  },
+  {
+    "id": "rust_045",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "advanced",
+    "question": "¿Qué particularidad tiene el borrow checker de Rust respecto al 'aliasing' y la mutación?",
+    "options": [
+      "Mutabilidad y aliasing son mutuamente excluyentes: nunca pueden coincidir sobre el mismo dato.",
+      "Permite aliasing mutable siempre que el tamaño de los datos no exceda una palabra de CPU.",
+      "Delega la comprobación de aliasing al procesador central mediante registros de hardware.",
+      "Tolera el aliasing mutable siempre que no existan bucles while activos en el hilo."
+    ],
+    "correct_index": 0,
+    "hint": "El principio rector de Rust es: Aliasing XOR Mutation. Si tienes múltiples accesos, son de solo lectura; si mutas, tienes exclusividad."
+  },
+  {
+    "id": "rust_046",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "advanced",
+    "question": "¿Qué representa la elisión de lifetime con el identificador guion bajo ''_' en Rust moderno?",
+    "options": [
+      "Declara una referencia con tiempo de vida nulo que no puede ser leída jamás en ejecución.",
+      "Indica al compilador que infiera el tiempo de vida concreto basándose en las reglas de contexto.",
+      "Indica que el dato referenciado se liberará de forma impredecible por el entorno.",
+      "Fuerza al compilador a descartar la variable tan pronto como termine la línea actual."
+    ],
+    "correct_index": 1,
+    "hint": "'_ es el lifetime placeholder: le indica al compilador que aplique inferencia de lifetimes en ese parámetro o tipo."
+  },
+  {
+    "id": "rust_047",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "advanced",
+    "question": "¿Qué sucede si una función recibe '&'a mut T' y retorna una referencia inmutable '&'a T'?",
+    "options": [
+      "La referencia mutable se clona internamente liberando la exclusividad sobre la variable T.",
+      "La función falla al compilar por degradar los permisos de mutabilidad en el valor de salida.",
+      "El préstamo original sobre T permanece bloqueado mientras la referencia de retorno siga viva.",
+      "La referencia retornada se desvincula de T y adopta un tiempo de vida global ilimitado."
+    ],
+    "correct_index": 2,
+    "hint": "El préstamo inmutable de salida extiende la exclusividad del préstamo mutable 'a; el recurso original sigue prestado y no se puede usar."
+  },
+  {
+    "id": "rust_048",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "advanced",
+    "question": "¿Por qué los cierres (closures) pueden deducir automáticamente cómo capturar variables?",
+    "options": [
+      "Los cierres siempre capturan todo por valor a menos que se indique la palabra clave ref.",
+      "Los cierres delegan la captura a un puntero opaco en el heap similar a una función virtual.",
+      "El compilador fuerza a que todas las variables capturadas implementen el trait Copy.",
+      "El compilador analiza el cuerpo del cierre e infiere si capturar por &T, &mut T o por valor (T)."
+    ],
+    "correct_index": 3,
+    "hint": "Rust deduce la captura más permisiva necesaria: &T si solo lee, &mut T si muta, o por valor si consume/mueve o usa 'move'."
+  },
+  {
+    "id": "rust_049",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "advanced",
+    "question": "¿Qué ocurre cuando se utiliza la palabra clave 'move' en la declaración de un closure?",
+    "options": [
+      "Fuerza al cierre a tomar posesión (ownership) por valor de todas las variables capturadas.",
+      "Convierte al cierre en una función estática incapaz de interactuar con su entorno léxico.",
+      "Mueve la ejecución del cierre a un nuevo hilo asignado por el planificador del sistema.",
+      "Impide que el cierre pueda ser invocado más de una vez en todo el ciclo del programa."
+    ],
+    "correct_index": 0,
+    "hint": "'move' fuerza al closure a tomar la propiedad de las variables capturadas, permitiendo que el closure sobreviva al ámbito actual."
+  },
+  {
+    "id": "rust_050",
+    "subtopic": "ownership_borrowing",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la implicación de la varianza en la regla de subtipeo de referencias inmutables '&'a T'?",
+    "options": [
+      "Es contravariante respecto a ''a' e invariante respecto al tipo de dato subyacente 'T'.",
+      "Es covariante respecto tanto al tiempo de vida ''a' como al tipo de dato subyacente 'T'.",
+      "Es totalmente invariante tanto para el lifetime ''a' como para el tipo subyacente 'T'.",
+      "Es bivariante permitiendo cualquier sustitución de tipos independientemente del contexto."
+    ],
+    "correct_index": 1,
+    "hint": "&'a T es covariante en 'a y T: si 'a sobrevive a 'b ('a: 'b), entonces &'a T puede usarse donde se requiere &'b T."
+  },
+  {
+    "id": "rust_051",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Qué función de la biblioteca estándar se utiliza para lanzar un nuevo hilo en Rust?",
+    "options": [
+      "La función std::thread::fork(), que duplica el proceso completo en el sistema.",
+      "La función std::async::spawn(), que encola una tarea en el planificador asíncrono.",
+      "La función std::thread::spawn(), que ejecuta un cierre en un hilo independiente.",
+      "La función std::process::thread(), que crea una hebra nativa del kernel del SO."
+    ],
+    "correct_index": 2,
+    "hint": "std::thread::spawn recibe un closure y genera un nuevo hilo nativo del sistema operativo."
+  },
+  {
+    "id": "rust_052",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Qué método se invoca sobre un JoinHandle para esperar a que un hilo concluya?",
+    "options": [
+      "El método handle.wait(), que suspende el proceso hasta recibir una notificación.",
+      "El método handle.await(), utilizado en la sintaxis de programación asíncrona.",
+      "El método handle.finish(), que cancela las operaciones pendientes del hilo.",
+      "El método handle.join(), que bloquea el hilo llamador hasta que termine la hebra."
+    ],
+    "correct_index": 3,
+    "hint": "handle.join() bloquea hasta que el hilo representado finaliza, retornando un Result con el valor producido."
+  },
+  {
+    "id": "rust_053",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Por qué suele ser necesario usar la palabra clave 'move' con cierres en thread::spawn?",
+    "options": [
+      "Porque el hilo puede sobrevivir al scope actual, exigiendo adueñarse de los datos.",
+      "Porque el compilador de Rust no admite el paso de punteros a través de funciones.",
+      "Porque el sistema operativo prohíbe que múltiples hilos lean la memoria física.",
+      "Porque 'move' convierte las variables capturadas en referencias inmutables puras."
+    ],
+    "correct_index": 0,
+    "hint": "Dado que el hilo generado puede sobrevivir al ámbito donde se creó, requiere ownership completo de sus variables capturadas."
+  },
+  {
+    "id": "rust_054",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Qué representan las siglas MPSC en el módulo 'std::sync::mpsc' de Rust?",
+    "options": [
+      "Multi Process Synchronized Channel (Canal Sincronizado de Múltiples Procesos).",
+      "Multiple Producer, Single Consumer (Múltiples Productores, Un Único Consumidor).",
+      "Main Process Socket Controller (Controlador de Sockets del Proceso Principal).",
+      "Memory Protected Shared Core (Núcleo Compartido con Memoria Protegida)."
+    ],
+    "correct_index": 1,
+    "hint": "mpsc provee canales de comunicación donde múltiples transmisores (Senders) envían hacia un único receptor (Receiver)."
+  },
+  {
+    "id": "rust_055",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Qué función crea un canal mpsc no acotado (unbounded) en Rust?",
+    "options": [
+      "La función std::sync::mpsc::sync_channel(), que fija una capacidad en el buffer.",
+      "La función std::sync::mpsc::create_pipe(), que devuelve descriptores de archivo.",
+      "La función std::sync::mpsc::channel(), devolviendo una tupla (Sender, Receiver).",
+      "La función std::sync::mpsc::unbounded_queue(), que gestiona colas en memoria."
+    ],
+    "correct_index": 2,
+    "hint": "mpsc::channel() crea un canal asíncrono con buffer infinito que retorna un par (tx, rx)."
+  },
+  {
+    "id": "rust_056",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Qué método del receptor (Receiver) bloquea el hilo actual hasta recibir un mensaje?",
+    "options": [
+      "El método rx.try_recv(), que consulta de forma no bloqueante el estado del canal.",
+      "El método rx.poll(), que sondea activamente los descriptores de lectura del canal.",
+      "El método rx.read(), que extrae los bytes del mensaje hacia un búfer de datos.",
+      "El método rx.recv(), que retorna Ok(valor) o un error si los transmisores colgaron."
+    ],
+    "correct_index": 3,
+    "hint": "rx.recv() suspende el hilo hasta recibir un dato o hasta que todos los emisores hayan sido destruidos (drop)."
+  },
+  {
+    "id": "rust_057",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Cómo se define un trait básico en el lenguaje Rust?",
+    "options": [
+      "Utilizando la palabra clave 'trait' seguida del nombre y sus firmas de métodos.",
+      "Utilizando la palabra clave 'interface' similar a otros lenguajes orientados a objetos.",
+      "Declarando una estructura abstracta con la directiva @abstract_methods sobre ella.",
+      "Definiendo un bloque 'protocol' con la especificación de tipos y campos válidos."
+    ],
+    "correct_index": 0,
+    "hint": "Los traits en Rust se declaran con 'trait Nombre { ... }' y definen conjuntos de métodos que los tipos pueden implementar."
+  },
+  {
+    "id": "rust_058",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Qué sintaxis se emplea para implementar un trait T sobre una estructura concreta S?",
+    "options": [
+      "La sentencia 'class S implements T { ... }' derivada de la sintaxis orientada a clases.",
+      "La sentencia 'impl T for S { ... }' implementando los métodos exigidos por el trait.",
+      "La sentencia 'extend S with T { ... }' que asocia el conjunto de métodos al struct.",
+      "La sentencia 'trait T on S { ... }' que registra la implementación en el compilador."
+    ],
+    "correct_index": 1,
+    "hint": "En Rust se implementan traits usando 'impl Trait for Type { ... }'."
+  },
+  {
+    "id": "rust_059",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Qué formato de visualización activa el trait 'std::fmt::Display' en macros como println!?",
+    "options": [
+      "El especificador de formato '{:?}' empleado para inspección de depuración interna.",
+      "El especificador de formato '{:#?}' que indenta estructuras complejas con saltos.",
+      "El especificador de formato '{}' destinado a representaciones legibles para el usuario.",
+      "El especificador de formato '{:x}' que imprime la representación en formato hexadecimal."
+    ],
+    "correct_index": 2,
+    "hint": "Display formatea con '{}' para el usuario final; Debug formatea con '{:?}' para depuración."
+  },
+  {
+    "id": "rust_060",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Qué atributo de derivación permite implementar automáticamente el trait Debug?",
+    "options": [
+      "El atributo decorador '#[auto_trait(Debug)]' procesado por el cargador del compilador.",
+      "El atributo decorador '#[implement(Debug)]' aplicado sobre el módulo del programa.",
+      "El atributo decorador '#[enable_reflection]' que expone los atributos a inspección.",
+      "El atributo decorador '#[derive(Debug)]' colocado encima de la definición del tipo."
+    ],
+    "correct_index": 3,
+    "hint": "#[derive(Debug)] permite que el compilador genere automáticamente una implementación para formatear con '{:?}'."
+  },
+  {
+    "id": "rust_061",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Qué método exige implementar el trait estándar 'Default' en Rust?",
+    "options": [
+      "El método 'default() -> Self', que devuelve una instancia con valores predefinidos.",
+      "El método 'init() -> Self', que inicializa la memoria reservada para la estructura.",
+      "El método 'zero() -> Self', que llena de ceros la representación binaria del tipo.",
+      "El método 'new() -> Self', que es una convención de constructor sin trait formal."
+    ],
+    "correct_index": 0,
+    "hint": "El trait Default define default() -> Self para proveer una construcción estándar sin argumentos."
+  },
+  {
+    "id": "rust_062",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Cómo se expresa una restricción de trait (trait bound) simple en una función genérica?",
+    "options": [
+      "Con la sintaxis 'fn procesar<T implements Display>(item: T) { ... }' en la cabecera.",
+      "Con la sintaxis 'fn procesar<T: Display>(item: T) { ... }' tras el parámetro de tipo.",
+      "Con la sintaxis 'fn procesar<T of Display>(item: T) { ... }' indicando la categoría.",
+      "Con la sintaxis 'fn procesar<T extends Display>(item: T) { ... }' en la definición."
+    ],
+    "correct_index": 1,
+    "hint": "En Rust, 'T: Trait' exige que el tipo concreto sustituido en T implemente dicho trait."
+  },
+  {
+    "id": "rust_063",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Qué conversión idiomática habilita la implementación del trait 'From<T>' para un tipo U?",
+    "options": [
+      "Convierte el tipo T en una referencia inmutable de tipo U sin consumo de memoria.",
+      "Obliga al tipo U a implementar el trait Clone para permitir copias defensivas.",
+      "Habilita automáticamente la implementación recíproca del trait 'Into<U>' para el tipo T.",
+      "Habilita el operador de conversión explícita mediante la palabra clave 'as'."
+    ],
+    "correct_index": 2,
+    "hint": "Implementar From<T> para U provee automáticamente la implementación inversa de Into<U> para T."
+  },
+  {
+    "id": "rust_064",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Cuál es la diferencia fundamental entre el trait Clone y el trait Copy en Rust?",
+    "options": [
+      "Clone solo funciona sobre tipos escalares; Copy se aplica sobre colecciones dinámicas.",
+      "Clone no admite implementaciones manuales; Copy exige escribir un bloque de código.",
+      "Clone transfiere el ownership del dato; Copy solo crea una referencia prestada.",
+      "Clone realiza una copia explícita y potencialmente costosa; Copy es una copia binaria implícita."
+    ],
+    "correct_index": 3,
+    "hint": "Copy es una duplicación bit a bit automática en la pila; Clone es una duplicación explícita mediante .clone()."
+  },
+  {
+    "id": "rust_065",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Qué método central exige implementar el trait estándar 'Iterator' de Rust?",
+    "options": [
+      "El método 'next(&mut self) -> Option<Self::Item>', devolviendo el siguiente elemento.",
+      "El método 'has_next(&self) -> bool', que comprueba la existencia de más elementos.",
+      "El método 'get_current(&self) -> Self::Item', que extrae el valor de la posición actual.",
+      "El método 'advance(&mut self)', que desplaza el puntero interno hacia la siguiente celda."
+    ],
+    "correct_index": 0,
+    "hint": "Iterator solo requiere implementar next(), que retorna Some(Item) o None cuando concluye."
+  },
+  {
+    "id": "rust_066",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Qué sucede si un tipo no implementa el trait 'Copy' y se pasa a una función sin usar '&'?",
+    "options": [
+      "Se genera una copia idéntica bit a bit en el marco de pila de la función llamada.",
+      "Se aplica semántica de movimiento (move), transfiriendo el ownership a la función.",
+      "El compilador asume que es un préstamo inmutable implícito de solo lectura.",
+      "El programa falla en tiempo de ejecución al intentar duplicar recursos protegidos."
+    ],
+    "correct_index": 1,
+    "hint": "Sin Copy, pasar un valor no prestado transfiere el ownership mediante move semantics."
+  },
+  {
+    "id": "rust_067",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "basic",
+    "question": "¿Qué operador permite desreferenciar un tipo que implementa el trait 'std::ops::Deref'?",
+    "options": [
+      "El operador unario '&', que extrae una nueva referencia hacia el contenedor externo.",
+      "El operador flecha '->', que navega a través de las indirecciones de los tipos.",
+      "El operador unario '*', que delega la desreferenciación en el método deref(&self).",
+      "El operador de conversión 'as', que transforma el contenedor en el tipo interno."
+    ],
+    "correct_index": 2,
+    "hint": "Deref sobrecarga el operador unario '*' para acceder al valor subyacente alojado en contenedores."
+  },
+  {
+    "id": "rust_068",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "medium",
+    "question": "¿Cuál es la diferencia crítica entre 'Rc<T>' y 'Arc<T>' en la biblioteca estándar de Rust?",
+    "options": [
+      "Arc<T> solo admite datos inmutables en la pila; Rc<T> aloja los datos en páginas del heap.",
+      "Arc<T> es un puntero exclusivo sin contador; Rc<T> cuenta referencias de forma distribuida.",
+      "Arc<T> requiere un recolector de basura periódico; Rc<T> libera memoria de forma síncrona.",
+      "Arc<T> utiliza operaciones atómicas de CPU seguras para concurrencia; Rc<T> no es seguro entre hilos."
+    ],
+    "correct_index": 3,
+    "hint": "Arc (Atomic Reference Counting) es hilo-seguro (Send+Sync si T lo es); Rc no usa sincronización atómica y es !Send."
+  },
+  {
+    "id": "rust_069",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "medium",
+    "question": "¿Qué retorna el método 'mutex.lock()' sobre una variable de tipo 'std::sync::Mutex<T>'?",
+    "options": [
+      "Un LockResult que envuelve un guardián de tipo 'MutexGuard<T>' cuando el bloqueo tiene éxito.",
+      "Una referencia mutable directa '&mut T' que permanece activa hasta invocar unlock().",
+      "Un valor booleano indicando si el cerrojo pudo ser adquirido sin contención en la cola.",
+      "Un nuevo hilo de ejecución dedicado exclusivamente a procesar las mutaciones del dato."
+    ],
+    "correct_index": 0,
+    "hint": "lock() bloquea hasta obtener el cerrojo y retorna un LockResult<MutexGuard<T>> que implementa RAII y DerefMut."
+  },
+  {
+    "id": "rust_070",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "medium",
+    "question": "¿Cómo libera un 'MutexGuard<T>' el bloqueo sobre el cerrojo en Rust?",
+    "options": [
+      "Invocando obligatoriamente el método mutex.unlock() al finalizar la sección crítica.",
+      "De forma automática mediante RAII cuando el MutexGuard sale de su ámbito (drop).",
+      "Emitiendo una señal de interrupción al despachador de hilos del sistema operativo.",
+      "Sobreescribiendo el puntero interno con una referencia al valor cero predeterminado."
+    ],
+    "correct_index": 1,
+    "hint": "MutexGuard implementa el trait Drop; al salir de scope se destruye y libera automáticamente el bloqueo (RAII)."
+  },
+  {
+    "id": "rust_071",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "medium",
+    "question": "¿Qué significa que un Mutex de Rust se encuentre 'envenenado' (poisoned)?",
+    "options": [
+      "Que la memoria subyacente ha sido corrompida por una condición de carrera externa.",
+      "Que el cerrojo ha superado el tiempo máximo de retención permitido por el planificador.",
+      "Que un hilo entró en pánico (panic) mientras mantenía adquirido el cerrojo del mutex.",
+      "Que el sistema operativo ha invalidado el descriptor de exclusión mutua asignado."
+    ],
+    "correct_index": 2,
+    "hint": "Si un hilo entra en pánico sosteniendo un Mutex, este se marca como envenenado para avisar que el estado puede ser corrupto."
+  },
+  {
+    "id": "rust_072",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "medium",
+    "question": "¿Qué ventaja ofrece 'std::sync::RwLock<T>' frente al uso de 'std::sync::Mutex<T>'?",
+    "options": [
+      "Permite reentrancia recursiva sobre el mismo hilo de ejecución sin generar interbloqueos.",
+      "Garantiza ejecución sin ningún tipo de contención atómica en procesadores multinúcleo.",
+      "Permite enviar referencias mutables a través de canales mpsc sin clonar estructuras.",
+      "Permite múltiples lectores simultáneos concurrentes mientras no existan escritores activos."
+    ],
+    "correct_index": 3,
+    "hint": "RwLock permite que varios hilos lean en paralelo (read lock) o un solo hilo escriba de forma exclusiva (write lock)."
+  },
+  {
+    "id": "rust_073",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "medium",
+    "question": "¿Qué diferencia fundamental existe entre despacho estático ('impl Trait') y despacho dinámico ('dyn Trait')?",
+    "options": [
+      "El estático monomorfiza en compilación sin sobrecarga; el dinámico usa vtables y punteros fat en runtime.",
+      "El estático usa punteros a funciones en heap; el dinámico expande copias binarias de la función.",
+      "El estático solo permite retornar un único tipo primitivo; el dinámico devuelve punteros nulos.",
+      "El estático incrementa el tamaño del ejecutable; el dinámico reduce el consumo de memoria RAM."
+    ],
+    "correct_index": 0,
+    "hint": "impl Trait resuelve llamadas estáticamente (monomorphization); dyn Trait despacha en ejecución mediante fat pointers y vtable."
+  },
+  {
+    "id": "rust_074",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "medium",
+    "question": "¿Qué regla de 'object safety' (seguridad de objetos) impide que un trait sea usado como 'dyn Trait'?",
+    "options": [
+      "Si el trait contiene métodos con implementaciones predeterminadas escritas en su cuerpo.",
+      "Si alguno de sus métodos retorna 'Self' o contiene sus propios parámetros genéricos de tipo.",
+      "Si el trait es implementado por estructuras asignadas enteramente en la memoria del stack.",
+      "Si el trait no deriva explícitamente del trait marcador 'std::marker::DynamicDispatch'."
+    ],
+    "correct_index": 1,
+    "hint": "Un trait es object safe si no requiere Self: Sized y sus métodos no retornan Self ni usan parámetros genéricos independientes."
+  },
+  {
+    "id": "rust_075",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "medium",
+    "question": "¿Para qué se utiliza una cláusula 'where' en la definición de funciones genéricas complejas?",
+    "options": [
+      "Para especificar condiciones booleanas de ejecución que filtran los valores de entrada.",
+      "Para indicar el módulo del sistema operativo en el cual se debe compilar la función.",
+      "Para declarar restricciones de traits de forma más clara y legible cuando son extensas.",
+      "Para capturar excepciones lanzadas por llamadas a funciones externas de C en tiempo real."
+    ],
+    "correct_index": 2,
+    "hint": "La cláusula 'where' permite expresar límites de traits complejos después de la firma, mejorando la legibilidad."
+  },
+  {
+    "id": "rust_076",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "medium",
+    "question": "¿Cuál es la diferencia entre un tipo asociado ('type Item;') y un parámetro genérico en un trait ('Trait<T>')?",
+    "options": [
+      "Un tipo asociado solo admite estructuras del heap; un parámetro genérico solo admite escalares.",
+      "Un tipo asociado obliga a usar dynamic dispatch; un parámetro genérico exige monomorfización.",
+      "Un tipo asociado no permite restricciones de traits; un parámetro genérico admite múltiples límites.",
+      "Un tipo asociado solo puede implementarse una vez por tipo; con genéricos se puede implementar múltiples veces."
+    ],
+    "correct_index": 3,
+    "hint": "Un trait con tipos asociados produce una única implementación por tipo; con genéricos T puede implementarse para varios T."
+  },
+  {
+    "id": "rust_077",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "medium",
+    "question": "¿En qué consiste la coerción por desreferenciación (deref coercion) en Rust?",
+    "options": [
+      "Convierte automáticamente una referencia a un tipo en una referencia a su tipo destino (ej: &String a &str).",
+      "Convierte de forma implícita tipos numéricos de coma flotante en enteros sin signo en la CPU.",
+      "Mueve valores del montículo hacia la pila cuando la función llamadora lo requiera.",
+      "Clona una estructura pesada si el compilador detecta que el receptor espera un tipo por valor."
+    ],
+    "correct_index": 0,
+    "hint": "Deref coercion convierte automáticamente &T en &U si T implementa Deref<Target=U>, facilitando llamadas a funciones."
+  },
+  {
+    "id": "rust_078",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "medium",
+    "question": "¿Cómo se envían mensajes sincrónicos con límite de buffer utilizando el módulo mpsc?",
+    "options": [
+      "Utilizando 'std::sync::mpsc::channel_with_timeout()', descartando mensajes tras expirar el tiempo.",
+      "Utilizando 'std::sync::mpsc::sync_channel(bound)', donde el emisor se bloquea si el buffer se llena.",
+      "Utilizando la llamada 'tx.send_sync()', que garantiza que el receptor procesó el mensaje.",
+      "Utilizando descriptores de pipes asíncronos configurados mediante llamadas ioctl del SO."
+    ],
+    "correct_index": 1,
+    "hint": "sync_channel(n) crea un canal con buffer acotado; si hay n elementos sin leer, el siguiente send() se bloquea."
+  },
+  {
+    "id": "rust_079",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "medium",
+    "question": "¿Qué ocurre cuando un hilo invoca 'panic!()' dentro de su cuerpo en ejecución?",
+    "options": [
+      "El proceso completo aborta inmediatamente sin permitir la captura del fallo en ningún hilo.",
+      "El sistema operativo suspende la máquina virtual hasta que un depurador capture la señal.",
+      "El hilo desenrolla su pila (unwind) y termina; el hilo principal recibe un error en handle.join().",
+      "El pánico se propaga automáticamente a todos los demás hilos congelando sus actividades."
+    ],
+    "correct_index": 2,
+    "hint": "El panic mata al hilo que lo produjo desenrollando su pila; otros hilos pueden detectar esto mediante join()."
+  },
+  {
+    "id": "rust_080",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "medium",
+    "question": "¿Qué trait permite comparar instancias por orden total estricto mediante '<', '>', '<=' y '>='?",
+    "options": [
+      "El trait 'std::cmp::PartialEq', que evalúa únicamente la equivalencia lógica de los campos.",
+      "El trait 'std::cmp::Sortable', empleado por algoritmos de ordenamiento rápido en slices.",
+      "El trait 'std::cmp::TotalOrder', que define el operador de comparación espacial de tres vías.",
+      "El trait 'std::cmp::Ord', que requiere que el tipo implemente además Eq y PartialOrd."
+    ],
+    "correct_index": 3,
+    "hint": "Ord define orden total estricto (cmp() -> Ordering); tipos como f64 solo implementan PartialOrd debido a NaN."
+  },
+  {
+    "id": "rust_081",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "medium",
+    "question": "¿Por qué no es posible usar operadores de igualdad '==' sobre tipos si no implementan 'PartialEq'?",
+    "options": [
+      "Porque Rust no incluye operadores sobrecargados por defecto; '==' es azúcar sintáctico de peq().",
+      "Porque el compilador exige que todas las comparaciones se resuelvan en tiempo de ejecución.",
+      "Porque las estructuras compuestas no pueden representarse en registros escalares de la CPU.",
+      "Porque el lenguaje exige que las igualdades sean auditadas por un cerrojo mutex de exclusión."
+    ],
+    "correct_index": 0,
+    "hint": "El operador '==' invoca el método eq() del trait PartialEq; sin él, el compilador rechaza el uso del operador."
+  },
+  {
+    "id": "rust_082",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "medium",
+    "question": "¿Qué función cumple el trait 'std::ops::Drop' en tipos contenedores de recursos externos?",
+    "options": [
+      "Permite reciclar la memoria física devolviéndola a un pool de asignaciones preexistente.",
+      "Permite definir la lógica de limpieza y liberación de recursos (destructor RAII) al salir de scope.",
+      "Impide que el tipo pueda ser clonado o duplicado por funciones externas del mismo módulo.",
+      "Notifica al hilo principal que una estructura de datos ha dejado de recibir escrituras."
+    ],
+    "correct_index": 1,
+    "hint": "Drop permite implementar código de finalización limpio (cerrar archivos, sockets, desasignar memoria) al expirar el valor."
+  },
+  {
+    "id": "rust_083",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "medium",
+    "question": "¿Qué particularidad tiene el uso de 'std::iter::FromIterator' en llamadas a '.collect()'?",
+    "options": [
+      "Obliga al iterador a procesar los elementos de forma concurrente repartiéndolos en hilos.",
+      "Convierte los datos del iterador en cadenas de texto formateadas para su impresión en pantalla.",
+      "Permite construir cualquier colección compatible a partir de un flujo de elementos de un iterador.",
+      "Restringe la colección resultante a listas simplemente enlazadas de la biblioteca estándar."
+    ],
+    "correct_index": 2,
+    "hint": "collect() delega en FromIterator::from_iter(), permitiendo recolectar un iterador en Vec, HashSet, HashMap, etc."
+  },
+  {
+    "id": "rust_084",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿Qué son los traits 'Send' y 'Sync' en el sistema de concurrencia de Rust?",
+    "options": [
+      "Interfaces de red que controlan la transmisión de paquetes binarios a través de sockets TCP.",
+      "Primitivas de bloqueo que el planificador de hilos del sistema operativo activa en tiempo real.",
+      "Decoradores de funciones que indican al compilador que genere código multi-hilo en el runtime.",
+      "Traits marcadores (auto traits) que el compilador implementa automáticamente según los tipos internos."
+    ],
+    "correct_index": 3,
+    "hint": "Send y Sync son auto-traits sin métodos implementados automáticamente si todos los campos los implementan."
+  },
+  {
+    "id": "rust_085",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿Por qué el puntero inteligente 'std::rc::Rc<T>' implementa '!Send' y '!Sync' de forma explícita?",
+    "options": [
+      "Porque usa un contador de referencias no atómico; compartirlo entre hilos provocaría data races.",
+      "Porque no puede calcular el tamaño de su bloque en tiempo de compilación por falta de Sized.",
+      "Porque su destructor requiere acceso exclusivo al despachador de señales del hilo principal.",
+      "Porque el estándar POSIX prohíbe pasar referencias de conteo manual a nuevos subprocesos."
+    ],
+    "correct_index": 0,
+    "hint": "Rc incrementa su refcount con operaciones ordinarias no atómicas; mutarlo desde múltiples hilos causaría carreras de datos."
+  },
+  {
+    "id": "rust_086",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿Por qué 'std::cell::RefCell<T>' es 'Send' pero es '!Sync' en la biblioteca estándar?",
+    "options": [
+      "Porque no implementa el trait Drop para liberar la memoria de su valor interior en el heap.",
+      "Porque su contador de préstamos no es atómico, permitiendo transferir el contenedor pero no compartirlo.",
+      "Porque su tamaño físico varía dinámicamente según la cantidad de referencias prestadas activas.",
+      "Porque está restringido exclusivamente a llamadas dentro de funciones marcadas con unsafe."
+    ],
+    "correct_index": 1,
+    "hint": "RefCell puede moverse a otro hilo (Send si T: Send), pero no compartirse mediante &RefCell (!Sync) por borrow count no atómico."
+  },
+  {
+    "id": "rust_087",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿En qué consiste la regla de orfandad (orphan rule) en la coherencia de traits de Rust?",
+    "options": [
+      "Un trait huérfano pierde sus implementaciones predeterminadas si no se define un constructor.",
+      "Los tipos huérfanos se eliminan durante la fase de optimización binaria por falta de uso.",
+      "Solo se puede implementar un trait para un tipo si al menos uno de los dos es local al crate actual.",
+      "Se prohíbe implementar traits estándar sobre estructuras que carezcan de parámetros de lifetime."
+    ],
+    "correct_index": 2,
+    "hint": "La regla de coherencia asegura que no colisionen implementaciones: Trait o Type deben ser locales al crate propio."
+  },
+  {
+    "id": "rust_088",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿Qué representan los Generic Associated Types (GATs) introducidos en Rust 1.65?",
+    "options": [
+      "Estructuras genéricas globales que pueden ser instanciadas sin necesidad de tipos concretos.",
+      "Anotaciones de tiempo de compilación que aceleran la monomorfización de funciones inline.",
+      "Tipos de retorno dinámicos que se evalúan exclusivamente en tiempo de ejecución del sistema.",
+      "Tipos asociados dentro de traits que pueden recibir sus propios parámetros de tipo o lifetimes."
+    ],
+    "correct_index": 3,
+    "hint": "GATs permiten que los associated types definan parámetros genéricos (ej: type Item<'a>;), clave para streaming iterators."
+  },
+  {
+    "id": "rust_089",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿Qué es un 'supertrait' en Rust y cómo se declara (ej: 'trait Sub: Super')?",
+    "options": [
+      "Exige que cualquier tipo que implemente 'Sub' debe implementar también obligatoriamente 'Super'.",
+      "Una clase abstracta base de la cual descienden todas las implementaciones de los tipos hijos.",
+      "Un trait que reemplaza las definiciones de los métodos del trait padre en tiempo de enlace.",
+      "Una interfaz que permite combinar dinámicamente múltiples punteros virtuales en una vtable."
+    ],
+    "correct_index": 0,
+    "hint": "Sub: Super declara un supertrait; cualquier tipo que desee implementar Sub debe implementar primero Super."
+  },
+  {
+    "id": "rust_090",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿Qué ventaja introdujeron los hilos con ámbito ('std::thread::scope') en Rust 1.63?",
+    "options": [
+      "Permiten ejecutar hilos en núcleos aislados de CPU con prioridades en tiempo real del kernel.",
+      "Permiten pasar referencias prestadas no estáticas (&T) a hilos hijos sin requerir ''static'.",
+      "Eliminan la necesidad de usar Mutex al compartir estructuras dinámicas en el montículo.",
+      "Asignan un hilo de ejecución independiente a cada instrucción de un bloque de código."
+    ],
+    "correct_index": 1,
+    "hint": "thread::scope garantiza que todos los hilos creados dentro finalizan antes de salir del scope, permitiendo prestar datos locales."
+  },
+  {
+    "id": "rust_091",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿Qué controlan los órdenes de memoria ('std::sync::atomic::Ordering') en operaciones atómicas?",
+    "options": [
+      "La prioridad con la que el planificador del sistema operativo asigna turnos a los hilos activos.",
+      "La posición física en la cual las variables se alinean dentro de los bloques de memoria caché.",
+      "El orden y sincronización en que las lecturas y escrituras en memoria se hacen visibles entre hilos.",
+      "El orden lexicográfico en que los identificadores atómicos se registran en el mapa de símbolos."
+    ],
+    "correct_index": 2,
+    "hint": "Memory ordering (Relaxed, Acquire, Release, AcqRel, SeqCst) define las barreras de hardware que limitan reordenamientos."
+  },
+  {
+    "id": "rust_092",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿Qué diferencia a 'Ordering::Relaxed' de 'Ordering::SeqCst' en operaciones con Atomics?",
+    "options": [
+      "Relaxed utiliza bloqueos a nivel de kernel; SeqCst opera puramente sobre registros de la CPU.",
+      "Relaxed suspende el hilo si hay colisiones; SeqCst ignora los fallos de lectura concurrentes.",
+      "Relaxed solo funciona sobre enteros de 8 bits; SeqCst se aplica a tipos de 64 bits de memoria.",
+      "Relaxed solo garantiza atomicidad sin sincronización; SeqCst impone un orden global consistente total."
+    ],
+    "correct_index": 3,
+    "hint": "Relaxed no establece barreras de memoria (sin sincronización de orden); SeqCst garantiza secuencialidad consistente global."
+  },
+  {
+    "id": "rust_093",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿Cómo funciona el patrón de implementación condicional en Rust (ej: 'impl<T: Display> ToString for T')?",
+    "options": [
+      "Provee automáticamente la implementación del trait para cualquier tipo que satisfaga el límite requerido.",
+      "Genera un error si el usuario intenta implementar manualmente el método en su propio módulo.",
+      "Evalúa condiciones booleanas en tiempo de ejecución para decidir si activar la llamada.",
+      "Restringe el uso de la función exclusivamente a tipos numéricos declarados en el archivo."
+    ],
+    "correct_index": 0,
+    "hint": "Las implementaciones en blanco (blanket implementations) extienden traits a todos los tipos que cumplan ciertos límites."
+  },
+  {
+    "id": "rust_094",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿Qué trait de la biblioteca estándar sobrecarga el operador de suma binaria '+'?",
+    "options": [
+      "El trait 'std::ops::Plus', que define la combinación de campos escalares en memoria.",
+      "El trait 'std::ops::Add', requiriendo implementar el método 'add(self, rhs) -> Self::Output'.",
+      "El trait 'std::ops::Sum', utilizado exclusivamente en operaciones de agregación de iteradores.",
+      "El trait 'std::ops::Concat', que concatena elementos en estructuras secuenciales continuas."
+    ],
+    "correct_index": 1,
+    "hint": "El operador '+' invoca el método add del trait std::ops::Add, permitiendo sobrecarga personalizada."
+  },
+  {
+    "id": "rust_095",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿Por qué el puntero crudo '*const T' no implementa 'Send' ni 'Sync' de forma predeterminada?",
+    "options": [
+      "Porque el tamaño de un puntero crudo es menor que el de una referencia prestada de memoria.",
+      "Porque los punteros crudos se almacenan en un segmento de memoria virtual inaccesible.",
+      "Porque no garantiza aliasing ni sincronización; el compilador no puede auditar su seguridad.",
+      "Porque el estándar de Rust exige que todos los punteros crudos se envuelvan en Box."
+    ],
+    "correct_index": 2,
+    "hint": "Los raw pointers (*const T, *mut T) son !Send y !Sync porque el compilador no puede verificar ausencia de data races."
+  },
+  {
+    "id": "rust_096",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿Qué es una barrera de sincronización ('std::sync::Barrier') en programación multihilo?",
+    "options": [
+      "Un cerrojo que impide que los hilos lean memoria mientras un hilo realiza escrituras.",
+      "Una directiva de compilación que evita que el optimizador reordene instrucciones críticas.",
+      "Un mecanismo del sistema operativo para limitar la cantidad total de hilos en ejecución.",
+      "Una primitiva que bloquea múltiples hilos hasta que un número específico de ellos alcance el punto."
+    ],
+    "correct_index": 3,
+    "hint": "Barrier permite coordinar N hilos de modo que ninguno avance hasta que los N hayan llegado al punto de sincronización."
+  },
+  {
+    "id": "rust_097",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿Qué hace la primitiva 'std::sync::Once' en entornos multihilo?",
+    "options": [
+      "Garantiza que una función o inicialización se ejecute estrictamente una vez entre todos los hilos.",
+      "Permite que un único hilo acceda a una sección crítica expulsando a todos los demás.",
+      "Asigna una sola cuota de tiempo de CPU antes de suspender permanentemente el proceso.",
+      "Convierte una variable compartida en una constante inmutable de solo lectura en memoria."
+    ],
+    "correct_index": 0,
+    "hint": "std::sync::Once garantiza que una acción de inicialización ocurre exactamente una sola vez de forma thread-safe."
+  },
+  {
+    "id": "rust_098",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿Qué problema resuelve 'crossbeam-channel' frente a los canales 'std::sync::mpsc' tradicionales?",
+    "options": [
+      "Permite transmitir referencias locales sin necesidad de comprobar reglas de ownership.",
+      "Soporta MPMC (Multiple Producer, Multiple Consumer), mejor rendimiento y select no bloqueante.",
+      "Elimina el uso de memoria en el heap asignando todos los mensajes en registros de CPU.",
+      "Garantiza que los mensajes se cifren de forma transparente durante la transferencia."
+    ],
+    "correct_index": 1,
+    "hint": "crossbeam-channel ofrece soporte multi-consumidor (MPMC), mayor velocidad y operaciones select avanzadas."
+  },
+  {
+    "id": "rust_099",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿Qué diferencia a 'std::sync::atomic::AtomicBool' de un 'bool' ordinario protegido por Mutex?",
+    "options": [
+      "AtomicBool ocupa 64 bytes de memoria para garantizar aislamiento contra alineaciones.",
+      "AtomicBool solo puede ser modificado por el hilo principal que arrancó el ejecutable.",
+      "AtomicBool realiza operaciones atómicas directas en la CPU sin overhead de cerrojos del SO.",
+      "AtomicBool permite almacenar estados booleanos nulos adicionales como indeterminate."
+    ],
+    "correct_index": 2,
+    "hint": "Las operaciones en AtomicBool son instrucciones directas de máquina lock-free sin llamadas al kernel ni cerrojos."
+  },
+  {
+    "id": "rust_100",
+    "subtopic": "concurrencia_traits",
+    "difficulty": "advanced",
+    "question": "¿Cómo se define un 'marker trait' (trait marcador) en Rust?",
+    "options": [
+      "Un trait que contiene exclusivamente métodos marcados con el atributo //#[inline(always)].",
+      "Un trait que imprime advertencias en pantalla cada vez que uno de sus métodos es invocado.",
+      "Un trait que almacena punteros de diagnóstico en la tabla de símbolos del binario final.",
+      "Un trait que no define ningún método ni tipo asociado, usado solo como propiedad de tipo a nivel estático."
+    ],
+    "correct_index": 3,
+    "hint": "Un marker trait (como Send, Sync, Sized, Copy) carece de cuerpo y sirve únicamente para clasificar tipos estáticamente."
+  },
+  {
+    "id": "rust_101",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "basic",
+    "question": "¿Cuál es el puntero inteligente más básico de Rust para asignar datos en el montículo (heap)?",
+    "options": [
+      "El tipo 'Box<T>', que proporciona propiedad exclusiva de un valor alojado en el heap.",
+      "El tipo 'Heap<T>', que gestiona bloques dinámicos mediante llamadas al kernel.",
+      "El tipo 'Raw<T>', que representa punteros directos sin comprobación de tipos.",
+      "El tipo 'Alloc<T>', que asigna páginas contiguas en la memoria virtual del SO."
+    ],
+    "correct_index": 0,
+    "hint": "Box<T> asigna un valor en el heap con tamaño conocido (tamaño de un puntero), transfiriendo su ownership."
+  },
+  {
+    "id": "rust_102",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "basic",
+    "question": "¿Por qué es necesario utilizar 'Box<T>' al definir estructuras de datos recursivas (ej: listas enlazadas)?",
+    "options": [
+      "Porque el compilador de Rust no permite referencias dentro de tipos recursivos.",
+      "Porque permite conocer el tamaño exacto del tipo en compilación rompiendo el tamaño infinito.",
+      "Porque evita que el recolector de basura elimine los nodos intermedios de la lista.",
+      "Porque duplica automáticamente los nodos cada vez que se accede a un elemento."
+    ],
+    "correct_index": 1,
+    "hint": "Rust necesita conocer el tamaño en bytes de cada tipo en tiempo de compilación; un tipo recursivo directo tendría tamaño infinito."
+  },
+  {
+    "id": "rust_103",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "basic",
+    "question": "¿Cómo previene safe Rust los errores de tipo 'puntero nulo' (null pointer dereference)?",
+    "options": [
+      "Asignando automáticamente la dirección 0x0 a una región estática protegida.",
+      "Interceptando todas las lecturas de memoria con un manejador de excepciones global.",
+      "Eliminando el concepto de puntero nulo y utilizando el tipo enum 'Option<T>'.",
+      "Obligando a que todos los punteros sean inicializados con un valor booleano true."
+    ],
+    "correct_index": 2,
+    "hint": "En safe Rust no existen referencias nulas; la ausencia de un valor se modela explícitamente con Option<T> (Some(T) o None)."
+  },
+  {
+    "id": "rust_104",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "basic",
+    "question": "¿Qué tipo estándar se utiliza en Rust para representar operaciones que pueden fallar de forma recuperable?",
+    "options": [
+      "El tipo estructural 'Exception<T>', que almacena la traza de llamadas del fallo.",
+      "El tipo primitivo 'status_t', que devuelve un código numérico entero al sistema.",
+      "El tipo enum 'Try<T>', que captura pánicos producidos por el runtime de la máquina.",
+      "El tipo enum 'Result<T, E>', que contiene la variante exitosa Ok(T) o el error Err(E)."
+    ],
+    "correct_index": 3,
+    "hint": "Result<T, E> es el estándar idiomático de Rust para manejo de errores: Ok(valor) para éxito y Err(error) para fallo."
+  },
+  {
+    "id": "rust_105",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "basic",
+    "question": "¿Qué exige el compilador de Rust al evaluar una expresión mediante la sentencia 'match'?",
+    "options": [
+      "Exige exhaustividad: todos los casos y patrones posibles deben ser contemplados.",
+      "Exige que todos los patrones contengan exactamente la misma longitud de texto.",
+      "Exige el uso obligatorio de una cláusula default independientemente de las variantes.",
+      "Exige que los valores evaluados pertenezcan exclusivamente a tipos numéricos escalares."
+    ],
+    "correct_index": 0,
+    "hint": "Las expresiones match en Rust deben ser exhaustivas; si falta alguna variante del enum, el compilador genera un error."
+  },
+  {
+    "id": "rust_106",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "basic",
+    "question": "¿Qué operador se utiliza en Rust para propagar errores tempranamente desde una función?",
+    "options": [
+      "El operador exclamación '!', que desenrolla la pila ante situaciones inesperadas.",
+      "El operador interrogación '?', que retorna inmediatamente la variante Err(e).",
+      "El operador flecha '->', que redirige el flujo hacia la rutina de captura.",
+      "La palabra clave 'throw', que lanza el objeto de error hacia el marco superior."
+    ],
+    "correct_index": 1,
+    "hint": "El operador '?' desenvuelve Ok(v) o retorna tempranamente Err(From::from(e)) al invocador."
+  },
+  {
+    "id": "rust_107",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "basic",
+    "question": "¿Qué estructura de control permite ejecutar código condicionalmente solo si un enum coincide con un patrón?",
+    "options": [
+      "La estructura 'switch let { ... }', que evalúa múltiples asignaciones concurrentes.",
+      "La estructura 'when Patrón do { ... }', común en lenguajes puramente funcionales.",
+      "La estructura 'if let Patrón = Expresión { ... }', ignorando las demás variantes.",
+      "La estructura 'case of { ... }', que ejecuta comprobaciones sin coincidencia de tipos."
+    ],
+    "correct_index": 2,
+    "hint": "if let es azúcar sintáctico para un match de un solo brazo cuando solo interesa una variante y se ignoran las demás."
+  },
+  {
+    "id": "rust_108",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "basic",
+    "question": "¿Qué ocurre en tiempo de ejecución al acceder a un índice fuera de rango en un vector (ej: v[100])?",
+    "options": [
+      "Lee memoria basura adyacente provocando una brecha de seguridad en el proceso.",
+      "El vector extiende automáticamente su capacidad rellenando con ceros los huecos.",
+      "Retorna un puntero nulo que debe ser comprobado manualmente por el programador.",
+      "El programa entra en pánico (panic) inmediato por desbordamiento de límites (bounds check)."
+    ],
+    "correct_index": 3,
+    "hint": "Rust realiza comprobación de límites (bounds checking) en indexaciones ordinarias, entrando en pánico seguro ante desbordamientos."
+  },
+  {
+    "id": "rust_109",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "basic",
+    "question": "¿Qué método de 'Vec' permite acceder a un elemento por índice de forma segura sin provocar pánico?",
+    "options": [
+      "El método 'v.get(index)', que devuelve 'Some(&T)' si existe o 'None' si está fuera de rango.",
+      "El método 'v.at(index)', que devuelve una referencia nula protegida ante fallos.",
+      "El método 'v.try_index(index)', que arroja un error recuperable de tipo BoundsError.",
+      "El método 'v.read(index)', que llena un búfer temporal con los datos del elemento."
+    ],
+    "correct_index": 0,
+    "hint": "v.get(i) comprueba el índice de forma segura y retorna un Option<&T> sin posibilidad de provocar panic."
+  },
+  {
+    "id": "rust_110",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "basic",
+    "question": "¿Cuáles son los dos tipos de punteros crudos (raw pointers) existentes en Rust?",
+    "options": [
+      "Los punteros 'raw_ptr<T>' y 'mut_ptr<T>', gestionados por librerías del compilador.",
+      "Los punteros '*const T' (inmutable) y '*mut T' (mutable), libres de borrow checking.",
+      "Los punteros 'void*' y 'const void*', derivados de la compatibilidad con lenguaje C.",
+      "Los punteros '&raw T' y '&raw mut T', utilizados como alias de referencias seguras."
+    ],
+    "correct_index": 1,
+    "hint": "Rust define dos punteros crudos: *const T y *mut T; no tienen lifetimes ni garantías del borrow checker."
+  },
+  {
+    "id": "rust_111",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "basic",
+    "question": "¿Es seguro declarar y crear un puntero crudo (raw pointer) fuera de un bloque 'unsafe'?",
+    "options": [
+      "No, cualquier declaración de un puntero crudo requiere obligatoriamente 'unsafe'.",
+      "Solo si el puntero se inicializa con la dirección de una variable estática global.",
+      "Sí, crear punteros crudos es seguro; lo que es 'unsafe' es desreferenciarlos.",
+      "Únicamente si el puntero se convierte a partir de una referencia que implemente Copy."
+    ],
+    "correct_index": 2,
+    "hint": "Crear o convertir a raw pointer es safe; desreferenciarlo (*p) es una operación insegura que exige un bloque unsafe."
+  },
+  {
+    "id": "rust_112",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "basic",
+    "question": "¿Qué garantiza 'safe Rust' respecto a la memoria y las condiciones de carrera?",
+    "options": [
+      "Garantiza que el programa nunca entrará en bucles infinitos ni consumirá memoria excesiva.",
+      "Garantiza que la memoria nunca se fragmentará independientemente del uso del montículo.",
+      "Garantiza que ningún hilo podrá ser bloqueado por llamadas al sistema operativo.",
+      "Garantiza ausencia total de fallos de segmentación, data races y corrupción de memoria."
+    ],
+    "correct_index": 3,
+    "hint": "Safe Rust garantiza ausencia de memoria corrupta, dangling pointers, double frees y data races en tiempo de compilación."
+  },
+  {
+    "id": "rust_113",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "basic",
+    "question": "¿Qué macro permite generar un pánico explícito para marcar rutas de código inalcanzables?",
+    "options": [
+      "La macro 'unreachable!()', que aborta con un mensaje de fallo si la rama se ejecuta.",
+      "La macro 'todo!()', que señala funcionalidades pendientes de desarrollo en el código.",
+      "La macro 'panic_if!()', que evalúa una condición booleana antes de suspender el hilo.",
+      "La macro 'unimplemented!()', que documenta métodos abstractos aún no definidos."
+    ],
+    "correct_index": 0,
+    "hint": "unreachable!() informa al compilador y al programador que ese punto de ejecución es inalcanzable, lanzando panic si se llega."
+  },
+  {
+    "id": "rust_114",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "basic",
+    "question": "¿Qué macro de Rust señala código que aún no ha sido implementado, fallando al ejecutarse?",
+    "options": [
+      "La macro 'stub!()', que retorna valores vacíos por defecto a las funciones.",
+      "La macro 'todo!()' (o 'unimplemented!()'), permitiendo compilar esqueletos de código.",
+      "La macro 'pass!()', que omite la comprobación de tipos sobre el bloque afectado.",
+      "La macro 'draft!()', que pospone el análisis estático del comprobador de préstamos."
+    ],
+    "correct_index": 1,
+    "hint": "todo!() y unimplemented!() permiten que el código compile, pero causan pánico si el flujo llega a ejecutarlas."
+  },
+  {
+    "id": "rust_115",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "basic",
+    "question": "¿Qué función de conversión en Result permite ejecutar una clausura solo si ocurrió un error?",
+    "options": [
+      "El método 'res.and_then(op)', que encadena una nueva operación en caso de éxito Ok.",
+      "El método 'res.map(op)', que transforma exclusivamente el valor exitoso contenido.",
+      "El método 'res.or_else(op)', que recibe una función que genera un nuevo Result alternativo.",
+      "El método 'res.unwrap_or(default)', que extrae el valor asignando uno fijo si hay fallo."
+    ],
+    "correct_index": 2,
+    "hint": "or_else() permite manejar el caso Err invocando una closure para recuperarse o transformar el error."
+  },
+  {
+    "id": "rust_116",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "basic",
+    "question": "¿Por qué un desbordamiento de búfer (buffer overflow) no es posible en código estándar de safe Rust?",
+    "options": [
+      "Porque la arquitectura de registros x86-64 bloquea físicamente las escrituras consecutivas.",
+      "Porque el compilador asigna una zona de memoria protegida de 1 GB alrededor de cada array.",
+      "Porque los arrays se reasignan en una nueva dirección de memoria en cada lectura de datos.",
+      "Porque los accesos indexados se comprueban contra la longitud del arreglo o vector en ejecución."
+    ],
+    "correct_index": 3,
+    "hint": "El bounds checking estático y dinámico impide acceder más allá de la memoria asignada en colecciones en safe Rust."
+  },
+  {
+    "id": "rust_117",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Qué problema surge cuando dos instancias de 'Rc<T>' mantienen referencias mutuas entre sí?",
+    "options": [
+      "Se produce un ciclo de referencias que impide que sus refcounts lleguen a 0, causando fuga de memoria.",
+      "El compilador entra en un bucle infinito durante el análisis del comprobador de préstamos.",
+      "Se produce un pánico inmediato por corrupción de punteros compartidos en el montículo.",
+      "El sistema operativo bloquea el proceso enviando una señal de terminación por contención."
+    ],
+    "correct_index": 0,
+    "hint": "Los ciclos de Rc impiden que el contador llegue a cero, causando un memory leak; se resuelven usando Weak<T>."
+  },
+  {
+    "id": "rust_118",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Cómo resuelve 'std::rc::Weak<T>' el problema de los ciclos de referencias causados por 'Rc<T>'?",
+    "options": [
+      "Interrumpe la ejecución del destructor Drop mediante técnicas de reflexión dinámica.",
+      "Provee referencias débiles que no incrementan el contador de propiedad (strong_count).",
+      "Fuerza al recolector de basura a inspeccionar y romper el ciclo cada diez segundos.",
+      "Mueve uno de los dos objetos hacia la memoria de la pila local de la función."
+    ],
+    "correct_index": 1,
+    "hint": "Weak<T> mantiene un weak_count que no previene la destrucción del valor; se accede con .upgrade() -> Option<Rc<T>>."
+  },
+  {
+    "id": "rust_119",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Cuál es el propósito del tipo 'std::cell::Cell<T>' en el diseño de tipos de Rust?",
+    "options": [
+      "Sincronizar el acceso a variables mutables entre múltiples hilos concurrentes activos.",
+      "Garantizar que una estructura resida en páginas de memoria contiguas en el heap.",
+      "Proveer mutabilidad interior (interior mutability) para tipos que implementan el trait Copy.",
+      "Permitir la creación de referencias mutables ilimitadas hacia el mismo dato."
+    ],
+    "correct_index": 2,
+    "hint": "Cell<T> permite mutar valores interiores (get/set) sin entregar referencias &mut, siendo seguro para tipos Copy."
+  },
+  {
+    "id": "rust_120",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Qué diferencia crucial existe entre 'RefCell<T>' y una referencia ordinaria '&mut T'?",
+    "options": [
+      "RefCell permite tener múltiples referencias mutables simultáneas sin ninguna restricción.",
+      "RefCell solo puede almacenar estructuras declaradas con visibilidad pública en el crate.",
+      "RefCell no admite la desasignación de su contenido hasta que el programa finalice.",
+      "RefCell traslada las comprobaciones de las reglas de préstamo a tiempo de ejecución (runtime)."
+    ],
+    "correct_index": 3,
+    "hint": "RefCell aplica las reglas del borrow checker en runtime: si se violan, lanza un panic en lugar de un error de compilación."
+  },
+  {
+    "id": "rust_121",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Qué ocurre si se intenta invocar 'borrow_mut()' en un RefCell cuando ya existe un préstamo activo?",
+    "options": [
+      "El programa entra en pánico en tiempo de ejecución (already borrowed: BorrowMutError).",
+      "El hilo se bloquea pacientemente hasta que el préstamo previo sea liberado.",
+      "La llamada devuelve un valor booleano false sin alterar el flujo del código.",
+      "El valor interno se clona automáticamente en una nueva dirección del heap."
+    ],
+    "correct_index": 0,
+    "hint": "Violar las reglas de préstamo sobre RefCell causa un panic en ejecución; para evitarlo se usa try_borrow_mut()."
+  },
+  {
+    "id": "rust_122",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Qué tipo primitivo constituye el núcleo fundamental de toda mutabilidad interior en Rust?",
+    "options": [
+      "El tipo 'std::sync::AtomicPtr<T>', utilizado por todos los contenedores de hilos.",
+      "El tipo 'std::cell::UnsafeCell<T>', el único mecanismo legal para obtener mutabilidad desde &T.",
+      "El tipo 'std::mem::RawCell<T>', reservado para operaciones de bajo nivel del kernel.",
+      "El tipo 'std::ptr::SharedMut<T>', implementado en las librerías del compilador."
+    ],
+    "correct_index": 1,
+    "hint": "UnsafeCell<T> es el bloque de construcción de toda mutabilidad interior: le indica al compilador que &T puede mutar."
+  },
+  {
+    "id": "rust_123",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Cuáles son las cinco operaciones que SOLO están permitidas dentro de un bloque 'unsafe'?",
+    "options": [
+      "Asignar memoria con malloc, usar macros de derivación, crear hilos, importar crates y hacer casting.",
+      "Manejar excepciones, acceder a variables privadas de otros módulos, definir traits y usar iteradores.",
+      "Desreferenciar raw pointers, llamar funciones unsafe, implementar unsafe traits, mutar statics y unions.",
+      "Modificar constantes inmutables, desactivar el borrow checker, realizar saltos goto y usar punteros."
+    ],
+    "correct_index": 2,
+    "hint": "Los 5 'superpoderes' de unsafe: desreferenciar raw pointers, llamar unsafe fn, implementar unsafe traits, mutar static mut y acceder a campos de union."
+  },
+  {
+    "id": "rust_124",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Qué es un 'Undefined Behavior' (comportamiento indefinido) en el contexto de Rust?",
+    "options": [
+      "Una función genérica cuyo tipo de retorno no ha sido especificado de forma explícita.",
+      "Un pánico recuperable provocado por una división por cero en operaciones aritméticas.",
+      "Una advertencia de estilo emitida por el linter clippy durante la revisión de código.",
+      "Un estado erróneo donde el compilador ya no garantiza ninguna corrección y la ejecución es impredecible."
+    ],
+    "correct_index": 3,
+    "hint": "UB significa que el compilador asume que nunca ocurrirá; si ocurre, puede optimizar o compilar código erróneo con efectos catastróficos."
+  },
+  {
+    "id": "rust_125",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Qué riesgo crítico presenta la función 'std::mem::transmute<T, U>()'?",
+    "options": [
+      "Reinterpreta los bits de T como U sin comprobaciones, pudiendo generar UB instantáneo.",
+      "Bloquea la memoria física impidiendo que otros procesos lean los datos convertidos.",
+      "Obliga a que ambos tipos tengan implementado el trait Clone para poder proceder.",
+      "Provoca fugas de memoria al duplicar las tablas de símbolos en el archivo binario."
+    ],
+    "correct_index": 0,
+    "hint": "transmute es una de las funciones más peligrosas: reinterpreta bits arbitrarios y causa UB si viola invariantes de tipo."
+  },
+  {
+    "id": "rust_126",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Por qué el uso de 'static mut' se considera extremadamente inseguro en Rust?",
+    "options": [
+      "Porque el compilador no puede calcular el desplazamiento de memoria de variables estáticas.",
+      "Porque cualquier acceso puede provocar una condición de carrera de datos (data race) sin sincronización.",
+      "Porque los datos estáticos mutables se eliminan automáticamente tras el primer hilo.",
+      "Porque el sistema operativo prohíbe páginas de memoria compartidas entre bibliotecas."
+    ],
+    "correct_index": 1,
+    "hint": "static mut permite que múltiples hilos lean y escriban la misma memoria sin control; en Rust 2024 las referencias a ellos son denegadas."
+  },
+  {
+    "id": "rust_127",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Qué garantiza 'std::ptr::NonNull<T>' sobre el puntero crudo que encapsula?",
+    "options": [
+      "Garantiza que el bloque de memoria apuntado nunca será modificado por otros punteros.",
+      "Garantiza que el dato apuntado reside en la memoria de la pila en lugar del heap.",
+      "Garantiza que el puntero nunca es nulo (0x0), habilitando optimizaciones de nicho (niche optimization).",
+      "Garantiza que el compilador rastreará los tiempos de vida del dato automáticamente."
+    ],
+    "correct_index": 2,
+    "hint": "NonNull<T> envuelve *mut T garantizando que no es null, covariante sobre T y optimizando Option<NonNull<T>>."
+  },
+  {
+    "id": "rust_128",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Qué hace la función 'std::mem::forget(x)' con una variable que posee recursos?",
+    "options": [
+      "Libera inmediatamente la memoria del montículo devolviéndola al sistema operativo.",
+      "Clona la variable en un hilo secundario para procesarla en segundo plano.",
+      "Rellena con ceros la estructura antes de que la función actual retorne al llamador.",
+      "Consume el valor sin ejecutar su destructor Drop, dejando que sus recursos queden retenidos."
+    ],
+    "correct_index": 3,
+    "hint": "forget(x) evita que el destructor de x se ejecute; en Rust moderno es una función 'safe' porque las fugas de memoria no se consideran UB."
+  },
+  {
+    "id": "rust_129",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Por qué las fugas de memoria (memory leaks) son consideradas técnicamente 'seguras' en Rust?",
+    "options": [
+      "Porque no provocan acceso a memoria inválida, desreferencias nulas ni corrupción de datos.",
+      "Porque el compilador incorpora un recolector de emergencia que limpia la memoria periódicamente.",
+      "Porque los sistemas operativos modernos destruyen todos los recursos al finalizar el proceso.",
+      "Porque el estándar del lenguaje prohíbe terminantemente la creación de punteros dinámicos."
+    ],
+    "correct_index": 0,
+    "hint": "Safe Rust garantiza memoria segura (type and memory safety), no la ausencia de fugas de recursos (leak safety)."
+  },
+  {
+    "id": "rust_130",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Qué diferencia a 'std::ptr::read(src)' de una asignación ordinaria por desreferenciación?",
+    "options": [
+      "Copia bit a bit el contenido exigiendo que el tipo destino implemente el trait Default.",
+      "Lee y mueve el valor de src sin requerir que T sea Copy y sin ejecutar el Drop del origen.",
+      "Verifica mediante el borrow checker que no existan otras referencias vivas hacia src.",
+      "Asigna un nuevo bloque de memoria en el heap donde clona los datos apuntados."
+    ],
+    "correct_index": 1,
+    "hint": "ptr::read extrae un valor de un puntero crudo sin ejecutar el destructor del valor original, requiriendo unsafe."
+  },
+  {
+    "id": "rust_131",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Qué función de punteros crudos se emplea para escribir un valor sin evaluar el destructor previo?",
+    "options": [
+      "La función 'std::ptr::replace(dst, val)', que devuelve el valor anterior para su limpieza.",
+      "El operador de asignación directa '*dst = val', que asume que dst ya es válido y corre drop.",
+      "La función 'std::ptr::write(dst, val)', que inicializa la memoria sin invocar drop() sobre dst.",
+      "La función 'std::ptr::copy(dst, val, 1)', que desplaza bloques de bytes continuos."
+    ],
+    "correct_index": 2,
+    "hint": "ptr::write sobreescribe la memoria sin ejecutar el destructor del valor antiguo, crucial para inicializar memoria no inicializada."
+  },
+  {
+    "id": "rust_132",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Qué garantiza el uso de 'std::panic::catch_unwind()' en aplicaciones Rust?",
+    "options": [
+      "Evita que el sistema operativo registre fallos de segmentación en sus logs nativos.",
+      "Garantiza que cualquier pánico se transforme en una llamada recursiva a la función main.",
+      "Desactiva las comprobaciones de límites de vectores en todo el código supervisado.",
+      "Permite capturar el desenrollado de pila de un pánico recuperando el control en el hilo."
+    ],
+    "correct_index": 3,
+    "hint": "catch_unwind atrapa pánicos causados por desenrollado (unwinding), permitiendo límites de seguridad (como en FFI)."
+  },
+  {
+    "id": "rust_133",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "medium",
+    "question": "¿Por qué llamar a funciones de C mediante FFI (Foreign Function Interface) es siempre 'unsafe'?",
+    "options": [
+      "Porque el compilador de Rust no puede comprobar las garantías de tipos ni memoria de C.",
+      "Porque el estándar binario ABI de C no admite parámetros de longitud mayor a 64 bits.",
+      "Porque todas las funciones escritas en C residen obligatoriamente en memoria no alineada.",
+      "Porque las librerías dinámicas de C se cargan exclusivamente en tiempo de compilación."
+    ],
+    "correct_index": 0,
+    "hint": "Rust no puede validar qué hace el código en C (posibles punteros nulos, UB, etc.), por lo que FFI requiere unsafe."
+  },
+  {
+    "id": "rust_134",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿Cuál es el propósito primordial del tipo 'std::pin::Pin<P>' en Rust?",
+    "options": [
+      "Fijar la ejecución de una tarea a un único núcleo físico de CPU en hardware.",
+      "Garantizar que el valor apuntado no será movido de su posición física en memoria.",
+      "Evitar que el valor sea liberado por el recolector de basura de la máquina.",
+      "Proteger variables globales contra accesos concurrentes de múltiples hilos."
+    ],
+    "correct_index": 1,
+    "hint": "Pin<P> garantiza que los datos no se moverán en memoria, indispensable para estructuras auto-referenciales en async/await."
+  },
+  {
+    "id": "rust_135",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿Qué indica el trait marcador 'Unpin' sobre un tipo T en relación a 'Pin'?",
+    "options": [
+      "Indica que el tipo no puede ser almacenado en la memoria de la pila en ningún caso.",
+      "Indica que el tipo carece de implementación del trait Drop y se destruye de inmediato.",
+      "Indica que el tipo es completamente seguro de mover en memoria aun estando dentro de un Pin.",
+      "Indica que el puntero debe ser administrado por llamadas atómicas del sistema operativo."
+    ],
+    "correct_index": 2,
+    "hint": "La inmensa mayoría de tipos son Unpin (es un auto-trait); si T: Unpin, Pin<Box<T>> puede des-pinearse libremente."
+  },
+  {
+    "id": "rust_136",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿Por qué el uso de 'std::mem::MaybeUninit<T>' es el método correcto para manejar memoria no inicializada?",
+    "options": [
+      "Porque asigna automáticamente ceros en los registros antes de que el código los lea.",
+      "Porque elude la comprobación de tipos permitiendo almacenar cualquier estructura dinámica.",
+      "Porque traslada la reserva de memoria a páginas protegidas de solo lectura del kernel.",
+      "Porque informa al compilador de no asumir que los bits son válidos, evitando UB inmediato."
+    ],
+    "correct_index": 3,
+    "hint": "En Rust, producir un valor no inicializado inválido (como un bool con bits 2) es UB instantáneo; MaybeUninit previene esto."
+  },
+  {
+    "id": "rust_137",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿Qué optimización permite que 'Option<Box<T>>' o 'Option<&T>' ocupe el mismo tamaño que un simple puntero?",
+    "options": [
+      "La optimización de nicho (niche filling), que utiliza el valor 0x0 (nulo) para representar None.",
+      "La compresión de etiquetas de enum durante la fase de optimización binaria de LLVM.",
+      "La eliminación de punteros virtuales mediante despacho estático de funciones inline.",
+      "La asignación conjunta de variantes en un único byte de la memoria de la pila."
+    ],
+    "correct_index": 0,
+    "hint": "Niche optimization aprovecha patrones de bits prohibidos (como el valor nulo en referencias y NonNull) para codificar None a costo cero."
+  },
+  {
+    "id": "rust_138",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿Qué garantiza la anotación '#[repr(C)]' sobre una estructura definida en Rust?",
+    "options": [
+      "Garantiza que la estructura sea compilada con el compilador clang en lugar de rustc.",
+      "Garantiza que el diseño y alineación de memoria en bytes coincida con el estándar ABI de C.",
+      "Convierte todos los campos de la estructura en tipos primitivos de longitud fija.",
+      "Desactiva todas las comprobaciones de límites de arrays dentro de sus métodos asociados."
+    ],
+    "correct_index": 1,
+    "hint": "#[repr(C)] asegura que el struct siga las reglas de layout y padding de C, esencial para FFI y compatibilidad binaria."
+  },
+  {
+    "id": "rust_139",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿Qué riesgo crítico presenta el atributo '#[repr(packed)]' en estructuras de Rust?",
+    "options": [
+      "Aumenta drásticamente el consumo de memoria al añadir bytes de padding redundantes.",
+      "Impide que la estructura pueda implementar métodos con receptores por referencia &self.",
+      "Puede provocar lecturas y escrituras no alineadas (unaligned access), causando fallos o UB.",
+      "Fuerza al compilador a generar código ejecutable exclusivo para arquitecturas de 32 bits."
+    ],
+    "correct_index": 2,
+    "hint": "#[repr(packed)] elimina el padding entre campos; tomar referencias &struct.campo no alineadas es UB en arquitecturas estrictas."
+  },
+  {
+    "id": "rust_140",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿Qué representa la estructura 'std::mem::ManuallyDrop<T>'?",
+    "options": [
+      "Un temporizador que retrasa la destrucción del objeto hasta que la CPU esté ociosa.",
+      "Una interfaz que obliga al usuario a escribir código ensamblador para liberar memoria.",
+      "Una primitiva que invoca el destructor Drop dos veces consecutivas para mayor seguridad.",
+      "Un envoltorio que inhibe al compilador de invocar el destructor Drop sobre el valor T."
+    ],
+    "correct_index": 3,
+    "hint": "ManuallyDrop<T> suprime la llamada automática a Drop, permitiendo controlar manualmente cuándo y cómo se destruye el valor."
+  },
+  {
+    "id": "rust_141",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿Qué es el concepto de 'Pointer Provenance' (procedencia de punteros) en compiladores modernos?",
+    "options": [
+      "El historial abstracto de asignación que determina qué rango de memoria puede acceder un puntero.",
+      "El archivo fuente específico y número de línea en el cual fue instanciado el puntero crudo.",
+      "El registro físico de CPU donde residió la dirección de memoria antes de ser leída.",
+      "El nombre del paquete del cual proviene la definición de la estructura referenciada."
+    ],
+    "correct_index": 0,
+    "hint": "Provenance rastrea a qué objeto en memoria pertenece un puntero; forjar punteros a partir de enteros puede violar provenance y causar UB."
+  },
+  {
+    "id": "rust_142",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿Cómo deben realizarse lecturas sobre memoria que no cumple los requisitos de alineación del tipo?",
+    "options": [
+      "Desreferenciando directamente el puntero crudo utilizando el operador unario '*ptr'.",
+      "Utilizando 'std::ptr::read_unaligned(src)', que emite instrucciones seguras para accesos desalineados.",
+      "Realizando un casting de tipo hacia 'usize' y sumando el offset necesario para alinear.",
+      "Invocando la función 'std::mem::align_now()' antes de proceder con la lectura de los datos."
+    ],
+    "correct_index": 1,
+    "hint": "ptr::read_unaligned y ptr::write_unaligned son las funciones obligatorias para manipular memoria no alineada sin causar UB."
+  },
+  {
+    "id": "rust_143",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la diferencia formal entre una 'Data Race' y una 'Race Condition' general?",
+    "options": [
+      "Data race solo ocurre en sistemas de 32 bits; race condition ocurre exclusivamente en 64 bits.",
+      "Data race es un fallo de compilación; race condition es una excepción que lanza el runtime.",
+      "Data race es acceso concurrente no sincronizado con al menos una escritura; race condition es error lógico de orden.",
+      "Data race no provoca corrupción de datos; race condition siempre corrompe la memoria física."
+    ],
+    "correct_index": 2,
+    "hint": "Safe Rust garantiza la ausencia de Data Races (acceso concurrente no coordinado a memoria), pero no previene Race Conditions lógicas."
+  },
+  {
+    "id": "rust_144",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿Qué información compone físicamente un puntero fat (fat pointer) a un trait object 'dyn Trait'?",
+    "options": [
+      "Tres palabras de máquina: el inicio del bloque, su longitud en bytes y un semáforo mutex.",
+      "Una única palabra que referencia a una tabla hash global con los métodos implementados.",
+      "Un vector dinámico de punteros directos a cada una de las instrucciones de máquina.",
+      "Dos palabras de máquina: un puntero a los datos del objeto y un puntero a la tabla vtable."
+    ],
+    "correct_index": 3,
+    "hint": "dyn Trait es un fat pointer de 16 bytes (en 64-bit): ptr al valor concreto + ptr a la vtable con metadatos y funciones."
+  },
+  {
+    "id": "rust_145",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿En qué orden se ejecutan los destructores de los campos de una estructura en Rust?",
+    "options": [
+      "En el orden exacto en que fueron declarados en el cuerpo de la definición de la estructura.",
+      "En orden inverso al que fueron declarados para simular una pila de llamadas LIFO.",
+      "De forma aleatoria y concurrente para optimizar el rendimiento del recolector.",
+      "Primero los tipos primitivos escalares y posteriormente las colecciones del heap."
+    ],
+    "correct_index": 0,
+    "hint": "En Rust, los campos de un struct se descartan (drop) en orden de declaración; las variables locales se descartan en orden inverso (LIFO)."
+  },
+  {
+    "id": "rust_146",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿Qué garantiza la regla de encapsulación segura de código 'unsafe' en el diseño de Rust?",
+    "options": [
+      "Que los bloques unsafe solo pueden compilarse si se activa una bandera de depuración.",
+      "Que una API 'safe' debe garantizar invariantes internamente para que el usuario no pueda causar UB.",
+      "Que todo código unsafe debe ser traducido a lenguaje C antes de generar el binario.",
+      "Que el compilador desactiva automáticamente las optimizaciones de LLVM en bloques unsafe."
+    ],
+    "correct_index": 1,
+    "hint": "El principio fundamental de Rust: el código unsafe debe estar envuelto en abstracciones seguras cuyas APIs impidan causar UB desde safe code."
+  },
+  {
+    "id": "rust_147",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿Qué función de bajo nivel se utiliza para solicitar memoria sin inicializar con alineación custom?",
+    "options": [
+      "La función 'std::mem::malloc_aligned(bytes)', provista por las llamadas al sistema del SO.",
+      "La función 'std::heap::allocate_raw(size)', que solicita páginas de memoria virtual.",
+      "La función 'std::alloc::alloc(layout)', requiriendo un 'std::alloc::Layout' válido con tamaño y alineación.",
+      "La función 'std::ptr::allocate_block(layout)', que registra el puntero en el despachador."
+    ],
+    "correct_index": 2,
+    "hint": "std::alloc::alloc(layout) es el asignador global de bajo nivel; exige un Layout con tamaño y alineación potencia de dos."
+  },
+  {
+    "id": "rust_148",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿Por qué es UB crear una referencia nula en Rust, incluso dentro de un bloque 'unsafe' (ej: &*std::ptr::null())?",
+    "options": [
+      "Porque el puntero nulo sobreescribe la tabla vtable de la función en la pila de llamadas.",
+      "Porque el sistema operativo intercepta la creación de la referencia con un segfault inmediato.",
+      "Porque las referencias en Rust requieren obligatoriamente apuntar a estructuras con el trait Copy.",
+      "Porque el compilador asume que toda referencia (&T / &mut T) es no nula y dereferenciable por definición."
+    ],
+    "correct_index": 3,
+    "hint": "Las referencias en Rust llevan la invariante estricta de ser no nulas y alineadas; producir &*null() es UB instantáneo."
+  },
+  {
+    "id": "rust_149",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿Qué herramienta oficial del proyecto Rust permite interpretar MIR y detectar UB en pruebas?",
+    "options": [
+      "La herramienta Miri (un intérprete de Rust MIR que valida Stacked Borrows, alineación y memoria).",
+      "La herramienta Rustfmt, que audita la sintaxis del código para cumplir estándares visuales.",
+      "La herramienta Cargo-Audit, que inspecciona dependencias con vulnerabilidades reportadas.",
+      "La herramienta Clippy, que sugiere advertencias sobre modismos y estilo de programación."
+    ],
+    "correct_index": 0,
+    "hint": "Miri ejecuta código en MIR para detectar violaciones de Stacked Borrows, desreferencias nulas, desalineación y memory leaks."
+  },
+  {
+    "id": "rust_150",
+    "subtopic": "seguridad_memoria",
+    "difficulty": "advanced",
+    "question": "¿Qué consecuencia tiene invocar 'unreachable_unchecked()' si la ruta de ejecución resulta ser alcanzada?",
+    "options": [
+      "Lanza un pánico descriptivo con la traza de pila de la llamada en tiempo de ejecución.",
+      "Comportamiento indefinido (UB) inmediato: el optimizador asume que el código nunca se ejecutará.",
+      "El compilador cancela el programa emitiendo un aviso durante la fase de depuración.",
+      "La llamada se transforma automáticamente en un bucle infinito que congela el proceso."
+    ],
+    "correct_index": 1,
+    "hint": "std::hint::unreachable_unchecked() es una promesa unsafe de que el código es inalcanzable; si se ejecuta, es UB puro."
   }
 ]

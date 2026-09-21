@@ -1,80 +1,2102 @@
 [
   {
     "id": "go_001",
-    "question": "¿Cuál es la principal ventaja arquitectónica de una Goroutine frente a un hilo tradicional (thread) del sistema operativo?",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Qué palabra clave se antepone a una llamada de función para ejecutarla concurrentemente en Go?",
     "options": [
-      "Las goroutines son administradas en espacio de usuario por el runtime de Go (modelo M:N), iniciando con un stack dinámico y ligero (~2 KB) frente a los MBs requeridos por un thread de OS.",
-      "Las goroutines no pueden ser ejecutadas en procesadores multinúcleo.",
-      "Las goroutines solo funcionan de manera síncrona dentro de la función main().",
-      "Las goroutines requieren llamadas al kernel del sistema operativo para cada cambio de contexto (context switch)."
+      "La palabra clave 'go', que crea e inicia una nueva goroutine.",
+      "La palabra clave 'async', que devuelve una promesa no resuelta.",
+      "La palabra clave 'spawn', que asigna un nuevo hilo de kernel.",
+      "La palabra clave 'thread', que reserva memoria para el proceso."
     ],
     "correct_index": 0,
-    "hint": "El runtime de Go multiplexa miles de goroutines sobre una cantidad pequeña de hilos del SO mediante un scheduler cooperativo de bajo coste.",
-    "subtopic": "goroutines_canales"
+    "hint": "En Go, cualquier invocación de función precedida por 'go' se ejecuta concurrentemente en una nueva goroutine."
   },
   {
     "id": "go_002",
-    "question": "¿En qué se diferencian los canales (channels) Buffered de los Unbuffered en Go?",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Qué función integrada se utiliza en Go para instanciar e inicializar un canal?",
     "options": [
-      "Los canales unbuffered bloquean al emisor hasta que un receptor esté listo para leer (sincrónicos); los buffered solo bloquean al emisor cuando el buffer interno alcanza su capacidad máxima.",
-      "Los canales buffered solo admiten tipos string y los unbuffered cualquier interfaz.",
-      "Los canales unbuffered almacenan hasta 100 elementos automáticamente antes de bloquearse.",
-      "Los canales buffered no requieren el operador '<-' para enviar datos."
+      "La función new(), que solo reserva memoria a cero devolviendo un puntero al canal.",
+      "La función make(), que inicializa las estructuras internas y buffer del canal.",
+      "La función chan(), que registra el canal en el planificador del runtime de Go.",
+      "La función init(), que prepara los descriptores de entrada y salida estándar."
     ],
-    "correct_index": 0,
-    "hint": "Un canal unbuffered (capacidad 0) garantiza sincronización estricta punto a punto entre goroutines (rendezvous).",
-    "subtopic": "goroutines_canales"
+    "correct_index": 1,
+    "hint": "Los canales son tipos de referencia que requieren make() para asignar sus buffers y estructuras internas."
   },
   {
     "id": "go_003",
-    "question": "¿Cómo se comporta la sentencia 'defer' en Go respecto al orden de ejecución y evaluación de argumentos?",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Qué operador se utiliza para enviar y recibir datos a través de un canal en Go?",
     "options": [
-      "Se ejecutan en orden FIFO (First-In, First-Out) y sus argumentos se calculan al cerrar el programa completo.",
-      "Se ejecutan en orden LIFO (Last-In, First-Out) justo antes de que la función retorne, pero sus argumentos se evalúan de inmediato al procesar la línea 'defer'.",
-      "Se ejecutan en paralelo en una nueva goroutine en segundo plano.",
-      "Solo pueden usarse para capturar excepciones con panic sin importar el retorno de la función."
+      "El operador flecha '->', que transfiere datos exclusivamente hacia receptores.",
+      "El operador de flecha doble '=>', empleado para asociar canales con funciones.",
+      "El operador unario o binario '<-', que marca la dirección del flujo de datos.",
+      "El operador de inserción '<<', que encola los bytes directamente en el buffer."
     ],
-    "correct_index": 1,
-    "hint": "Imagina una pila (stack): las llamadas diferidas se apilan y se desapilan en orden inverso (LIFO) cuando la función termina.",
-    "subtopic": "goroutines_canales"
+    "correct_index": 2,
+    "hint": "La flecha '<-' indica la dirección del flujo de datos hacia o desde el canal según su posición."
   },
   {
     "id": "go_004",
-    "question": "¿Cómo se implementa una interfaz en el lenguaje Go?",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Qué ocurre si se intenta enviar un valor a un canal sin buffer cuando no hay un receptor listo?",
     "options": [
-      "De forma implícita: un tipo implementa una interfaz simplemente proveyendo los métodos declarados en ella, sin requerir una palabra clave como 'implements'.",
-      "Mediante la declaración obligatoria 'type StructName implements InterfaceName'.",
-      "Heredando de una clase abstracta base mediante 'extends'.",
-      "Registrando manualmente el tipo en el compilador dentro del archivo go.mod."
+      "El valor enviado se descarta silenciosamente permitiendo continuar a la goroutine.",
+      "Se produce un error de compilación inmediato por falta de sincronización del canal.",
+      "El valor se almacena en una cola temporal oculta gestionada por el runtime de Go.",
+      "La goroutine emisora se bloquea hasta que otra goroutine esté lista para recibir."
     ],
-    "correct_index": 0,
-    "hint": "Go utiliza tipado estructural (structural typing o 'duck typing en tiempo de compilación'): si un tipo define los métodos del contrato, cumple la interfaz automáticamente.",
-    "subtopic": "interfaces_tipos"
+    "correct_index": 3,
+    "hint": "Los canales sin buffer son síncronos: emisor y receptor deben coincidir simultáneamente para transferir el dato."
   },
   {
     "id": "go_005",
-    "question": "Al definir métodos para un struct en Go, ¿cuándo se debe utilizar un Pointer Receiver (e.g. `func (s *Struct) Method()`) en lugar de un Value Receiver?",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Qué sucede por defecto cuando la función main() de un programa en Go termina su ejecución?",
     "options": [
-      "Únicamente cuando el struct no contenga números enteros ni cadenas.",
-      "Cuando el método necesita mutar el estado del struct original, o para evitar el costo de copiar structs grandes en memoria en cada invocación.",
-      "Solo cuando la función deba retornar múltiples valores a la vez.",
-      "Los pointer receivers están prohibidos cuando se implementan interfaces públicas."
+      "El programa finaliza de inmediato, terminando forzosamente todas las goroutines.",
+      "El programa espera automáticamente a que todas las goroutines activas terminen.",
+      "Se genera un pánico en tiempo de ejecución avisando de goroutines huérfanas vivas.",
+      "Las goroutines activas se transfieren en segundo plano al proceso init del SO."
     ],
-    "correct_index": 1,
-    "hint": "Un Value Receiver recibe una copia completa del struct (cualquier modificación no afecta al llamador); un Pointer Receiver opera directamente sobre la referencia original.",
-    "subtopic": "interfaces_tipos"
+    "correct_index": 0,
+    "hint": "La salida de main() invoca os.Exit(0), finalizando inmediatamente el proceso sin esperar a otras goroutines."
   },
   {
     "id": "go_006",
-    "question": "¿Qué diferencia existe entre un Array y un Slice en Go?",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Qué función integrada se utiliza para cerrar formalmente un canal en Go?",
     "options": [
-      "Un array tiene un tamaño fijo definido en tiempo de compilación que forma parte de su tipo; un slice es una vista dinámica sobre un array subyacente con puntero, longitud (len) y capacidad (cap).",
-      "Los slices no permiten almacenar tipos primitivos como int o float.",
-      "Los arrays son dinámicos y pueden crecer indefinidamente con la función append().",
-      "No existe ninguna diferencia; son dos palabras para la misma estructura de memoria."
+      "La función stop(), que pausa temporalmente la recepción de nuevos mensajes.",
+      "La función close(), que avisa que no se enviarán más valores por el canal.",
+      "El método ch.End(), que destruye los descriptores de comunicación del canal.",
+      "La función clear(), que borra los elementos contenidos en el buffer del canal."
+    ],
+    "correct_index": 1,
+    "hint": "close(ch) marca el canal como cerrado; las lecturas posteriores devolverán el zero value cuando se vacíe."
+  },
+  {
+    "id": "go_007",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Qué valor retorna la lectura de un canal cerrado cuando su buffer ya está vacío?",
+    "options": [
+      "Un error de tipo io.EOF que detiene inmediatamente el flujo de ejecución.",
+      "Un puntero nulo (nil) independientemente del tipo concreto de dicho canal.",
+      "El valor cero (zero-value) correspondiente al tipo de datos del canal.",
+      "Un valor indefinido especial que invalida la variable destino en tiempo real."
+    ],
+    "correct_index": 2,
+    "hint": "Leer de un canal cerrado y vacío nunca bloquea y retorna siempre el valor cero del tipo correspondiente."
+  },
+  {
+    "id": "go_008",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Cómo se verifica si un canal fue cerrado al recibir un valor con la sintaxis de dos variables?",
+    "options": [
+      "Con la expresión 'v, err := <-ch', donde err contiene una referencia a ErrClosed.",
+      "Con la expresión 'v, open := <-ch', donde open es un entero que indica los slots libres.",
+      "Con la expresión 'v, st := ch.Read()', donde st contiene el código de retorno numérico.",
+      "Con la expresión 'v, ok := <-ch', donde ok es false si el canal está cerrado y vacío."
+    ],
+    "correct_index": 3,
+    "hint": "El segundo valor booleano 'ok' es true si el dato proviene de un envío exitoso, o false si está cerrado y vacío."
+  },
+  {
+    "id": "go_009",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Qué estructura de control permite coordinar y reaccionar a múltiples canales simultáneamente?",
+    "options": [
+      "La sentencia select, que permite evaluar múltiples operaciones sobre canales a la vez.",
+      "La sentencia switch, que evalúa exclusivamente expresiones lógicas o tipos de datos.",
+      "La sentencia choose, que selecciona aleatoriamente entre varias funciones activas.",
+      "La sentencia poll, que sondea los descriptores de archivos del sistema operativo."
     ],
     "correct_index": 0,
-    "hint": "El tipo [5]int es diferente de [10]int (longitud fija). Un []int es un slice flexible compuesto por un puntero al array subyacente, longitud y capacidad.",
-    "subtopic": "interfaces_tipos"
+    "hint": "select se parece a un switch pero cada cláusula case representa una operación de envío o recepción de canales."
+  },
+  {
+    "id": "go_010",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Qué tipo del paquete 'sync' se usa para esperar la finalización de un grupo de goroutines?",
+    "options": [
+      "El tipo sync.Barrier, que sincroniza el avance de hilos en puntos de comprobación.",
+      "El tipo sync.WaitGroup, que lleva un contador de tareas pendientes de finalización.",
+      "El tipo sync.Condition, que despierta goroutines ante el cumplimiento de predicados.",
+      "El tipo sync.JoinPool, que agrupa los hilos del sistema operativo en colas locales."
+    ],
+    "correct_index": 1,
+    "hint": "sync.WaitGroup proporciona Add(), Done() y Wait() para esperar a que un conjunto de goroutines termine."
+  },
+  {
+    "id": "go_011",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Cómo se itera sobre todos los valores recibidos de un canal hasta que este sea cerrado?",
+    "options": [
+      "Mediante el bucle 'while ch.HasNext()', solicitando la lectura con 'v := <-ch'.",
+      "Mediante la llamada 'for ch.Poll(&v)', que retorna un booleano mientras haya datos.",
+      "Mediante el bucle 'for v := range ch', que finaliza al cerrarse y vaciarse el canal.",
+      "Mediante el bucle 'foreach v in ch', que procesa de manera reactiva cada elemento."
+    ],
+    "correct_index": 2,
+    "hint": "El bucle 'for range' sobre un canal extrae elementos continuamente hasta que el canal es cerrado y drenado."
+  },
+  {
+    "id": "go_012",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Cuál es la sintaxis para declarar un parámetro de canal de solo lectura en una función?",
+    "options": [
+      "Declarando el parámetro como 'ch chan<- T', impidiendo operaciones de recepción.",
+      "Declarando el parámetro como 'ch readonly chan T', mediante palabras reservadas.",
+      "Declarando el parámetro como 'ch chan(in) T', indicando la entrada de datos pura.",
+      "Declarando el parámetro como 'ch <-chan T', impidiendo operaciones de envío en él."
+    ],
+    "correct_index": 3,
+    "hint": "La flecha a la izquierda de chan (<-chan T) indica que los datos solo pueden ser leídos desde el canal."
+  },
+  {
+    "id": "go_013",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Cuál es la sintaxis para declarar un parámetro de canal de solo escritura en una función?",
+    "options": [
+      "Declarando el parámetro como 'ch chan<- T', impidiendo operaciones de lectura en él.",
+      "Declarando el parámetro como 'ch <-chan T', impidiendo operaciones de envío de datos.",
+      "Declarando el parámetro como 'ch writeonly chan T', usando modificadores de tipo.",
+      "Declarando el parámetro como 'ch chan(out) T', definiendo la salida de datos pura."
+    ],
+    "correct_index": 0,
+    "hint": "La flecha apuntando a chan (chan<- T) especifica que el canal únicamente admite envíos."
+  },
+  {
+    "id": "go_014",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Qué primitiva de exclusión mutua proporciona el paquete 'sync' para proteger variables?",
+    "options": [
+      "La estructura sync.Critical, que delimita bloques de código atómicos en memoria.",
+      "La estructura sync.Mutex, que expone los métodos de bloqueo Lock() y Unlock().",
+      "La estructura sync.Semaphore, que controla el conteo de accesos a recursos libres.",
+      "La estructura sync.Monitor, que encapsula variables compartidas con condiciones."
+    ],
+    "correct_index": 1,
+    "hint": "sync.Mutex ofrece exclusión mutua tradicional con Lock() y Unlock() para evitar data races."
+  },
+  {
+    "id": "go_015",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Qué método de sync.WaitGroup invoca una goroutine trabajadora para indicar que concluyó?",
+    "options": [
+      "El método wg.Finish(), que marca la tarea actual como resuelta en el grupo.",
+      "El método wg.Complete(), que notifica al planificador la liberación del hilo.",
+      "El método wg.Done(), que decrementa en una unidad el contador del WaitGroup.",
+      "El método wg.Exit(), que destruye la referencia de la goroutine en la cola."
+    ],
+    "correct_index": 2,
+    "hint": "wg.Done() resta 1 al contador interno del WaitGroup (equivalente a wg.Add(-1))."
+  },
+  {
+    "id": "go_016",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Cuál es la capacidad del buffer de un canal creado simplemente como 'make(chan int)'?",
+    "options": [
+      "Un elemento por defecto, permitiendo un envío previo antes de bloquearse.",
+      "Capacidad ilimitada, redimensionando dinámicamente su espacio según la demanda.",
+      "El equivalente al tamaño de una página de memoria virtual asignada por el SO.",
+      "Cero elementos, comportándose como un canal estrictamente síncrono sin buffer."
+    ],
+    "correct_index": 3,
+    "hint": "Si se omite el argumento de capacidad en make(chan T), el canal carece de buffer (capacidad 0)."
+  },
+  {
+    "id": "go_017",
+    "subtopic": "goroutines_canales",
+    "difficulty": "basic",
+    "question": "¿Qué función del paquete 'time' suspende la ejecución de la goroutine durante un periodo?",
+    "options": [
+      "La función time.Sleep(), que suspende la goroutine invocadora durante la duración dada.",
+      "La función time.Wait(), que congela el hilo del sistema operativo hasta una señal.",
+      "La función time.Delay(), que encola la siguiente instrucción con un retardo fijo.",
+      "La función time.Pause(), que bloquea los canales vinculados a la goroutine actual."
+    ],
+    "correct_index": 0,
+    "hint": "time.Sleep(d) suspende la goroutine actual durante la duración especificada sin bloquear el hilo del SO."
+  },
+  {
+    "id": "go_018",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Qué ocurre exactamente si una goroutine intenta enviar un valor a un canal ya cerrado?",
+    "options": [
+      "La operación devuelve silenciosamente un booleano false sin bloquear a la goroutine.",
+      "Se produce un pánico inmediato (panic: send on closed channel) en tiempo de ejecución.",
+      "El canal reabre automáticamente su buffer para recibir el dato de forma excepcional.",
+      "La goroutine se bloquea de forma indefinida en espera de que otro proceso lo reabra."
+    ],
+    "correct_index": 1,
+    "hint": "Enviar a un canal cerrado siempre genera un panic irrecuperable de tipo 'send on closed channel'."
+  },
+  {
+    "id": "go_019",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Qué sucede si una goroutine intenta cerrar un canal que ya ha sido cerrado antes?",
+    "options": [
+      "La llamada se ignora de forma idempotente sin producir ningún efecto colateral.",
+      "Se retorna un valor de error para notificar al invocador sobre el cierre repetido.",
+      "El runtime arroja un pánico inmediato (panic: close of closed channel) inatrapable.",
+      "La goroutine pasa a un estado de reposo esperando que el canal sea reinicializado."
+    ],
+    "correct_index": 2,
+    "hint": "Cerrar un canal dos veces es un error de programación grave y genera pánico en ejecución."
+  },
+  {
+    "id": "go_020",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Cuál es el comportamiento al intentar leer o escribir sobre un canal que tiene valor nil?",
+    "options": [
+      "Produce un pánico inmediato por desreferencia de puntero nulo en tiempo de ejecución.",
+      "Retorna instantáneamente el valor cero del tipo sin suspender a la goroutine activa.",
+      "El canal asigna automáticamente un buffer de tamaño 1 para completar la transferencia.",
+      "La operación se bloquea permanentemente sin arrojar ningún tipo de error o pánico."
+    ],
+    "correct_index": 3,
+    "hint": "Tanto enviar como recibir en un canal nil bloquea para siempre la goroutine invocadora."
+  },
+  {
+    "id": "go_021",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Cómo actúa la sentencia select cuando dos o más casos están listos para ejecutarse a la vez?",
+    "options": [
+      "Selecciona de forma pseudoaleatoria y uniforme uno solo de los casos preparados.",
+      "Ejecuta de manera secuencial el primer caso según el orden textual en el código.",
+      "Ejecuta de forma concurrente todas las ramas listas creando goroutines efímeras.",
+      "Lanza una excepción de contención al no poder determinar el canal prioritario."
+    ],
+    "correct_index": 0,
+    "hint": "Para evitar inanición (starvation), Go elige pseudoaleatoriamente entre los canales preparados."
+  },
+  {
+    "id": "go_022",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Cuál es el propósito principal de incluir una cláusula 'default' en una sentencia select?",
+    "options": [
+      "Capturar cualquier pánico o error producido dentro de las ramas de comunicación.",
+      "Permitir operaciones no bloqueantes si ningún canal está inmediatamente disponible.",
+      "Asignar la máxima prioridad de ejecución a la lógica contenida en dicho bloque.",
+      "Reiniciar automáticamente los temporizadores de timeout definidos en los canales."
+    ],
+    "correct_index": 1,
+    "hint": "Si ningún caso está listo para comunicar, el select ejecuta inmediatamente el bloque default."
+  },
+  {
+    "id": "go_023",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Por qué es un error grave pasar una variable sync.WaitGroup por valor a una función?",
+    "options": [
+      "Porque el compilador de Go prohíbe el paso de estructuras del paquete sync por valor.",
+      "Porque genera fugas de memoria irrecuperables en el montículo al duplicar punteros.",
+      "Porque copia el estado interno, impidiendo sincronizar con el WaitGroup original.",
+      "Porque modifica el identificador numérico de la goroutine que invoca la función."
+    ],
+    "correct_index": 2,
+    "hint": "sync.WaitGroup almacena contadores internos; si se copia por valor, los métodos actúan sobre la copia."
+  },
+  {
+    "id": "go_024",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Qué diferencia funcional clave existe entre sync.Mutex y sync.RWMutex en Go?",
+    "options": [
+      "RWMutex admite llamadas recursivas reentrantes al método Lock desde la misma goroutine.",
+      "Mutex permite configurar tiempos de espera máximos mediante parámetros de expiración.",
+      "RWMutex solo puede coordinar tipos atómicos suministrados por el paquete sync/atomic.",
+      "RWMutex permite múltiples lectores concurrentes o un único escritor con acceso exclusivo."
+    ],
+    "correct_index": 3,
+    "hint": "RLock() permite concurrencia de lectura; Lock() garantiza acceso exclusivo para escritura."
+  },
+  {
+    "id": "go_025",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Qué garantía formal ofrece el tipo sync.Once mediante su método Do(f)?",
+    "options": [
+      "Garantiza que la función f se ejecutará una única vez aunque muchas goroutines la llamen.",
+      "Garantiza que la función f se ejecutará una vez por cada núcleo de CPU disponible.",
+      "Garantiza que la función f finalizará en menos de un milisegundo o será cancelada.",
+      "Garantiza que la función f se ejecutará en un hilo nativo del sistema con prioridad."
+    ],
+    "correct_index": 0,
+    "hint": "sync.Once garantiza que la función argumento se ejecutará estrictamente una vez en todo el ciclo del programa."
+  },
+  {
+    "id": "go_026",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Qué tipo de canal devuelve el método Done() expuesto por context.Context?",
+    "options": [
+      "Un canal de tipo 'chan error' que emite el motivo detallado de la cancelación ocurrida.",
+      "Un canal de tipo '<-chan struct{}' que se cierra al momento de cancelarse el contexto.",
+      "Un canal de tipo 'chan bool' que transmite el valor true justo antes de desactivarse.",
+      "Un canal de tipo 'chan int' que retorna el código numérico de salida de la operación."
+    ],
+    "correct_index": 1,
+    "hint": "El canal retornado por Done() se cierra al cancelar el contexto; leer de un canal cerrado desbloquea."
+  },
+  {
+    "id": "go_027",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Cuál es la estrategia idiomática para prevenir goroutine leaks al producir datos a un canal?",
+    "options": [
+      "Incrementar indefinidamente la capacidad del buffer para evitar cualquier bloqueo.",
+      "Invocar periódicamente a runtime.GC() para forzar la eliminación de hilos ociosos.",
+      "Vincular el ciclo de vida del productor a un context.Context o canal de cancelación.",
+      "Configurar la variable de entorno GODEBUG=leakdetector antes de compilar el binario."
+    ],
+    "correct_index": 2,
+    "hint": "Las goroutine leaks suelen deberse a productores bloqueados en canales que nadie lee; un context evita esto."
+  },
+  {
+    "id": "go_028",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Qué método de context.Context reporta el motivo del cierre tras desbloquearse el canal Done()?",
+    "options": [
+      "El método ctx.Reason(), que devuelve una descripción legible de la interrupción.",
+      "El método ctx.Cause(), que extrae la traza de llamadas del origen del fallo.",
+      "El método ctx.Status(), que informa si el contexto continúa o finalizó su tarea.",
+      "El método ctx.Err(), que retorna context.Canceled o context.DeadlineExceeded."
+    ],
+    "correct_index": 3,
+    "hint": "ctx.Err() devuelve un error no nulo (Canceled o DeadlineExceeded) una vez cancelado el contexto."
+  },
+  {
+    "id": "go_029",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Qué función de 'context' añade una duración límite relativa a partir del momento actual?",
+    "options": [
+      "La función context.WithTimeout(), que cancela el contexto tras expirar el tiempo dado.",
+      "La función context.WithDelay(), que pospone el inicio de las tareas en segundo plano.",
+      "La función context.WithExpiry(), que establece un temporizador inmutable en memoria.",
+      "La función context.WithDuration(), que asigna cuotas de cómputo a las goroutines hijas."
+    ],
+    "correct_index": 0,
+    "hint": "context.WithTimeout(parent, timeout) crea un contexto que expira tras transcurrir la duración estipulada."
+  },
+  {
+    "id": "go_030",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Qué función de 'context' se utiliza habitualmente como raíz vacía no cancelable?",
+    "options": [
+      "La función context.Root(), que inicializa el árbol de contextos con el hilo inicial.",
+      "La función context.Background(), que provee un contexto base no nulo y sin valores.",
+      "La función context.New(), que crea un contexto configurado con parámetros estándar.",
+      "La función context.Empty(), que retorna una referencia nula protegida contra pánicos."
+    ],
+    "correct_index": 1,
+    "hint": "context.Background() es el punto de partida estándar para main(), peticiones y pruebas unitarias."
+  },
+  {
+    "id": "go_031",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Para qué sirve el flag '-race' al compilar o probar programas Go (go test -race)?",
+    "options": [
+      "Para forzar la vectorización automática de bucles mejorando la velocidad global.",
+      "Para medir el tiempo de ejecución comparativo entre diferentes funciones concurrentes.",
+      "Para activar el detector dinámico de condiciones de carrera en memoria compartida.",
+      "Para restringir la ejecución de todo el programa a un único hilo de procesamiento."
+    ],
+    "correct_index": 2,
+    "hint": "El race detector añade instrumentación al código para detectar lecturas y escrituras conflictivas en memoria."
+  },
+  {
+    "id": "go_032",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Qué función del paquete 'time' devuelve un canal que emite la hora actual tras un retardo?",
+    "options": [
+      "La función time.Tick(), que programa una alarma recurrente en intervalos continuos.",
+      "La función time.DelayChan(), que retiene la goroutine hasta recibir una señal.",
+      "La función time.WaitUntil(), que congela la ejecución hasta un momento exacto.",
+      "La función time.After(), que retorna un canal de solo lectura con el timestamp."
+    ],
+    "correct_index": 3,
+    "hint": "time.After(d) es muy útil en sentencias select para fijar límites de tiempo a operaciones asíncronas."
+  },
+  {
+    "id": "go_033",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Qué ocurre al leer de un canal con buffer que contiene datos después de haber sido cerrado?",
+    "options": [
+      "Se recuperan normalmente los datos remanentes hasta que el buffer quede vacío.",
+      "Los datos restantes se descartan de inmediato arrojando un error en ejecución.",
+      "La operación de lectura se bloquea permanentemente debido al cierre del canal.",
+      "Se recibe de inmediato el valor cero, perdiéndose los datos almacenados previamente."
+    ],
+    "correct_index": 0,
+    "hint": "Cerrar un canal no destruye los datos en tránsito; los valores almacenados en el buffer pueden leerse con normalidad."
+  },
+  {
+    "id": "go_034",
+    "subtopic": "goroutines_canales",
+    "difficulty": "medium",
+    "question": "¿Por qué era peligroso capturar la variable de un bucle 'for' en goroutines antes de Go 1.22?",
+    "options": [
+      "Porque el compilador liberaba la memoria de la variable de iteración en cada salto.",
+      "Porque todas las goroutines capturaban la misma dirección física compartida por cierre.",
+      "Porque se generaba un pánico en tiempo de ejecución por variables concurrentes.",
+      "Porque la variable quedaba bloqueada impidiendo las lecturas de los demás hilos."
+    ],
+    "correct_index": 1,
+    "hint": "Antes de Go 1.22, la variable del bucle se reusaba en cada ciclo; las goroutines compartían la misma referencia."
+  },
+  {
+    "id": "go_035",
+    "subtopic": "goroutines_canales",
+    "difficulty": "advanced",
+    "question": "¿Cómo se define el modelo de planificación GMP empleado por el runtime de Go?",
+    "options": [
+      "Asocia un hilo del SO (M) a cada goroutine (G) mediante procesos POSIX estándar (P).",
+      "Ejecuta todas las goroutines (G) en un bucle de eventos monohilo asistido por pools (P).",
+      "Mapea N goroutines (G) sobre M hilos del SO mediante P procesadores lógicos del runtime.",
+      "Delega la conmutación de contexto de goroutines enteramente en el kernel del SO."
+    ],
+    "correct_index": 2,
+    "hint": "El planificador GMP coordina G (goroutine), M (hilo del SO) y P (procesador lógico con cola local)."
+  },
+  {
+    "id": "go_036",
+    "subtopic": "goroutines_canales",
+    "difficulty": "advanced",
+    "question": "¿Cuál es el tamaño aproximado de la pila (stack) de una goroutine recién instanciada?",
+    "options": [
+      "Exactamente 1 MB asignado de manera estática e inmutable en la memoria del sistema.",
+      "Alrededor de 64 KB en bloques dispersos vinculados a través de listas enlazadas.",
+      "El tamaño estándar de página de memoria virtual gestionada por el kernel del SO.",
+      "Aproximadamente 2 KB, creciendo o encogiéndose de forma contigua según sea necesario."
+    ],
+    "correct_index": 3,
+    "hint": "Las goroutines inician con pilas muy livianas de ~2 KB que pueden crecer dinámicamente según la profundidad."
+  },
+  {
+    "id": "go_037",
+    "subtopic": "goroutines_canales",
+    "difficulty": "advanced",
+    "question": "¿Qué técnica aplica el scheduler de Go cuando la cola local de un procesador P se vacía?",
+    "options": [
+      "Aplica work-stealing, robando la mitad de las goroutines de la cola de otro procesador P.",
+      "Suspende de inmediato el hilo nativo M asociado a dicho P para ahorrar energía de CPU.",
+      "Emite una interrupción al sistema operativo para que balancee las tareas en hardware.",
+      "Bloquea las demás colas de procesadores hasta que se encolen nuevas goroutines."
+    ],
+    "correct_index": 0,
+    "hint": "El algoritmo de work-stealing permite a un P sin tareas robar la mitad del trabajo de otro P para evitar ociosidad."
+  },
+  {
+    "id": "go_038",
+    "subtopic": "goroutines_canales",
+    "difficulty": "advanced",
+    "question": "¿Qué ventaja en rendimiento ofrece sync/atomic frente a la sincronización con sync.Mutex?",
+    "options": [
+      "Permite sincronizar colecciones complejas de objetos a través de memoria persistente.",
+      "Ejecuta instrucciones atómicas directas en la CPU sin suspender ni despertar goroutines.",
+      "Elimina por completo la necesidad de barreras de sincronización en memorias caché.",
+      "Permite que múltiples goroutines escriban estructuras grandes sin ningún bloqueo."
+    ],
+    "correct_index": 1,
+    "hint": "sync/atomic emplea primitivas de CPU como Compare-And-Swap evitando cambios de contexto del planificador."
+  },
+  {
+    "id": "go_039",
+    "subtopic": "goroutines_canales",
+    "difficulty": "advanced",
+    "question": "¿Cuál es el caso de uso adecuado para el tipo sync.Pool en aplicaciones de alto rendimiento?",
+    "options": [
+      "Limitar la cantidad concurrente de peticiones HTTP procesadas por el servidor web.",
+      "Mantener sesiones de base de datos activas de forma permanente ante posibles caídas.",
+      "Reutilizar estructuras u objetos temporales para reducir la presión sobre el recolector.",
+      "Garantizar la persistencia de estados en memoria ante cierres inesperados de proceso."
+    ],
+    "correct_index": 2,
+    "hint": "sync.Pool permite reciclar objetos para aminorar la sobrecarga de allocations y pausas del Garbage Collector."
+  },
+  {
+    "id": "go_040",
+    "subtopic": "goroutines_canales",
+    "difficulty": "advanced",
+    "question": "¿En qué escenario resulta óptimo usar sync.Map frente a un map protegido con sync.RWMutex?",
+    "options": [
+      "Escrituras continuas y concurrentes concentradas sobre un conjunto idéntico de claves.",
+      "Cualquier estructura de almacenamiento asociativo que supere los mil elementos.",
+      "Cuando sea indispensable conservar el orden de inserción al iterar sobre el mapa.",
+      "Claves estables con lecturas masivas o goroutines operando sobre conjuntos de claves disjuntos."
+    ],
+    "correct_index": 3,
+    "hint": "sync.Map está optimizado para claves que solo se escriben una vez y se leen muchas veces, o accesos disjuntos."
+  },
+  {
+    "id": "go_041",
+    "subtopic": "goroutines_canales",
+    "difficulty": "advanced",
+    "question": "¿Cómo implementó Go 1.14 la apropiación no cooperativa (preemption asíncrona) en goroutines?",
+    "options": [
+      "Emitiendo señales de interrupción del SO (SIGURG en Unix) para suspender bucles cerrados.",
+      "Inyectando comprobaciones de prólogo de función en cada instrucción de salto condicional.",
+      "Desactivando el multi-threading nativo cuando se ejecutan rutinas de cómputo intensivo.",
+      "Obligando al compilador a generar bytecode interpretado en lugar de binario de máquina."
+    ],
+    "correct_index": 0,
+    "hint": "Go 1.14 usa señales POSIX (SIGURG) para interrumpir goroutines que ejecutan bucles cerrados sin llamadas."
+  },
+  {
+    "id": "go_042",
+    "subtopic": "goroutines_canales",
+    "difficulty": "advanced",
+    "question": "¿Por qué el uso repetitivo de time.After en un select dentro de un bucle rápido produce fuga?",
+    "options": [
+      "Porque time.After crea un hilo nativo del sistema operativo en cada iteración del bucle.",
+      "Porque cada llamada registra un temporizador en memoria que no se libera hasta que expira.",
+      "Porque el canal resultante nunca puede ser cerrado por el runtime en tiempo de ejecución.",
+      "Porque sobreescribe las tablas globales de interrupciones del kernel del sistema."
+    ],
+    "correct_index": 1,
+    "hint": "time.After reserva memoria que permanece activa durante toda su duración; en bucles rápidos se acumulan miles."
+  },
+  {
+    "id": "go_043",
+    "subtopic": "goroutines_canales",
+    "difficulty": "advanced",
+    "question": "¿Qué efecto produce la llamada explícita a runtime.Gosched() dentro de una goroutine?",
+    "options": [
+      "Detiene la ejecución de la goroutine de manera definitiva hasta recibir una señal externa.",
+      "Fuerza la ejecución inmediata de una fase completa de recolección de basura en el heap.",
+      "Cede voluntariamente el procesador P, colocando la goroutine al final de la cola ejecutable.",
+      "Incrementa la prioridad de cómputo de la goroutine en las colas del planificador."
+    ],
+    "correct_index": 2,
+    "hint": "runtime.Gosched() realiza un yield voluntario, permitiendo a otras goroutines ejecutarse en el procesador."
+  },
+  {
+    "id": "go_044",
+    "subtopic": "goroutines_canales",
+    "difficulty": "advanced",
+    "question": "¿Qué controla exactamente el parámetro fijado mediante runtime.GOMAXPROCS(n)?",
+    "options": [
+      "La cantidad máxima total de goroutines que pueden encontrarse en memoria activa.",
+      "El número de hilos de kernel dedicados a escuchar eventos de red en el netpoller.",
+      "La cuota de memoria RAM asignada al compilador durante la fase de optimización.",
+      "El número máximo de procesadores lógicos (P) que ejecutan código de usuario a la vez."
+    ],
+    "correct_index": 3,
+    "hint": "GOMAXPROCS establece cuántos procesadores lógicos P pueden ejecutar goroutines en paralelo."
+  },
+  {
+    "id": "go_045",
+    "subtopic": "goroutines_canales",
+    "difficulty": "advanced",
+    "question": "¿Cómo se utiliza un canal buffered para materializar el patrón concurrente 'Semáforo'?",
+    "options": [
+      "Enviando un token para ocupar un slot y recibiendo del canal para liberar el recurso.",
+      "Cerrando y reabriendo el canal sucesivamente según la cantidad de tareas en espera.",
+      "Consultando la función len() sobre el canal y aplicando sentencias condicionales if.",
+      "Asignando múltiples goroutines lectoras sobre un único canal sin buffer intermedio."
+    ],
+    "correct_index": 0,
+    "hint": "Un canal buffered de capacidad N actúa como semáforo: enviar adquiere un cupo y recibir lo libera."
+  },
+  {
+    "id": "go_046",
+    "subtopic": "goroutines_canales",
+    "difficulty": "advanced",
+    "question": "¿Qué ocurre con el hilo M y el procesador P cuando una goroutine ejecuta una syscall bloqueante?",
+    "options": [
+      "El procesador P se bloquea por completo deteniendo a todas las goroutines asociadas.",
+      "El hilo M se bloquea en la llamada del SO y P se desvincula para seguir con otro hilo M.",
+      "La llamada al sistema se aborta si excede el umbral de tiempo fijado por el scheduler.",
+      "El runtime cancela la goroutine y la relanza en un nuevo hilo tras recibir la respuesta."
+    ],
+    "correct_index": 1,
+    "hint": "El planificador desvincula P de M (handoff_p) para que P continúe ejecutando otras goroutines en otro hilo."
+  },
+  {
+    "id": "go_047",
+    "subtopic": "goroutines_canales",
+    "difficulty": "advanced",
+    "question": "¿Cómo optimiza el componente 'netpoller' las operaciones de entrada/salida de red en Go?",
+    "options": [
+      "Crea un socket crudo omitiendo la pila de protocolos de red del sistema operativo.",
+      "Asigna un hilo nativo del sistema operativo de manera exclusiva a cada conexión abierta.",
+      "Transforma I/O bloqueante en no bloqueante integrando epoll/kqueue con el scheduler de Go.",
+      "Comprime las tramas de red concurrentemente antes de enviarlas al controlador físico."
+    ],
+    "correct_index": 2,
+    "hint": "El netpoller integra mecanismos como epoll/kqueue para parquear goroutines sin bloquear hilos del SO."
+  },
+  {
+    "id": "go_048",
+    "subtopic": "goroutines_canales",
+    "difficulty": "advanced",
+    "question": "¿Qué consecuencia tiene intentar adquirir dos veces consecutivas el mismo sync.Mutex?",
+    "options": [
+      "El mutex detecta la llamada recursiva y permite el acceso incrementando un contador.",
+      "El método Lock() devuelve false avisando que el cerrojo ya se encontraba bloqueado.",
+      "El cerrojo se libera automáticamente permitiendo adquirir la nueva solicitud de bloqueo.",
+      "Se produce un interbloqueo fatal (deadlock) que detiene permanentemente a la goroutine."
+    ],
+    "correct_index": 3,
+    "hint": "sync.Mutex en Go no es reentrante; si la misma goroutine llama a Lock() dos veces, se produce un deadlock fatal."
+  },
+  {
+    "id": "go_049",
+    "subtopic": "goroutines_canales",
+    "difficulty": "advanced",
+    "question": "¿Cuándo pueden ser purgados por el runtime los objetos almacenados en un sync.Pool?",
+    "options": [
+      "El Garbage Collector puede vaciar por completo el contenido de sync.Pool en cualquier ciclo.",
+      "Los objetos permanecen garantizados en memoria hasta que el proceso finalice formalmente.",
+      "Solo se descartan cuando la memoria física del equipo entra en condición crítica de OOM.",
+      "Se guardan temporalmente en un archivo de paginación en disco para liberar espacio de RAM."
+    ],
+    "correct_index": 0,
+    "hint": "El ciclo de vida en sync.Pool es efímero: el GC puede reclamar sus objetos en cualquier ciclo de recolección."
+  },
+  {
+    "id": "go_050",
+    "subtopic": "goroutines_canales",
+    "difficulty": "advanced",
+    "question": "¿En qué consiste el patrón concurrente 'Fan-Out' en el desarrollo con Go?",
+    "options": [
+      "Una única goroutine combina los resultados de múltiples canales en un flujo unificado.",
+      "Múltiples goroutines leen en paralelo de un mismo canal para repartirse el procesamiento.",
+      "Una goroutine replica un mensaje idéntico enviándolo hacia múltiples canales distintos.",
+      "Se finalizan anticipadamente tareas concurrentes mediante señales de timeout globales."
+    ],
+    "correct_index": 1,
+    "hint": "Fan-Out consiste en distribuir el trabajo de un canal común entre múltiples goroutines consumidoras concurrentes."
+  },
+  {
+    "id": "go_051",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Cómo se implementa una interfaz en el lenguaje Go?",
+    "options": [
+      "Usando la palabra clave 'implements' en la declaración de la estructura.",
+      "Registrando el tipo en una tabla global con la directiva @implement de paquete.",
+      "De forma implícita, definiendo todos los métodos requeridos por la interfaz.",
+      "Heredando directamente de una clase base mediante la sintaxis de dos puntos."
+    ],
+    "correct_index": 2,
+    "hint": "Go utiliza tipado estructural (duck typing): si un tipo define los métodos requeridos, satisface la interfaz."
+  },
+  {
+    "id": "go_052",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Qué representa la interfaz vacía interface{} (o su alias 'any' en Go 1.18+)?",
+    "options": [
+      "Un tipo puntero nulo que solo admite asignaciones a referencias vacías.",
+      "Un tipo genérico especial restringido exclusivamente a tipos numéricos básicos.",
+      "Una interfaz que obliga a implementar serialización binaria en tiempo de ejecución.",
+      "Una interfaz sin métodos que puede contener valores de cualquier tipo existente."
+    ],
+    "correct_index": 3,
+    "hint": "Al no requerir ningún método, cualquier valor satisface la interfaz vacía interface{} / any."
+  },
+  {
+    "id": "go_053",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Cuál es la sintaxis correcta para realizar una aserción de tipo simple en Go?",
+    "options": [
+      "La sintaxis 'v := i.(Tipo)', que extrae el valor concreto de la interfaz.",
+      "La sintaxis 'v := Tipo(i)', que efectúa una conversión explícita directa.",
+      "La sintaxis 'v := i as Tipo', inspirada en lenguajes orientados a objetos.",
+      "La sintaxis 'v := (Tipo)i', utilizada comúnmente en la sintaxis de lenguaje C."
+    ],
+    "correct_index": 0,
+    "hint": "La expresión i.(T) afirma que la interfaz i contiene dinámicamente un valor del tipo concreto T."
+  },
+  {
+    "id": "go_054",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Cómo se previene un pánico al realizar una aserción de tipo sobre una interfaz?",
+    "options": [
+      "Envolviendo la aserción en una sentencia try/catch convencional del lenguaje.",
+      "Usando la forma de dos variables 'v, ok := i.(Tipo)', donde ok indica el éxito.",
+      "Comprobando el tipo previamente con reflect.Validate(i, Tipo) antes de evaluar.",
+      "Añadiendo la directiva //go:no-panic sobre la línea de código de la aserción."
+    ],
+    "correct_index": 1,
+    "hint": "Con la forma 'v, ok := i.(T)', si la aserción no coincide, 'ok' toma el valor false sin producir pánico."
+  },
+  {
+    "id": "go_055",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Cuál es la única firma requerida para satisfacer la interfaz integrada 'error' en Go?",
+    "options": [
+      "La firma 'GetMessage() string', que extrae el texto del mensaje registrado.",
+      "La firma 'ToString() string', que formatea los datos del error como cadena.",
+      "La firma 'Error() string', que devuelve una descripción legible del problema.",
+      "La firma 'Description() []byte', que genera los bytes de la traza de error."
+    ],
+    "correct_index": 2,
+    "hint": "La interfaz integrada 'error' contiene únicamente el método Error() que retorna un string descriptivo."
+  },
+  {
+    "id": "go_056",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Qué método requiere implementar un tipo para satisfacer la interfaz fmt.Stringer?",
+    "options": [
+      "El método 'ToString() string', comúnmente empleado en jerarquías orientadas a objetos.",
+      "El método 'Format() string', que aplica plantillas de texto a la estructura.",
+      "El método 'Print() string', que emite los caracteres hacia la salida estándar.",
+      "El método 'String() string', que define la representación textual del objeto."
+    ],
+    "correct_index": 3,
+    "hint": "fmt.Stringer requiere implementar String() string y define cómo se imprime el tipo con el paquete fmt."
+  },
+  {
+    "id": "go_057",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Qué construcción de control permite discriminar múltiples tipos concretos de una interfaz?",
+    "options": [
+      "Un type switch con la sintaxis 'switch v := i.(type) { ... }'.",
+      "Una sentencia de coincidencia estructurada 'match typeof(i) { ... }'.",
+      "Una cláusula condicional de pertenencia 'if type(i) in types { ... }'.",
+      "Un selector de tipos por reflexión 'switch i.Kind() { ... }'."
+    ],
+    "correct_index": 0,
+    "hint": "Un type switch evalúa el tipo dinámico de una interfaz frente a múltiples tipos concretos en cláusulas case."
+  },
+  {
+    "id": "go_058",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Cuál es la sintaxis correcta para declarar una estructura (struct) en Go?",
+    "options": [
+      "La sentencia 'struct Usuario { string Nombre; }' con terminación en punto y coma.",
+      "La sentencia 'type Usuario struct { Nombre string }' con sus campos tipados.",
+      "La sentencia 'class Usuario { Nombre string }' definiendo atributos de instancia.",
+      "La sentencia 'def struct Usuario: Nombre string' con indentación de bloque."
+    ],
+    "correct_index": 1,
+    "hint": "En Go las estructuras se declaran usando 'type Nombre struct { ... }'."
+  },
+  {
+    "id": "go_059",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Qué mecanismo favorece Go en lugar de la herencia jerárquica de clases tradicional?",
+    "options": [
+      "Herencia múltiple de clases virtuales con resolución de colisión de atributos.",
+      "Polimorfismo estático basado en sobrecarga de operadores aritméticos en clases.",
+      "Composición de tipos mediante incrustación de estructuras anónimas (embedding).",
+      "Metaprogramación basada en macros con expansión en tiempo de compilación."
+    ],
+    "correct_index": 2,
+    "hint": "Go promueve composición sobre herencia incrustando structs anónimos para promover sus campos y métodos."
+  },
+  {
+    "id": "go_060",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Cómo se define un método con receptor sobre una estructura en Go?",
+    "options": [
+      "Con la sintaxis 'func Saludar(this Usuario) string { ... }' mediante this implícito.",
+      "Con la sintaxis 'Usuario::func Saludar() string { ... }' con operador de ámbito.",
+      "Con la sintaxis 'def (u: Usuario) Saludar() -> string: ...' con tipado de retorno.",
+      "Con la sintaxis 'func (u Usuario) Saludar() string { ... }' antes del nombre."
+    ],
+    "correct_index": 3,
+    "hint": "El receptor se ubica entre la palabra reservada func y el nombre del método: func (r Receptor) Metodo()."
+  },
+  {
+    "id": "go_061",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Qué regla de Go determina si un campo o método es exportado (público) fuera del paquete?",
+    "options": [
+      "Debe comenzar con una letra mayúscula en su identificador principal.",
+      "Debe estar precedido por el modificador de visibilidad 'public' explícito.",
+      "Debe registrarse en el archivo de configuración exports.json del módulo.",
+      "Debe estar decorado con el comentario de directiva //export antes de su firma."
+    ],
+    "correct_index": 0,
+    "hint": "En Go la visibilidad se determina por la capitalización: mayúscula es exportado; minúscula es privado al paquete."
+  },
+  {
+    "id": "go_062",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Qué función del paquete 'errors' crea un error básico a partir de un texto literal?",
+    "options": [
+      "La función errors.Create(), que construye un objeto de error con código numérico.",
+      "La función errors.New(), que retorna una instancia que implementa la interfaz error.",
+      "La función errors.Make(), que inicializa una estructura de fallo en la pila.",
+      "La función errors.Init(), que registra un descriptor de error en el sistema."
+    ],
+    "correct_index": 1,
+    "hint": "errors.New(\"texto\") crea una estructura simple con el mensaje que satisface la interfaz error."
+  },
+  {
+    "id": "go_063",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Cuál es el valor cero predeterminado de una variable declarada con tipo interfaz?",
+    "options": [
+      "El valor undefined, indicando que el descriptor aún no ha sido resuelto.",
+      "El número 0, asignando un valor escalar por defecto en los registros de la CPU.",
+      "El valor nil, indicando que no contiene ni tipo concreto ni valor dinámico.",
+      "El booleano false, que representa un estado de interfaz no inicializada."
+    ],
+    "correct_index": 2,
+    "hint": "Una variable de interfaz no inicializada contiene nil tanto en su tipo como en su valor."
+  },
+  {
+    "id": "go_064",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Qué método principal exige la interfaz io.Reader en la biblioteca estándar de Go?",
+    "options": [
+      "El método 'Read() ([]byte, error)', que devuelve un nuevo slice con los datos.",
+      "El método 'Receive(buffer []byte) int', que retorna únicamente la cantidad leída.",
+      "El método 'ReadByte() (byte, error)', que recupera un solo byte en cada llamada.",
+      "El método 'Read(p []byte) (n int, err error)', que lee bytes hacia el buffer p."
+    ],
+    "correct_index": 3,
+    "hint": "io.Reader llena el buffer de bytes provisto como argumento y retorna los bytes leídos y posibles errores."
+  },
+  {
+    "id": "go_065",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Qué método principal exige la interfaz io.Writer en la biblioteca estándar de Go?",
+    "options": [
+      "El método 'Write(p []byte) (n int, err error)', que escribe los datos del buffer p.",
+      "El método 'Write(s string) (bool, error)', que recibe cadenas de texto directamente.",
+      "El método 'Send(data []byte) (int, error)', que despacha los datos al receptor.",
+      "El método 'Flush(p []byte) error', que vacía los búferes internos hacia el medio."
+    ],
+    "correct_index": 0,
+    "hint": "io.Writer escribe los bytes contenidos en el slice p y retorna el recuento escrito y posibles errores."
+  },
+  {
+    "id": "go_066",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Cómo se define un nuevo tipo con nombre propio a partir de un tipo primitivo como int?",
+    "options": [
+      "Con la declaración 'typedef int MiID;', propia de lenguajes procedimentales clásicos.",
+      "Con la declaración 'type MiID int', que define un tipo estático diferenciado.",
+      "Con la declaración 'alias MiID = int', que crea una referencia mutable al tipo.",
+      "Con la declaración 'newtype MiID of int', que encapsula el tipo en un contenedor."
+    ],
+    "correct_index": 1,
+    "hint": "La sentencia 'type Nombre TipoBase' crea un tipo estático nuevo con su propio conjunto de métodos."
+  },
+  {
+    "id": "go_067",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "basic",
+    "question": "¿Qué identificador especial se utiliza para generar constantes numéricas sucesivas?",
+    "options": [
+      "El identificador enum, que agrupa variantes dentro de una enumeración estricta.",
+      "El identificador auto, que infiere los valores sucesivos a partir del anterior.",
+      "El identificador iota, que representa enteros sucesivos dentro de un bloque const.",
+      "El identificador seq, que incrementa en pasos fijados por directivas de compilador."
+    ],
+    "correct_index": 2,
+    "hint": "iota simplifica la definición de constantes enumeradas sucesivas (0, 1, 2...) dentro de un bloque const."
+  },
+  {
+    "id": "go_068",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "question": "¿Por qué una interfaz que almacena un puntero tipado nulo (*MiError = nil) NO es igual a nil?",
+    "options": [
+      "Porque los punteros en Go nunca pueden evaluarse con el operador de igualdad nil.",
+      "Porque el compilador asigna una dirección de memoria estática ficticia al puntero.",
+      "Porque las variables de tipo interfaz reservan un bloque de memoria no purgable.",
+      "Porque la interfaz guarda una tupla (tipo, valor); su descriptor de tipo no es nulo."
+    ],
+    "correct_index": 3,
+    "hint": "Una interfaz solo es nil si tanto su tipo como su valor son nil; con (*MiError)(nil), el tipo es *MiError, no nil."
+  },
+  {
+    "id": "go_069",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "question": "¿Cuál es la ventaja de usar un receptor por puntero func (t *T) frente a uno por valor func (t T)?",
+    "options": [
+      "Permite modificar la estructura original y evita copiar en memoria todo el struct.",
+      "Permite que el método se ejecute en una goroutine independiente de forma implícita.",
+      "Garantiza que la estructura sea serializable automáticamente por el paquete json.",
+      "Permite invocar el método omitiendo la comprobación de tipos del compilador de Go."
+    ],
+    "correct_index": 0,
+    "hint": "Los receptores por puntero permiten mutar los campos de la instancia original y evitan duplicar estructuras pesadas."
+  },
+  {
+    "id": "go_070",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "question": "¿Qué diferencia existe entre los conjuntos de métodos (method sets) del tipo T y de *T?",
+    "options": [
+      "T contiene métodos con receptores (*T) y (T); *T solo contiene receptores con (*T).",
+      "T solo contiene métodos con receptor (T); *T contiene métodos con receptores (*T) y (T).",
+      "Ambos tipos comparten exactamente el mismo conjunto de métodos en toda circunstancia.",
+      "El tipo T contiene todos los métodos excepto aquellos que retornan valores de error."
+    ],
+    "correct_index": 1,
+    "hint": "El method set de un puntero *T incluye receptores por valor y puntero, pero el de un valor T solo incluye los de valor."
+  },
+  {
+    "id": "go_071",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "question": "¿Qué verbo de formato introducido en Go 1.13 se utiliza en fmt.Errorf para envolver errores?",
+    "options": [
+      "El verbo '%v', que produce la representación por defecto del objeto recibido.",
+      "El verbo '%e', que convierte el código de excepción en un identificador numérico.",
+      "El verbo '%w', que formatea el texto y preserva el error original mediante Unwrap().",
+      "El verbo '%+v', que incluye automáticamente la traza de pila de la llamada actual."
+    ],
+    "correct_index": 2,
+    "hint": "%w formatea el mensaje e implementa el método Unwrap() para que errors.Is y errors.As funcionen."
+  },
+  {
+    "id": "go_072",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "question": "¿Qué función del paquete 'errors' determina si un error objetivo existe en la cadena de wrapping?",
+    "options": [
+      "La función errors.Has(err, target), que verifica la igualdad estricta de textos.",
+      "La función errors.Contains(err, target), que busca el error usando expresiones regulares.",
+      "La función errors.Match(err, target), que evalúa si ambos errores comparten el mismo tipo.",
+      "La función errors.Is(err, target), que desenvuelve la cadena comparando errores."
+    ],
+    "correct_index": 3,
+    "hint": "errors.Is desenvuelve recursivamente la cadena de errores mediante Unwrap() para comprobar si coincide con target."
+  },
+  {
+    "id": "go_073",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "question": "¿Qué función del paquete 'errors' extrae y asigna un error de tipo concreto de la cadena?",
+    "options": [
+      "La función errors.As(err, &target), que asigna el error coincidente al puntero dado.",
+      "La función errors.Cast(err, &target), que convierte forzosamente el error al tipo.",
+      "La función errors.To(err, &target), que copia los atributos del error hacia la variable.",
+      "La función errors.Extract(err, &target), que elimina el error de la cadena de llamadas."
+    ],
+    "correct_index": 0,
+    "hint": "errors.As busca en la cadena de wrapping un error compatible con el puntero al tipo provisto y lo asigna."
+  },
+  {
+    "id": "go_074",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "question": "¿Qué diferencia existe entre el alias de tipo 'type A = B' y la definición 'type A B'?",
+    "options": [
+      "'type A = B' se resuelve en ejecución; 'type A B' se evalúa en tiempo de compilación.",
+      "'type A = B' es exactamente el mismo tipo que B; 'type A B' crea un nuevo tipo estático.",
+      "'type A = B' solo se permite en structs; 'type A B' solo se aplica sobre tipos primitivos.",
+      "'type A = B' duplica los métodos de B; 'type A B' hereda los métodos de forma polimórfica."
+    ],
+    "correct_index": 1,
+    "hint": "Con '=' es un alias idéntico (útil para refactorización de código); sin '=' crea un tipo estático totalmente diferenciado."
+  },
+  {
+    "id": "go_075",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "question": "¿Cómo se desambigua la llamada a un método cuando una estructura incrusta dos tipos con igual método?",
+    "options": [
+      "Empleando la palabra reservada 'super' para hacer referencia al tipo incrustado previo.",
+      "El compilador cancela la compilación impidiendo el uso de métodos con nombres duplicados.",
+      "Invocando el método explícitamente a través del nombre del tipo incrustado (u.Base.M()).",
+      "Invocando la función de reflexión reflect.ResolveConflict() en tiempo de ejecución."
+    ],
+    "correct_index": 2,
+    "hint": "Los métodos colisionados se sombrean, pero pueden llamarse accediendo al tipo incrustado: u.TipoIncrustado.Metodo()."
+  },
+  {
+    "id": "go_076",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "question": "¿Qué convención de nombrado promueve Go para interfaces compuestas por un único método?",
+    "options": [
+      "Anteponer el prefijo 'I' al nombre conceptual del tipo (por ejemplo, IReader, IWriter).",
+      "Añadir la palabra 'Interface' al final de la definición (por ejemplo, ReadInterface).",
+      "Utilizar prefijos descriptivos como 'Abstract' (por ejemplo, AbstractReader).",
+      "Añadir el sufijo '-er' al nombre de la acción (por ejemplo, Reader, Writer, Stringer)."
+    ],
+    "correct_index": 3,
+    "hint": "La convención idiomática de Go es nombrar interfaces unitarias con el sufijo -er derivado de su método."
+  },
+  {
+    "id": "go_077",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "question": "¿Cómo se procesan e inspeccionan las etiquetas de campos (struct tags) en tiempo de ejecución?",
+    "options": [
+      "Mediante el paquete estándar reflect, accediendo a los metadatos de los campos del tipo.",
+      "Son transformadas en directivas de máquina fijas durante el análisis sintáctico léxico.",
+      "Se almacenan en un archivo JSON anexo que se carga al inicio de la ejecución del binario.",
+      "Son eliminadas completamente por el compilador para evitar sobrecarga de memoria."
+    ],
+    "correct_index": 0,
+    "hint": "El paquete reflect inspecciona etiquetas de struct con métodos como field.Tag.Get(\"json\")."
+  },
+  {
+    "id": "go_078",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "question": "¿Qué restricción predefinida ('constraint') admite tipos que soportan operadores == y !=?",
+    "options": [
+      "La restricción 'equatable', que agrupa estructuras con método de comparación definido.",
+      "La restricción 'comparable', que engloba a todos los tipos con igualdad estricta.",
+      "La restricción 'any', que admite cualquier tipo independientemente de sus operadores.",
+      "La restricción 'orderable', que exige la existencia de operadores de orden numérico."
+    ],
+    "correct_index": 1,
+    "hint": "'comparable' es la restricción del lenguaje que asegura que un parámetro de tipo genérico admite comparación de igualdad."
+  },
+  {
+    "id": "go_079",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "question": "¿Qué efecto tiene el operador tilde ~ en una restricción genérica como ~int en Go?",
+    "options": [
+      "Indica que el tipo genérico es opcional y puede omitirse en la llamada a función.",
+      "Permite conversiones aproximadas con pérdida de precisión hacia punto flotante.",
+      "Acepta int y cualquier tipo definido cuyo tipo subyacente fundamental sea int.",
+      "Restringe el tipo a punteros de memoria cuyo valor desreferenciado sea de tipo int."
+    ],
+    "correct_index": 2,
+    "hint": "~T permite aceptar tanto T como cualquier tipo definido con 'type MiTipo T' cuyo underlying type sea T."
+  },
+  {
+    "id": "go_080",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "question": "¿Por qué un valor no direccionable (non-addressable) no puede invocar métodos con receptor (*T)?",
+    "options": [
+      "Porque el recolector de basura prohíbe punteros a estructuras creadas en funciones puras.",
+      "Porque las interfaces solo permiten la invocación de métodos definidos en variables globales.",
+      "Porque el compilador restringe los métodos mutables a estructuras exportadas del paquete.",
+      "Porque Go no puede obtener automáticamente la dirección de memoria de un valor temporal."
+    ],
+    "correct_index": 3,
+    "hint": "Para invocar un método con receptor (*T), Go necesita tomar &x; si x es temporal o literal, falla."
+  },
+  {
+    "id": "go_081",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "question": "¿Cuál es la sintaxis correcta para declarar una función genérica en Go 1.18+?",
+    "options": [
+      "La sintaxis 'func Filtrar[T any](lista []T, fn func(T) bool) []T { ... }' con corchetes.",
+      "La sintaxis 'func Filtrar<T>(lista []T, fn func(T) bool) []T { ... }' con signos de ángulo.",
+      "La sintaxis 'generic<T> func Filtrar(lista []T, fn func(T) bool) []T { ... }' con palabra clave.",
+      "La sintaxis 'func<T: any> Filtrar(lista []T, fn func(T) bool) []T { ... }' con delimitadores."
+    ],
+    "correct_index": 0,
+    "hint": "Go emplea corchetes [] tras el nombre de la función para declarar los parámetros de tipo genérico."
+  },
+  {
+    "id": "go_082",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "question": "¿Qué ocurre si una aserción de tipo simple x.(int) falla cuando x almacena una cadena?",
+    "options": [
+      "La expresión retorna 0 de manera silenciosa sin alterar el flujo de ejecución del hilo.",
+      "Se produce un pánico inmediato (panic: interface conversion) en tiempo de ejecución.",
+      "La variable destino adopta el valor dinámico nil sin producir advertencias en pantalla.",
+      "El compilador intercepta el fallo en tiempo de compilación impidiendo generar el build."
+    ],
+    "correct_index": 1,
+    "hint": "Una aserción de tipo simple sin la forma comma-ok causa un runtime panic si el tipo concreto no coincide."
+  },
+  {
+    "id": "go_083",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "medium",
+    "question": "¿Qué representa un valor de tipo uintptr en el sistema de tipos de Go?",
+    "options": [
+      "Un puntero seguro rastreado y protegido continuamente por el recolector de basura.",
+      "Un descriptor numérico de archivo devuelto exclusivamente por llamadas a syscalls.",
+      "Un entero sin signo con tamaño suficiente para albergar cualquier dirección de memoria.",
+      "Una estructura que encapsula un puntero y su longitud de buffer asociada en memoria."
+    ],
+    "correct_index": 2,
+    "hint": "uintptr es un valor puramente entero; a diferencia de unsafe.Pointer, el GC no lo considera una referencia viva."
+  },
+  {
+    "id": "go_084",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Cómo se representan internamente las interfaces en el runtime de Go (iface vs eface)?",
+    "options": [
+      "Como tablas hash dinámicas idénticas a los objetos polimórficos de lenguaje C++.",
+      "Mediante un puntero fat de 16 bytes que referencia exclusivamente a código binario.",
+      "A través de estructuras opacas asignadas siempre en páginas protegidas del SO.",
+      "eface contiene (_type, data) para interface{}; iface contiene (itab, data) para interfaces con métodos."
+    ],
+    "correct_index": 3,
+    "hint": "eface modela interface{} (tipo y valor); iface modela interfaces tipadas (itab y valor)."
+  },
+  {
+    "id": "go_085",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Qué información almacena exactamente la estructura 'itab' dentro del runtime de Go?",
+    "options": [
+      "Metadatos de la interfaz, el tipo concreto subyacente y la tabla de punteros a métodos.",
+      "El historial de ejecuciones de métodos para el optimizador JIT en tiempo de ejecución.",
+      "La lista de goroutines en espera de sincronización para interactuar con la estructura.",
+      "Únicamente el hash criptográfico del nombre del paquete para control de versiones."
+    ],
+    "correct_index": 0,
+    "hint": "La itab contiene la interfaz, el tipo concreto, un hash para aserciones rápidas y los punteros a métodos."
+  },
+  {
+    "id": "go_086",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Por qué asignar un valor a una variable de tipo interface{} puede causar asignación en heap?",
+    "options": [
+      "Porque las interfaces consumen más memoria que el tamaño de registros de la CPU.",
+      "Porque el runtime necesita empaquetar (boxing) el valor en una dirección indirecta.",
+      "Porque el recolector de basura no puede auditar estructuras guardadas en la pila.",
+      "Porque todas las interfaces se compilan como variables con ciclo de vida estático."
+    ],
+    "correct_index": 1,
+    "hint": "El boxing de tipos de valor hacia una interfaz suele forzar escape al heap para que data apunte a una dirección fija."
+  },
+  {
+    "id": "go_087",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Por qué Go no admite métodos genéricos con sus propios parámetros de tipo en structs?",
+    "options": [
+      "Porque la sintaxis de corchetes colisionaría con el indexado de matrices multidimensionales.",
+      "Porque la arquitectura de registros x86-64 impide recibir más de dos tipos en llamadas.",
+      "Porque impediría calcular de antemano el tamaño y contenido de las tablas itab.",
+      "Porque generaría ciclos infinitos de dependencias entre paquetes del módulo principal."
+    ],
+    "correct_index": 2,
+    "hint": "Métodos genéricos independientes en structs imposibilitarían la construcción de vtables/itabs finitas."
+  },
+  {
+    "id": "go_088",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Qué técnica idiomática permite verificar en tiempo de compilación que un tipo T satisface una interfaz I?",
+    "options": [
+      "La directiva de preprocesador '#pragma verify_implements(T, I)' sobre el archivo.",
+      "La llamada estática 'assert(implements(T, I))' al inicio de la función principal.",
+      "La llamada a la función integrada 'reflect.MustImplement[T, I]()' en un archivo de test.",
+      "La asignación estática 'var _ I = (*T)(nil)', forzando al compilador a validarlo."
+    ],
+    "correct_index": 3,
+    "hint": "Declarar 'var _ I = (*T)(nil)' valida la implementación en tiempo de compilación con coste cero en runtime."
+  },
+  {
+    "id": "go_089",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Qué restricción fundamental tienen las uniones de tipos (ej. int | string) en interfaces genéricas?",
+    "options": [
+      "Solo pueden emplearse como restricciones de tipos genéricos, no como tipos ordinarios de variables.",
+      "Solo pueden utilizarse en funciones que retornen valores de tipo booleano puro.",
+      "Requieren que todos los tipos de la unión implementen el método reflect.Match.",
+      "No se pueden compilar en arquitecturas que no posean soporte de 64 bits nativo."
+    ],
+    "correct_index": 0,
+    "hint": "Las interfaces con conjuntos de tipos (type sets) solo son válidas como type constraints en firmas genéricas."
+  },
+  {
+    "id": "go_090",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Cómo maneja Go la resolución de llamadas a métodos sobre interfaces frente a llamadas sobre tipos directos?",
+    "options": [
+      "Realiza una búsqueda textual en la tabla de símbolos del binario en cada ejecución.",
+      "Usa una indirección a través de la tabla de punteros a funciones en itab (despacho dinámico).",
+      "Sustituye la llamada por una función inline recompilando el método en caliente.",
+      "Lanza un trap de software para que el planificador localice la dirección de salto."
+    ],
+    "correct_index": 1,
+    "hint": "Las llamadas a métodos sobre interfaces implican dynamic dispatch a través de punteros alojados en itab."
+  },
+  {
+    "id": "go_091",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Qué ocurre al intentar serializar a JSON un struct con campos no exportados (con minúscula)?",
+    "options": [
+      "Se produce un pánico inmediato por violación de acceso a campos privados en ejecución.",
+      "Los campos se serializan renombrándose automáticamente con un prefijo de advertencia.",
+      "El codificador encoding/json los ignora por completo omitiéndolos de la salida resultante.",
+      "El compilador emite un fallo durante la construcción del binario ejecutable final."
+    ],
+    "correct_index": 2,
+    "hint": "encoding/json usa reflexión y solo puede acceder a campos exportados (que inician con letra mayúscula)."
+  },
+  {
+    "id": "go_092",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Qué técnica emplea el compilador gc de Go para la implementación eficiente de código genérico?",
+    "options": [
+      "Monomorfización total generando una copia binaria para absolutamente cada tipo concreto.",
+      "Borrado completo de tipos transformando todos los parámetros en llamadas a interface{}.",
+      "Interpretación dinámica de las firmas genéricas en tiempo de ejecución sin optimizar.",
+      "GCShape stenciling: tipos con idéntica distribución de punteros comparten implementación binaria."
+    ],
+    "correct_index": 3,
+    "hint": "Go usa GCShape stenciling para equilibrar el tamaño del binario y la velocidad de ejecución de código genérico."
+  },
+  {
+    "id": "go_093",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Qué limitación tiene la comparación con == entre dos variables de tipo interfaz en Go?",
+    "options": [
+      "Lanza un pánico en runtime si los valores concretos subyacentes son tipos no comparables.",
+      "Siempre evalúa a false si las dos interfaces provienen de funciones distintas en el código.",
+      "No compila si la interfaz posee más de un método declarado formalmente en su cuerpo.",
+      "Exige implementar de forma explícita el método Equals(other any) bool en el tipo base."
+    ],
+    "correct_index": 0,
+    "hint": "Comparar dos interfaces cuyo valor dinámico subyacente es un slice o un map produce un runtime panic."
+  },
+  {
+    "id": "go_094",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la diferencia fundamental entre reflect.TypeOf(x) y reflect.ValueOf(x)?",
+    "options": [
+      "TypeOf solo opera en tiempo de compilación; ValueOf solo opera en tiempo de ejecución.",
+      "TypeOf inspecciona metadatos y firmas de tipos; ValueOf permite leer y alterar valores concretos.",
+      "TypeOf solo admite tipos básicos primitivos; ValueOf solo admite tipos compuestos.",
+      "TypeOf mide la longitud en bytes del dato; ValueOf obtiene su posición física en el heap."
+    ],
+    "correct_index": 1,
+    "hint": "reflect.Type modela la información estática del tipo, mientras reflect.Value manipula los datos dinámicos."
+  },
+  {
+    "id": "go_095",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Qué condición indispensable debe satisfacer un reflect.Value para poder invocar su método Set()?",
+    "options": [
+      "El tipo base debe implementar obligatoriamente la interfaz reflect.Mutable en su paquete.",
+      "El binario debe compilarse con la opción experimental -gcflags=-settable en producción.",
+      "Debe ser direccionable (addressable), obtenido comúnmente con reflect.ValueOf(&x).Elem().",
+      "La variable original debe encontrarse declarada en el ámbito global del paquete fuente."
+    ],
+    "correct_index": 2,
+    "hint": "Un reflect.Value es 'settable' solo si se originó a partir de un puntero direccionable desreferenciado con Elem()."
+  },
+  {
+    "id": "go_096",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Por qué el aforismo 'Accept interfaces, return structs' es una buena práctica de diseño en Go?",
+    "options": [
+      "Porque el recolector de basura no puede reciclar valores retornados como interfaces.",
+      "Porque retornar interfaces requiere obligatoriamente una asignación fija en el stack.",
+      "Porque previene que los métodos de estructuras concretas sean sobreescritos en caliente.",
+      "Maximiza la flexibilidad del invocador sin atarlo a abstracciones prematuras ni ocultar API."
+    ],
+    "correct_index": 3,
+    "hint": "Aceptar interfaces otorga flexibilidad al llamador; retornar tipos concretos expone una API clara y extensible."
+  },
+  {
+    "id": "go_097",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Qué ocurre si una estructura incrusta un puntero (*T) con valor nil e invoca un método promovido?",
+    "options": [
+      "El método se invoca, pero causará un pánico si intenta desreferenciar campos del receptor nil.",
+      "Los métodos de punteros incrustados no se promueven jamás a la estructura contenedora.",
+      "Go inicializa automáticamente una instancia vacía de T en memoria antes de la llamada.",
+      "Se produce un error de sintaxis al compilar porque solo se pueden incrustar valores directos."
+    ],
+    "correct_index": 0,
+    "hint": "El método se despacha con nil como receptor; si dentro se accede a un campo del struct, se produce pánico."
+  },
+  {
+    "id": "go_098",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Cómo se define una restricción genérica que acepte únicamente enteros con y sin signo en Go?",
+    "options": [
+      "Obligando a los tipos a implementar un método formal Number() int en su definición.",
+      "Creando una interfaz con una unión exhaustiva de tipos aproximados (~int | ~int64 | ~uint | ...).",
+      "Usando la palabra clave integrada standard 'number' reservada en el runtime de Go.",
+      "Especificando una anotación especial @numeric_only sobre la firma de la función genérica."
+    ],
+    "correct_index": 1,
+    "hint": "Las restricciones numéricas estándar se construyen uniendo tipos base aproximados con el operador ~."
+  },
+  {
+    "id": "go_099",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Cómo impactan los campos no exportados en una estructura a la comparación directa mediante ==?",
+    "options": [
+      "Provocan un error de compilación inmediato impidiendo el uso del operador de igualdad.",
+      "El operador == omite silenciosamente los campos privados evaluando solo los exportados.",
+      "Son comparados normalmente; si todos los campos son comparables, la igualdad evalúa ambos.",
+      "Obligan a implementar de manera explícita el método reflect.DeepEqual en la estructura."
+    ],
+    "correct_index": 2,
+    "hint": "El operador == evalúa todos los campos (exportados o no) siempre que sus tipos individuales sean comparables."
+  },
+  {
+    "id": "go_100",
+    "subtopic": "interfaces_tipos",
+    "difficulty": "advanced",
+    "question": "¿Qué garantiza la regla de coherencia de tipos sobre la implementación de métodos en Go?",
+    "options": [
+      "Cualquier paquete puede añadir métodos libremente a tipos estándar como int o string.",
+      "Solo las estructuras pueden poseer métodos, quedando excluidos los tipos primitivos definidos.",
+      "Los métodos con receptores por puntero deben residir en archivos nombrados con sufijo _ptr.go.",
+      "Solo se pueden definir métodos en tipos declarados dentro del mismo paquete de la definición."
+    ],
+    "correct_index": 3,
+    "hint": "Go prohíbe añadir métodos a tipos definidos en otros paquetes (incluyendo tipos básicos como int)."
+  },
+  {
+    "id": "go_101",
+    "subtopic": "memoria_punteros",
+    "difficulty": "basic",
+    "question": "¿Qué operador se utiliza en Go para obtener la dirección de memoria de una variable?",
+    "options": [
+      "El operador unario '&', antepuesto a la variable direccionable deseada.",
+      "El operador unario '*', que se reserva exclusivamente para desreferenciación.",
+      "El operador flecha '->', utilizado para navegación de miembros en lenguajes como C.",
+      "El operador unario '@', utilizado en macros para referenciar ubicaciones de memoria."
+    ],
+    "correct_index": 0,
+    "hint": "El operador & extrae la dirección de memoria de una variable direccionable en Go."
+  },
+  {
+    "id": "go_102",
+    "subtopic": "memoria_punteros",
+    "difficulty": "basic",
+    "question": "¿Qué operador se utiliza en Go para desreferenciar un puntero y obtener su valor?",
+    "options": [
+      "El operador unario '&', que se encarga de extraer la dirección física en memoria.",
+      "El operador unario '*', antepuesto a la variable que almacena el puntero.",
+      "El operador punto '.', que permite invocar métodos y acceder a campos de structs.",
+      "El operador unario '^', utilizado habitualmente para operaciones bitwise XOR."
+    ],
+    "correct_index": 1,
+    "hint": "*p desreferencia el puntero p, accediendo o modificando el valor en dicha dirección."
+  },
+  {
+    "id": "go_103",
+    "subtopic": "memoria_punteros",
+    "difficulty": "basic",
+    "question": "¿Cuál es el valor cero predeterminado de cualquier variable de tipo puntero en Go?",
+    "options": [
+      "El número 0, interpretado como un desplazamiento numérico dentro del segmento.",
+      "La constante NULL, reservada para la interoperabilidad con librerías nativas.",
+      "El valor nil, que representa un puntero no asignado a ninguna dirección válida.",
+      "El valor undefined, que señala que la variable no ha sido tipada en el parser."
+    ],
+    "correct_index": 2,
+    "hint": "Un puntero sin inicializar apunta a nada y su valor cero es nil."
+  },
+  {
+    "id": "go_104",
+    "subtopic": "memoria_punteros",
+    "difficulty": "basic",
+    "question": "¿Qué sucede si una goroutine intenta desreferenciar un puntero que tiene valor nil?",
+    "options": [
+      "Devuelve el valor cero correspondiente al tipo sin generar ningún mensaje de fallo.",
+      "Se produce un fallo de segmentación del SO que destruye irreversiblemente el proceso.",
+      "El puntero se reasigna automáticamente a una dirección temporal de memoria libre.",
+      "Se produce un pánico en ejecución (invalid memory address or nil pointer dereference)."
+    ],
+    "correct_index": 3,
+    "hint": "Desreferenciar un puntero nil provoca un panic de tiempo de ejecución en Go capturable con recover()."
+  },
+  {
+    "id": "go_105",
+    "subtopic": "memoria_punteros",
+    "difficulty": "basic",
+    "question": "¿Qué función integrada reserva memoria a cero para un tipo T y devuelve un puntero *T?",
+    "options": [
+      "La función new(T), que asigna el espacio requerido e inicializa a ceros sus campos.",
+      "La función make(T), reservada exclusivamente para inicializar tipos con cabeceras.",
+      "La función alloc(T), que solicita bloques contiguos al asignador de memoria virtual.",
+      "La función malloc(T), integrada en librerías estándar procedimentales del sistema."
+    ],
+    "correct_index": 0,
+    "hint": "new(T) asigna memoria a cero para un tipo T y retorna su puntero *T."
+  },
+  {
+    "id": "go_106",
+    "subtopic": "memoria_punteros",
+    "difficulty": "basic",
+    "question": "¿Para cuáles de los siguientes tipos compuestos está diseñada la función make() en Go?",
+    "options": [
+      "Para estructuras, arrays estáticos y punteros a tipos primitivos del lenguaje.",
+      "Exclusivamente para slices, maps y channels, inicializando sus descriptores.",
+      "Para cualquier estructura que contenga campos numéricos de coma flotante.",
+      "Únicamente para cadenas de texto e interfaces dinámicas del recolector."
+    ],
+    "correct_index": 1,
+    "hint": "make() crea e inicializa las estructuras internas y cabeceras requeridas por slices, mapas y canales."
+  },
+  {
+    "id": "go_107",
+    "subtopic": "memoria_punteros",
+    "difficulty": "basic",
+    "question": "¿Qué campos componen el encabezado interno (slice header) de un slice en Go?",
+    "options": [
+      "Un puntero a memoria virtual, un contador de referencias y un mutex de exclusión.",
+      "Un vector de punteros a elementos individuales y un descriptor de tipo estático.",
+      "Un puntero al arreglo subyacente, una longitud (len) y una capacidad (cap).",
+      "Una dirección de inicio, una dirección de fin y un indicador booleano de mutabilidad."
+    ],
+    "correct_index": 2,
+    "hint": "Un slice es un descriptor de 3 palabras de máquina: puntero al array de respaldo, len y cap."
+  },
+  {
+    "id": "go_108",
+    "subtopic": "memoria_punteros",
+    "difficulty": "basic",
+    "question": "¿Qué función devuelve la cantidad actual de elementos contenidos en un slice?",
+    "options": [
+      "La función cap(), que mide el total de posiciones disponibles en el buffer.",
+      "La función size(), utilizada para medir estructuras en bytes de memoria física.",
+      "La función count(), que recorre iterativamente los elementos no nulos del slice.",
+      "La función len(), que retorna la longitud numérica accesible en el slice."
+    ],
+    "correct_index": 3,
+    "hint": "len(s) retorna la cantidad de elementos disponibles en el slice."
+  },
+  {
+    "id": "go_109",
+    "subtopic": "memoria_punteros",
+    "difficulty": "basic",
+    "question": "¿Qué función devuelve la capacidad máxima del arreglo subyacente accesible por un slice?",
+    "options": [
+      "La función cap(), que indica el número máximo de elementos desde el inicio del slice.",
+      "La función len(), que se limita a reportar la cantidad de elementos ya asignados.",
+      "La función max(), que extrae el valor más alto entre los elementos numéricos del slice.",
+      "La función limit(), que fija una cuota máxima de crecimiento para el array subyacente."
+    ],
+    "correct_index": 0,
+    "hint": "cap(s) indica la capacidad máxima del backing array desde el índice inicial del slice."
+  },
+  {
+    "id": "go_110",
+    "subtopic": "memoria_punteros",
+    "difficulty": "basic",
+    "question": "¿Qué ocurre al invocar append() sobre un slice cuya longitud actual iguala su capacidad máxima?",
+    "options": [
+      "Se produce un error fatal de desbordamiento de búfer deteniendo la ejecución del proceso.",
+      "Se asigna un nuevo arreglo subyacente más amplio y se copian los datos existentes.",
+      "El nuevo elemento sobreescribe silenciosamente la primera posición del slice original.",
+      "La llamada falla retornando un valor booleano false para indicar el desbordamiento."
+    ],
+    "correct_index": 1,
+    "hint": "Cuando no cabe el nuevo elemento, append reserva un nuevo backing array y migra los datos transparentemente."
+  },
+  {
+    "id": "go_111",
+    "subtopic": "memoria_punteros",
+    "difficulty": "basic",
+    "question": "¿Qué función integrada transfiere elementos de un slice de origen a otro de destino?",
+    "options": [
+      "La función clone(dst, src), que duplica la estructura completa en una nueva dirección.",
+      "La función memmove(dst, src), que copia bytes en bloque sin comprobación de tipos.",
+      "La función copy(dst, src), que traslada elementos limitándose al tamaño menor.",
+      "La función transfer(dst, src), que mueve los elementos invalidando el slice original."
+    ],
+    "correct_index": 2,
+    "hint": "copy(dst, src) copia elementos de src a dst hasta el límite de min(len(dst), len(src))."
+  },
+  {
+    "id": "go_112",
+    "subtopic": "memoria_punteros",
+    "difficulty": "basic",
+    "question": "¿Qué ocurre si se elimina una clave inexistente de un mapa usando delete(m, clave)?",
+    "options": [
+      "Lanza un pánico indicando que la clave solicitada no fue hallada en los buckets.",
+      "Retorna un valor booleano false para advertir al llamador de la ausencia de la clave.",
+      "Asigna el valor cero correspondiente a dicha clave en la tabla hash del mapa.",
+      "La operación es una no-op (no hace nada) y no produce ningún tipo de error ni pánico."
+    ],
+    "correct_index": 3,
+    "hint": "delete() es totalmente segura: si la clave no existe en el mapa, no genera ningún error."
+  },
+  {
+    "id": "go_113",
+    "subtopic": "memoria_punteros",
+    "difficulty": "basic",
+    "question": "¿Qué sucede al intentar insertar un par clave-valor en un mapa con valor nil en Go?",
+    "options": [
+      "Se produce un pánico inmediato (panic: assignment to entry in nil map) en runtime.",
+      "El mapa se inicializa automáticamente almacenando el nuevo par sin error alguno.",
+      "La asignación se descarta silenciosamente sin almacenar datos en la memoria física.",
+      "Se genera una advertencia en tiempo de compilación impidiendo generar el binario."
+    ],
+    "correct_index": 0,
+    "hint": "Leer de un mapa nil retorna el zero value, pero escribir en un mapa nil produce un pánico fatal."
+  },
+  {
+    "id": "go_114",
+    "subtopic": "memoria_punteros",
+    "difficulty": "basic",
+    "question": "¿Cómo se pasan los argumentos a una función de manera predeterminada en Go?",
+    "options": [
+      "Siempre por referencia implícita como ocurre habitualmente en Java o Python.",
+      "Siempre por valor (se genera una copia del argumento recibido en la llamada).",
+      "Por referencia para estructuras compuestas y por valor para escalares numéricos.",
+      "Por valor para variables de pila y por referencia para variables del montículo."
+    ],
+    "correct_index": 1,
+    "hint": "Go es estrictamente paso por valor: todo argumento (incluidos punteros y cabeceras) se copia al pasarse."
+  },
+  {
+    "id": "go_115",
+    "subtopic": "memoria_punteros",
+    "difficulty": "basic",
+    "question": "¿Qué distingue a un array estático [5]int de un slice []int en el lenguaje Go?",
+    "options": [
+      "El array es una lista doblemente enlazada asignada en la memoria virtual del SO.",
+      "El slice no permite indexación directa mediante corchetes numéricos en ejecución.",
+      "El array posee un tamaño fijo que forma parte inseparable de su tipo de dato.",
+      "El array se almacena únicamente en archivos temporales del sistema de ficheros."
+    ],
+    "correct_index": 2,
+    "hint": "En Go el tamaño de un array determina su tipo estático: [5]int y [10]int son tipos totalmente incompatibles."
+  },
+  {
+    "id": "go_116",
+    "subtopic": "memoria_punteros",
+    "difficulty": "basic",
+    "question": "¿Qué retorna exactamente len(\"mundo\") al invocarse sobre una cadena de texto literal?",
+    "options": [
+      "El número exacto de runas o caracteres gráficos Unicode visibles en pantalla.",
+      "La capacidad total reservada en el bloque de memoria estática del ejecutable.",
+      "El índice en bytes de la posición donde reside el carácter terminador nulo final.",
+      "El número de bytes que componen la cadena de texto codificada en UTF-8."
+    ],
+    "correct_index": 3,
+    "hint": "len(str) retorna la cantidad total de bytes de la cadena codificada en UTF-8, no de runas."
+  },
+  {
+    "id": "go_117",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Qué análisis realiza el compilador de Go para decidir si una variable vive en el stack o heap?",
+    "options": [
+      "Escape analysis (análisis de escape), evaluando si la variable supera su contexto local.",
+      "Análisis de tiempo de vida determinista (lifetime checking) basado en tipos de datos.",
+      "Conteo dinámico de referencias compartidas (reference counting) en tiempo de ejecución.",
+      "Análisis de grafo de llamadas estático para eliminación de código muerto (dead code)."
+    ],
+    "correct_index": 0,
+    "hint": "El escape analysis determina si una variable puede vivir en el stack o si 'escapa' al heap."
+  },
+  {
+    "id": "go_118",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Es válido y seguro en Go retornar la dirección de memoria (&x) de una variable local?",
+    "options": [
+      "No, genera punteros colgantes (dangling pointers) con lecturas corruptas de memoria.",
+      "Sí, el compilador detecta el escape y promueve la variable al heap de forma segura.",
+      "Solo si la variable se declara con el modificador static dentro del archivo fuente.",
+      "Genera un error fatal en tiempo de compilación por violación de ámbito léxico."
+    ],
+    "correct_index": 1,
+    "hint": "A diferencia de C, el compilador detecta el retorno del puntero y aloja la variable en el heap de manera segura."
+  },
+  {
+    "id": "go_119",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Qué flag de compilación permite verificar qué variables escapan al heap durante el build?",
+    "options": [
+      "El flag 'go tool escape --verbose', que ejecuta un analizador estático independiente.",
+      "El flag 'go check -memory-escape', que audita las funciones buscando asignaciones.",
+      "El flag 'go build -gcflags=\"-m\"', que reporta las decisiones tomadas por el compilador.",
+      "El flag 'go test -v -heap-analysis', que mide los consumos en pruebas unitarias."
+    ],
+    "correct_index": 2,
+    "hint": "-gcflags=\"-m\" imprime diagnósticos del compilador sobre inlining y decisiones de escape analysis."
+  },
+  {
+    "id": "go_120",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Qué sucede si dos slices comparten el mismo backing array y uno muta un elemento común?",
+    "options": [
+      "Go crea una copia aislada automática para evitar la mutación compartida de memoria.",
+      "El segundo slice queda invalidado produciendo un error fatal en la siguiente lectura.",
+      "Se dispara un pánico de memoria por corrupción de datos concurrentes en el heap.",
+      "El cambio se refleja inmediatamente en ambos slices al apuntar al mismo bloque."
+    ],
+    "correct_index": 3,
+    "hint": "Al apuntar a la misma región de memoria, cualquier modificación en los índices solapados es visible por ambos."
+  },
+  {
+    "id": "go_121",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Qué problema de memoria surge al mantener un subsíce de 2 bytes derivado de un slice de 100 MB?",
+    "options": [
+      "El arreglo de 100 MB completo se mantiene vivo impidiendo su recolección por el GC.",
+      "Se fragmenta la memoria virtual obligando a compactar todo el heap de la aplicación.",
+      "Se corrompe el puntero de longitud del encabezado del nuevo slice derivado del array.",
+      "El recolector de basura suspende indefinidamente todas las goroutines en ejecución."
+    ],
+    "correct_index": 0,
+    "hint": "El subsíce retiene todo el backing array original en memoria; para liberarlo se recomienda usar copy()."
+  },
+  {
+    "id": "go_122",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Qué ocurre si se ejecuta copy(dst, src) cuando len(dst) es 0 y len(src) es 10?",
+    "options": [
+      "El slice dst amplía automáticamente su longitud para recibir los 10 elementos de src.",
+      "No se copia ningún elemento hacia dst y la función retorna el entero 0.",
+      "Se produce un error de desbordamiento de búfer con caída inmediata del proceso.",
+      "El slice dst adopta la referencia directa al arreglo subyacente provisto por src."
+    ],
+    "correct_index": 1,
+    "hint": "copy() transfiere como máximo min(len(dst), len(src)) elementos; si len(dst) es 0, no transfiere nada."
+  },
+  {
+    "id": "go_123",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Por qué los mapas estándar de Go provocan un crash fatal ante escrituras concurrentes?",
+    "options": [
+      "Porque el recolector de basura reorganiza los bloques de memoria aleatoriamente en hilos.",
+      "Porque las interfaces de mapa obligan al uso de bloqueos a nivel de llamadas de kernel.",
+      "Porque no incorporan sincronización interna y una colisión puede corromper los buckets.",
+      "Porque las claves duplicadas corrompen los punteros de la tabla de símbolos binarios."
+    ],
+    "correct_index": 2,
+    "hint": "El runtime de Go detecta escrituras concurrentes en mapas y lanza: fatal error: concurrent map writes."
+  },
+  {
+    "id": "go_124",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Qué ocurre con la memoria asignada a un mapa tras borrar todas sus claves mediante delete()?",
+    "options": [
+      "La memoria se devuelve al sistema operativo de manera inmediata y sincrónica en llamada.",
+      "El mapa se reduce a tamaño 0 liberando todos los punteros asociados en el montículo.",
+      "El mapa se destruye requiriendo invocar a make() nuevamente para poder reutilizarlo.",
+      "Los buckets de memoria no se devuelven al SO de inmediato; se retienen para nuevos datos."
+    ],
+    "correct_index": 3,
+    "hint": "delete() libera los valores pero no desasigna los buckets ya reservados; para reducir el heap se recrea el mapa."
+  },
+  {
+    "id": "go_125",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Qué algoritmo implementa el recolector de basura (GC) contemporáneo de Go?",
+    "options": [
+      "Marcado y barrido tricolor (tri-color mark-and-sweep) de ejecución concurrente.",
+      "Recolección generacional por copia compacta con múltiples generaciones de objetos.",
+      "Conteo automático de referencias determinista asistido por detección de ciclos.",
+      "Recolección monociclo de parada total (stop-the-world) sin concurrencia entre hilos."
+    ],
+    "correct_index": 0,
+    "hint": "Go usa un GC tricolor concurrente sin compactación para minimizar las pausas stop-the-world a microsegundos."
+  },
+  {
+    "id": "go_126",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Qué variable de entorno fija el ratio de crecimiento del heap antes del próximo ciclo del GC?",
+    "options": [
+      "La variable de entorno GOMEMLIMIT, que controla la cuota máxima de memoria virtual.",
+      "La variable de entorno GOGC, fijada en 100 de forma predeterminada en el sistema.",
+      "La variable de entorno GOCACHE, que determina el espacio asignado a compilaciones.",
+      "La variable de entorno GODEBUG, que activa modos de depuración interna del compilador."
+    ],
+    "correct_index": 1,
+    "hint": "GOGC fija el porcentaje de crecimiento respecto a la memoria viva alcanzable antes del siguiente ciclo del GC."
+  },
+  {
+    "id": "go_127",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Qué función del paquete 'runtime' solicita forzar un ciclo completo de recolección de basura?",
+    "options": [
+      "La función runtime.Collect(), que ejecuta un barrido preliminar de punteros huérfanos.",
+      "La función runtime.FreeMemory(), que devuelve páginas de memoria al kernel del SO.",
+      "La función runtime.GC(), que bloquea al invocador hasta completar la recolección.",
+      "La función runtime.SweepNow(), que destruye los descriptores de canales inactivos."
+    ],
+    "correct_index": 2,
+    "hint": "runtime.GC() bloquea al llamador hasta que concluye un ciclo completo de recolección de basura."
+  },
+  {
+    "id": "go_128",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Qué sucede en memoria al convertir una cadena literal a un slice de bytes con []byte(s)?",
+    "options": [
+      "Se reutiliza la memoria existente sin realizar ninguna copia de datos ni asignación.",
+      "Se produce un error de conversión si la cadena contiene caracteres no pertenecientes a ASCII.",
+      "La cadena original s queda invalidada y su puntero interno pasa a tener el valor nil.",
+      "Se asigna nuevo espacio de memoria y se copian los bytes para mantener la inmutabilidad."
+    ],
+    "correct_index": 3,
+    "hint": "Como las cadenas en Go son inmutables y los slices mutables, la conversión estándar realiza una copia de seguridad."
+  },
+  {
+    "id": "go_129",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Cómo se interpreta la expresión de slice extendida s[inicio:fin:max] en Go?",
+    "options": [
+      "Fija la capacidad del nuevo slice resultante exactamente a la diferencia (max - inicio).",
+      "Fija la longitud del nuevo slice a max ignorando el parámetro fin provisto por el usuario.",
+      "Multiplica la capacidad por el factor max ampliando el array original en el heap.",
+      "Limita la cantidad máxima de elementos que se pueden agregar posteriormente con append."
+    ],
+    "correct_index": 0,
+    "hint": "La expresión de 3 índices s[low:high:max] restringe la capacidad del slice resultante a (max - low)."
+  },
+  {
+    "id": "go_130",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Qué función de runtime/debug permite configurar un límite blando de memoria total para Go?",
+    "options": [
+      "La función debug.SetMaxHeap(), que restringe las asignaciones solicitadas por malloc.",
+      "La función debug.SetMemoryLimit(), que ayuda a mitigar fallos por OOM del sistema.",
+      "La función debug.SetRAMCap(), que congela el proceso si supera la cuota estipulada.",
+      "La función debug.SetOOMProtection(), que instruye al kernel para no matar el proceso."
+    ],
+    "correct_index": 1,
+    "hint": "SetMemoryLimit (y GOMEMLIMIT) ayuda a prevenir OOM activando el GC más frecuentemente al rozar el límite."
+  },
+  {
+    "id": "go_131",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Por qué enlazar punteros a estructuras temporales en variables globales degrada la memoria?",
+    "options": [
+      "Produce punteros colgantes que generan fallos de hardware en la memoria física real.",
+      "Desborda la pila de llamadas de la goroutine principal al duplicar los contextos.",
+      "Provoca fugas de memoria lógicas impidiendo que el GC libere dichos bloques alojados.",
+      "Invalida la compatibilidad de tipos entre módulos distintos de la aplicación en curso."
+    ],
+    "correct_index": 2,
+    "hint": "Las referencias alcanzables desde variables globales o raíces vivas nunca son recolectadas por el Garbage Collector."
+  },
+  {
+    "id": "go_132",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Qué paquete estándar de Go se emplea para instrumentar perfiles de memoria (heap profile)?",
+    "options": [
+      "El paquete debug/memtrace mediante la inspección de llamadas al sistema operativo.",
+      "El paquete valgrind con instrumentación binaria en tiempo de ejecución del sistema.",
+      "El paquete os/memory mediante monitoreo de descriptores de asignación del kernel.",
+      "El paquete runtime/pprof (o net/http/pprof para perfiles a través de la web)."
+    ],
+    "correct_index": 3,
+    "hint": "pprof es la herramienta oficial de perfilado para CPU, asignaciones en heap, goroutines y bloqueos."
+  },
+  {
+    "id": "go_133",
+    "subtopic": "memoria_punteros",
+    "difficulty": "medium",
+    "question": "¿Qué consecuencia tiene la alineación de memoria (padding) sobre el tamaño de un struct?",
+    "options": [
+      "Introduce bytes de relleno entre campos para cumplir los requisitos de alineación del hardware.",
+      "Compacta los campos booleanos en bits individuales reduciendo el tamaño total ocupado.",
+      "No produce ningún efecto, pues el tamaño es siempre la suma exacta de sus tipos de campos.",
+      "Reordena automáticamente los campos para garantizar la mínima memoria posible consumida."
+    ],
+    "correct_index": 0,
+    "hint": "El compilador añade bytes de relleno (padding) respetando el orden declarado para alinear los accesos en CPU."
+  },
+  {
+    "id": "go_134",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿Qué función cumple la barrera de escritura (write barrier) en el GC de Go?",
+    "options": [
+      "Bloquea todas las lecturas de memoria hasta que el ciclo de recolección finalice formalmente.",
+      "Intercepta mutaciones de punteros durante el marcado para preservar la invariante tricolor.",
+      "Escribe copias de seguridad de cada objeto en disco antes de su modificación concurrente.",
+      "Suspende los hilos del sistema operativo mediante pausas stop-the-world muy prolongadas."
+    ],
+    "correct_index": 1,
+    "hint": "La barrera de escritura garantiza que ningún objeto blanco quede conectado únicamente a uno negro sin ser gris."
+  },
+  {
+    "id": "go_135",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la diferencia crítica entre unsafe.Pointer y uintptr para el recolector de basura?",
+    "options": [
+      "uintptr es seguro para desreferenciación concurrente y unsafe.Pointer requiere cerrojos.",
+      "unsafe.Pointer solo se admite en arquitecturas de 32 bits y uintptr en las de 64 bits.",
+      "unsafe.Pointer es reconocido como puntero por el GC; uintptr es un entero sin seguimiento.",
+      "No hay diferencia sustancial; ambos tipos son gestionados por el GC de forma equivalente."
+    ],
+    "correct_index": 2,
+    "hint": "Si la única referencia a un objeto es un uintptr, el GC puede liberar o mover el objeto provocando corrupción."
+  },
+  {
+    "id": "go_136",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿Cómo se deben ordenar los campos de un struct en Go para minimizar el espacio por padding?",
+    "options": [
+      "Agrupando los campos por orden alfabético para acelerar la resolución de símbolos en RAM.",
+      "Colocando todos los punteros al final de la estructura para ayudar al barrido del GC.",
+      "Alternando campos pequeños y grandes para balancear las líneas de memoria caché de CPU.",
+      "Ordenando los campos por orden decreciente de tamaño (de mayor a menor número de bytes)."
+    ],
+    "correct_index": 3,
+    "hint": "Ordenar los campos de mayor a menor tamaño reduce o elimina los huecos de padding insertados por alineación."
+  },
+  {
+    "id": "go_137",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿Qué riesgo crítico implica convertir string a []byte usando unsafe y mutar el slice resultante?",
+    "options": [
+      "Viola la invariante de inmutabilidad de cadenas y puede causar fallos catastróficos o UB.",
+      "Provoca un error de compilación inmediato por uso de sintaxis no autorizada en Go.",
+      "El recolector de basura se desactiva permanentemente para todo el ejecutable en marcha.",
+      "La cadena se reinicia automáticamente al valor vacío en tiempo de ejecución del hilo."
+    ],
+    "correct_index": 0,
+    "hint": "Los strings pueden residir en memoria de solo lectura; mutarlos con unsafe provoca segmentation faults o corrupción."
+  },
+  {
+    "id": "go_138",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿Cómo gestiona Go el crecimiento de las pilas de goroutines cuando se quedan sin espacio?",
+    "options": [
+      "Encadena un segmento de memoria separado mediante listas enlazadas (segmented stacks).",
+      "Asigna una nueva pila contigua del doble de tamaño, copia los datos y ajusta punteros.",
+      "Promueve inmediatamente todas las variables activas de la pila al montículo (heap).",
+      "Lanza una excepción irrecuperable de stack overflow terminando el hilo de ejecución."
+    ],
+    "correct_index": 1,
+    "hint": "Go reemplazó segmented stacks por contiguous stacks: reserva el doble de espacio continuo y copia la pila."
+  },
+  {
+    "id": "go_139",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿A qué dirección apuntan las asignaciones de tipos sin tamaño (zero-sized, ej. struct{}{})?",
+    "options": [
+      "A punteros nulos ordinarios que causan pánico si son evaluados por el programa en curso.",
+      "A bloques de 16 bytes asignados de forma aislada en el heap del proceso del sistema.",
+      "A una dirección fija especial compartida llamada 'zerobase' sin ocupar memoria dinámica.",
+      "A direcciones aleatorias generadas por la tabla de descriptores de archivos del kernel."
+    ],
+    "correct_index": 2,
+    "hint": "Valores con tamaño 0 (como struct{}) comparten un puntero estático global (zerobase) para ahorrar memoria."
+  },
+  {
+    "id": "go_140",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿Por qué un slice de punteros ([]*T) impone mayor sobrecarga al GC que uno de valores ([]T)?",
+    "options": [
+      "Porque los slices de punteros se duplican en memoria en cada ciclo del GC del sistema.",
+      "Porque el procesador desactiva la vectorización SIMD para cualquier array con punteros.",
+      "Porque obliga al runtime a ejecutar la fase de barrido (sweep) en modo monohilo estricto.",
+      "Porque el recolector debe escanear y desreferenciar cada puntero para auditar objetos vivos."
+    ],
+    "correct_index": 3,
+    "hint": "Un bloque libre de punteros (noscan) es ignorado por el GC; los punteros obligan a recorrer todo el grafo."
+  },
+  {
+    "id": "go_141",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿Qué asegura la función runtime.KeepAlive(x) en código que interactúa con finalizadores o Cgo?",
+    "options": [
+      "Garantiza que el objeto x permanezca marcado como alcanzable hasta ese punto del código.",
+      "Evita que la goroutine que ejecuta el código sea expulsada por el planificador de hilos.",
+      "Impide que el sistema operativo suspenda el proceso por inactividad prolongada en CPU.",
+      "Mantiene abierta la conexión de red asociada hasta que retorne la función contenedora."
+    ],
+    "correct_index": 0,
+    "hint": "KeepAlive evita que el GC recolecte prematuramente un objeto mientras punteros no rastreados operan sobre él."
+  },
+  {
+    "id": "go_142",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿Cómo está diseñado internamente cada bucket en la estructura hash de un map de Go?",
+    "options": [
+      "Una lista simplemente enlazada de punteros dinámicos a nodos aislados en memoria física.",
+      "Alberga un arreglo de 8 tophash seguido de 8 claves y 8 valores en bloques contiguos.",
+      "Un árbol balanceado AVL donde cada nodo contiene una clave y un puntero a un valor.",
+      "Un bloque plano donde claves y valores se alternan secuencialmente de forma paritaria."
+    ],
+    "correct_index": 1,
+    "hint": "Agrupar 8 claves y luego 8 valores dentro del bucket minimiza el padding de alineación entre pares individuales."
+  },
+  {
+    "id": "go_143",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿Cómo gestiona Go el proceso de rehashing cuando un map requiere duplicar su capacidad?",
+    "options": [
+      "Detiene completamente el proceso y traslada el mapa completo de forma monolítica y síncrona.",
+      "Escribe una copia secundaria en un archivo de paginación temporal en el disco del equipo.",
+      "De forma incremental: evacua buckets gradualmente durante operaciones de escritura o borrado.",
+      "Reasigna los punteros sin alterar la cantidad de buckets físicos disponibles en el heap."
+    ],
+    "correct_index": 2,
+    "hint": "Go redimensiona mapas de manera progresiva (incremental evacuation) para amortizar la latencia en milisegundos."
+  },
+  {
+    "id": "go_144",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿Qué operación realiza la función unsafe.Slice(ptr, len) incorporada en Go 1.17?",
+    "options": [
+      "Duplica de forma atómica un segmento de memoria protegiéndolo de escrituras concurrentes.",
+      "Convierte cualquier slice en una estructura de solo lectura administrada por hardware.",
+      "Elimina elementos repetidos de un slice compactando el espacio de memoria contiguo en RAM.",
+      "Construye un slice artificial apuntando a ptr con longitud len sin realizar copias."
+    ],
+    "correct_index": 3,
+    "hint": "unsafe.Slice genera un slice válido a partir de un puntero crudo y una longitud sin costo de asignación."
+  },
+  {
+    "id": "go_145",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿Cómo interactúa la optimización de 'inlining' con las decisiones de escape analysis?",
+    "options": [
+      "Al expandir la función en el invocador, variables que antes escapaban pueden quedar en stack.",
+      "Fuerza invariablemente que todas las variables de la función expandida escapen al heap.",
+      "Impide que la función expandida pueda ser invocada dentro de una goroutine concurrente.",
+      "Provoca que el compilador descarte los chequeos de desbordamiento de índices en arrays."
+    ],
+    "correct_index": 0,
+    "hint": "Al hacer inline, el compilador ve el contexto ampliado y con frecuencia evita asignar variables locales al heap."
+  },
+  {
+    "id": "go_146",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿Qué tecnología subyacente emplea el detector de carreras (-race) en Go?",
+    "options": [
+      "Simulación determinista monohilo de permutaciones temporales de eventos del planificador.",
+      "ThreadSanitizer (TSan) desarrollado por Google mediante seguimiento en shadow memory.",
+      "Registro pasivo de advertencias del planificador mediante logs del sistema operativo.",
+      "Validación estática de patrones de concurrencia en la fase de análisis léxico del código."
+    ],
+    "correct_index": 1,
+    "hint": "Go integra ThreadSanitizer en su runtime para registrar estados de sincronización y detectar carreras de datos."
+  },
+  {
+    "id": "go_147",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿Por qué un puntero a un campo interno de un struct impide liberar la totalidad del struct?",
+    "options": [
+      "Porque los punteros internos modifican los metadatos de los buckets del recolector de Go.",
+      "Porque el recolector de basura de Go no admite punteros dirigidos a estructuras de datos.",
+      "Porque el asignador gestiona bloques enteros; retener un campo interno retiene todo el bloque.",
+      "Porque el struct se clona obligatoriamente a una zona de memoria estática inmutable en RAM."
+    ],
+    "correct_index": 2,
+    "hint": "El GC rastrea la asignación completa; un puntero a cualquier subcampo mantiene vivo todo el bloque contiguo."
+  },
+  {
+    "id": "go_148",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿Cómo estructura el asignador de memoria de Go las áreas para mitigar la contención entre hilos?",
+    "options": [
+      "Utiliza un cerrojo mutex global que sincroniza cada llamada a mmap en el kernel del SO.",
+      "Asigna memoria compartida exclusivamente mediante canales IPC entre subprocesos nativos.",
+      "Reserva toda la memoria de forma estática al arrancar la aplicación sin admitir heap dinámico.",
+      "Utiliza cachés de asignación por hilo lógico (mcache) con categorías de tamaño (size classes)."
+    ],
+    "correct_index": 3,
+    "hint": "El asignador de Go se basa en TCMalloc: cada P tiene un mcache local para asignaciones sin contención de cerrojos."
+  },
+  {
+    "id": "go_149",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿Qué problema surge al registrar un finalizador (runtime.SetFinalizer) sobre ciclos de objetos?",
+    "options": [
+      "El GC puede verse impedido de recolectar los objetos y no garantiza ejecutar el finalizador.",
+      "El proceso se detiene inmediatamente con un pánico irrecuperable por ciclo circular en RAM.",
+      "El recolector rompe una referencia aleatoria del ciclo para poder invocar el finalizador.",
+      "El finalizador se ejecuta de forma sincrónica e inmediata interrumpiendo el hilo en curso."
+    ],
+    "correct_index": 0,
+    "hint": "Los ciclos de referencias con finalizadores impiden al GC determinar el orden de destrucción, reteniéndolos."
+  },
+  {
+    "id": "go_150",
+    "subtopic": "memoria_punteros",
+    "difficulty": "advanced",
+    "question": "¿Qué representa la función unsafe.String(ptr, len) introducida en Go 1.20?",
+    "options": [
+      "Convierte una cadena en una variable mutable accesible por múltiples goroutines a la vez.",
+      "Crea una cadena inmutable directamente a partir de un puntero a bytes y su longitud sin copiar.",
+      "Verifica criptográficamente que una cadena de bytes no contenga caracteres maliciosos.",
+      "Asigna un bloque de memoria seguro protegido contra lectura en el espacio de pila local."
+    ],
+    "correct_index": 1,
+    "hint": "unsafe.String(ptr, len) permite construir un string a partir de memoria existente sin incurrir en allocation."
   }
 ]

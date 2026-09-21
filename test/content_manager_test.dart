@@ -135,6 +135,37 @@ void main() {
       expect(duePy!.id, isNot(qId)); // qId is no longer due
     });
 
+    test('validates all 7 language packs have 150 questions and tiered difficulty', () {
+      final langFiles = [
+        'assets/packs/python_basico.json',
+        'assets/packs/javascript_basico.json',
+        'assets/packs/typescript_basico.json',
+        'assets/packs/go_basico.json',
+        'assets/packs/rust_basico.json',
+        'assets/packs/dart_basico.json',
+        'assets/packs/java_basico.json',
+      ];
+
+      for (final filePath in langFiles) {
+        final file = File(filePath);
+        expect(file.existsSync(), isTrue, reason: '$filePath must exist');
+
+        final decoded = jsonDecode(file.readAsStringSync()) as List<dynamic>;
+        expect(decoded.length, equals(150), reason: '$filePath must have exactly 150 questions');
+
+        for (final item in decoded) {
+          final q = Question.fromJson(Map<String, dynamic>.from(item as Map));
+          expect(q.id, isNotEmpty);
+          expect(q.question, isNotEmpty);
+          expect(q.options.length, 4);
+          expect(q.correctIndex, inInclusiveRange(0, 3));
+          expect(q.hint, isNotEmpty);
+          expect(['basic', 'medium', 'advanced'], contains(q.difficulty));
+          expect(q.subtopic, isNotEmpty);
+        }
+      }
+    });
+
     test('validates database packs and tiered difficulty filtering', () {
       final manager = ContentManager();
       

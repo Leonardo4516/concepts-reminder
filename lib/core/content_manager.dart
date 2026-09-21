@@ -330,6 +330,21 @@ class ContentManager {
       'interfaces_tipos': 'Interfaces & Tipos',
       'memoria_punteros': 'Punteros & Rutinas',
     },
+    'typescript': {
+      'tipado_avanzado': 'Tipado Estático & Genéricos',
+      'interfaces_tipos': 'Interfaces, Tipos & Enums',
+      'utilidades_tipos': 'Utility Types & Decoradores',
+    },
+    'rust': {
+      'ownership_borrowing': 'Ownership, Borrowing & Lifetimes',
+      'concurrencia_traits': 'Traits, Generics & Concurrencia',
+      'seguridad_memoria': 'Memory Safety & Zero-Cost',
+    },
+    'dart': {
+      'fundamentos_oop': 'Sintaxis & Clases',
+      'null_safety': 'Sound Null Safety',
+      'asincronia_streams': 'Async/Await & Streams',
+    },
   };
 
   /// Returns available subtopics for a given pack as a Map of key -> displayName

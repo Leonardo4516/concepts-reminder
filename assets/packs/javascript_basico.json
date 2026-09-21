@@ -1,80 +1,2102 @@
 [
   {
     "id": "js_001",
-    "question": "En el Event Loop de JavaScript, ¿en qué orden se procesan las Microtasks (e.g., Promise.then, queueMicrotask) frente a las Macrotasks (e.g., setTimeout, setInterval)?",
+    "question": "¿Cuál es la función primordial del Call Stack en el motor de JavaScript?",
     "options": [
-      "Las macrotasks siempre se vacían antes de comprobar si hay microtasks pendientes.",
-      "La cola de microtasks se drena por completo inmediatamente después de finalizar la tarea síncrona actual y antes de ejecutar la siguiente macrotask.",
-      "Ambas colas se procesan intercalando una microtask y una macrotask aleatoriamente.",
-      "Las microtasks solo se ejecutan cuando el hilo del navegador entra en reposo absoluto."
+      "Rastrear y apilar las llamadas a funciones que se están ejecutando.",
+      "Guardar los temporizadores activos en memoria hasta que expiren.",
+      "Recorrer los nodos del DOM para aplicar transformaciones de estilos.",
+      "Manejar las conexiones de red TCP entrantes al servidor de Node."
     ],
-    "correct_index": 1,
-    "hint": "Microtasks tienen mayor prioridad y se ejecutan antes de que el Event Loop entregue el control al renderizado o a la siguiente macrotask de timers o I/O.",
-    "subtopic": "event_loop"
+    "correct_index": 0,
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "El Call Stack es una estructura LIFO que mantiene el contexto de las funciones en ejecución."
   },
   {
     "id": "js_002",
-    "question": "¿Qué es una Clausura (Closure) en JavaScript y cómo opera con el Lexical Scope?",
+    "question": "¿Por qué se califica a JavaScript como un lenguaje de programación monohilo?",
     "options": [
-      "Es una función que retiene acceso a las variables de su ámbito léxico exterior (enclosing scope) incluso después de que la función contenedora haya retornado.",
-      "Es un método nativo que cierra la conexión a sockets WebSocket abiertos.",
-      "Es una técnica para sellar un objeto e impedir que se le agreguen nuevas propiedades (Object.seal).",
-      "Es una variable declarada con la palabra reservada 'close' en tiempo de ejecución."
+      "Solo permite declarar una única variable de tipo numérico por bloque.",
+      "Ejecuta su código principal utilizando una única pila de llamadas en el hilo.",
+      "No soporta la ejecución de ninguna tarea en segundo plano por diseño.",
+      "Carece de operadores lógicos para procesar flujos de decisión condicional."
     ],
-    "correct_index": 0,
-    "hint": "Las funciones en JS recuerdan el entorno en el que fueron creadas, reteniendo referencias vivas a sus variables externas.",
-    "subtopic": "closures_scope"
+    "correct_index": 1,
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "JavaScript tiene un solo Call Stack en su hilo principal, lo que define su naturaleza single-threaded."
   },
   {
     "id": "js_003",
-    "question": "¿Qué relación existe entre la sintaxis 'async/await' y las Promesas en JavaScript moderno?",
+    "question": "¿Qué ocurre cuando una función se invoca a sí misma recursivamente sin base?",
     "options": [
-      "async/await es azúcar sintáctico construido sobre Promesas y generadores; una función async siempre devuelve una Promesa.",
-      "async/await ejecuta el código en un hilo nativo del sistema operativo separado e independiente del Event Loop.",
-      "await solo puede esperar funciones sincrónicas sin valor de retorno.",
-      "async/await reemplazó las Promesas, eliminándolas del motor V8."
+      "El recolector de basura suspende el hilo para liberar variables del heap.",
+      "Las nuevas llamadas recursivas se desvían de inmediato a las Web APIs.",
+      "Se desborda la pila de llamadas provocando un error RangeError crítico.",
+      "El Event Loop apaga el navegador para proteger la integridad del sistema."
     ],
-    "correct_index": 0,
-    "hint": "Cualquier función con la palabra clave 'async' encapsula su resultado en Promise.resolve() o Promise.reject().",
-    "subtopic": "event_loop"
+    "correct_index": 2,
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "La recursión infinita satura la memoria del Call Stack arrojando Maximum call stack size exceeded."
   },
   {
     "id": "js_004",
-    "question": "¿Cómo funciona la cadena de prototipos (Prototype Chain) al acceder a una propiedad de un objeto en JavaScript?",
+    "question": "¿Qué componente del entorno se encarga de ejecutar temporizadores como setTimeout?",
     "options": [
-      "El motor busca en las variables globales directamente antes de revisar el objeto.",
-      "Si la propiedad no existe en el objeto propio, el motor recorre su prototipo interno (__proto__) de forma ascendente hasta encontrarla o alcanzar null (Object.prototype).",
-      "Si no existe en el objeto, se genera un error de sintaxis en tiempo de compilación sin consultar prototipos.",
-      "Solo los objetos instanciados con 'class' tienen cadena de prototipos; los literales de objeto no."
+      "El intérprete de bytecode de V8 de forma estrictamente síncrona.",
+      "El compilador Just-In-Time antes de generar el código de máquina.",
+      "El árbol de renderizado CSS antes de calcular la disposición visual.",
+      "Las Web APIs del navegador o las APIs de C++ provistas por Node.js."
     ],
-    "correct_index": 1,
-    "hint": "La herencia en JS es prototípica; cada objeto tiene un puntero interno a su prototipo ancestro hasta terminar en null.",
-    "subtopic": "closures_scope"
+    "correct_index": 3,
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "setTimeout no forma parte del estándar ECMAScript sino de las APIs del entorno de ejecución."
   },
   {
     "id": "js_005",
-    "question": "¿Cómo se comporta el enlace (binding) de 'this' en una Arrow Function en comparación con una función tradicional?",
+    "question": "¿A qué cola se envía el callback de setTimeout una vez transcurrido el tiempo?",
     "options": [
-      "Las Arrow Functions poseen su propio binding de 'this', el cual apunta siempre al objeto global.",
-      "Las Arrow Functions carecen de su propio binding de 'this'; lo capturan léxicamente del ámbito en el que fueron definidas y no pueden ser modificadas con .bind, .call o .apply.",
-      "Las funciones tradicionales siempre tienen un 'this' inmutable fijado al momento de su declaración.",
-      "Las Arrow Functions solo pueden usarse como constructores con el operador 'new'."
+      "A la cola de tareas o macrotareas para esperar a que la pila se vacíe.",
+      "Directamente a la cima de la pila de llamadas interrumpiendo el flujo.",
+      "A la cola de microtareas junto con las resoluciones de promesas nativas.",
+      "Al espacio de almacenamiento local hasta la recarga completa del sitio."
     ],
-    "correct_index": 1,
-    "hint": "En funciones tradicionales 'this' depende de cómo se invoca la función; en arrow functions 'this' depende de dónde se escribe el código (ámbito léxico).",
-    "subtopic": "closures_scope"
+    "correct_index": 0,
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "Los callbacks de temporizadores entran en la Task Queue (macrotareas) para su turno en el loop."
   },
   {
     "id": "js_006",
-    "question": "¿Cuál es la diferencia de Hoisting entre declaraciones con 'var' versus 'let' y 'const'?",
+    "question": "¿A qué cola se incorpora el callback que se pasa a la función queueMicrotask()?",
     "options": [
-      "'var' se eleva e inicializa con 'undefined'; 'let' y 'const' también se elevan pero no se inicializan, quedando en la Zona Muerta Temporal (Temporal Dead Zone - TDZ) hasta su declaración.",
-      "Ninguna de las tres variables sufre hoisting en versiones de ECMAScript superiores a ES6.",
-      "'let' y 'const' se inicializan inmediatamente con null en el ámbito global.",
-      "'var' lanza ReferenceError si se lee antes de su línea de asignación."
+      "A la cola de macrotareas detrás de cualquier temporizador pendiente.",
+      "A la cola de microtareas que se procesa al finalizar la tarea actual.",
+      "Directamente al motor gráfico omitiendo la intervención del Call Stack.",
+      "A una lista de espera de red que solo se ejecuta con conexión activa."
+    ],
+    "correct_index": 1,
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "queueMicrotask programa una función en la microtask queue con prioridad sobre macrotareas."
+  },
+  {
+    "id": "js_007",
+    "question": "¿Qué efecto tiene ejecutar setTimeout(callback, 0) en un script?",
+    "options": [
+      "Ejecuta el callback de inmediato de forma síncrona en el Call Stack actual.",
+      "Congela el hilo de JavaScript durante cero nanosegundos comprobables.",
+      "Difiere la ejecución del callback hasta la próxima vuelta de macrotareas.",
+      "Convierte el callback en una microtarea que precede a las promesas."
+    ],
+    "correct_index": 2,
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "setTimeout(cb, 0) cede el control y coloca el callback al final de la cola de macrotareas."
+  },
+  {
+    "id": "js_008",
+    "question": "¿Cuál es la responsabilidad central del Event Loop en el entorno de JavaScript?",
+    "options": [
+      "Interpretar sintácticamente las expresiones regulares de todo el código.",
+      "Distribuir la carga de cómputo en todos los núcleos de la CPU del equipo.",
+      "Optimizar la tasa de transferencia de datos entre cliente y servidor.",
+      "Supervisar el Call Stack y mover tareas desde las colas cuando esté libre."
+    ],
+    "correct_index": 3,
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "El Event Loop coordina cuándo pasar funciones de las colas a la pila de llamadas vacía."
+  },
+  {
+    "id": "js_009",
+    "question": "¿Qué estructura de datos rige el comportamiento de la pila de llamadas (Call Stack)?",
+    "options": [
+      "LIFO (Last In, First Out), el último elemento en entrar es el primero en salir.",
+      "FIFO (First In, First Out), el primer elemento en entrar es el primero en salir.",
+      "Un árbol binario ordenado según la complejidad algorítmica del bloque.",
+      "Una cola circular indexada por la cantidad de argumentos de la función."
     ],
     "correct_index": 0,
-    "hint": "Acceder a una variable 'let' o 'const' antes de su línea de definición arroja ReferenceError debido a la TDZ.",
-    "subtopic": "closures_scope"
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "El Call Stack opera con disciplina LIFO: las funciones más recientes se resuelven primero."
+  },
+  {
+    "id": "js_010",
+    "question": "¿Qué consecuencia tiene ejecutar una función síncrona que tarda 10 segundos?",
+    "options": [
+      "Se traslada en silencio a un subproceso del sistema operativo anfitrión.",
+      "Bloquea el Call Stack e impide la interacción y repintado de la interfaz.",
+      "El motor JavaScript fragmenta la función en promesas de 100 milisegundos.",
+      "Se cancela automáticamente arrojando una excepción de tiempo de espera."
+    ],
+    "correct_index": 1,
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "Al ser monohilo, cualquier computación síncrona pesada congela la respuesta de la interfaz."
+  },
+  {
+    "id": "js_011",
+    "question": "¿Qué principio de ordenamiento rige la extracción de callbacks en la Task Queue?",
+    "options": [
+      "LIFO (Last In, First Out), priorizando siempre la tarea encolada más reciente.",
+      "Orden alfabético estricto según el nombre del identificador de la función.",
+      "FIFO (First In, First Out), donde las tareas más antiguas se atienden primero.",
+      "Selección pseudoaleatoria para balancear la carga entre distintos eventos."
+    ],
+    "correct_index": 2,
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "Las colas de tareas son FIFO: atienden las tareas en el estricto orden de llegada."
+  },
+  {
+    "id": "js_012",
+    "question": "¿Qué almacena el Memory Heap en los motores de JavaScript modernos como V8?",
+    "options": [
+      "Las direcciones de retorno de las llamadas de funciones activas en la pila.",
+      "El historial cronológico de todas las interacciones realizadas con el mouse.",
+      "El código compilado en ensamblador listo para su volcado en el disco duro.",
+      "La memoria dinámica no estructurada donde se alojan objetos y variables complejas."
+    ],
+    "correct_index": 3,
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "El Heap es la región de memoria dinámica donde residen objetos, arrays y clausuras."
+  },
+  {
+    "id": "js_013",
+    "question": "¿Qué tipo de tarea genera el callback adjuntado a Promise.prototype.then()?",
+    "options": [
+      "Una microtarea que se atiende antes de cualquier macrotarea pendiente.",
+      "Una macrotarea estándar que se coloca al final de la cola de eventos.",
+      "Una llamada síncrona que detiene el flujo del script hasta que responda.",
+      "Un hilo nativo en segundo plano que no interactúa con el Call Stack."
+    ],
+    "correct_index": 0,
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "Las resoluciones de promesas generan microtareas con prioridad de ejecución alta."
+  },
+  {
+    "id": "js_014",
+    "question": "¿Qué sucede si expira un temporizador mientras el Call Stack está ocupado ejecutando?",
+    "options": [
+      "El temporizador interrumpe la función activa para ejecutar su contenido.",
+      "El callback espera en la Task Queue hasta que el Call Stack se vacíe.",
+      "El callback es descartado de inmediato por no haber tenido turno a tiempo.",
+      "El navegador genera un error alertando de sobrecarga en el temporizador."
+    ],
+    "correct_index": 1,
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "El Event Loop nunca introduce tareas en el Call Stack mientras este tenga código corriendo."
+  },
+  {
+    "id": "js_015",
+    "question": "¿Cómo se clasifica la ejecución de console.log() en el flujo del lenguaje?",
+    "options": [
+      "Es una microtarea asíncrona que siempre espera a que termine el script.",
+      "Es una macrotarea delegada al subsistema de entrada y salida del navegador.",
+      "Es una invocación puramente síncrona que se apila y desapila de inmediato.",
+      "Es una promesa oculta que solo se resuelve si la consola del browser abre."
+    ],
+    "correct_index": 2,
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "console.log es una instrucción síncrona directa sobre la pila de llamadas actual."
+  },
+  {
+    "id": "js_016",
+    "question": "¿Qué ventaja proporciona el modelo asíncrono no bloqueante en navegadores?",
+    "options": [
+      "Garantiza que el código síncrono corra siempre el doble de rápido en disco.",
+      "Evita por completo la necesidad de asignar memoria para nuevos objetos.",
+      "Convierte automáticamente bucles infinitos en operaciones de corta espera.",
+      "Permite procesar I/O y peticiones de red sin congelar la interfaz de usuario."
+    ],
+    "correct_index": 3,
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "La asincronía delega tareas pesadas al entorno manteniendo fluida la interacción gráfica."
+  },
+  {
+    "id": "js_017",
+    "question": "¿Cómo maneja el navegador los eventos del usuario como un click en un botón?",
+    "options": [
+      "Encola el callback del listener en la cola de macrotareas cuando ocurre el evento.",
+      "Detiene de golpe la ejecución actual e inserta el callback en la pila de llamadas.",
+      "Transforma el evento en una microtarea que congela todas las peticiones HTTP.",
+      "Guarda la pulsación en un registro global sin ejecutar código hasta recargar."
+    ],
+    "correct_index": 0,
+    "subtopic": "event_loop",
+    "difficulty": "basic",
+    "hint": "Los eventos del DOM se gestionan encolando macrotareas en la cola de tareas del navegador."
+  },
+  {
+    "id": "js_018",
+    "question": "Dado: setTimeout(() => log(1), 0); Promise.resolve().then(() => log(2)); log(3); ¿Orden?",
+    "options": [
+      "1, 2, 3 (los callbacks registrados se despachan estrictamente en orden de código).",
+      "3, 2, 1 (el código síncrono va primero, luego la microtarea y al final la macrotarea).",
+      "3, 1, 2 (el temporizador de cero milisegundos se ejecuta antes que la promesa).",
+      "2, 3, 1 (las microtareas siempre se adelantan incluso al código síncrono en curso)."
+    ],
+    "correct_index": 1,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "Primero corre el código síncrono (3), luego las microtareas (2) y al final las macrotareas (1)."
+  },
+  {
+    "id": "js_019",
+    "question": "¿Qué ocurre si una microtarea genera indefinidamente nuevas microtareas?",
+    "options": [
+      "El motor detecta el bucle y promueve automáticamente las tareas a macrotareas.",
+      "Se genera un error RangeError por desbordamiento de la pila de microtareas.",
+      "Provoca starvation: la cola de macrotareas y el renderizado nunca obtienen turno.",
+      "El Event Loop ignora la cola de microtareas y prioriza el renderizado del DOM."
+    ],
+    "correct_index": 2,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "El motor procesa todas las microtareas hasta vaciar la cola, provocando inanición de tareas."
+  },
+  {
+    "id": "js_020",
+    "question": "¿Cuál es la diferencia entre process.nextTick() y setImmediate() en Node.js?",
+    "options": [
+      "setImmediate se ejecuta de manera síncrona interrumpiendo el flujo de funciones.",
+      "process.nextTick se ejecuta exclusivamente en la fase de temporizadores de libuv.",
+      "Ambos métodos son exactamente sinónimos y comparten la misma cola en libuv.",
+      "process.nextTick corre antes de cualquier microtarea y antes de cambiar de fase."
+    ],
+    "correct_index": 3,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "process.nextTick se vacía inmediatamente tras la operación en curso antes del loop regular."
+  },
+  {
+    "id": "js_021",
+    "question": "¿En qué punto del ciclo de eventos del navegador se ejecuta requestAnimationFrame?",
+    "options": [
+      "Justo antes del paso de renderizado, cálculo de estilos y repintado de pantalla.",
+      "En la misma fase de microtareas inmediatamente después de cada Promise.resolve.",
+      "Al término de cada evento de red antes de transferir datos al Memory Heap.",
+      "En un hilo auxiliar que jamás interactúa con el árbol de elementos del DOM."
+    ],
+    "correct_index": 0,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "requestAnimationFrame se ejecuta justo antes de la actualización de la pantalla del browser."
+  },
+  {
+    "id": "js_022",
+    "question": "¿Cómo se comporta internamente el código de una función async antes de encontrar 'await'?",
+    "options": [
+      "Se envía a la cola de microtareas para diferir su inicio hasta la siguiente vuelta.",
+      "Se ejecuta de forma enteramente síncrona en el Call Stack que realizó la llamada.",
+      "Se delega a un hilo de Node o Web Worker sin intervención de la pila actual.",
+      "Se congela temporalmente hasta que se resuelva la primera promesa del script."
+    ],
+    "correct_index": 1,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "Las funciones async corren síncronamente hasta encontrar la primera palabra clave await."
+  },
+  {
+    "id": "js_023",
+    "question": "¿Qué ocurre con el renderizado gráfico si la cola de microtareas tiene mucho trabajo?",
+    "options": [
+      "El navegador fuerza el repintado ignorando el estado de la cola de microtareas.",
+      "Las microtareas se pausan a los 16ms para permitir que la pantalla se actualice.",
+      "El renderizado se pospone hasta que la cola de microtareas quede totalmente vacía.",
+      "El compositor visual dibuja la pantalla utilizando una copia antigua del heap."
+    ],
+    "correct_index": 2,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "El microtask checkpoint exige vaciar toda la cola antes de dar paso al pipeline de render."
+  },
+  {
+    "id": "js_024",
+    "question": "¿Para qué se utiliza la API MessageChannel en lugar de setTimeout(fn, 0)?",
+    "options": [
+      "Para crear un hilo nativo que no comparte la memoria de las variables globales.",
+      "Para convertir cualquier función asíncrona en una llamada puramente síncrona.",
+      "Para impedir que las microtareas de promesas se ejecuten antes que el mensaje.",
+      "Para planificar una macrotarea rápida evitando el clamping mínimo de 4 milisegundos."
+    ],
+    "correct_index": 3,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "MessageChannel encola macrotareas sin el retraso artificial de 4ms impuesto a setTimeout anidado."
+  },
+  {
+    "id": "js_025",
+    "question": "¿En qué fase del Event Loop de Node.js se evalúan los temporizadores de setTimeout?",
+    "options": [
+      "En la fase de Timers al inicio de cada iteración del bucle de eventos de libuv.",
+      "En la fase de Poll justo antes de esperar nuevas conexiones entrantes por red.",
+      "En la fase de Check designada específicamente para los callbacks de setImmediate.",
+      "En la fase de Close Callbacks donde se gestionan los cierres de descriptores."
+    ],
+    "correct_index": 0,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "libuv comprueba los temporizadores expirados en la fase de Timers de cada ciclo."
+  },
+  {
+    "id": "js_026",
+    "question": "¿Qué diferencia a los Web Workers respecto a la ejecución en el hilo principal?",
+    "options": [
+      "Comparten la misma pila de llamadas pero cuentan con su propio espacio de Heap.",
+      "Poseen su propio Call Stack y Event Loop independientes sin acceso al DOM directo.",
+      "Solo pueden procesar código síncrono y carecen de soporte para temporizadores.",
+      "Pueden mutar el DOM de forma concurrente mediante bloqueos de exclusión mutua."
+    ],
+    "correct_index": 1,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "Los Web Workers corren en hilos separados con su propio Event Loop y sin acceso al DOM."
+  },
+  {
+    "id": "js_027",
+    "question": "¿Qué sucede si una excepción no capturada ocurre dentro de un setTimeout?",
+    "options": [
+      "Es capturada por el bloque try/catch circundante que programó el setTimeout.",
+      "Se convierte en una promesa rechazada que emite un unhandledrejection global.",
+      "Llega al manejador global de errores del entorno sin atraparse en el try original.",
+      "El Event Loop detiene permanentemente el navegador para evitar corrupción."
+    ],
+    "correct_index": 2,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "El callback corre en otro turno de la pila, fuera del alcance del bloque try/catch original."
+  },
+  {
+    "id": "js_028",
+    "question": "¿Por qué múltiples llamadas a queueMicrotask corren antes que un setTimeout(fn, 0)?",
+    "options": [
+      "Porque los temporizadores en JavaScript tienen un retraso obligatorio de un segundo.",
+      "Porque queueMicrotask invoca al sistema operativo sin pasar por la cola de eventos.",
+      "Porque las promesas y microtareas corren en paralelo en los núcleos de la CPU.",
+      "Porque el Event Loop debe vaciar todas las microtareas antes de la siguiente macrotarea."
+    ],
+    "correct_index": 3,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "Entre cada macrotarea, el Event Loop vacía la cola de microtareas por completo."
+  },
+  {
+    "id": "js_029",
+    "question": "¿Qué estipula la especificación HTML sobre el orden de microtareas encoladas?",
+    "options": [
+      "Se deben ejecutar en riguroso orden FIFO dentro del mismo entorno de ejecución.",
+      "El motor puede alterar el orden según la cantidad de memoria que ocupe cada una.",
+      "Las microtareas con callbacks anónimos se descartan si tardan más de 50 microsegundos.",
+      "Se alternan de manera aleatoria para asegurar concurrencia justa entre promesas."
+    ],
+    "correct_index": 0,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "Las microtareas se procesan en estricto orden de inserción (FIFO)."
+  },
+  {
+    "id": "js_030",
+    "question": "¿Qué es el temporizador de 'clamping' impuesto por los navegadores en setTimeout anidado?",
+    "options": [
+      "Una restricción que cancela los temporizadores si el uso de memoria excede el 80%.",
+      "Un límite mínimo de 4ms forzado a partir del quinto nivel consecutivo de anidamiento.",
+      "La aceleración automática de temporizadores cuando la batería del equipo baja.",
+      "El retraso obligatorio de 1000ms impuesto a todos los scripts cargados de forma asíncrona."
+    ],
+    "correct_index": 1,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "La especificación HTML fija un piso de 4ms para timers con anidación profunda (>=5)."
+  },
+  {
+    "id": "js_031",
+    "question": "¿Qué ocurre al disparar un evento sintéticamente con element.dispatchEvent()?",
+    "options": [
+      "Se colocan en la cola de macrotareas esperando a que finalice el script por completo.",
+      "Se descartan inmediatamente a menos que el usuario esté moviendo físicamente el ratón.",
+      "Los manejadores de eventos se ejecutan de forma síncrona en la pila de llamadas actual.",
+      "Generan un hilo paralelo que corre independientemente del hilo principal del browser."
+    ],
+    "correct_index": 2,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "dispatchEvent invoca los listeners de forma síncrona directa sobre la pila actual."
+  },
+  {
+    "id": "js_032",
+    "question": "¿En qué fase de libuv en Node.js se procesan los callbacks de setImmediate()?",
+    "options": [
+      "En la fase de Timers junto a los callbacks registrados mediante setInterval.",
+      "En la fase de Idle utilizada internamente para comprobaciones del motor V8.",
+      "En la fase de Close Callbacks donde se limpian las instancias de sockets de red.",
+      "En la fase de Check inmediatamente posterior a la finalización de la fase Poll."
+    ],
+    "correct_index": 3,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "setImmediate está diseñado para ejecutarse en la fase Check de libuv tras el polling."
+  },
+  {
+    "id": "js_033",
+    "question": "¿Qué evento se genera si una Promise se rechaza sin tener un handler .catch()?",
+    "options": [
+      "Se despacha el evento global unhandledrejection en la ventana o proceso de Node.",
+      "Se produce un error de sintaxis que bloquea la carga de futuros scripts en la web.",
+      "La promesa se reintenta automáticamente hasta tres veces en las siguientes tareas.",
+      "El motor convierte silenciosamente el error en un objeto con estado fulfilled vacío."
+    ],
+    "correct_index": 0,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "Las promesas rechazadas sin manejador disparan el evento 'unhandledrejection'."
+  },
+  {
+    "id": "js_034",
+    "question": "¿Cómo afecta 'await' al flujo de ejecución de las sentencias que le siguen?",
+    "options": [
+      "Bloquea el hilo del sistema operativo hasta que los datos lleguen por completo.",
+      "Empaqueta el resto de la función como una microtarea que aguarda la resolución.",
+      "Convierte el resto del código en una macrotarea encolada detrás de setTimeout.",
+      "Fuerza a la promesa a resolverse de manera síncrona dentro del mismo frame visual."
+    ],
+    "correct_index": 1,
+    "subtopic": "event_loop",
+    "difficulty": "medium",
+    "hint": "El código tras 'await' se reanuda en una microtarea cuando la promesa se resuelve."
+  },
+  {
+    "id": "js_035",
+    "question": "¿Cómo se comporta MutationObserver en el ciclo de eventos del navegador web?",
+    "options": [
+      "Sus callbacks son macrotareas de baja prioridad procesadas tras los temporizadores.",
+      "Corre en un worker exclusivo que actualiza el árbol de render de manera asíncrona.",
+      "Sus notificaciones se despachan como microtareas antes de repintar la interfaz.",
+      "Suspende de forma síncrona cualquier evento de usuario hasta modificar el DOM."
+    ],
+    "correct_index": 2,
+    "subtopic": "event_loop",
+    "difficulty": "advanced",
+    "hint": "Los callbacks de MutationObserver se procesan como microtareas antes del repintado."
+  },
+  {
+    "id": "js_036",
+    "question": "¿Qué cambio crucial respecto a microtareas se introdujo en Node.js versión 11?",
+    "options": [
+      "Se suprimió por completo la cola de microtareas delegando todo a las fases de libuv.",
+      "Node.js dejó de usar el motor V8 para adoptar un runtime multi-hilo nativo de Rust.",
+      "Se pospuso el vaciado de microtareas hasta el cierre de todas las fases del ciclo.",
+      "Las microtareas se ejecutan inmediatamente después de cada callback de temporizador."
+    ],
+    "correct_index": 3,
+    "subtopic": "event_loop",
+    "difficulty": "advanced",
+    "hint": "Node 11 se alineó con la especificación del navegador vaciando microtareas entre timers."
+  },
+  {
+    "id": "js_037",
+    "question": "¿Qué función desempeña Atomics.wait() y en qué contexto puede invocarse?",
+    "options": [
+      "Bloquea el hilo esperando un valor; solo se admite en Web Workers secundarios.",
+      "Pausa el Call Stack del hilo principal sin afectar la tasa de cuadros por segundo.",
+      "Sincroniza microtareas entre diferentes ventanas del mismo origen de navegación.",
+      "Permite que dos promesas concurrentes se resuelvan en una única operación atómica."
+    ],
+    "correct_index": 0,
+    "subtopic": "event_loop",
+    "difficulty": "advanced",
+    "hint": "Atomics.wait es una primitiva bloqueante prohibida en el hilo principal del browser."
+  },
+  {
+    "id": "js_038",
+    "question": "¿Cómo clasifica tareas la API experimental scheduler.postTask() en el browser?",
+    "options": [
+      "Elimina las macrotareas y convierte todas las funciones en microtareas puras.",
+      "Asigna prioridades formales: 'user-blocking', 'user-visible' y 'background'.",
+      "Obliga al recolector de basura a activarse antes de invocar la tarea programada.",
+      "Genera hilos del sistema dedicados a computación de alto rendimiento en WebGL."
+    ],
+    "correct_index": 1,
+    "subtopic": "event_loop",
+    "difficulty": "advanced",
+    "hint": "scheduler.postTask introduce planificación explícita de tareas por niveles de prioridad."
+  },
+  {
+    "id": "js_039",
+    "question": "¿Qué sucede si se invoca process.exit() dentro de un script en ejecución en Node.js?",
+    "options": [
+      "Permite vaciar las macrotareas pendientes antes de salir ordenadamente del SO.",
+      "Procesa únicamente las microtareas acumuladas y luego suspende el bucle de eventos.",
+      "Termina el proceso de inmediato sin esperar las tareas pendientes en las colas.",
+      "Envía una señal de apagado suave que aguarda el cierre de todos los servidores activos."
+    ],
+    "correct_index": 2,
+    "subtopic": "event_loop",
+    "difficulty": "advanced",
+    "hint": "process.exit() causa la terminación inmediata del proceso omitiendo colas pendientes."
+  },
+  {
+    "id": "js_040",
+    "question": "¿Qué ocurre si un callback de requestAnimationFrame agenda otro rAF idéntico?",
+    "options": [
+      "Se ejecuta de inmediato dentro del mismo frame provocando un bloqueo infinito.",
+      "Es cancelado de inmediato por el compositor gráfico para proteger los recursos.",
+      "Se degrada a una microtarea que compite con las resoluciones de promesas activas.",
+      "La nueva petición se programa para el siguiente cuadro gráfico sin saturar el actual."
+    ],
+    "correct_index": 3,
+    "subtopic": "event_loop",
+    "difficulty": "advanced",
+    "hint": "Las llamadas a rAF dentro de rAF se reservan para el siguiente frame de renderizado."
+  },
+  {
+    "id": "js_041",
+    "question": "¿De qué manera las Long Tasks (>50ms) deterioran la métrica web Interaction to Next Paint (INP)?",
+    "options": [
+      "Monopolizan el hilo principal demorando la atención y respuesta a eventos del usuario.",
+      "Aumentan el consumo de ancho de banda al forzar peticiones repetidas al servidor.",
+      "Inhabilitan la memoria caché del navegador provocando descargas de recursos redundantes.",
+      "Causan fallos en el motor de estilos obligando a reconstruir el DOM repetidamente."
+    ],
+    "correct_index": 0,
+    "subtopic": "event_loop",
+    "difficulty": "advanced",
+    "hint": "Tareas que superan 50ms retrasan el procesamiento de eventos deteriorando el INP."
+  },
+  {
+    "id": "js_042",
+    "question": "¿Qué papel desempeña la biblioteca libuv en el diseño interno de Node.js?",
+    "options": [
+      "Transforma el código fuente de TypeScript a JavaScript ejecutable en el navegador.",
+      "Implementa el Event Loop y administra el pool de hilos para operaciones asíncronas de I/O.",
+      "Gestiona la renderización en el canvas y la conversión de colores para pantallas.",
+      "Supervisa el cumplimiento de las restricciones de seguridad en las APIs de red."
+    ],
+    "correct_index": 1,
+    "subtopic": "event_loop",
+    "difficulty": "advanced",
+    "hint": "libuv gestiona el Event Loop y el thread pool para operaciones asíncronas en Node."
+  },
+  {
+    "id": "js_043",
+    "question": "¿En qué orden se despachan los resultados consolidados por Promise.all()?",
+    "options": [
+      "Se ordenan cronológicamente según la velocidad de resolución de cada promesa individual.",
+      "Se entregan en orden inverso para priorizar la última promesa declarada en el código.",
+      "Preservan el orden posicional del array original independientemente de cuándo terminen.",
+      "Se agrupan aleatoriamente para reducir el consumo de ciclos de CPU en el proceso."
+    ],
+    "correct_index": 2,
+    "subtopic": "event_loop",
+    "difficulty": "advanced",
+    "hint": "Promise.all mantiene estrictamente el orden de los elementos del iterable original."
+  },
+  {
+    "id": "js_044",
+    "question": "¿Qué impacto tiene un bucle síncrono infinito ejecutándose dentro de un Web Worker?",
+    "options": [
+      "Congela toda la ventana del navegador incluyendo todas las pestañas de otros dominios.",
+      "Obliga al recolector de basura a detener todos los procesos del motor JavaScript.",
+      "Provoca un fallo general en la tarjeta gráfica al intentar sincronizar el viewport.",
+      "Satura el hilo de ese worker pero mantiene el hilo principal y la interfaz totalmente fluidos."
+    ],
+    "correct_index": 3,
+    "subtopic": "event_loop",
+    "difficulty": "advanced",
+    "hint": "El worker corre en un hilo aislado; su bloqueo no congela el hilo principal del DOM."
+  },
+  {
+    "id": "js_045",
+    "question": "¿Cómo cooperan las funciones generadoras asíncronas con el Event Loop?",
+    "options": [
+      "Cada yield suspende la ejecución retornando una promesa atendida en microtareas.",
+      "Bloquean el Call Stack de manera síncrona hasta la llamada del siguiente generador.",
+      "Convierten los valores emitidos en macrotareas gestionadas por el hilo de red.",
+      "Delegan el cálculo a las colas de temporizadores con un delay fijo de diez segundos."
+    ],
+    "correct_index": 0,
+    "subtopic": "event_loop",
+    "difficulty": "advanced",
+    "hint": "Los async generators suspenden su contexto y entregan promesas resueltas en microtareas."
+  },
+  {
+    "id": "js_046",
+    "question": "¿Qué requerimiento impone SharedArrayBuffer para la sincronización entre hilos?",
+    "options": [
+      "Requiere serializar los datos en cadenas JSON antes de cada lectura compartida.",
+      "Exige utilizar métodos atómicos de la API Atomics para impedir condiciones de carrera.",
+      "Obliga a que todos los Web Workers compartan exactamente el mismo Call Stack.",
+      "Demanda el reinicio del Event Loop cada vez que un worker modifica un valor numérico."
+    ],
+    "correct_index": 1,
+    "subtopic": "event_loop",
+    "difficulty": "advanced",
+    "hint": "El acceso concurrente a SharedArrayBuffer requiere Atomics para evitar data races."
+  },
+  {
+    "id": "js_047",
+    "question": "¿Cuándo se garantiza la invocación de los callbacks en FinalizationRegistry?",
+    "options": [
+      "De manera instantánea y síncrona en el ciclo de reloj en que se pierde la referencia.",
+      "Antes de que cualquier promesa pendiente en la cola de microtareas pueda resolverse.",
+      "En un turno posterior del Event Loop tras la recolección del objeto, sin garantía de tiempo.",
+      "Únicamente al momento en que el usuario cierra de forma manual la pestaña web."
+    ],
+    "correct_index": 2,
+    "subtopic": "event_loop",
+    "difficulty": "advanced",
+    "hint": "La limpieza de FinalizationRegistry ocurre de forma asíncrona tras la recolección de basura."
+  },
+  {
+    "id": "js_048",
+    "question": "¿Por qué un microtask checkpoint ocurre tras un click simulado con element.click()?",
+    "options": [
+      "Porque los clicks programáticos son redirigidos al subsistema de red del sistema.",
+      "Porque el navegador convierte automáticamente todos los eventos de botón en promesas.",
+      "Porque las interacciones simuladas exigen la intervención de un Web Worker dedicado.",
+      "Porque dispatchEvent y click() despachan handlers de manera síncrona sobre la pila."
+    ],
+    "correct_index": 3,
+    "subtopic": "event_loop",
+    "difficulty": "advanced",
+    "hint": "Al invocarse síncronamente, los listeners finalizan y se evalúan las microtareas resultantes."
+  },
+  {
+    "id": "js_049",
+    "question": "¿Qué sucede cuando una función async devuelve un valor primitivo como un número?",
+    "options": [
+      "Lo encapsula automáticamente en una Promise resuelta que encola una microtarea.",
+      "Devuelve el número síncronamente sin ninguna intervención del sistema de promesas.",
+      "Genera un error en tiempo de compilación por no devolver una instancia de Promise.",
+      "Lo almacena en el registro de variables globales hasta el siguiente ciclo del loop."
+    ],
+    "correct_index": 0,
+    "subtopic": "event_loop",
+    "difficulty": "advanced",
+    "hint": "Las funciones async siempre devuelven una promesa envuelta vía Promise.resolve()."
+  },
+  {
+    "id": "js_050",
+    "question": "¿Cómo beneficia la utilización de OffscreenCanvas al Event Loop del hilo principal?",
+    "options": [
+      "Elimina por completo la necesidad de contar con una tarjeta de vídeo en la máquina.",
+      "Permite delegar operaciones pesadas de renderizado a un Worker liberando la interfaz.",
+      "Fuerza al navegador a compilar el código JavaScript en lenguaje de sombreado GLSL.",
+      "Duplica la velocidad de resolución de las promesas activas en la cola de microtareas."
+    ],
+    "correct_index": 1,
+    "subtopic": "event_loop",
+    "difficulty": "advanced",
+    "hint": "OffscreenCanvas traslada el renderizado de gráficos a un hilo secundario sin trabar la UI."
+  },
+  {
+    "id": "js_051",
+    "question": "¿Qué es un closure (clausura) en JavaScript?",
+    "options": [
+      "Un método especial para cerrar ventanas emergentes de forma segura en el DOM.",
+      "Una palabra clave reservada para finalizar la ejecución de bucles anidados.",
+      "Una función que conserva acceso a variables de su ámbito léxico exterior.",
+      "Un mecanismo del compilador para eliminar variables no utilizadas de memoria."
+    ],
+    "correct_index": 2,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "Un closure permite a una función recordar y acceder a variables del ámbito en que fue creada."
+  },
+  {
+    "id": "js_052",
+    "question": "¿Qué alcance (scope) tienen las variables declaradas con 'var'?",
+    "options": [
+      "Tienen ámbito de bloque estricto delimitado por llaves en cualquier sentencia.",
+      "Tienen ámbito exclusivamente de módulo impidiendo su lectura en otros archivos.",
+      "Tienen ámbito temporal que se destruye automáticamente tras cada sentencia if.",
+      "Tienen ámbito de función o ámbito global, ignorando los bloques de llaves."
+    ],
+    "correct_index": 3,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "Las variables con 'var' no respetan el ámbito de bloque; solo el de función o global."
+  },
+  {
+    "id": "js_053",
+    "question": "¿Qué define el ámbito léxico (lexical scoping) en JavaScript?",
+    "options": [
+      "El alcance se determina por la ubicación física de las funciones en el código.",
+      "El alcance depende dinámicamente del lugar exacto desde donde se invoca la función.",
+      "Las variables solo son visibles dentro de los primeros 100 caracteres del script.",
+      "El alcance se redefine en cada vuelta del bucle de eventos según el uso de memoria."
+    ],
+    "correct_index": 0,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "El ámbito léxico significa que la estructura del código escrito fija la visibilidad."
+  },
+  {
+    "id": "js_054",
+    "question": "¿Qué comportamiento caracteriza a 'let' y 'const' frente a los bloques de código?",
+    "options": [
+      "Son promovidas al objeto window haciéndose accesibles en toda la aplicación web.",
+      "Respetan el ámbito de bloque delimitado por un par de llaves {}; no se fugan.",
+      "Solo pueden definirse dentro de clases creadas con la palabra reservada 'class'.",
+      "Se reasignan automáticamente al valor null al cambiar de iteración en un bucle."
+    ],
+    "correct_index": 1,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "let y const poseen ámbito de bloque, restringiendo su visibilidad al bloque contenedor."
+  },
+  {
+    "id": "js_055",
+    "question": "¿Qué ocurre si se intenta acceder a una variable 'let' antes de su declaración?",
+    "options": [
+      "Devuelve el valor undefined como sucedía tradicionalmente al usar 'var'.",
+      "El intérprete detiene la ejecución del script sin emitir ningún mensaje de error.",
+      "Se genera un ReferenceError debido a la Temporal Dead Zone (TDZ).",
+      "La variable se inicializa de forma automática con el valor booleano false."
+    ],
+    "correct_index": 2,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "Acceder a variables let/const antes de su línea de definición causa un ReferenceError por TDZ."
+  },
+  {
+    "id": "js_056",
+    "question": "¿Qué sucede con las declaraciones de funciones tradicionales debido al hoisting?",
+    "options": [
+      "Se eleva únicamente su identificador asignándole temporalmente el valor null.",
+      "Se convierten en expresiones de función anónimas durante el tiempo de ejecución.",
+      "Quedan bloqueadas hasta que todos los módulos externos hayan sido importados.",
+      "Se elevan completas (nombre y cuerpo) al inicio de su contexto de ejecución."
+    ],
+    "correct_index": 3,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "Las function declarations se elevan completamente permitiendo invocarlas antes en el código."
+  },
+  {
+    "id": "js_057",
+    "question": "¿Qué valor tiene una variable declarada con 'var' cuando se consulta antes de su línea?",
+    "options": [
+      "Devuelve 'undefined' porque su declaración se eleva pero no su inicialización.",
+      "Lanza un ReferenceError inmediato impidiendo que el motor continúe ejecutando.",
+      "Devuelve 'null' indicando que aún no se le ha reservado espacio en memoria.",
+      "Retorna una función vacía que no realiza ninguna acción al ser invocada."
+    ],
+    "correct_index": 0,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "Con 'var', el hoisting eleva la declaración e inicializa la variable con 'undefined'."
+  },
+  {
+    "id": "js_058",
+    "question": "¿Qué es la Temporal Dead Zone (TDZ) en JavaScript?",
+    "options": [
+      "El tiempo de espera mientras se resuelven las promesas pendientes en segundo plano.",
+      "El periodo entre el inicio del bloque y la inicialización de variables let/const.",
+      "El intervalo en el que el recolector de basura suspende el hilo para liberar RAM.",
+      "La fase del ciclo de vida en la que el DOM todavía no ha completado su renderizado."
+    ],
+    "correct_index": 1,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "La TDZ es la zona donde la variable existe pero no puede leerse antes de su declaración."
+  },
+  {
+    "id": "js_059",
+    "question": "¿Qué es el sombreamiento de variables (variable shadowing)?",
+    "options": [
+      "Ocultar el valor de una variable utilizando un algoritmo de cifrado asimétrico.",
+      "Borrar una variable del ámbito global para ahorrar espacio en la pila de llamadas.",
+      "Declarar una variable en un ámbito interno con el mismo nombre que otra exterior.",
+      "Copiar una variable por referencia para que comparta el mismo espacio en el heap."
+    ],
+    "correct_index": 2,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "El shadowing ocurre cuando una variable local oculta a otra del mismo nombre de un ámbito superior."
+  },
+  {
+    "id": "js_060",
+    "question": "¿Qué sucede al intentar reasignar una variable declarada mediante 'const'?",
+    "options": [
+      "Se crea una nueva variable oculta en el ámbito global con el nuevo contenido.",
+      "La asignación se ignora en silencio sin notificar ningún fallo al desarrollador.",
+      "La variable original se muta a tipo let permitiendo modificaciones posteriores.",
+      "Lanza un TypeError indicando que no es posible asignar a una variable constante."
+    ],
+    "correct_index": 3,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "Las variables 'const' no pueden ser reasignadas tras su inicialización original."
+  },
+  {
+    "id": "js_061",
+    "question": "¿Permite 'const' mutar las propiedades internas de un objeto asignado?",
+    "options": [
+      "Sí, impide reasignar la variable pero las propiedades del objeto pueden mutarse.",
+      "No, congela el objeto de forma recursiva impidiendo cualquier tipo de mutación.",
+      "Solo si el objeto fue creado utilizando la sintaxis de Object.create(null).",
+      "Únicamente dentro de funciones anónimas ejecutadas de forma autoinvocada."
+    ],
+    "correct_index": 0,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "const protege el enlace de la variable, no la inmutabilidad de los datos del objeto."
+  },
+  {
+    "id": "js_062",
+    "question": "¿Qué ocurre cuando una función interna se retorna desde una función contenedora?",
+    "options": [
+      "Pierde el acceso a las variables locales del padre al destruirse su contexto.",
+      "Mantiene la referencia viva al ámbito de la función padre mediante un closure.",
+      "Convierte todas las variables locales de la función padre en variables globales.",
+      "Clona los valores en el Call Stack de forma inmutable como tipos primitivos."
+    ],
+    "correct_index": 1,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "La función retornada retiene el entorno léxico de su creador gracias a las clausuras."
+  },
+  {
+    "id": "js_063",
+    "question": "¿Cuál es el objeto de ámbito global estándar en entornos modernos de JS?",
+    "options": [
+      "window, disponible de forma idéntica en servidores de Node.js y web workers.",
+      "global, que funciona universalmente en cualquier motor de búsqueda y browser.",
+      "globalThis, accesible universalmente tanto en navegadores como en Node.js.",
+      "document, que almacena las funciones matemáticas y cadenas en el sistema."
+    ],
+    "correct_index": 2,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "globalThis estandariza el acceso al objeto global en cualquier entorno de JavaScript."
+  },
+  {
+    "id": "js_064",
+    "question": "¿Qué sucede si se declara dos veces la misma variable con 'let' en un mismo bloque?",
+    "options": [
+      "La segunda declaración sobrescribe a la primera sin emitir ningún mensaje.",
+      "La variable se degrada automáticamente a una variable global vinculada a window.",
+      "El intérprete convierte la variable en un array que almacena ambos valores.",
+      "Se genera un SyntaxError alertando de que el identificador ya ha sido declarado."
+    ],
+    "correct_index": 3,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "En un mismo bloque no se permite redeclarar identificadores definidos con let o const."
+  },
+  {
+    "id": "js_065",
+    "question": "¿Cómo se crea un contador privado básico en JavaScript utilizando closures?",
+    "options": [
+      "Encapsulando una variable en una función padre y retornando métodos que la modifiquen.",
+      "Declarando la variable en el objeto global y congelándolo con Object.freeze().",
+      "Asignando la variable a una constante dentro de un bloque condicional if vacío.",
+      "Exportando la variable en un archivo JSON separado dentro del sistema de ficheros."
+    ],
+    "correct_index": 0,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "Una función con estado local y métodos que la leen/mutan crea un contador encapsulado."
+  },
+  {
+    "id": "js_066",
+    "question": "¿Qué alcance tienen los parámetros definidos en la cabecera de una función?",
+    "options": [
+      "Pasan a formar parte del ámbito global de la ventana tras la primera invocación.",
+      "Tienen ámbito local propio dentro del cuerpo de la función correspondiente.",
+      "Se comparten entre todas las funciones declaradas en el mismo archivo de script.",
+      "Son inaccesibles para cualquier función anidada declarada dentro de su cuerpo."
+    ],
+    "correct_index": 1,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "Los parámetros de una función forman parte de su entorno léxico local."
+  },
+  {
+    "id": "js_067",
+    "question": "¿Qué sucede si se asigna un valor a una variable no declarada en modo no estricto?",
+    "options": [
+      "Se genera un ReferenceError en tiempo de ejecución interrumpiendo el flujo.",
+      "Se almacena como una propiedad privada del módulo sin ser visible afuera.",
+      "Se crea automáticamente una variable global en el objeto global del entorno.",
+      "La asignación se descarta silenciosamente sin producir ningún efecto secundario."
+    ],
+    "correct_index": 2,
+    "subtopic": "closures_scope",
+    "difficulty": "basic",
+    "hint": "En modo no estricto ('sloppy mode'), asignar a variables no declaradas crea globales."
+  },
+  {
+    "id": "js_068",
+    "question": "Dado: for (var i = 0; i < 3; i++) setTimeout(() => log(i), 0); ¿Qué imprime?",
+    "options": [
+      "Imprime 0, 1, 2 porque setTimeout hace una copia profunda del valor de cada iteración.",
+      "Imprime undefined tres veces porque la variable ya fue descartada del Call Stack.",
+      "Imprime 0, 0, 0 debido a que los temporizadores se ejecutaron antes del incremento.",
+      "Imprime 3, 3, 3 porque 'var' comparte un único ámbito de función para todo el bucle."
+    ],
+    "correct_index": 3,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "var tiene ámbito de función; al correr los timers, la única variable 'i' ya vale 3."
+  },
+  {
+    "id": "js_069",
+    "question": "¿Cómo resuelve 'let' el problema clásico de capturar el índice en un bucle for?",
+    "options": [
+      "Crea una nueva vinculación léxica de la variable 'i' para cada iteración del bucle.",
+      "Fuerza a setTimeout a ejecutarse de forma síncrona dentro del cuerpo del bucle.",
+      "Clona la función de callback en un hilo separado con memoria independiente.",
+      "Convierte el índice en una constante inmutable que no puede alterarse luego."
+    ],
+    "correct_index": 0,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "let en un bucle for genera un binding léxico individual por cada iteración."
+  },
+  {
+    "id": "js_070",
+    "question": "¿Qué es una IIFE (Immediately Invoked Function Expression) y cuál era su uso principal?",
+    "options": [
+      "Un método para invocar peticiones HTTP de forma inmediata al cargar la página.",
+      "Una función que se ejecuta al definirse para crear un ámbito cerrado y evitar contaminar.",
+      "Una técnica para optimizar la compilación de expresiones matemáticas en bucles.",
+      "Una instrucción que obliga al recolector de basura a limpiar variables obsoletas."
+    ],
+    "correct_index": 1,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "Las IIFE se usaban para encapsular variables y no ensuciar el ámbito global."
+  },
+  {
+    "id": "js_071",
+    "question": "¿Qué es el 'currying' en JavaScript basado en closures?",
+    "options": [
+      "Acelerar funciones matemáticas complejas mediante la precomputación de hashes.",
+      "Combinar dos objetos en uno solo asegurando la inmutabilidad de sus claves.",
+      "Transformar una función de varios argumentos en una cadena de funciones de un argumento.",
+      "Reemplazar callbacks asíncronos por estructuras de control basadas en generadores."
+    ],
+    "correct_index": 2,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "El currying convierte f(a,b,c) en f(a)(b)(c) reteniendo los argumentos mediante closures."
+  },
+  {
+    "id": "js_072",
+    "question": "¿En qué consiste la técnica de aplicación parcial de funciones (partial application)?",
+    "options": [
+      "Ejecutar una función solo si se cumplen un conjunto parcial de condiciones lógicas.",
+      "Detener la ejecución de una función en la mitad de sus sentencias con un return.",
+      "Dividir el código de una biblioteca en varios paquetes para carga perezosa.",
+      "Fijar de antemano algunos argumentos de una función produciendo otra de menor aridad."
+    ],
+    "correct_index": 3,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "La aplicación parcial suministra una parte de los parámetros retornando una función."
+  },
+  {
+    "id": "js_073",
+    "question": "¿Cómo puede un closure provocar una fuga de memoria (memory leak)?",
+    "options": [
+      "Reteniendo referencias a objetos grandes o elementos DOM que ya no se necesitan.",
+      "Multiplicando el tamaño de los enteros primitivos almacenados en la pila de llamadas.",
+      "Impidiendo que el compilador Just-In-Time transforme el código a lenguaje máquina.",
+      "Obligando al navegador a guardar todas las variables en el almacenamiento de sesión."
+    ],
+    "correct_index": 0,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "Si un closure que sigue vivo referencia objetos grandes, estos no podrán recolectarse."
+  },
+  {
+    "id": "js_074",
+    "question": "¿Cómo resuelve el motor la cadena de alcances (scope chain) al buscar un identificador?",
+    "options": [
+      "Consulta primero el objeto global y desciende hacia las funciones más internas.",
+      "Busca en el ámbito local actual y asciende por los ámbitos padres hasta el global.",
+      "Examina simultáneamente todas las funciones del archivo sin seguir jerarquía.",
+      "Pregunta a la cola de microtareas si existe alguna promesa con ese nombre."
+    ],
+    "correct_index": 1,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "La resolución de identificadores viaja desde el ámbito léxico local hacia afuera."
+  },
+  {
+    "id": "js_075",
+    "question": "¿Cómo afecta el uso de 'this' dentro de una arrow function respecto a su closure?",
+    "options": [
+      "Crea un nuevo 'this' dinámico ligado al objeto que invocó la función flecha.",
+      "Hace que 'this' apunte siempre al objeto window independientemente del contexto.",
+      "No tiene su propio 'this'; lo captura léxicamente del ámbito donde fue declarada.",
+      "Convierte 'this' en un valor indefinido para prevenir errores de referencia."
+    ],
+    "correct_index": 2,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "Las arrow functions carecen de 'this' propio; capturan el 'this' léxico circundante."
+  },
+  {
+    "id": "js_076",
+    "question": "¿En qué consiste el patrón de memoización apoyado en closures?",
+    "options": [
+      "Escribir los logs de una función en el disco duro para analizarlos posteriormente.",
+      "Reducir la memoria asignada a un array convirtiendo sus elementos a strings.",
+      "Suspender temporalmente las llamadas repetidas a una función con debounce.",
+      "Guardar en caché los resultados de cálculos previos en un objeto dentro del closure."
+    ],
+    "correct_index": 3,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "La memoización usa un closure con un mapa caché para no repetir cómputos idénticos."
+  },
+  {
+    "id": "js_077",
+    "question": "¿Por qué se produce un SyntaxError al declarar 'let x' en dos ramas de un 'switch'?",
+    "options": [
+      "Porque todo el bloque switch comparte un único ámbito léxico común entre cases.",
+      "Porque el compilador prohíbe el uso de identificadores cortos dentro de switch.",
+      "Porque las sentencias case solo admiten variables declaradas mediante 'var'.",
+      "Porque 'let' solo puede declararse en bucles y nunca dentro de condicionales."
+    ],
+    "correct_index": 0,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "El cuerpo del switch es un solo bloque; usar llaves en cada case aísla el ámbito."
+  },
+  {
+    "id": "js_078",
+    "question": "¿Qué sucede si un parámetro por defecto intenta leer otro parámetro posterior en la firma?",
+    "options": [
+      "El parámetro posterior se inicializa automáticamente con el valor booleano true.",
+      "Se produce un ReferenceError por caer en la Temporal Dead Zone de ese parámetro.",
+      "La función descarta el valor por defecto y utiliza undefined como argumento.",
+      "El motor compila la función intercambiando el orden de los argumentos en memoria."
+    ],
+    "correct_index": 1,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "Los parámetros se evalúan de izquierda a derecha; leer uno posterior entra en TDZ."
+  },
+  {
+    "id": "js_079",
+    "question": "¿Qué es el 'Revealing Module Pattern' en JavaScript?",
+    "options": [
+      "Un método para cargar dinámicamente scripts de terceros mediante etiquetas HTML.",
+      "Una técnica de depuración que imprime todas las variables internas en la consola.",
+      "Un patrón que usa closures para definir miembros privados y exponer un objeto público.",
+      "Una convención de nombres que añade un guion bajo a todas las funciones públicas."
+    ],
+    "correct_index": 2,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "El Revealing Module Pattern retorna un objeto con punteros a funciones privadas locales."
+  },
+  {
+    "id": "js_080",
+    "question": "¿Qué ocurre con las variables de una función que no son capturadas por ningún closure?",
+    "options": [
+      "Se transfieren automáticamente al objeto global por si se requieren en el futuro.",
+      "Permanecen en el Memory Heap hasta que el usuario recargue o cierre la aplicación.",
+      "Se encriptan en la pila para servir como respaldo en caso de excepciones graves.",
+      "El recolector de basura las libera de la memoria tan pronto finaliza la invocación."
+    ],
+    "correct_index": 3,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "Las variables locales no capturadas por ningún closure se destruyen al terminar la función."
+  },
+  {
+    "id": "js_081",
+    "question": "¿Cuál es la diferencia entre el ámbito de función y el ámbito de bloque?",
+    "options": [
+      "El ámbito de función abarca todo su cuerpo; el de bloque se limita a las llaves {}.",
+      "El ámbito de función solo dura 10 milisegundos; el de bloque es permanente.",
+      "El ámbito de función no admite closures; el ámbito de bloque sí los admite.",
+      "El ámbito de bloque solo existe en TypeScript, no en JavaScript estándar."
+    ],
+    "correct_index": 0,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "El ámbito de función cubre toda la función; el de bloque limita la visibilidad a las llaves."
+  },
+  {
+    "id": "js_082",
+    "question": "¿Qué ocurre con la variable 'e' declarada en una cláusula 'catch (e) { ... }'?",
+    "options": [
+      "Se fuga al ámbito de la función que contiene el bloque try/catch correspondiente.",
+      "Posee ámbito de bloque específico accesible únicamente dentro del bloque catch.",
+      "Se convierte en una propiedad inmutable vinculada al prototipo de Error nativo.",
+      "Es visible en el bloque finally aunque este haya sido declarado después."
+    ],
+    "correct_index": 1,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "La variable del error en catch (e) tiene ámbito de bloque confinado al propio catch."
+  },
+  {
+    "id": "js_083",
+    "question": "¿Qué ocurre si una función interna define una variable con el mismo nombre que la externa?",
+    "options": [
+      "El motor genera un SyntaxError alertando de una colisión léxica en la pila.",
+      "Ambas variables se fusionan en una lista enlazada compartiendo el mismo puntero.",
+      "La variable interna sombrea a la externa, haciendo inaccesible la exterior directamente.",
+      "La variable externa se sobreescribe y pierde su valor original definitivamente."
+    ],
+    "correct_index": 2,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "El shadowing oculta la variable exterior en el ámbito interno sin alterarla fuera."
+  },
+  {
+    "id": "js_084",
+    "question": "¿Pueden los closures acceder a los argumentos de la función externa usando 'arguments'?",
+    "options": [
+      "Sí, 'arguments' se propaga libremente a través de todos los niveles de anidación.",
+      "Únicamente si la función interna es declarada con la sintaxis de 'function*'.",
+      "Solo si la función externa fue declarada en el ámbito global del navegador.",
+      "No directamente; cada función normal tiene su propio objeto local 'arguments'."
+    ],
+    "correct_index": 3,
+    "subtopic": "closures_scope",
+    "difficulty": "medium",
+    "hint": "Las funciones regulares tienen su propio 'arguments'; se suele usar rest (...args) o un alias."
+  },
+  {
+    "id": "js_085",
+    "question": "¿Cómo optimiza el motor V8 la asignación de variables capturadas en closures?",
+    "options": [
+      "Crea un objeto Context en el Heap solo para las variables referenciadas por closures.",
+      "Almacena todas las variables locales en la pila de llamadas sin utilizar el Heap.",
+      "Convierte todas las clausuras en métodos estáticos de una clase global oculta.",
+      "Duplica la totalidad del entorno léxico en una tabla hash compartida en disco."
+    ],
+    "correct_index": 0,
+    "subtopic": "closures_scope",
+    "difficulty": "advanced",
+    "hint": "V8 aloja un Context en el Heap únicamente con las variables que un closure necesita."
+  },
+  {
+    "id": "js_086",
+    "question": "¿Por qué dos funciones anidadas en el mismo ámbito comparten el mismo objeto Context en V8?",
+    "options": [
+      "Porque el estándar ECMAScript prohíbe tener más de un closure activo a la vez.",
+      "Porque V8 genera un único Context por ámbito léxico compartido por sus funciones hijas.",
+      "Para evitar que el recolector de basura tenga que analizar la pila de llamadas.",
+      "Porque las funciones en JavaScript se compilan siempre en el mismo hilo de hardware."
+    ],
+    "correct_index": 1,
+    "subtopic": "closures_scope",
+    "difficulty": "advanced",
+    "hint": "Las funciones del mismo ámbito comparten el Context, lo que puede causar retención cruzada."
+  },
+  {
+    "id": "js_087",
+    "question": "¿Por qué el uso de 'eval()' o 'with' deteriora drásticamente las optimizaciones de scope?",
+    "options": [
+      "Porque borran todas las variables del Call Stack obligando a reiniciar el script.",
+      "Porque duplican el tiempo de espera mínimo requerido para cada macrotarea.",
+      "Porque impiden el análisis léxico estático obligando a desoptimizar la búsqueda de variables.",
+      "Porque transforman todas las variables primitivas en referencias de tipo WeakMap."
+    ],
+    "correct_index": 2,
+    "subtopic": "closures_scope",
+    "difficulty": "advanced",
+    "hint": "eval/with introducen identificadores dinámicos que impiden la optimización de ámbitos."
+  },
+  {
+    "id": "js_088",
+    "question": "¿Cuál es la diferencia de ámbito entre 'new Function()' y una función regular con closure?",
+    "options": [
+      "'new Function()' captura todas las variables del bloque actual con acceso de escritura.",
+      "'new Function()' no puede utilizarse dentro de ninguna estructura condicional.",
+      "'new Function()' crea un closure exclusivo que protege las variables contra el GC.",
+      "'new Function()' siempre se compila en el ámbito global sin capturar el ámbito local."
+    ],
+    "correct_index": 3,
+    "subtopic": "closures_scope",
+    "difficulty": "advanced",
+    "hint": "new Function('...') evalúa su cuerpo en el scope global y no crea closure con su entorno local."
+  },
+  {
+    "id": "js_089",
+    "question": "¿Cómo interactúan los campos privados (#campo) de clases con el concepto de ámbito léxico?",
+    "options": [
+      "Tienen ámbito léxico estricto limitado al cuerpo de la clase en la que se definieron.",
+      "Son accesibles desde cualquier subclase mediante la palabra reservada 'super'.",
+      "Se transforman en propiedades públicas accesibles con corchetes ['#campo'].",
+      "Se guardan en el objeto global de la ventana bajo una clave encriptada."
+    ],
+    "correct_index": 0,
+    "subtopic": "closures_scope",
+    "difficulty": "advanced",
+    "hint": "Los campos privados #campo tienen alcance léxico estricto y no son accesibles fuera de la clase."
+  },
+  {
+    "id": "js_090",
+    "question": "¿Qué ocurre con la TDZ en clases derivadas cuando se intenta usar 'this' antes de 'super()'?",
+    "options": [
+      "El compilador crea una instancia temporal vacía para evitar que la aplicación falle.",
+      "El enlace de 'this' está en TDZ hasta que se ejecuta exitosamente la llamada a super().",
+      "Se devuelve el prototipo de la clase base sin inicializar los métodos locales.",
+      "El motor ignora la sentencia y procede a inicializar las propiedades de la hija."
+    ],
+    "correct_index": 1,
+    "subtopic": "closures_scope",
+    "difficulty": "advanced",
+    "hint": "En clases derivadas, 'this' no existe (está en TDZ) hasta que se completa super()."
+  },
+  {
+    "id": "js_091",
+    "question": "¿Cuál es la diferencia de ámbito entre una llamada directa a eval() y una indirecta?",
+    "options": [
+      "La directa crea un hilo secundario; la indirecta bloquea el hilo principal.",
+      "La directa no admite retorno de valores; la indirecta devuelve siempre promesas.",
+      "La directa ejecuta en el ámbito local; la indirecta (0, eval)() corre en el global.",
+      "Ambas operan siempre en el ámbito local del bloque donde fueron declaradas."
+    ],
+    "correct_index": 2,
+    "subtopic": "closures_scope",
+    "difficulty": "advanced",
+    "hint": "Una llamada indirecta a eval se evalúa en el ámbito global en vez del local."
+  },
+  {
+    "id": "js_092",
+    "question": "¿Qué ámbito tienen las variables declaradas en la expresión del encabezado for (let x of ...)?",
+    "options": [
+      "Tienen ámbito de función haciéndose visibles en cualquier línea después del for.",
+      "Se promocionan a variables globales que conservan el último valor recorrido.",
+      "Se consideran variables temporales inaccesibles para funciones de callback.",
+      "Tienen ámbito de bloque propio por cada iteración del bucle, independiente del cuerpo."
+    ],
+    "correct_index": 3,
+    "subtopic": "closures_scope",
+    "difficulty": "advanced",
+    "hint": "La variable del for..of crea un binding de bloque por iteración accesible a los closures."
+  },
+  {
+    "id": "js_093",
+    "question": "¿Cómo afecta la desestructuración en parámetros con valores por defecto al ámbito léxico?",
+    "options": [
+      "Crea un ámbito de parámetros intermedio situado entre el padre y el cuerpo de la función.",
+      "Obliga al motor a evaluar todos los valores por defecto en el ámbito global.",
+      "Fusiona el ámbito de la función con el ámbito del módulo que la importó.",
+      "Elimina la posibilidad de declarar variables locales con 'const' en la función."
+    ],
+    "correct_index": 0,
+    "subtopic": "closures_scope",
+    "difficulty": "advanced",
+    "hint": "Cuando hay parámetros por defecto se crea un ámbito intermedio entre la llamada y el cuerpo."
+  },
+  {
+    "id": "js_094",
+    "question": "¿Cómo ayuda WeakMap a crear campos verdaderamente privados frente a los closures?",
+    "options": [
+      "Obliga a que todas las propiedades del objeto sean leídas en formato binario.",
+      "Asocia datos a la instancia sin retenerla en memoria cuando la instancia se destruye.",
+      "Elimina el prototipo del objeto para evitar la inspección con getOwnPropertyNames.",
+      "Acelera la búsqueda de propiedades convirtiéndolas en índices de un array plano."
+    ],
+    "correct_index": 1,
+    "subtopic": "closures_scope",
+    "difficulty": "advanced",
+    "hint": "WeakMap permite asociar estado privado a objetos sin impedir su recolección de basura."
+  },
+  {
+    "id": "js_095",
+    "question": "¿Qué sucede si un closure mantiene una referencia a una variable gigante pero solo usa otra pequeña?",
+    "options": [
+      "El motor destruye inmediatamente la variable grande convirtiéndola en un puntero nulo.",
+      "La variable grande se divide automáticamente en fragmentos de un kilobyte.",
+      "En motores antiguos o sin optimización fina, el Context retiene ambas y no las libera.",
+      "Se lanza un advertencia de desbordamiento en la consola de herramientas de desarrollo."
+    ],
+    "correct_index": 2,
+    "subtopic": "closures_scope",
+    "difficulty": "advanced",
+    "hint": "Si varias funciones comparten el mismo Context, variables grandes no usadas pueden retenerse."
+  },
+  {
+    "id": "js_096",
+    "question": "¿Cómo se investiga una fuga de memoria provocada por closures en Chrome DevTools?",
+    "options": [
+      "Inspeccionando la pestaña Network para comprobar la velocidad de descarga.",
+      "Revisando el código fuente en la pestaña Sources para contar el número de llaves.",
+      "Desactivando el compilador Just-In-Time mediante flags en la barra de direcciones.",
+      "Tomando Heap Snapshots y analizando la ruta de retenedores (Retainers) del Context."
+    ],
+    "correct_index": 3,
+    "subtopic": "closures_scope",
+    "difficulty": "advanced",
+    "hint": "En DevTools se inspecciona el Heap Snapshot buscando Retainers ligados al Context."
+  },
+  {
+    "id": "js_097",
+    "question": "¿Qué sucede con el ámbito léxico cuando se utiliza una directiva 'use strict' dentro de una función?",
+    "options": [
+      "Activa el modo estricto localmente impidiendo la creación accidental de globales.",
+      "Hace que todas las variables declaradas con 'var' adquieran ámbito de bloque.",
+      "Convierte automáticamente todas las llamadas síncronas en promesas nativas.",
+      "Prohíbe la creación de funciones anidadas dentro de cualquier bloque condicional."
+    ],
+    "correct_index": 0,
+    "subtopic": "closures_scope",
+    "difficulty": "advanced",
+    "hint": "'use strict' a nivel de función aplica reglas estrictas como prohibir variables no declaradas."
+  },
+  {
+    "id": "js_098",
+    "question": "¿Cómo maneja JavaScript el ámbito en bloques 'try { ... } catch (err) { ... }' con 'var'?",
+    "options": [
+      "Las variables 'var' quedan confinadas estrictamente al bloque try donde nacieron.",
+      "Las declaraciones con 'var' dentro de try o catch se elevan a la función contenedora.",
+      "El motor emite un error de sintaxis al detectar 'var' dentro de un bloque try.",
+      "Se eliminan de memoria automáticamente si el bloque catch llega a ejecutarse."
+    ],
+    "correct_index": 1,
+    "subtopic": "closures_scope",
+    "difficulty": "advanced",
+    "hint": "var no tiene ámbito de bloque; dentro de try/catch se eleva a la función contenedora."
+  },
+  {
+    "id": "js_099",
+    "question": "¿Qué ocurre con el ámbito de variables al utilizar imports dinámicos 'import()' dentro de un closure?",
+    "options": [
+      "Las variables del módulo importado se inyectan en el closure local de la función.",
+      "El closure se destruye para permitir que el nuevo módulo ocupe el Call Stack.",
+      "El módulo importado tiene su propio ámbito de módulo aislado; la promesa resuelve sus exports.",
+      "Se bloquea el hilo principal hasta que el archivo secundario sea descargado."
+    ],
+    "correct_index": 2,
+    "subtopic": "closures_scope",
+    "difficulty": "advanced",
+    "hint": "import() carga un módulo con su propio scope aislado y resuelve sus exports en una promesa."
+  },
+  {
+    "id": "js_100",
+    "question": "¿Qué es un 'brand check' y cómo se implementa para verificar campos privados léxicos?",
+    "options": [
+      "Comprobar el nombre del constructor comparándolo contra una cadena de texto plana.",
+      "Consultar si la propiedad existe dentro del array retornado por Object.keys().",
+      "Inspeccionar el prototipo del objeto utilizando el método isPrototypeOf().",
+      "Verificar con la sintaxis '#campo in objeto' si una instancia posee el campo privado."
+    ],
+    "correct_index": 3,
+    "subtopic": "closures_scope",
+    "difficulty": "advanced",
+    "hint": "El operador '#field in obj' realiza una comprobación de marca para validar campos privados."
+  },
+  {
+    "id": "js_101",
+    "question": "¿Qué es la cadena de prototipos (prototype chain) en JavaScript?",
+    "options": [
+      "El mecanismo por el cual los objetos heredan propiedades y métodos de otros.",
+      "Una estructura de datos que almacena las promesas en estado pendiente.",
+      "Una secuencia de llamadas asíncronas encadenadas mediante el método .then().",
+      "El registro cronológico de todas las mutaciones realizadas sobre el DOM."
+    ],
+    "correct_index": 0,
+    "subtopic": "prototipos_async",
+    "difficulty": "basic",
+    "hint": "La prototype chain permite buscar propiedades en el prototipo si no están en el objeto."
+  },
+  {
+    "id": "js_102",
+    "question": "¿Cuál es la diferencia fundamental entre 'prototype' y '__proto__'?",
+    "options": [
+      "'prototype' existe en todas las instancias; '__proto__' solo en las clases nativas.",
+      "'prototype' es la propiedad de funciones constructoras; '__proto__' apunta al prototipo del objeto.",
+      "Son propiedades idénticas y totalmente intercambiables en cualquier contexto.",
+      "'__proto__' fue añadido en ES2024 para reemplazar la sintaxis de clases de ES6."
+    ],
+    "correct_index": 1,
+    "subtopic": "prototipos_async",
+    "difficulty": "basic",
+    "hint": "prototype es el objeto molde de constructores; __proto__ es el enlace interno del objeto."
+  },
+  {
+    "id": "js_103",
+    "question": "¿Qué objeto se encuentra normalmente en la cúspide de la cadena de prototipos?",
+    "options": [
+      "Function.prototype, que no desciende de ninguna otra estructura en memoria.",
+      "Array.prototype, que hereda directamente del Call Stack del motor de JS.",
+      "Object.prototype, cuyo prototipo interno apunta finalmente al valor 'null'.",
+      "El objeto global 'window', que no puede ser modificado ni sobreescrito."
+    ],
+    "correct_index": 2,
+    "subtopic": "prototipos_async",
+    "difficulty": "basic",
+    "hint": "El final de la cadena de prototipos es Object.prototype cuyo __proto__ es null."
+  },
+  {
+    "id": "js_104",
+    "question": "¿Qué resultado produce invocar Object.create(null)?",
+    "options": [
+      "Lanza un TypeError porque todo objeto debe heredar obligatoriamente de Object.",
+      "Retorna una referencia vacía que no permite almacenar ninguna propiedad.",
+      "Crea una copia idéntica del objeto global protegido contra modificaciones.",
+      "Crea un objeto puro sin ningún prototipo ni métodos heredados de Object."
+    ],
+    "correct_index": 3,
+    "subtopic": "prototipos_async",
+    "difficulty": "basic",
+    "hint": "Object.create(null) genera un objeto limpio sin __proto__ ni métodos como toString."
+  },
+  {
+    "id": "js_105",
+    "question": "¿Qué hace el operador 'new' al instanciar una función constructora?",
+    "options": [
+      "Crea un nuevo objeto, vincula su prototipo, ejecuta el constructor con 'this' y lo retorna.",
+      "Compila la función constructora en código binario y la almacena en el disco duro.",
+      "Convierte la función constructora en una microtarea que corre en segundo plano.",
+      "Copia todas las propiedades del prototipo en el ámbito global del navegador."
+    ],
+    "correct_index": 0,
+    "subtopic": "prototipos_async",
+    "difficulty": "basic",
+    "hint": "new crea un objeto, conecta su __proto__ al prototype de la función y enlaza this."
+  },
+  {
+    "id": "js_106",
+    "question": "¿Para qué sirve el método Object.prototype.hasOwnProperty()?",
+    "options": [
+      "Verifica si un objeto tiene al menos un método asíncrono en su declaración.",
+      "Comprueba si una propiedad pertenece directamente al objeto y no a su prototipo.",
+      "Evalúa si una propiedad fue declarada utilizando la palabra clave 'const'.",
+      "Indica si un objeto está listo para ser recolectado por el recolector de basura."
+    ],
+    "correct_index": 1,
+    "subtopic": "prototipos_async",
+    "difficulty": "basic",
+    "hint": "hasOwnProperty valida propiedades propias del objeto sin subir por la cadena prototípica."
+  },
+  {
+    "id": "js_107",
+    "question": "¿Cuál es la diferencia entre el operador 'in' y hasOwnProperty()?",
+    "options": [
+      "'in' solo comprueba índices de arrays; hasOwnProperty comprueba claves de texto.",
+      "'in' arroja un error si la propiedad es undefined; hasOwnProperty retorna false.",
+      "'in' revisa propiedades propias y heredadas; hasOwnProperty solo las propias.",
+      "Ambos métodos son idénticos y arrojan exactamente el mismo resultado siempre."
+    ],
+    "correct_index": 2,
+    "subtopic": "prototipos_async",
+    "difficulty": "basic",
+    "hint": "El operador 'in' recorre toda la prototype chain; hasOwnProperty solo la instancia."
+  },
+  {
+    "id": "js_108",
+    "question": "¿Cuáles son los tres estados posibles de una Promise en JavaScript?",
+    "options": [
+      "waiting (esperando), active (activa) y finished (finalizada con éxito).",
+      "initial (inicial), processing (procesando) e invalid (inválida o rota).",
+      "open (abierta), suspended (suspendida) y closed (cerrada definitivamente).",
+      "pending (pendiente), fulfilled (cumplida) y rejected (rechazada)."
+    ],
+    "correct_index": 3,
+    "subtopic": "prototipos_async",
+    "difficulty": "basic",
+    "hint": "Una promesa pasa de pending a cumplida (fulfilled) o a rechazada (rejected)."
+  },
+  {
+    "id": "js_109",
+    "question": "¿Cómo se crea una nueva Promise en JavaScript moderno?",
+    "options": [
+      "Instanciando 'new Promise((resolve, reject) => { ... })' con un ejecutor.",
+      "Invocando la función global 'createPromise()' con un intervalo de tiempo.",
+      "Añadiendo la etiqueta 'async' antes de la declaración de una variable.",
+      "Asignando una función generadora al prototipo de una función constructora."
+    ],
+    "correct_index": 0,
+    "subtopic": "prototipos_async",
+    "difficulty": "basic",
+    "hint": "new Promise recibe una función ejecutora con las funciones de control resolve y reject."
+  },
+  {
+    "id": "js_110",
+    "question": "¿Para qué sirve el método Promise.prototype.finally()?",
+    "options": [
+      "Forzar la resolución exitosa de una promesa que se encontraba rechazada.",
+      "Ejecutar código de limpieza sin importar si la promesa se cumplió o rechazó.",
+      "Destruir la promesa y eliminar sus variables asociadas del Memory Heap.",
+      "Detener la ejecución del script hasta que el usuario confirme un cuadro de diálogo."
+    ],
+    "correct_index": 1,
+    "subtopic": "prototipos_async",
+    "difficulty": "basic",
+    "hint": "finally() corre siempre al terminar la promesa, útil para tareas comunes de limpieza."
+  },
+  {
+    "id": "js_111",
+    "question": "¿Qué tipo de valor retorna siempre una función declarada con 'async'?",
+    "options": [
+      "Retorna el valor directo sin envolverlo en ninguna estructura asíncrona.",
+      "Retorna un generador que debe ser iterado manualmente con un bucle while.",
+      "Retorna invariablemente una instancia de Promise, resuelta o rechazada.",
+      "Retorna un identificador numérico similar al devuelto por setTimeout."
+    ],
+    "correct_index": 2,
+    "subtopic": "prototipos_async",
+    "difficulty": "basic",
+    "hint": "Una función async siempre retorna una Promise."
+  },
+  {
+    "id": "js_112",
+    "question": "¿Qué función cumple la palabra clave 'await' dentro de una función async?",
+    "options": [
+      "Detiene el bucle de eventos completo impidiendo que el navegador procese clics.",
+      "Convierte una función sincrónica en una tarea que corre en un hilo de C++.",
+      "Fuerza a la promesa a resolverse inmediatamente con el valor booleano true.",
+      "Pausa la ejecución local de la función hasta que la promesa evaluada se resuelva."
+    ],
+    "correct_index": 3,
+    "subtopic": "prototipos_async",
+    "difficulty": "basic",
+    "hint": "await suspende la ejecución de la función async localmente hasta resolver la promesa."
+  },
+  {
+    "id": "js_113",
+    "question": "¿Cómo se capturan errores producidos al utilizar la sintaxis async/await?",
+    "options": [
+      "Envolviendo las sentencias evaluadas dentro de un bloque estándar try/catch.",
+      "Declarando un manejador especial de errores en la firma con la palabra 'rescue'.",
+      "Invocando el método global window.catchAsyncError() tras cada llamada await.",
+      "Los errores en async/await no pueden capturarse y provocan el cierre del script."
+    ],
+    "correct_index": 0,
+    "subtopic": "prototipos_async",
+    "difficulty": "basic",
+    "hint": "Con async/await el manejo de errores síncronos y asíncronos se hace con try/catch."
+  },
+  {
+    "id": "js_114",
+    "question": "¿Qué hace el método auxiliar Promise.resolve(valor)?",
+    "options": [
+      "Obliga a todas las promesas del script a resolverse exitosamente de golpe.",
+      "Retorna de inmediato una promesa cumplida con el valor que se le haya suministrado.",
+      "Limpia la cola de microtareas para agilizar la ejecución del siguiente bloque.",
+      "Convierte el valor numérico en una función constructora con prototipo propio."
+    ],
+    "correct_index": 1,
+    "subtopic": "prototipos_async",
+    "difficulty": "basic",
+    "hint": "Promise.resolve envuelve un valor en una promesa ya resuelta satisfactoriamente."
+  },
+  {
+    "id": "js_115",
+    "question": "¿Qué hace el método auxiliar Promise.reject(razón)?",
+    "options": [
+      "Borra la promesa de la memoria para que no pueda ser leída por un handler catch.",
+      "Dispara un cierre forzoso de las conexiones HTTP activas en la aplicación.",
+      "Retorna una promesa en estado rechazada con la razón de rechazo suministrada.",
+      "Emite una alerta modal en el navegador notificando el rechazo al usuario."
+    ],
+    "correct_index": 2,
+    "subtopic": "prototipos_async",
+    "difficulty": "basic",
+    "hint": "Promise.reject devuelve una promesa rechazada con el motivo proporcionado."
+  },
+  {
+    "id": "js_116",
+    "question": "¿Qué método estático moderno sustituye a Object.prototype.hasOwnProperty?",
+    "options": [
+      "Object.checkProperty(objeto, clave), que examina el prototipo recursivamente.",
+      "Reflect.contains(objeto, clave), que lanza una excepción si la clave no existe.",
+      "Object.isProperty(objeto, valor), que valida el tipo de dato asignado a la clave.",
+      "Object.hasOwn(objeto, propiedad), que opera de forma segura incluso en objetos nulos."
+    ],
+    "correct_index": 3,
+    "subtopic": "prototipos_async",
+    "difficulty": "basic",
+    "hint": "Object.hasOwn(obj, prop) es la alternativa segura moderna a obj.hasOwnProperty."
+  },
+  {
+    "id": "js_117",
+    "question": "¿Qué métodos estándar se deben usar para leer y definir el prototipo de un objeto?",
+    "options": [
+      "Object.getPrototypeOf(obj) y Object.setPrototypeOf(obj, proto).",
+      "Object.readProto(obj) y Object.writeProto(obj, nuevoPrototipo).",
+      "obj.prototype y obj.prototype = nuevoPrototipo de forma directa.",
+      "Reflect.getPrototypeChain(obj) y Reflect.setPrototypeChain(obj)."
+    ],
+    "correct_index": 0,
+    "subtopic": "prototipos_async",
+    "difficulty": "medium",
+    "hint": "Object.getPrototypeOf y Object.setPrototypeOf son los métodos canónicos del estándar."
+  },
+  {
+    "id": "js_118",
+    "question": "¿Cómo se comporta la sintaxis de clases de ES6 frente a los prototipos?",
+    "options": [
+      "Es una reimplementación interna basada en clases estáticas reales de C++.",
+      "Es azúcar sintáctico sobre el modelo existente de herencia prototípica de JS.",
+      "Elimina por completo la cadena de prototipos convirtiendo los objetos en structs.",
+      "Solo permite instanciar objetos si se compila previamente con WebAssembly."
+    ],
+    "correct_index": 1,
+    "subtopic": "prototipos_async",
+    "difficulty": "medium",
+    "hint": "Las clases en JavaScript son una capa sintáctica elegante sobre la herencia prototípica."
+  },
+  {
+    "id": "js_119",
+    "question": "¿Cómo funciona internamente el operador 'instanceof' en JavaScript?",
+    "options": [
+      "Compara el nombre de la clase como string con el nombre del constructor del objeto.",
+      "Comprueba si ambos objetos ocupan exactamente el mismo bloque en la memoria RAM.",
+      "Verifica si el prototype del constructor aparece en algún lugar de la prototype chain.",
+      "Valida que todos los métodos del constructor existan físicamente en la instancia."
+    ],
+    "correct_index": 2,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "instanceof comprueba si Constructor.prototype está en la cadena prototípica del objeto."
+  },
+  {
+    "id": "js_120",
+    "question": "¿Por qué es peligroso modificar directamente Array.prototype (monkey patching)?",
+    "options": [
+      "Provoca la desinstalación automática del motor V8 en navegadores modernos.",
+      "Convierte todos los arrays de la aplicación en listas enlazadas inmutables.",
+      "Impide que el recolector de basura libere memoria ocupada por arreglos vacíos.",
+      "Puede colisionar con futuros métodos estándar y corromper código de terceros."
+    ],
+    "correct_index": 3,
+    "subtopic": "prototipos_async",
+    "difficulty": "medium",
+    "hint": "Extender prototipos nativos causa colisiones de nombres y vulnerabilidades de compatibilidad."
+  },
+  {
+    "id": "js_121",
+    "question": "¿Cómo reacciona Promise.all() si una de las promesas del array se rechaza?",
+    "options": [
+      "Se rechaza de inmediato (fast-fail) con la razón de esa primera promesa rechazada.",
+      "Espera a que todas las demás se resuelvan antes de arrojar una lista de errores.",
+      "Ignora la promesa fallida y resuelve con las promesas que tuvieron éxito.",
+      "Reintenta la ejecución de la promesa fallida hasta un máximo de cinco veces."
+    ],
+    "correct_index": 0,
+    "subtopic": "prototipos_async",
+    "difficulty": "medium",
+    "hint": "Promise.all falla de inmediato ante el primer rechazo (comportamiento fail-fast)."
+  },
+  {
+    "id": "js_122",
+    "question": "¿Qué retorna Promise.allSettled() cuando todas las promesas finalizan?",
+    "options": [
+      "El valor de la promesa que resolvió con mayor rapidez en el bucle de eventos.",
+      "Un array de objetos describiendo el estado ('fulfilled'/'rejected') y valor/razón.",
+      "Un booleano true si al menos la mitad de las promesas concluyeron con éxito.",
+      "Una única promesa combinada que solo contiene los valores de las resueltas."
+    ],
+    "correct_index": 1,
+    "subtopic": "prototipos_async",
+    "difficulty": "medium",
+    "hint": "Promise.allSettled espera a que todas concluyan y entrega su estado y resultado."
+  },
+  {
+    "id": "js_123",
+    "question": "¿Cuál es el comportamiento del método Promise.race()?",
+    "options": [
+      "Espera a que todas las promesas se resuelvan y retorna el resultado más grande.",
+      "Ejecuta las promesas en orden secuencial una detrás de otra sin concurrencia.",
+      "Se resuelve o rechaza tan pronto como la primera promesa del iterable se resuelva o rechace.",
+      "Cancela todas las promesas que no hayan concluido en los primeros 100 milisegundos."
+    ],
+    "correct_index": 2,
+    "subtopic": "prototipos_async",
+    "difficulty": "medium",
+    "hint": "Promise.race adopta el resultado (éxito o rechazo) de la primera promesa en finalizar."
+  },
+  {
+    "id": "js_124",
+    "question": "¿Qué diferencia a Promise.any() de Promise.race()?",
+    "options": [
+      "Promise.any ignora los errores arrojando siempre un array con resultados nulos.",
+      "Promise.any ejecuta las promesas en hilos de hardware totalmente separados.",
+      "Promise.any rechaza de inmediato si alguna de las promesas tarda más de un segundo.",
+      "Promise.any espera a la primera cumplida; solo rechaza si TODAS se rechazan."
+    ],
+    "correct_index": 3,
+    "subtopic": "prototipos_async",
+    "difficulty": "medium",
+    "hint": "Promise.any busca el primer éxito; si todas fallan, arroja un AggregateError."
+  },
+  {
+    "id": "js_125",
+    "question": "¿Qué error arroja Promise.any() cuando ninguna de las promesas se cumple?",
+    "options": [
+      "Un AggregateError que agrupa todas las razones de rechazo individuales.",
+      "Un TypeError indicando que no se suministraron promesas válidas en el array.",
+      "Un SyntaxError informando de una falla crítica en la cola de microtareas.",
+      "Un TimeoutError notificando que se excedió el plazo máximo de evaluación."
+    ],
+    "correct_index": 0,
+    "subtopic": "prototipos_async",
+    "difficulty": "medium",
+    "hint": "Si todas las promesas fallan, Promise.any rechaza con un AggregateError."
+  },
+  {
+    "id": "js_126",
+    "question": "¿Qué sucede en una cadena de promesas si se retorna un nuevo Promise en un .then()?",
+    "options": [
+      "La cadena se bifurca creando dos ejecuciones paralelas totalmente inconexas.",
+      "La siguiente llamada a .then() espera a que esa nueva promesa se resuelva.",
+      "Se produce un error de tipado al no permitir el anidamiento de promesas en then.",
+      "La promesa interna se descarta y el flujo continúa con el valor anterior."
+    ],
+    "correct_index": 1,
+    "subtopic": "prototipos_async",
+    "difficulty": "medium",
+    "hint": "Retornar una promesa dentro de .then 'desenvuelve' su valor para el siguiente handler."
+  },
+  {
+    "id": "js_127",
+    "question": "¿Cómo se itera sobre una fuente de datos asíncrona usando generadores o streams?",
+    "options": [
+      "Invocando la directiva síncrona 'while async (true) { ... }' con yield.",
+      "Aplicando el método estándar Array.prototype.forEach con una función flecha.",
+      "Utilizando el bucle 'for await (const item of iterableAsincrono)'.",
+      "Mapeando los elementos con un switch con expresiones de tipo await."
+    ],
+    "correct_index": 2,
+    "subtopic": "prototipos_async",
+    "difficulty": "medium",
+    "hint": "El bucle 'for await...of' permite consumir iterables y generadores asíncronos limpiamente."
+  },
+  {
+    "id": "js_128",
+    "question": "¿Qué define a una función generadora en JavaScript?",
+    "options": [
+      "Se ejecuta en un hilo separado del procesador usando paralelismo SIMD.",
+      "Genera números aleatorios de alta entropía para criptografía en el navegador.",
+      "Retorna un objeto congelado que no puede ser alterado por ninguna otra función.",
+      "Se declara con 'function*' y puede suspender su ejecución cediendo con 'yield'."
+    ],
+    "correct_index": 3,
+    "subtopic": "prototipos_async",
+    "difficulty": "medium",
+    "hint": "Las function* generan iteradores y pueden pausarse y reanudarse con yield."
+  },
+  {
+    "id": "js_129",
+    "question": "¿Qué protocolo debe implementar un objeto para ser iterable con 'for...of'?",
+    "options": [
+      "Debe poseer un método en la clave Symbol.iterator que retorne un objeto iterador.",
+      "Debe extender obligatoriamente la clase global Iterator provista por Node.",
+      "Debe contar con una propiedad numérica 'length' mayor o igual a cero.",
+      "Debe convertir todas sus claves en strings y congelarse con Object.seal."
+    ],
+    "correct_index": 0,
+    "subtopic": "prototipos_async",
+    "difficulty": "medium",
+    "hint": "El protocolo de iteración requiere una función en [Symbol.iterator] que devuelva next()."
+  },
+  {
+    "id": "js_130",
+    "question": "¿Qué ocurre si se omite la sentencia 'return' en una función async?",
+    "options": [
+      "Lanza un ReferenceError alertando de una función asíncrona incompleta.",
+      "Retorna una Promise que se resuelve con el valor primitivo 'undefined'.",
+      "La promesa permanece en estado 'pending' indefinidamente sin resolverse.",
+      "Se cancela la cola de microtareas correspondiente a ese turno del loop."
+    ],
+    "correct_index": 1,
+    "subtopic": "prototipos_async",
+    "difficulty": "medium",
+    "hint": "Al no retornar nada explícito, una función async resuelve su promesa con undefined."
+  },
+  {
+    "id": "js_131",
+    "question": "¿Qué sucede si se hace 'await' sobre un valor que no es una promesa (ej: await 10)?",
+    "options": [
+      "Lanza un TypeError exigiendo que todo operando de await sea un objeto Promise.",
+      "Se salta la evaluación y retorna el valor de forma enteramente síncrona.",
+      "El valor se envuelve en Promise.resolve(10) y se evalúa como microtarea.",
+      "Se bloquea la función async hasta que el valor sea transformado por el DOM."
+    ],
+    "correct_index": 2,
+    "subtopic": "prototipos_async",
+    "difficulty": "medium",
+    "hint": "await castea valores no-promesa con Promise.resolve() continuando en una microtarea."
+  },
+  {
+    "id": "js_132",
+    "question": "¿Qué diferencia hay entre Object.assign() y la herencia prototípica?",
+    "options": [
+      "Object.assign crea un vínculo dinámico; la herencia copia los métodos en el objeto.",
+      "Object.assign solo funciona con métodos privados; la herencia con públicos.",
+      "La herencia prototípica no permite que los objetos hijos tengan propiedades propias.",
+      "Object.assign copia propiedades superficiales; la herencia delega búsquedas por cadena."
+    ],
+    "correct_index": 3,
+    "subtopic": "prototipos_async",
+    "difficulty": "medium",
+    "hint": "assign copia valores de propiedades directamente al destino; prototipos delegan."
+  },
+  {
+    "id": "js_133",
+    "question": "¿Cómo se manejan múltiples promesas independientes en paralelo con async/await?",
+    "options": [
+      "Iniciando las promesas primero y luego aplicando 'await Promise.all([p1, p2])'.",
+      "Escribiendo 'await p1; await p2;' en líneas consecutivas sin usar arrays.",
+      "Llamando a setTimeout con un valor de 0ms antes de cada sentencia await.",
+      "Creando un bucle for tradicional que invoque new Promise en cada vuelta."
+    ],
+    "correct_index": 0,
+    "subtopic": "prototipos_async",
+    "difficulty": "medium",
+    "hint": "Hacer await secuencial no paraleliza; se deben iniciar y aguardar con Promise.all."
+  },
+  {
+    "id": "js_134",
+    "question": "¿Por qué el uso de Object.setPrototypeOf() penaliza fuertemente el rendimiento en V8?",
+    "options": [
+      "Obliga al motor a reiniciar el Call Stack borrando todas las variables del heap.",
+      "Rompe las optimizaciones de Hidden Classes (Shapes) y desoptimiza inline caches.",
+      "Fuerza a todos los Web Workers activos a pausar su ejecución durante 500ms.",
+      "Convierte el objeto en una estructura no recolectable por el Garbage Collector."
+    ],
+    "correct_index": 1,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "Cambiar el prototipo dinámicamente destruye las transiciones de Shapes en el motor V8."
+  },
+  {
+    "id": "js_135",
+    "question": "¿En qué consiste la vulnerabilidad de Prototype Pollution en aplicaciones JavaScript?",
+    "options": [
+      "Sobrecargar la memoria del Call Stack mediante miles de promesas huérfanas.",
+      "Modificar el puntero del Event Loop para ejecutar código en espacio del kernel.",
+      "Inyectar propiedades maliciosas en Object.prototype para alterar todos los objetos.",
+      "Reescribir el archivo ejecutable de Node.js mediante llamadas a console.log."
+    ],
+    "correct_index": 2,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "Prototype Pollution muta Object.prototype comprometiendo la seguridad de la app."
+  },
+  {
+    "id": "js_136",
+    "question": "¿Cómo ayuda Object.create(null) a mitigar ataques de Prototype Pollution?",
+    "options": [
+      "Cifra las claves del objeto utilizando claves simétricas generadas al azar.",
+      "Impide que cualquier usuario envíe cadenas de texto que contengan llaves {}.",
+      "Fuerza a que todas las funciones del script se compilen en modo estricto.",
+      "Crea un diccionario que no desciende de Object.prototype, inmune a inyecciones."
+    ],
+    "correct_index": 3,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "Objetos creados con Object.create(null) carecen de prototipo, previniendo polución."
+  },
+  {
+    "id": "js_137",
+    "question": "¿Qué efecto tiene Object.freeze() sobre la cadena de prototipos de un objeto?",
+    "options": [
+      "Congela únicamente las propiedades propias; el prototipo del objeto no se congela.",
+      "Congela recursivamente toda la cadena de prototipos hasta llegar a Object.prototype.",
+      "Permite que los prototipos hijos modifiquen las propiedades del padre libremente.",
+      "Borra la referencia interna __proto__ impidiendo la invocación de métodos."
+    ],
+    "correct_index": 0,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "Object.freeze es superficial; no congela los objetos situados en su prototipo."
+  },
+  {
+    "id": "js_138",
+    "question": "¿Cómo se personaliza el comportamiento de 'instanceof' en una clase moderna de ES6?",
+    "options": [
+      "Sobrescribiendo la propiedad 'constructor' en el prototipo de la clase base.",
+      "Implementando un método estático utilizando el símbolo Symbol.hasInstance.",
+      "Declarando un método privado llamado '#instanceof' que retorne un booleano.",
+      "Modificando directamente el valor de la función nativa Function.prototype.bind."
+    ],
+    "correct_index": 1,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "Symbol.hasInstance permite redefinir cómo evalúa instanceof para esa clase."
+  },
+  {
+    "id": "js_139",
+    "question": "¿Cómo resuelve JavaScript la vinculación de 'super' en métodos concisos de objetos?",
+    "options": [
+      "Calculando dinámicamente el prototipo del objeto que invoca la función en cada turno.",
+      "Consultando la primera variable global que contenga una referencia a la clase padre.",
+      "Mediante la ranura interna [[HomeObject]] asignada estáticamente al crearse el método.",
+      "Transformando el método en una macro que se compila antes de la fase de análisis."
+    ],
+    "correct_index": 2,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "super utiliza la ranura interna [[HomeObject]] ligada al objeto donde se declaró."
+  },
+  {
+    "id": "js_140",
+    "question": "¿En qué consiste el patrón de limitador de concurrencia de promesas (p-limit)?",
+    "options": [
+      "Cancelar promesas si el consumo de memoria del navegador sobrepasa un gigabyte.",
+      "Restringir las peticiones HTTP para que solo operen en direcciones con HTTPS.",
+      "Convertir llamadas asíncronas en callbacks síncronos dentro de un bucle for.",
+      "Procesar una cola de tareas asíncronas permitiendo un número máximo activo a la vez."
+    ],
+    "correct_index": 3,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "Limitar la concurrencia previene agotar recursos del sistema al disparar miles de tareas."
+  },
+  {
+    "id": "js_141",
+    "question": "¿Cómo se implementa la cancelación cooperativa de promesas en estándares web modernos?",
+    "options": [
+      "Utilizando instancias de AbortController y escuchando la señal de su AbortSignal.",
+      "Invocando el método obsoleto Promise.prototype.cancel() en la promesa activa.",
+      "Lanzando una excepción asíncrona no capturada desde la cola de macrotareas.",
+      "Asignando el valor booleano false a la propiedad privada '#active' de la promesa."
+    ],
+    "correct_index": 0,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "AbortController y AbortSignal representan el estándar web para cancelar asincronía."
+  },
+  {
+    "id": "js_142",
+    "question": "¿Qué es un objeto 'Thenable' en la especificación ECMAScript?",
+    "options": [
+      "Una función que solo puede invocarse si previamente se resolvió una promesa.",
+      "Cualquier objeto o función que define un método denominado 'then'.",
+      "Un tipo de dato primitivo reservado para almacenar números de coma flotante.",
+      "Una clase nativa de Node.js especializada en el manejo de buffers de memoria."
+    ],
+    "correct_index": 1,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "Un thenable es cualquier estructura que implementa un método then compatible."
+  },
+  {
+    "id": "js_143",
+    "question": "¿Qué estipula la especificación Promises/A+ sobre la resolución de un Thenable?",
+    "options": [
+      "Debe ignorar el método 'then' y tratar la estructura como un objeto estático común.",
+      "Debe arrojar inmediatamente un TypeError para garantizar la pureza del código.",
+      "Debe invocar el método 'then' asíncronamente adoptando el estado resultante.",
+      "Debe convertir todas las funciones del thenable en callbacks de temporizadores."
+    ],
+    "correct_index": 2,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "El procedimiento de resolución desenvuelve el Thenable invocando then() en microtareas."
+  },
+  {
+    "id": "js_144",
+    "question": "¿Cómo preservan los navegadores modernos los 'async stack traces' en llamadas encadenadas?",
+    "options": [
+      "Guardando una instantánea completa de la memoria RAM en el almacenamiento temporal.",
+      "Impidiendo que las promesas salgan del Call Stack hasta que completen su tarea.",
+      "Registrando todas las llamadas en un archivo de texto en la máquina del usuario.",
+      "El motor V8 reconstruye la cadena de contextos a través de los enlaces de las promesas."
+    ],
+    "correct_index": 3,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "V8 inspecciona las promesas encadenadas para recrear trazas de pila asíncronas útiles."
+  },
+  {
+    "id": "js_145",
+    "question": "¿Qué sucede si en una función async se hace 'return await promesa' vs 'return promesa'?",
+    "options": [
+      "return await introduce un tick de microtarea extra pero provee traza de error completa.",
+      "return promesa congela la ejecución hasta que expire el temporizador global.",
+      "Son completamente idénticos en todos los aspectos de rendimiento y depuración.",
+      "return await arroja una excepción si la función no forma parte de una clase ES6."
+    ],
+    "correct_index": 0,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "return await añade un turno de microtarea pero mejora la información en stack traces."
+  },
+  {
+    "id": "js_146",
+    "question": "¿Qué particularidad tiene el manejo de contrapresión (backpressure) en async iterators?",
+    "options": [
+      "El productor satura la memoria del navegador emitiendo valores de forma ilimitada.",
+      "El consumidor controla la velocidad solicitando el siguiente elemento con 'next()'.",
+      "Se exige el uso de la API MessageChannel para sincronizar los pulsos de envío.",
+      "Los datos que excedan el límite de transferencia se descartan automáticamente."
+    ],
+    "correct_index": 1,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "En async iterators el consumidor dicta el ritmo mediante llamadas sucesivas a next()."
+  },
+  {
+    "id": "js_147",
+    "question": "¿Cómo funciona la delegación de generadores mediante la expresión 'yield* iterable'?",
+    "options": [
+      "Multiplica el valor del operando numérico por todos los elementos de la lista.",
+      "Convierte las llamadas de yield en microtareas concurrentes dentro del bucle.",
+      "Delega la iteración completa al iterable secundario hasta que este se agote.",
+      "Genera un error de sintaxis al no permitir asteriscos fuera de la declaración inicial."
+    ],
+    "correct_index": 2,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "yield* delega el control de la generación secuencialmente al iterable provisto."
+  },
+  {
+    "id": "js_148",
+    "question": "¿Cómo se implementaba la herencia prototípica limpia antes de las clases de ES6?",
+    "options": [
+      "Hijo.prototype = new Padre(); sin modificar la referencia del constructor original.",
+      "Padre.prototype.extend(Hijo.prototype); mediante la API nativa de reflexión.",
+      "Asignando los prototipos en una tupla indexada dentro del objeto global window.",
+      "Hijo.prototype = Object.create(Padre.prototype); Hijo.prototype.constructor = Hijo;"
+    ],
+    "correct_index": 3,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "Object.create(Padre.prototype) y reasignar constructor era el estándar pre-ES6."
+  },
+  {
+    "id": "js_149",
+    "question": "¿Qué sucede si un objeto hereda una propiedad con solo 'getter' e intenta asignarle valor?",
+    "options": [
+      "En modo estricto arroja un TypeError; en modo no estricto la asignación falla en silencio.",
+      "El motor añade la propiedad como propia del objeto tapando el getter del prototipo.",
+      "El getter se transforma automáticamente en un setter genérico para recibir el valor.",
+      "Se emite un evento global notificando la mutación de una propiedad de solo lectura."
+    ],
+    "correct_index": 0,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "Si un prototipo define un getter sin setter, asignar a la instancia falla o arroja TypeError."
+  },
+  {
+    "id": "js_150",
+    "question": "¿Qué sucede si una promesa rechazada es manejada por un .catch() que retorna un string?",
+    "options": [
+      "La cadena continúa en estado de error perpetuando el rechazo a lo largo del flujo.",
+      "La cadena se recupera y la siguiente promesa derivada pasa a estar 'fulfilled'.",
+      "Se produce una excepción por transformar un error en un tipo primitivo de texto.",
+      "El método catch se ejecuta de forma recursiva hasta recibir un objeto de tipo Error."
+    ],
+    "correct_index": 1,
+    "subtopic": "prototipos_async",
+    "difficulty": "advanced",
+    "hint": "catch() recupera el flujo: si retorna normalmente, la siguiente promesa se cumple."
   }
 ]

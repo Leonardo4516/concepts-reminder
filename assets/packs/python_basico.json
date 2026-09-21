@@ -1,80 +1,2102 @@
 [
   {
     "id": "py_001",
-    "question": "¿Qué hace el decorador @staticmethod en Python?",
+    "difficulty": "basic",
+    "question": "¿Cuál es la principal diferencia semántica y funcional entre una lista y una tupla en Python?",
     "options": [
-      "Modifica el estado de la instancia.",
-      "Permite llamar al método sin instanciar la clase y no recibe 'self' ni 'cls'.",
-      "Requiere pasar 'self' obligatoriamente como primer argumento.",
-      "Convierte la función en un método de clase que recibe 'cls'."
+      "Las listas son secuencias mutables de longitud dinámica, mientras que las tuplas son colecciones inmutables.",
+      "Las listas admiten tipos heterogéneos, mientras que las tuplas solo aceptan valores numéricos primitivos.",
+      "Las listas reservan bloques estáticos en memoria, mientras que las tuplas recalculan memoria dinámicamente.",
+      "Las listas se evalúan en tiempo de compilación, mientras que las tuplas se resuelven de forma perezosa."
     ],
-    "correct_index": 1,
-    "hint": "No depende ni de la instancia ni de la clase en sí.",
-    "subtopic": "poo"
+    "correct_index": 0,
+    "hint": "Las tuplas son inmutables una vez instanciadas (no se pueden reasignar sus índices), mientras que las listas son mutables y permiten agregar, modificar o eliminar elementos en tiempo de ejecución.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "py_002",
-    "question": "¿Cuál es la principal diferencia entre una lista y una tupla en Python?",
+    "difficulty": "basic",
+    "question": "¿Cómo opera la cláusula else cuando se asocia directamente al final de un bucle for o while en Python?",
     "options": [
-      "Las listas son inmutables y las tuplas son mutables.",
-      "Las listas usan paréntesis () y las tuplas corchetes [].",
-      "Las listas son mutables y las tuplas son inmutables.",
-      "Las tuplas solo pueden contener datos de tipo numérico."
+      "Se ejecuta de forma obligatoria en cada iteración en la que la condición booleana principal evalúe a False.",
+      "Se ejecuta únicamente si el bucle finaliza su iteración de forma natural sin haber sido interrumpido por break.",
+      "Se ejecuta únicamente cuando el bucle es interrumpido de manera explícita por una instrucción break o exit.",
+      "Se invoca exclusivamente si la colección iterable proporcionada al bucle se encuentra totalmente vacía."
     ],
-    "correct_index": 2,
-    "hint": "Una vez creada, no puedes modificar los elementos de una tupla.",
+    "correct_index": 1,
+    "hint": "En Python, la cláusula else de un bucle se ejecuta al completarse todas las iteraciones de la secuencia. Si se interrumpe el ciclo prematuramente con break, el bloque else se omite.",
     "subtopic": "fundamentos"
   },
   {
     "id": "py_003",
-    "question": "¿Qué estructura de palabras clave se usa para manejar excepciones en Python?",
+    "difficulty": "basic",
+    "question": "¿Cuál es la diferencia fundamental entre el operador de comparación '==' y el operador 'is' en Python?",
     "options": [
-      "try ... catch",
-      "try ... except",
-      "begin ... rescue",
-      "try ... handle"
+      "'==' evalúa la dirección de memoria exacta, mientras que 'is' realiza coerción implícita de tipos de datos.",
+      "'==' se reserva de forma estricta para números primitivos, mientras que 'is' se utiliza para colecciones y objetos.",
+      "'==' evalúa la igualdad de valor entre objetos, mientras que 'is' comprueba si ambos apuntan a la misma identidad.",
+      "'==' ejecuta una comparación superficial binaria, mientras que 'is' invoca internamente el método dunder __eq__."
     ],
-    "correct_index": 1,
-    "hint": "En Python la cláusula que captura el error se llama 'except'.",
+    "correct_index": 2,
+    "hint": "'==' invoca internamente __eq__ para comparar si los valores representados son equivalentes, mientras que 'is' evalúa id(a) == id(b), verificando identidad física en memoria.",
     "subtopic": "fundamentos"
   },
   {
     "id": "py_004",
-    "question": "¿Cuál es el propósito del método especial __init__ en una clase de Python?",
+    "difficulty": "basic",
+    "question": "¿Por qué motivo se considera una mala práctica asignar un objeto mutable (como una lista) como valor por defecto de un parámetro?",
     "options": [
-      "Destruir la instancia cuando ya no se usa.",
-      "Inicializar los atributos del objeto al crearse una nueva instancia.",
-      "Importar módulos necesarios dentro de la clase.",
-      "Declarar variables globales compartidas por todas las clases."
+      "El intérprete de Python eleva un error de sintaxis SyntaxError antes de iniciar la ejecución del script principal.",
+      "El recolector de basura destruye el objeto inmediatamente después de la primera llamada provocando fallos de memoria.",
+      "La función convierte automáticamente cualquier lista pasada como argumento en una tupla congelada de solo lectura.",
+      "El objeto por defecto se evalúa una sola vez al definir la función y es compartido por todas las invocaciones subsecuentes."
     ],
-    "correct_index": 1,
-    "hint": "Funciona como el constructor de la clase.",
-    "subtopic": "poo"
+    "correct_index": 3,
+    "hint": "Las expresiones por defecto en definiciones de funciones se evalúan en tiempo de definición del módulo (cuando se crea el objeto función), por lo que mutar esa lista persiste los cambios para futuras llamadas.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "py_005",
-    "question": "¿Cómo se define una función anónima de una sola línea en Python?",
+    "difficulty": "basic",
+    "question": "¿Qué valor retorna la función pop() ejecutada sobre una lista de Python si no se le proporciona ningún índice?",
     "options": [
-      "def anon() -> None",
-      "func() => expression",
-      "lambda x: expression",
-      "anonymous(x) { return expression; }"
+      "Elimina y retorna el último elemento de la lista en complejidad amortizada de tiempo constante O(1).",
+      "Elimina y retorna el primer elemento de la lista desplazando todos los índices con complejidad O(n).",
+      "Retorna un valor booleano True indicando que la estructura aún conserva elementos válidos en su interior.",
+      "Lanza de forma obligatoria una excepción TypeError al requerir un argumento de posición para indexar."
     ],
-    "correct_index": 2,
-    "hint": "Se utiliza la palabra reservada 'lambda'.",
-    "subtopic": "avanzado"
+    "correct_index": 0,
+    "hint": "list.pop() sin argumentos por defecto extrae el último elemento (índice -1), lo cual no requiere desplazar elementos contiguos en memoria, garantizando O(1) amortizado.",
+    "subtopic": "fundamentos"
   },
   {
     "id": "py_006",
-    "question": "¿Qué método se utiliza para obtener el valor de una clave en un diccionario sin lanzar KeyError si no existe?",
+    "difficulty": "basic",
+    "question": "¿Cuál es la complejidad temporal promedio de comprobar la pertenencia de un elemento ('x in c') en un set vs una list?",
     "options": [
-      "dict.fetch(key, default)",
-      "dict.get(key, default)",
-      "dict.find(key, default)",
-      "dict.value(key, default)"
+      "En un set la complejidad promedio es O(log n) por árboles binarios, mientras que en list es O(1) por indexación.",
+      "En un set la complejidad promedio es O(1) mediante hashing, mientras que en una list es O(n) por búsqueda secuencial.",
+      "Ambas estructuras ofrecen exactamente la misma complejidad O(log n) al mantener punteros ordenados internamente.",
+      "En un set la complejidad es O(n) al no permitir duplicados, mientras que en list es O(1) debido a acceso directo."
     ],
     "correct_index": 1,
-    "hint": "El método estándar es .get() que devuelve un valor por defecto o None.",
+    "hint": "Los conjuntos (set) están implementados sobre tablas hash con resolución de colisiones en tiempo constante O(1) promedio, mientras que una lista requiere recorrer secuencialmente sus elementos hasta encontrar una coincidencia.",
     "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_007",
+    "difficulty": "basic",
+    "question": "¿Cuál de los siguientes literales u objetos evalúa como True en un contexto booleano en Python?",
+    "options": [
+      "Una lista vacía instanciada mediante corchetes simples sin elementos o mediante la llamada a list().",
+      "El valor numérico flotante 0.0 o el objeto que representa la ausencia de valor definido como None.",
+      "Una cadena de texto que contiene un único espacio en blanco ' ' o cualquier contenedor no vacío.",
+      "Un diccionario instanciado sin pares de clave y valor mediante la sintaxis literal de llaves {}."
+    ],
+    "correct_index": 2,
+    "hint": "En Python son falsy: None, False, ceros numéricos (0, 0.0, 0j) y secuencias/colecciones vacías ('', (), [], {}, set()). Una cadena con un espacio (' ') tiene longitud 1 y evalúa a True.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_008",
+    "difficulty": "basic",
+    "question": "¿Qué comportamiento introduce el operador morsa (walrus operator, ':=') introducido en Python 3.8?",
+    "options": [
+      "Fuerza la comparación estricta de punteros en memoria anulando la sobrecarga del método dunder __eq__.",
+      "Convierte automáticamente un generador perezoso en una tupla inmutable evaluada de forma inmediata.",
+      "Declara variables de ámbito local constantes cuyo valor no puede ser reasignado en el resto del bloque.",
+      "Permite asignar valores a variables dentro de una expresión como parte de una condición de control o cálculo."
+    ],
+    "correct_index": 3,
+    "hint": "El operador de asignación en expresiones ':=' permite evaluar y vincular un valor a un identificador dentro de una misma línea de código, muy útil en condiciones while o if.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_009",
+    "difficulty": "basic",
+    "question": "¿Qué sucede al intentar utilizar una lista como clave dentro de un diccionario estándar en Python?",
+    "options": [
+      "Se eleva un error TypeError indicando que las listas son objetos no hashables debido a su naturaleza mutable.",
+      "La lista se convierte de forma automática en una cadena de texto serializada para actuar como clave válida.",
+      "El intérprete permite la operación pero las búsquedas de clave fallan de forma silenciosa retornando None.",
+      "Se almacena la referencia del puntero de memoria permitiendo modificar la lista sin afectar la indexación."
+    ],
+    "correct_index": 0,
+    "hint": "Las claves de un diccionario deben ser inmutables y poseer un valor hash constante en su ciclo de vida (__hash__). Como las listas son mutables, carecen de __hash__ y disparan TypeError: unhashable type: 'list'.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_010",
+    "difficulty": "basic",
+    "question": "¿Qué bloque de código se ejecuta de forma garantizada en una estructura try-except-finally independientemente de si ocurrió un error?",
+    "options": [
+      "El bloque except se ejecuta siempre sin importar la clase de excepción que se haya producido durante el bloque.",
+      "El bloque finally se ejecuta siempre, tanto si se lanzó una excepción capturada o no, como si el bloque terminó con éxito.",
+      "El bloque else se invoca siempre justo después de capturar cualquier error de ejecución mediante un raise.",
+      "El bloque finally solo se ejecuta si no ocurrió ningún tipo de error ni interrupción dentro de la sección try."
+    ],
+    "correct_index": 1,
+    "hint": "El bloque finally está diseñado para tareas de limpieza y liberación de recursos (cerrar descriptores de archivos, desconectar sockets) y se ejecuta siempre, incluso si hay una instrucción return o una excepción no manejada.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_011",
+    "difficulty": "basic",
+    "question": "¿Cuál es la función del archivo especial __init__.py dentro de una carpeta de código en Python?",
+    "options": [
+      "Define de forma estricta los puntos de entrada para la compilación de binarios optimizados en formato de rueda wheel.",
+      "Bloquea la importación de cualquier submódulo que no esté explícitamente listado en el descriptor setup.py.",
+      "Marca el directorio como un paquete reconocible por el sistema de importación y permite inicializar su espacio de nombres.",
+      "Establece una interfaz gráfica de usuario automática basada en las firmas de funciones descubiertas en la carpeta."
+    ],
+    "correct_index": 2,
+    "hint": "Aunque Python 3.3+ soporta 'namespace packages' implícitos sin __init__.py, incluirlo sigue siendo la forma estándar de definir un paquete regular y ejecutar código de inicialización al importarlo.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_012",
+    "difficulty": "basic",
+    "question": "¿Qué resultado produce la expresión booleana '5 and 0 or \"hola\"' al ser evaluada en el intérprete de Python?",
+    "options": [
+      "Retorna el valor booleano True puesto que la cadena final contiene caracteres válidos y no es vacía.",
+      "Retorna el número entero 5 al ser el primer operando con valor verdadero evaluado de izquierda a derecha.",
+      "Lanza una excepción TypeError al intentar evaluar operadores lógicos booleanos sobre tipos incompatibles.",
+      "Retorna la cadena de texto 'hola' debido a las reglas de cortocircuito y evaluación del último valor considerado."
+    ],
+    "correct_index": 3,
+    "hint": "'5 and 0' evalúa '5' (truthy), por lo que continúa y evalúa '0' (falsy), devolviendo 0. Luego '0 or \"hola\"' evalúa 0 (falsy), pasando al lado derecho y devolviendo finalmente 'hola'.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_013",
+    "difficulty": "basic",
+    "question": "¿Qué método de cadenas se debe utilizar para combinar una lista de strings en un solo texto separado por comas?",
+    "options": [
+      "','.join(lista_de_strings), invocando el método de concatenación directamente sobre el separador textual.",
+      "lista_de_strings.concat(','), pasando la coma como parámetro de delimitación sobre el objeto iterable origen.",
+      "str.split(lista_de_strings, delimiter=','), configurando el token delimitador en la llamada de clase estándar.",
+      "lista_de_strings.join(','), ejecutando el algoritmo de unión iterativa directamente sobre el arreglo mutuo."
+    ],
+    "correct_index": 0,
+    "hint": "En Python el método join pertenece a la clase str y no a list: 'separador'.join(iterable) concatena eficientemente los elementos iterables reservando la memoria necesaria en una única pasada.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_014",
+    "difficulty": "medium",
+    "question": "¿Cómo resuelve Python la búsqueda de identificadores siguiendo la regla de resolución de alcance LEGB?",
+    "options": [
+      "Prioriza el ámbito Global, descendiendo posteriormente hacia Local, Enclosing y concluyendo en el ámbito Built-in.",
+      "Busca secuencialmente en el ámbito Local, luego en Enclosing (cierres), luego en Global y finalmente en Built-in.",
+      "Inspecciona exclusivamente el ámbito Built-in antes de verificar variables locales creadas dentro de la función.",
+      "Evalúa simultáneamente todos los espacios de nombres fusionando identificadores duplicados bajo un contexto dinámico."
+    ],
+    "correct_index": 1,
+    "hint": "LEGB define el orden estricto de resolución de nombres en Python: Local -> Enclosing (funciones envolventes) -> Global (módulo actual) -> Built-in (funciones y tipos nativos del sistema).",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_015",
+    "difficulty": "medium",
+    "question": "¿Cuál es el propósito y comportamiento de la palabra clave 'nonlocal' dentro de una función anidada en Python?",
+    "options": [
+      "Declara una variable accesible por cualquier hilo del sistema operativo sin requerir bloqueos de exclusión mutua.",
+      "Evita que el recolector de basura elimine las variables temporales locales al terminar la función secundaria.",
+      "Permite reasignar una variable definida en el ámbito de la función externa más cercana sin llegar al ámbito global.",
+      "Exporta una variable interna directamente al espacio de nombres global del módulo principal durante el runtime."
+    ],
+    "correct_index": 2,
+    "hint": "'nonlocal' indica al intérprete que el identificador hace referencia a una variable previamente vinculada en el ámbito envolvente más cercano (enclosing scope), excluyendo el ámbito global.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_016",
+    "difficulty": "medium",
+    "question": "¿Qué diferencia existe entre el método dict.get(clave, default) y acceder directamente a la clave mediante dict[clave]?",
+    "options": [
+      "dict.get() añade automáticamente la clave con el valor default si no existe, mientras que dict[] solo lee datos.",
+      "dict.get() opera en tiempo O(n) por validación de tipos, mientras que dict[] garantiza O(1) de acceso directo.",
+      "dict.get() solo admite claves de tipo cadena, mientras que la indexación con corchetes admite cualquier objeto.",
+      "dict.get() retorna el valor por defecto si la clave no existe, mientras que dict[] eleva una excepción KeyError."
+    ],
+    "correct_index": 3,
+    "hint": "dict.get(k, default) previene fallos por claves ausentes devolviendo un valor seguro (por defecto None), mientras que dict[k] genera un KeyError si la clave no está presente en la tabla hash.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_017",
+    "difficulty": "medium",
+    "question": "¿Cuál es la función de la barra diagonal '/' en la lista de parámetros de una función en Python 3.8+?",
+    "options": [
+      "Indica que todos los parámetros situados a su izquierda deben ser pasados exclusivamente como argumentos posicionales.",
+      "Indica que los parámetros a su derecha admiten operaciones aritméticas de división de punto flotante automáticas.",
+      "Señala el punto exacto donde la función bifurca su ejecución en dos subprocesos asíncronos concurrentes.",
+      "Marca los parámetros precedentes como obligatorios y prohíbe que reciban valores nulos de tipo NoneType."
+    ],
+    "correct_index": 0,
+    "hint": "En la firma 'def f(a, b, /, c):', los argumentos 'a' y 'b' son positional-only; no pueden pasarse usando palabras clave como 'f(a=1, b=2, c=3)', lo cual previene acoplamiento a nombres de parámetros internos.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_018",
+    "difficulty": "medium",
+    "question": "¿Qué hace el asterisco individual '*' aislado en la lista de parámetros de una función en Python?",
+    "options": [
+      "Captura un número arbitrario de argumentos posicionales adicionales agrupándolos en una tupla dinámica.",
+      "Obliga a que todos los parámetros definidos después de él se pasen exclusivamente mediante argumentos por palabra clave.",
+      "Indica que la función se ejecutará como un generador perezoso devolviendo un iterador tras cada invocación.",
+      "Permite que los parámetros subsiguientes acepten punteros directos a memoria nativa de bajo nivel en C."
+    ],
+    "correct_index": 1,
+    "hint": "En 'def f(a, *, b):', 'b' es un keyword-only parameter. Debe invocarse explícitamente como f(1, b=2); pasar f(1, 2) generará un TypeError.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_019",
+    "difficulty": "medium",
+    "question": "¿Cuál es la diferencia entre copy.copy() y copy.deepcopy() del módulo estándar copy de Python?",
+    "options": [
+      "copy() duplica únicamente cadenas y enteros; deepcopy() es el único método capaz de clonar instancias de clases.",
+      "copy() opera en modo asíncrono liberando el GIL; deepcopy() bloquea la ejecución de todo el proceso en ejecución.",
+      "copy() crea un nuevo contenedor pero copia referencias internas; deepcopy() duplica recursivamente todos los objetos anidados.",
+      "copy() preserva la inmutabilidad de los elementos; deepcopy() convierte todas las tuplas anidadas en listas mutables."
+    ],
+    "correct_index": 2,
+    "hint": "La copia superficial (shallow copy) duplica la estructura contenedora raíz, pero sus elementos internos apuntan a las mismas direcciones de memoria. La copia profunda (deep copy) clona recursivamente el árbol completo de objetos.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_020",
+    "difficulty": "medium",
+    "question": "¿Por qué la expresión 'a is b' evalúa a True para enteros como 100 pero puede evaluar a False para enteros grandes como 1000000?",
+    "options": [
+      "Enteros mayores a 256 desbordan la memoria estática y se transfieren a un archivo swap temporal en el disco duro.",
+      "El operador is aplica una regla de redondeo probabilístico para números que superan la longitud de un byte binario.",
+      "Los números superiores a 256 se convierten internamente en objetos Decimal que no admiten comparación con is.",
+      "CPython preasigna y reutiliza en memoria un singleton cacheado para los enteros en el rango cerrado de -5 a 256."
+    ],
+    "correct_index": 3,
+    "hint": "Por motivos de optimización, CPython crea una única instancia para cada entero pequeño en el rango [-5, 256] al iniciar el intérprete. Para enteros fuera de ese rango, generalmente se instancian nuevos objetos separados.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_021",
+    "difficulty": "medium",
+    "question": "¿Cómo se comporta la estructura de datos collections.defaultdict ante el acceso a una clave inexistente?",
+    "options": [
+      "Invoca la función fábrica proporcionada en su constructor, inserta el valor retornado para esa clave y lo devuelve.",
+      "Retorna siempre un valor constante None sin modificar el contenido interno ni añadir nuevas claves al mapa.",
+      "Lanza una excepción KeyError pero registra en un archivo de log la clave solicitada para auditoría posterior.",
+      "Bloquea la ejecución del hilo principal hasta que otro subproceso inserte manualmente la clave esperada."
+    ],
+    "correct_index": 0,
+    "hint": "Cuando se consulta una clave ausente, defaultdict llama a su default_factory (por ejemplo int, list o una función lambda), asigna el resultado como valor de dicha clave en el diccionario y lo devuelve al llamador.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_022",
+    "difficulty": "medium",
+    "question": "¿Qué ventaja técnica proporciona collections.deque frente a una lista ordinaria para operaciones de cola (FIFO)?",
+    "options": [
+      "Reduce el consumo de memoria en un factor de 10x al almacenar los enteros comprimidos en formato binario crudo.",
+      "Permite inserciones y extracciones eficientes en ambos extremos (appendleft/popleft) en tiempo constante O(1).",
+      "Garantiza que todos los elementos se mantengan permanentemente ordenados sin costo adicional de cómputo.",
+      "Ofrece acceso por índice arbitrario (deque[i]) mucho más rápido que una lista convencional en arrays de memoria."
+    ],
+    "correct_index": 1,
+    "hint": "collections.deque es una lista doblemente enlazada por bloques; añadir o quitar elementos al inicio (appendleft / popleft) toma O(1), mientras que en una lista estándar pop(0) o insert(0, x) requiere desplazar todos los elementos en O(n).",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_023",
+    "difficulty": "medium",
+    "question": "¿Qué garantiza el orden de iteración de los diccionarios en Python a partir de la versión 3.7 según la especificación del lenguaje?",
+    "options": [
+      "Ordena de forma automática las claves alfabética o numéricamente según la implementación de Timsort nativo.",
+      "Mantiene un orden aleatorio reordenando la tabla hash periódicamente para mitigar ataques de colisión de hash.",
+      "Garantiza de forma determinista que las claves se iteran en el orden exacto en que fueron originalmente insertadas.",
+      "Prioriza las claves cuyos valores asociados posean el mayor tamaño en bytes antes de claves con tipos primitivos."
+    ],
+    "correct_index": 2,
+    "hint": "Desde Python 3.6 (detalle de implementación) y formalizado en Python 3.7 (especificación del lenguaje), los diccionarios preservan el orden de inserción gracias a una arquitectura de arrays compactos separados.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_024",
+    "difficulty": "medium",
+    "question": "¿Qué acción realiza la función functools.partial(func, *args, **keywords) en Python?",
+    "options": [
+      "Ejecuta la función func de forma parcial retornando un generador que suspende la ejecución tras cada instrucción.",
+      "Calcula la derivada matemática parcial de una función numérica utilizando introspección de bytecode en CPython.",
+      "Valida que los tipos de datos pasados a func coincidan rigurosamente con sus anotaciones de tipo estáticas.",
+      "Crea un nuevo objeto invocable que congela ciertos argumentos de la función original para simplificar su signatura."
+    ],
+    "correct_index": 3,
+    "hint": "functools.partial permite aplicar parcialmente una función, preconfigurando algunos de sus argumentos posicionales o con nombre, retornando un nuevo callable que acepta los argumentos restantes.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_025",
+    "difficulty": "medium",
+    "question": "¿Cómo se encadenan excepciones de manera explícita en Python utilizando la cláusula 'raise ... from ...'?",
+    "options": [
+      "Asigna la excepción original al atributo __cause__ de la nueva excepción, documentando el contexto causal directo.",
+      "Reemplaza completamente la pila de llamadas (traceback) eliminando todo rastro del error previo en el reporte.",
+      "Fuerza a que ambas excepciones se propaguen simultáneamente en hilos paralelos independientes del intérprete.",
+      "Convierte la excepción en una advertencia de tipo UserWarning sin detener el flujo normal de la aplicación."
+    ],
+    "correct_index": 0,
+    "hint": "'raise NuevaExcepcion from excepcion_original' vincula la causa original explícitamente en el atributo __cause__ y desactiva __suppress_context__, mostrando 'The above exception was the direct cause of the following exception'.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_026",
+    "difficulty": "medium",
+    "question": "¿Qué funcionalidad aporta el módulo itertools mediante su función itertools.chain(*iterables)?",
+    "options": [
+      "Genera el producto cartesiano de las secuencias multiplicando cada elemento por todos los del siguiente iterable.",
+      "Trata múltiples iterables como una única secuencia continua, consumiendo sus elementos de forma consecutiva y perezosa.",
+      "Crea un ciclo infinito que repite indefinidamente los elementos del primer iterable ignorando los subsecuentes.",
+      "Fusiona diccionarios independientes sumando los valores numéricos correspondientes a claves repetidas."
+    ],
+    "correct_index": 1,
+    "hint": "itertools.chain toma una serie de iterables y devuelve un único iterador que produce elementos del primero hasta agotarlo, continuando con el segundo, y así sucesivamente sin instanciar listas en memoria.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_027",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la semántica del operador de coincidencia de patrones estructurales con 'match-case' introducido en Python 3.10?",
+    "options": [
+      "Constituye una traducción sintáctica directa de la sentencia switch de C que solo compara constantes por identidad.",
+      "Ejecuta expresiones regulares precompiladas de forma exclusiva sobre cadenas de texto y flujos de bytes crudos.",
+      "Evalúa patrones contra el sujeto realizando desempaquetado de secuencias, verificación de tipos y vinculación de variables.",
+      "Evalúa todas las ramas de casos en paralelo en el bucle de eventos y selecciona la primera que retorne sin error."
+    ],
+    "correct_index": 2,
+    "hint": "El pattern matching (PEP 634) va mucho más allá de un simple switch: permite validar formas de estructuras de datos (secuencias, mapeos, clases con atributos), desempaquetar valores y aplicar guardas booleanas ('if').",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_028",
+    "difficulty": "advanced",
+    "question": "¿Cómo maneja CPython el recolector de basura principal y en qué casos entra en acción el módulo 'gc' cíclico?",
+    "options": [
+      "CPython utiliza únicamente un algoritmo Mark-and-Sweep global que detiene todo el proceso cada 60 segundos.",
+      "Toda la memoria es gestionada por el kernel del sistema operativo; Python carece de recolector de basura integrado.",
+      "El conteo de referencias solo opera sobre enteros; todas las colecciones complejas dependen exclusivamente de gc.",
+      "El conteo de referencias libera memoria de inmediato al llegar a cero; el recolector cíclico detecta referencias circulares."
+    ],
+    "correct_index": 3,
+    "hint": "El mecanismo principal de gestión de memoria en CPython es el conteo de referencias (inmediato y determinista). Para resolver ciclos donde objetos se referencian mutuamente sin llegar a cero, interviene el garbage collector generacional (gc).",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_029",
+    "difficulty": "advanced",
+    "question": "¿Qué garantiza la función sys.intern(string) al ser aplicada sobre cadenas de texto en Python?",
+    "options": [
+      "Garantiza que cadenas con el mismo contenido compartan la misma dirección de memoria física para comparaciones O(1) con 'is'.",
+      "Cifra el contenido del string en memoria RAM para evitar que pueda ser leído por depuradores o volcados de memoria.",
+      "Convierte la cadena de texto de forma irreversible a una representación binaria en codificación hexadecimal.",
+      "Fuerza a que la cadena sea inmutable impidiendo que el recolector de basura la libere hasta finalizar el script."
+    ],
+    "correct_index": 0,
+    "hint": "sys.intern() almacena la cadena en una tabla interna global de cadenas internadas. Si ya existía una cadena idéntica, devuelve la referencia existente. Esto agiliza comparaciones de identificadores mediante punteros (is).",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_030",
+    "difficulty": "advanced",
+    "question": "¿Cómo opera la sintaxis 'except* ExcepcionTipo' introducida en Python 3.11 para el manejo de ExceptionGroup?",
+    "options": [
+      "Captura todas las excepciones del sistema incluyendo SystemExit y KeyboardInterrupt omitiendo la jerarquía base.",
+      "Permite capturar y procesar de forma selectiva subtipos específicos de excepciones contenidos dentro de un ExceptionGroup.",
+      "Convierte automáticamente las excepciones capturadas en corrutinas asíncronas para su reintento en el bucle.",
+      "Ejecuta el bloque de manejo de excepciones en un proceso separado de multiprocessing para aislar fallos fatales."
+    ],
+    "correct_index": 1,
+    "hint": "PEP 654 introdujo ExceptionGroup y la sintaxis 'except*': permite desglosar un grupo de excepciones concurrentes, capturando subconjuntos que coincidan con el tipo especificado y dejando el resto propagarse.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_031",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la diferencia técnica de implementación entre una expresión generadora y una comprensión de listas en cuanto a memoria?",
+    "options": [
+      "La comprensión produce un iterador que no puede reutilizarse; el generador guarda todos los estados en caché L3.",
+      "Ambas consumen exactamente la misma cantidad de memoria física al reservar punteros continuos en el heap de C.",
+      "La comprensión almacena la lista completa en memoria al instante; el generador produce valores bajo demanda con O(1) de memoria.",
+      "La expresión generadora duplica el uso de memoria porque mantiene una copia serializada del marco de pila activo."
+    ],
+    "correct_index": 2,
+    "hint": "Una list comprehension [x for x in data] instancia todos los objetos y reserva memoria contigua al instante. Una expresión generadora (x for x in data) evalúa perezosamente (lazy evaluation) ocupando espacio constante O(1).",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_032",
+    "difficulty": "advanced",
+    "question": "¿Qué función cumple el método dunder __missing__(self, key) cuando se define en una subclase de la clase nativa dict?",
+    "options": [
+      "Elimina periódicamente del diccionario todas las claves que contengan valores nulos de tipo NoneType.",
+      "Se dispara cada vez que un usuario intenta insertar un elemento cuyo tipo no coincide con la firma tipada.",
+      "Interpreta la clave faltante como una expresión regular para intentar hacer match con claves preexistentes.",
+      "Es invocado por dict.__getitem__ de forma automática únicamente cuando la clave solicitada no se encuentra en el mapeo."
+    ],
+    "correct_index": 3,
+    "hint": "__missing__ es el hook que implementa collections.defaultdict: cuando un acceso con corchetes dict[key] no halla la clave, dict invoca __missing__(key) en lugar de lanzar KeyError directamente.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_033",
+    "difficulty": "advanced",
+    "question": "¿Qué ocurre internamente en CPython al desempaquetar secuencias con sintaxis extendida como 'primero, *medio, ultimo = secuencia'?",
+    "options": [
+      "El elemento intermedio 'medio' se construye siempre como un nuevo objeto de tipo list que contiene los elementos restantes.",
+      "El elemento 'medio' retiene el tipo exacto de la secuencia original (por ejemplo conservando si era tupla o deque).",
+      "Genera un objeto generador perezoso que solo consumirá los elementos intermedios si son leídos expresamente.",
+      "Eleva un error ValueError a menos que la secuencia posea una longitud calculada exactamente en potencias de dos."
+    ],
+    "correct_index": 0,
+    "hint": "En el desempaquetado con estrella (PEP 3132), la variable decorada con '*' siempre se asigna como una lista (tipo list), sin importar si la fuente original fue una tupla, un rango, una cadena o un conjunto.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_034",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la diferencia de comportamiento entre los métodos dict.setdefault(key, default) y collections.defaultdict?",
+    "options": [
+      "setdefault solo acepta enteros como valor de relleno; defaultdict acepta cualquier estructura mutable compleja.",
+      "setdefault evalúa y pasa la expresión default en cada llamada; defaultdict invoca la fábrica callable solo al fallar la clave.",
+      "setdefault es inmutable y no modifica el diccionario original; defaultdict muta el diccionario en memoria compartida.",
+      "setdefault bloquea el acceso de lectura en entornos multihilo; defaultdict carece de soporte de concurrencia."
+    ],
+    "correct_index": 1,
+    "hint": "En 'd.setdefault(k, [])', la lista vacía '[]' se instancia en cada ejecución aunque la clave exista. En cambio, defaultdict solo invoca la función fábrica cuando efectivamente la clave está ausente, ahorrando memoria y cómputo.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_035",
+    "difficulty": "advanced",
+    "question": "¿Por qué la herencia directa de la clase built-in 'dict' puede provocar comportamientos inesperados en comparación con 'collections.UserDict'?",
+    "options": [
+      "Las subclases de dict no tienen acceso al intérprete de Python y requieren ser compiladas con Cython en Linux.",
+      "Heredar de dict inhabilita la capacidad del recolector de basura de liberar instancias destruidas por el usuario.",
+      "Los métodos en C de la clase nativa dict a menudo omiten sobreescrituras en Python invocando slots de C internos directamente.",
+      "La clase nativa dict prohíbe la adición de nuevos métodos personalizados lanzando TypeError en tiempo de definición."
+    ],
+    "correct_index": 2,
+    "hint": "Las clases nativas escritas en C (como dict o list) optimizan sus llamadas internas accediendo directamente a punteros en C (slots) y a menudo no invocan métodos sobreescritos por subclases (como __getitem__ o update). UserDict resuelve esto estando escrito en Python puro.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_036",
+    "difficulty": "advanced",
+    "question": "¿Cómo interactúan las variables declaradas como 'global' dentro de una función con el diccionario del módulo '__dict__'?",
+    "options": [
+      "Crea una copia aislada en la pila del intérprete que se descarta silenciosamente al concluir la ejecución de la función.",
+      "Las variables globales no pueden ser inspeccionadas a través de globals() para garantizar aislamiento de memoria.",
+      "Fuerza a que la variable sea serializada en formato JSON y guardada en el directorio temporal del sistema operativo.",
+      "Cualquier modificación o vinculación a la variable global actualiza directamente la clave correspondiente en globals()."
+    ],
+    "correct_index": 3,
+    "hint": "En Python, el espacio de nombres global de un módulo es literalmente el diccionario retornado por globals() (que es module.__dict__). La directiva 'global x' hace que las asignaciones a 'x' escriban directamente en esa tabla hash.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_037",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la función del tipo de dato 'frozenset' en comparación con el tipo 'set' estándar en Python?",
+    "options": [
+      "frozenset es una versión inmutable y hashable de un conjunto, lo que permite utilizarlo como clave de diccionarios.",
+      "frozenset almacena sus elementos en disco de forma persistente mientras que set reside únicamente en la memoria RAM.",
+      "frozenset mantiene sus elementos estrictamente ordenados cronológicamente según el momento de su inserción.",
+      "frozenset admite únicamente valores numéricos de punto flotante de 64 bits con precisión IEEE-754 garantizada."
+    ],
+    "correct_index": 0,
+    "hint": "Dado que frozenset es inmutable, implementa el método dunder __hash__. Por lo tanto, puede formar parte de otros conjuntos como elemento o utilizarse como clave en un diccionario, a diferencia de set que es mutable.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_038",
+    "difficulty": "advanced",
+    "question": "¿Cuál es el propósito y alcance del tipo typing.LiteralString introducido en el PEP 675 en Python 3.11?",
+    "options": [
+      "Convierte cualquier texto en una cadena cruda escapando automáticamente caracteres de control como saltos de línea.",
+      "Garantiza estáticamente que una cadena provenga únicamente de literales de código o composiciones seguras contra inyecciones.",
+      "Obliga a que el contenido del string sea codificado exclusivamente en formato ASCII de 7 bits sin soporte UTF-8.",
+      "Impide que una cadena de texto sea modificada o concatenada en tiempo de ejecución por funciones externas."
+    ],
+    "correct_index": 1,
+    "hint": "typing.LiteralString permite a los analizadores estáticos verificar que un valor de string fue escrito directamente como literal por el desarrollador y no construido a partir de datos externos no confiables, mitigando ataques de inyección SQL o comandos.",
+    "subtopic": "fundamentos"
+  },
+  {
+    "id": "py_039",
+    "difficulty": "basic",
+    "question": "¿Cuál es la función del método especial __init__ en la definición de una clase en Python?",
+    "options": [
+      "Reserva la memoria física de bajo nivel en el heap asignando el bloque binario a la variable.",
+      "Compila los métodos de la clase a bytecode optimizado antes de permitir su primera llamada.",
+      "Inicializa el estado y los atributos de una nueva instancia tras haber sido creada por __new__.",
+      "Destruye instancias previas de la misma clase para garantizar el patrón de diseño Singleton."
+    ],
+    "correct_index": 2,
+    "hint": "__init__ es el inicializador de la instancia. Se invoca después de que __new__ ha construido físicamente el objeto y recibe la instancia en su primer argumento ('self') para configurarla.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_040",
+    "difficulty": "basic",
+    "question": "¿Cuál es la diferencia fundamental entre un método decorado con @classmethod y uno decorado con @staticmethod?",
+    "options": [
+      "@classmethod solo puede invocarse desde subclases, mientras que @staticmethod solo se invoca desde la instancia base.",
+      "@classmethod bloquea la modificación de atributos, mientras que @staticmethod permite mutar libremente 'self'.",
+      "@classmethod se compila de forma asíncrona, mientras que @staticmethod se ejecuta en el hilo principal bloqueante.",
+      "@classmethod recibe la clase 'cls' como primer argumento, mientras que @staticmethod no recibe ni la clase ni la instancia."
+    ],
+    "correct_index": 3,
+    "hint": "Un @classmethod recibe 'cls' implícitamente como primer argumento (útil para factory methods alternativos), mientras que un @staticmethod es esencialmente una función regular aislada dentro del namespace de la clase sin acceso implícito a 'self' o 'cls'.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_041",
+    "difficulty": "basic",
+    "question": "¿Qué convención y comportamiento aplica CPython cuando un atributo de clase inicia con dos guiones bajos ('__nombre')?",
+    "options": [
+      "Aplica 'name mangling' renombrando el atributo internamente a '_NombreClase__nombre' para evitar colisiones en subclases.",
+      "Convierte el atributo en una variable de solo lectura inmutable bloqueando totalmente cualquier tipo de reasignación.",
+      "Cifra la dirección de memoria del atributo imposibilitando su lectura desde cualquier función externa del módulo.",
+      "Fuerza a que el atributo sea público y accesible de forma global por cualquier módulo sin requerir instanciación."
+    ],
+    "correct_index": 0,
+    "hint": "El doble guion bajo inicial desencadena la alteración de nombres (name mangling): el compilador de CPython reescribe el identificador agregando '_NombreClase' como prefijo para prevenir sobreescrituras accidentales en subclases.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_042",
+    "difficulty": "basic",
+    "question": "¿Qué función cumple la función integrada super() dentro del método __init__ de una subclase?",
+    "options": [
+      "Clona todos los atributos de la clase padre creando una copia profunda aislada en el espacio de nombres local.",
+      "Retorna un objeto proxy que delega las llamadas a métodos hacia la siguiente clase en el MRO de la jerarquía.",
+      "Fuerza la ejecución inmediata de todos los métodos abstractos de la clase base en hilos de trabajo paralelos.",
+      "Inhabilita el polimorfismo obligando a la subclase a utilizar únicamente los métodos definidos por su creador."
+    ],
+    "correct_index": 1,
+    "hint": "super() devuelve un objeto proxy que resuelve las llamadas a métodos según el orden de resolución de métodos (MRO), permitiendo llamar a la implementación de la superclase de manera limpia y cooperativa.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_043",
+    "difficulty": "basic",
+    "question": "¿Cuál es la diferencia de propósito entre los métodos especiales __str__ y __repr__ en una clase de Python?",
+    "options": [
+      "__str__ retorna obligatoriamente una cadena codificada en UTF-8; __repr__ devuelve un arreglo binario crudo.",
+      "__str__ se invoca al serializar con pickle; __repr__ se utiliza exclusivamente al exportar datos a formatos JSON.",
+      "__str__ genera una representación legible para el usuario; __repr__ provee una descripción inequívoca para depuración.",
+      "__str__ requiere que el objeto sea inmutable; __repr__ está reservado únicamente para estructuras mutables."
+    ],
+    "correct_index": 2,
+    "hint": "La convención en Python es que __str__ esté orientado al usuario final (amigable y legible), mientras que __repr__ busca no ser ambiguo y, de ser posible, contener una expresión de Python válida que recree el objeto (para logging y debug).",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_044",
+    "difficulty": "basic",
+    "question": "¿Qué efecto tiene definir el atributo de clase especial __slots__ en una clase personalizada de Python?",
+    "options": [
+      "Permite ejecutar métodos de la instancia en paralelo asignándoles núcleos de procesamiento dedicados en la CPU.",
+      "Convierte automáticamente todos los métodos convencionales de la clase en generadores asíncronos concurrentes.",
+      "Bloquea la instanciación de la clase transformándola de manera forzosa en una interfaz abstracta pura y estricta.",
+      "Restringe los atributos permitidos y elimina la creación del diccionario __dict__ por instancia, optimizando memoria."
+    ],
+    "correct_index": 3,
+    "hint": "Al definir __slots__ = ('attr1', 'attr2'), Python reserva espacio fijo en memoria C para esos descriptores y no crea el diccionario dinámico __dict__ en cada instancia, ahorrando memoria significativa en millones de objetos.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_045",
+    "difficulty": "basic",
+    "question": "¿Cómo se define un método abstracto en Python para obligar a que las subclases lo implementen obligatoriamente?",
+    "options": [
+      "Heredando de abc.ABC y aplicando el decorador @abstractmethod sobre la firma del método dentro de la clase base.",
+      "Declarando el método con la palabra clave abstract def sin incluir ningún cuerpo ni instrucción en su bloque.",
+      "Lanzando una excepción NotImplementedError en el bloque inicial del archivo __init__.py del módulo principal.",
+      "Decorando la clase con el decorador @interface e implementando métodos estáticos vacíos que retornen None."
+    ],
+    "correct_index": 0,
+    "hint": "Python provee el módulo 'abc' (Abstract Base Classes). Al heredar de abc.ABC (o usar ABCMeta) y decorar con @abc.abstractmethod, Python prohíbe instanciar la clase si no se implementan todos los métodos abstractos.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_046",
+    "difficulty": "basic",
+    "question": "¿Qué función desempeña el decorador @property al colocarse sobre un método de una clase en Python?",
+    "options": [
+      "Sincroniza el valor del atributo con una base de datos relacional externa de forma asíncrona y transparente.",
+      "Permite acceder al método como si fuese un atributo ordinario de solo lectura mediante la sintaxis de punto.",
+      "Oculta el atributo de los analizadores estáticos de código para garantizar la seguridad de claves privadas.",
+      "Transforma el valor devuelto por el método en una tupla inmutable congelada que no puede ser serializada."
+    ],
+    "correct_index": 1,
+    "hint": "El decorador @property convierte un método sin argumentos en un getter, permitiendo consumirlo con la sintaxis de atributo (obj.prop en lugar de obj.prop()), y posibilitando añadir setters y deleters asociados.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_047",
+    "difficulty": "basic",
+    "question": "¿Qué principio describe el concepto de 'Duck Typing' comúnmente empleado en la programación orientada a objetos en Python?",
+    "options": [
+      "Todos los objetos deben heredar obligatoriamente de una única clase base común denominada DuckObject en CPython.",
+      "Las clases deben declarar todas sus interfaces en archivos de encabezado .pyi antes de ser importadas en runtime.",
+      "El tipo de un objeto se determina por los métodos y propiedades que exhibe en runtime, no por su clase explícita.",
+      "El sistema prohíbe sobreescribir métodos heredados para evitar alteraciones en el comportamiento polimórfico."
+    ],
+    "correct_index": 2,
+    "hint": "'Si camina como un pato y grazna como un pato, entonces es un pato': Python favorece comprobar si el objeto soporta la interfaz requerida (métodos o protocolos) en vez de validar isinstance(obj, Tipo).",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_048",
+    "difficulty": "basic",
+    "question": "¿Qué método especial dunder permite que una instancia de una clase personalizada sea invocada como una función (callable)?",
+    "options": [
+      "__invoke__, que habilita la ejecución en segundo plano desacoplada del recolector de basura de la aplicación.",
+      "__execute__, que transforma la clase en un hilo de trabajo gestionado por el bucle de eventos del sistema.",
+      "__run__, que obliga a la instancia a ejecutarse dentro de un contenedor aislado con memoria protegida en Linux.",
+      "__call__, permitiendo que una instancia 'obj' ejecute lógica personalizada al invocarla mediante 'obj(args)'."
+    ],
+    "correct_index": 3,
+    "hint": "Implementar def __call__(self, *args, **kwargs) hace que las instancias de esa clase sean invocables como funciones (callable(obj) devuelve True), útil para factorías con estado o decoradores basados en clases.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_049",
+    "difficulty": "basic",
+    "question": "¿Cuál es la diferencia entre una variable de clase y una variable de instancia en Python?",
+    "options": [
+      "La variable de clase es compartida por todas las instancias; la de instancia pertenece exclusivamente a cada objeto.",
+      "La variable de clase solo admite tipos inmutables; la de instancia acepta cualquier estructura de datos en memoria.",
+      "La variable de clase se borra al cerrar el intérprete; la de instancia se guarda de forma persistente en el disco.",
+      "La variable de clase requiere decoradores especiales; la de instancia se declara fuera del cuerpo de la clase."
+    ],
+    "correct_index": 0,
+    "hint": "Las variables definidas dentro del cuerpo de la clase (fuera de métodos) residen en el diccionario de la clase y son compartidas por todas las instancias. Las asignadas a 'self.attr' residen en el diccionario de la instancia individual.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_050",
+    "difficulty": "basic",
+    "question": "¿Qué método dunder debe implementarse para permitir el uso de la función integrada len() sobre un objeto personalizado?",
+    "options": [
+      "__size__, retornando el tamaño en bytes que ocupa la estructura de datos en la memoria heap del sistema.",
+      "__len__, el cual debe retornar obligatoriamente un número entero no negativo que represente el tamaño.",
+      "__count__, devolviendo un iterador con el número acumulado de accesos realizados sobre la instancia dada.",
+      "__length__, que puede retornar cualquier tipo de dato numérico incluyendo números complejos y de coma flotante."
+    ],
+    "correct_index": 1,
+    "hint": "El protocolo de secuencias exige el método __len__(self). La función len(obj) invoca directamente este método y CPython valida rigurosamente que devuelva un entero >= 0.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_051",
+    "difficulty": "basic",
+    "question": "¿Qué método dunder se invoca automáticamente al indexar un objeto mediante corchetes, por ejemplo 'obj[clave]'?",
+    "options": [
+      "__index__(self, key), que convierte la clave en un puntero físico al segmento de memoria reservado en C.",
+      "__lookup__(self, key), que busca la clave en un árbol binario balanceado construido durante la instanciación.",
+      "__getitem__(self, key), permitiendo que la instancia implemente el protocolo de secuencias o de mapeos.",
+      "__access__(self, key), que evalúa permisos de lectura antes de retornar el valor solicitado por el usuario."
+    ],
+    "correct_index": 2,
+    "hint": "__getitem__(self, key) es el método dunder invocado por el operador de subíndice []. Si se implementa, el objeto puede emular una lista o un diccionario.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_052",
+    "difficulty": "medium",
+    "question": "¿Cuál es el algoritmo que utiliza Python para determinar el orden de resolución de métodos (MRO) en herencia múltiple?",
+    "options": [
+      "Búsqueda en profundidad pura (Depth-First Search) con eliminación arbitraria de clases duplicadas en el árbol.",
+      "Búsqueda en anchura priorizada (Breadth-First Search) ordenando las clases alfabéticamente por su identificador.",
+      "El algoritmo de Dijkstra para grafos acíclicos dirigidos optimizando la distancia mínima hacia la clase object.",
+      "El algoritmo de linealización C3, que garantiza la monotonicidad y respeta el orden de precedencia local."
+    ],
+    "correct_index": 3,
+    "hint": "Desde Python 2.3, Python utiliza C3 Linearization para calcular el MRO (Method Resolution Order). Resuelve ambigüedades en jerarquías complejas (como el problema del diamante) manteniendo coherencia y monotonicidad.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_053",
+    "difficulty": "medium",
+    "question": "¿Cuál es la diferencia entre el método constructor __new__ y el método inicializador __init__ en una clase?",
+    "options": [
+      "__new__ es un método estático que crea y retorna la instancia física; __init__ la inicializa sin retornar valor.",
+      "__new__ se invoca únicamente al restaurar objetos desde un archivo binario; __init__ se usa en el código normal.",
+      "__new__ solo opera en clases abstractas heredadas de ABC; __init__ solo puede usarse en clases concretas finales.",
+      "__new__ destruye la instancia anterior antes de asignarla; __init__ reserva la memoria en el espacio de usuario."
+    ],
+    "correct_index": 0,
+    "hint": "__new__(cls, ...) es el verdadero constructor de la instancia: crea el objeto en memoria y lo retorna. Si retorna una instancia de cls, entonces CPython procede a llamar a __init__(self, ...).",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_054",
+    "difficulty": "medium",
+    "question": "¿Qué regla deben cumplir dos objetos personalizados para ser considerados hashables y poder ser usados en un set o dict?",
+    "options": [
+      "Deben heredar obligatoriamente de la clase collections.Hashable y poseer una clave primaria de tipo entero único.",
+      "Deben implementar __hash__ y __eq__ de modo que objetos que resulten iguales según __eq__ tengan el mismo valor de hash.",
+      "Deben implementar el método __len__ y garantizar que su tamaño en memoria no sobrepase los 64 bytes contiguos.",
+      "Deben sobrescribir el método __str__ para retornar una representación hexadecimal generada por el algoritmo SHA-256."
+    ],
+    "correct_index": 1,
+    "hint": "El contrato de hash en Python exige: si a == b (__eq__ devuelve True), entonces obligatoriamente hash(a) == hash(b). Si una clase sobreescribe __eq__ sin definir __hash__, Python anula __hash__ poniéndolo en None.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_055",
+    "difficulty": "medium",
+    "question": "¿Qué comportamiento introduce el decorador @dataclass del módulo estándar dataclasses cuando se utiliza frozen=True?",
+    "options": [
+      "Serializa la clase completa en un archivo binario cifrado impidiendo cualquier modificación de su bytecode nativo.",
+      "Suspende la ejecución del recolector de basura sobre las instancias de la clase para evitar fugas de memoria.",
+      "Genera una clase inmutable cuyos atributos no pueden reasignarse tras la inicialización y genera automáticamente __hash__.",
+      "Convierte todos los métodos de la clase en funciones puras bloqueando la invocación de llamadas a librerías en C."
+    ],
+    "correct_index": 2,
+    "hint": "@dataclass(frozen=True) emula inmutabilidad generando un __setattr__ y __delattr__ que lanzan FrozenInstanceError ante cualquier intento de asignación, y provee automáticamente una implementación segura de __hash__.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_056",
+    "difficulty": "medium",
+    "question": "¿Cómo se define un valor por defecto dinámico (como una lista vacía) en un campo de una @dataclass para evitar aliasing?",
+    "options": [
+      "Asignando directamente una lista vacía literal 'campo: list = []' en la declaración del atributo en la clase.",
+      "Marcando el campo con el decorador @property y retornando una referencia a una tupla compartida en el módulo.",
+      "Definiendo el atributo dentro de un bloque try-except en el encabezado de importación del módulo principal.",
+      "Utilizando field(default_factory=list) para que cada nueva instancia obtenga una lista independiente recién creada."
+    ],
+    "correct_index": 3,
+    "hint": "Al igual que con argumentos de funciones, no se deben usar mutables como defaults directos en dataclasses. La función field(default_factory=list) invoca list() cada vez que se crea una instancia.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_057",
+    "difficulty": "medium",
+    "question": "¿Qué diferencia existe entre los métodos especiales de acceso a atributos __getattr__ y __getattribute__?",
+    "options": [
+      "__getattribute__ se invoca incondicionalmente en cada acceso; __getattr__ se invoca solo si el atributo no existe.",
+      "__getattr__ se ejecuta en llamadas a métodos; __getattribute__ solo se dispara al leer propiedades numéricas simples.",
+      "__getattr__ es un método estático del sistema; __getattribute__ es un método de instancia creado por el recolector.",
+      "__getattr__ solo busca en el diccionario global; __getattribute__ busca exclusivamente en variables locales de hilo."
+    ],
+    "correct_index": 0,
+    "hint": "__getattribute__ intercepta cualquier lectura de atributo indiscriminadamente. En cambio, __getattr__ actúa como mecanismo de fallback y CPython solo lo invoca cuando el atributo no fue encontrado en la instancia o su jerarquía.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_058",
+    "difficulty": "medium",
+    "question": "¿Cuál es el riesgo de implementar __setattr__ asignando directamente con 'self.nombre = valor' dentro de su cuerpo?",
+    "options": [
+      "Eleva un error TypeError inmediato por violar la inmutabilidad de los espacios de nombres del intérprete.",
+      "Provoca una recursión infinita (RecursionError) al invocar nuevamente a __setattr__ de manera recursiva.",
+      "Corrompe los punteros de memoria C de la clase destruyendo todos los métodos definidos en la instancia.",
+      "Fuerza a que el recolector de basura elimine la instancia en el ciclo generacional siguiente sin aviso."
+    ],
+    "correct_index": 1,
+    "hint": "Como 'self.nombre = valor' invoca internamente a __setattr__, hacerlo dentro de __setattr__ genera una llamada circular infinita. La solución es usar super().__setattr__(nombre, valor) o self.__dict__[nombre] = valor.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_059",
+    "difficulty": "medium",
+    "question": "¿Qué utilidad ofrece el decorador functools.total_ordering en la definición de clases que sobrecargan operadores relacionales?",
+    "options": [
+      "Ordena de forma ascendente los atributos dentro de __dict__ para acelerar las lecturas de atributos en un 20%.",
+      "Garantiza que todas las comparaciones se resuelvan en complejidad O(1) usando una tabla de símbolos precompilada.",
+      "Completa automáticamente todos los métodos de comparación (__le__, __gt__, __ge__) definiendo __eq__ y uno más.",
+      "Convierte las instancias de la clase en tipos primitivos ordenables de forma nativa por el hardware del procesador."
+    ],
+    "correct_index": 2,
+    "hint": "@functools.total_ordering ahorra código redundante: con definir __eq__ y solo uno de los métodos de orden (__lt__, __le__, __gt__ o __ge__), el decorador calcula y provee el resto automáticamente.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_060",
+    "difficulty": "medium",
+    "question": "¿Cómo opera la característica typing.Protocol (PEP 544) en el sistema de tipado estático de Python?",
+    "options": [
+      "Obliga a que las clases hereden explícitamente de la interfaz en tiempo de ejecución para evitar fallos de importación.",
+      "Genera código C optimizado para cada método declarado en el protocolo mejorando el rendimiento de ejecución.",
+      "Restringe la herencia múltiple prohibiendo que una clase implemente más de un protocolo de comunicación en red.",
+      "Permite tipado estructural ('duck typing' estático): una clase es compatible si implementa la interfaz requerida."
+    ],
+    "correct_index": 3,
+    "hint": "typing.Protocol implementa subtipado estructural. Una clase satisface el protocolo si tiene los métodos y atributos definidos en él, sin necesidad de heredar explícitamente de la clase Protocol.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_061",
+    "difficulty": "medium",
+    "question": "¿Cuál es la función del método especial __del__ en una clase de Python y qué precaución exige su uso?",
+    "options": [
+      "Es el finalizador invocado al destruir el objeto; no garantiza su ejecución inmediata ni con ciclos de referencia.",
+      "Es el operador que se ejecuta al llamar a 'del obj' eliminando de forma forzada la memoria RAM en el acto.",
+      "Es un método abstracto obligatorio que resetea los atributos antes de enviar la instancia al recolector de basura.",
+      "Es un destructor determinista idéntico al de C++ que se ejecuta inmediatamente al salir del bloque de la función."
+    ],
+    "correct_index": 0,
+    "hint": "__del__ no es el destructor equivalente a C++; no se invoca necesariamente cuando se ejecuta 'del variable' (que solo decrementa la referencia), sino cuando el refcount llega a cero. Si hay referencias circulares, puede demorarse o no llamarse al apagar el proceso.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_062",
+    "difficulty": "medium",
+    "question": "¿Qué rol juegan las clases de tipo Mixin en la arquitectura de software orientada a objetos en Python?",
+    "options": [
+      "Compilan clases de Python a bibliotecas compartidas .so para acelerar bucles matemáticos de alto rendimiento.",
+      "Proveen paquetes de métodos reutilizables para componer clases mediante herencia múltiple sin poseer estado propio.",
+      "Actúan como intermediarios obligatorios entre el modelo relacional de base de datos y la vista de la interfaz gráfica.",
+      "Impiden que las subclases agreguen nuevos métodos protegiendo la API pública contra modificaciones de terceros."
+    ],
+    "correct_index": 1,
+    "hint": "Un Mixin es una clase diseñada para inyectar funcionalidad específica a otras clases mediante herencia múltiple, sin estar diseñada para instanciarse por sí sola y típicamente sin inicializador de estado propio.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_063",
+    "difficulty": "medium",
+    "question": "¿Qué método dunder se debe implementar para permitir que una clase personalizada soporte el protocolo de iteración?",
+    "options": [
+      "__step__, retornando una función callback que avanza el puntero de ejecución sobre el arreglo contiguo de datos.",
+      "__loop__, que delega la iteración directamente al bucle de eventos asíncrono para evitar bloquear el proceso.",
+      "__iter__, el cual debe retornar un objeto iterador que a su vez implemente el método dunder __next__.",
+      "__traverse__, que recorre los nodos de un grafo serializado retornando los valores en formato de tupla inmutable."
+    ],
+    "correct_index": 2,
+    "hint": "El protocolo de iteración en Python requiere que el iterable implemente __iter__() devolviendo un iterador. El iterador a su vez debe implementar __next__() y lanzar StopIteration al agotarse.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_064",
+    "difficulty": "medium",
+    "question": "¿Cuál es la semántica del método especial __post_init__ en una clase decorada con @dataclass?",
+    "options": [
+      "Se ejecuta antes de reservar la memoria de la instancia para verificar la disponibilidad de memoria RAM física.",
+      "Reemplaza totalmente la inicialización convencional permitiendo deserializar datos desde flujos binarios crudos.",
+      "Se ejecuta exclusivamente cuando la instancia es destruida por el recolector de basura del sistema operativo.",
+      "Se invoca automáticamente al finalizar __init__ generado por la dataclass para validaciones o cálculos derivados."
+    ],
+    "correct_index": 3,
+    "hint": "El método generado __init__ de una dataclass llama a self.__post_init__() al terminar de asignar los campos definidos. Es el lugar ideal para validar reglas de negocio o inicializar atributos calculados.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_065",
+    "difficulty": "advanced",
+    "question": "¿Cuál es el mecanismo mediante el cual opera el protocolo descriptor en Python a nivel de clases y atributos?",
+    "options": [
+      "Un objeto que implementa __get__, __set__ o __delete__ gestiona el acceso al atributo cuando reside en la clase.",
+      "Una función que intercepta llamadas a la API de sockets del sistema operativo mediante ganchos del kernel.",
+      "Un decorador que traduce clases de Python a código ensamblador optimizado mediante compilación Just-In-Time.",
+      "Un módulo de seguridad que cifra los identificadores de variables en tiempo de compilación para ofuscar código."
+    ],
+    "correct_index": 0,
+    "hint": "Los descriptores son la base de @property, métodos de clase, métodos estáticos y slots. Cuando se accede a un atributo cuya clase define __get__ (y opcionalmente __set__/__delete__), Python cede el control a dichos métodos.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_066",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la diferencia de precedencia entre un 'descriptor de datos' (data descriptor) y uno de 'no-datos' (non-data descriptor)?",
+    "options": [
+      "Los descriptores de no-datos tienen prioridad sobre el __dict__ de la instancia y anulan cualquier variable local.",
+      "Los descriptores de datos (definen __set__ o __delete__) tienen prioridad absoluta sobre el __dict__ de la instancia.",
+      "Ambos tienen exactamente la misma prioridad y Python resuelve el conflicto lanzando un AttributeError en tiempo de ejecución.",
+      "El __dict__ de la instancia siempre prevalece sobre cualquier descriptor independientemente de los métodos que defina."
+    ],
+    "correct_index": 1,
+    "hint": "Si un descriptor define __set__ o __delete__ (descriptor de datos), Python lo consulta antes que el __dict__ de la instancia. Si solo define __get__ (descriptor de no-datos, como una función o método ordinario), el __dict__ de la instancia tiene prioridad y puede sombrearlo.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_067",
+    "difficulty": "advanced",
+    "question": "¿Qué función desempeña el hook de clase __init_subclass__ introducido en Python 3.6 (PEP 487)?",
+    "options": [
+      "Obliga a que todas las subclases sean instanciadas de forma inmediata al importar el módulo que las contiene.",
+      "Convierte automáticamente todos los métodos de las subclases en corrutinas asíncronas compatibles con asyncio.",
+      "Permite a una clase base personalizar e interceptar la inicialización de sus subclases sin necesidad de una metaclase.",
+      "Restringe la herencia prohibiendo que las subclases agreguen métodos con nombres que comiencen con guion bajo."
+    ],
+    "correct_index": 2,
+    "hint": "__init_subclass__(cls, **kwargs) se invoca cuando la clase que lo define es heredada por una subclase. Simplifica enormemente tareas de registro, validación y configuración que antes requerían metaclases complejas.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_068",
+    "difficulty": "advanced",
+    "question": "¿Cuál es el rol de una metaclase en Python y de qué clase debe heredar para ser una metaclase válida?",
+    "options": [
+      "Una metaclase es una interfaz gráfica abstracta que debe heredar obligatoriamente del módulo PyQt6.QtWidgets.",
+      "Es un contenedor de dependencias del sistema operativo que debe heredar de la clase base os.PathLike de Python.",
+      "Es un modelo de base de datos relacional distribuida que hereda de la clase multiprocessing.Process estándar.",
+      "Una metaclase es la clase de una clase; define cómo se construyen las clases y debe heredar obligatoriamente de 'type'."
+    ],
+    "correct_index": 3,
+    "hint": "En Python, las clases son objetos de primera clase y su tipo es 'type'. Una metaclase personalizada hereda de 'type' y permite interceptar la creación de clases mediante sus métodos __new__ y __init__.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_069",
+    "difficulty": "advanced",
+    "question": "¿Qué método del protocolo de descriptores fue añadido en Python 3.6 (PEP 487) para registrar el nombre del atributo?",
+    "options": [
+      "__set_name__(self, owner, name), invocado al momento de crearse la clase para asociar el nombre del atributo.",
+      "__bind_name__(self, class_ref), que vincula el puntero de memoria del descriptor a la tabla de símbolos del sistema.",
+      "__register_attr__(self, alias), que registra el descriptor en un registro global mantenido por el recolector gc.",
+      "__assign_label__(self, label), que define la representación legible en formato de cadena utilizada por __repr__."
+    ],
+    "correct_index": 0,
+    "hint": "Antes de PEP 487, un descriptor no sabía a qué nombre de variable estaba asignado en la clase sin trucos o decoradores de clase. __set_name__(owner, name) es invocado automáticamente al construirse la clase propietaria.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_070",
+    "difficulty": "advanced",
+    "question": "¿Cómo se implementa el patrón de diseño Singleton de manera robusta a nivel de clase utilizando el método __new__?",
+    "options": [
+      "Lanzando una excepción RuntimeError cada vez que el usuario intente invocar el constructor por segunda ocasión.",
+      "Verificando en __new__ si existe una instancia guardada en un atributo de clase y retornando la misma referencia única.",
+      "Sobrescribiendo el método __init__ para que elimine los atributos de las instancias previas en cada llamada.",
+      "Declarando la clase con el decorador @property e instanciando un objeto en una variable global inmutable."
+    ],
+    "correct_index": 1,
+    "hint": "En __new__(cls, *args, **kwargs), se comprueba si hasattr(cls, '_instance'): si no existe, se crea llamando a super().__new__(cls) y se almacena en cls._instance, retornando siempre esa referencia única.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_071",
+    "difficulty": "advanced",
+    "question": "¿Por qué el uso de 'super()' sin argumentos es válido dentro de un método en Python 3?",
+    "options": [
+      "Porque el intérprete inspecciona la pila del sistema operativo buscando la última clase que fue compilada en disco.",
+      "Porque super() se convierte en una función global que almacena un mapa de todas las instancias activas en RAM.",
+      "El compilador inyecta una celda de cierre oculta '__class__' y resuelve 'self' desde el primer argumento del marco.",
+      "Porque Python 3 evalúa las clases estáticamente y reemplaza super() por la llamada directa a la superclase en C."
+    ],
+    "correct_index": 2,
+    "hint": "En Python 3, 'super()' sin argumentos lee la variable de closure implícita '__class__' (la clase en la que se definió el método) y el primer argumento del método (la instancia 'self' o clase 'cls'), resolviendo super(Tipo, self).",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_072",
+    "difficulty": "advanced",
+    "question": "¿Qué objeto representa el atributo __dict__ de una clase en comparación con el __dict__ de una instancia ordinaria?",
+    "options": [
+      "El de la clase es una tupla congelada de constantes; el de la instancia es un conjunto mutable de cadenas hashables.",
+      "Ambos son exactamente instancias normales de dict de Python que admiten asignaciones directas con corchetes.",
+      "El de la clase reside en la memoria caché del procesador; el de la instancia se almacena en memoria virtual de disco.",
+      "El __dict__ de una clase es un mappingproxy inmutable de solo lectura, mientras que el de la instancia es un dict normal."
+    ],
+    "correct_index": 3,
+    "hint": "type(Clase.__dict__) es 'mappingproxy'. Protege la tabla de símbolos interna de CPython contra manipulaciones directas (evitando mutaciones corruptas). En cambio, obj.__dict__ es un diccionario de Python regular.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_073",
+    "difficulty": "advanced",
+    "question": "¿Cómo maneja un gestor de contexto basado en clases la supresión de una excepción dentro de su método __exit__?",
+    "options": [
+      "Retornando un valor truthy (como True) desde __exit__, lo cual indica a Python que suprima la excepción ocurrida.",
+      "Invocando sys.exc_clear() para eliminar la excepción de la pila de llamadas del intérprete en tiempo real.",
+      "Lanzando una nueva excepción de tipo CleanExit que el bloque with captura de forma silenciosa e inadvertida.",
+      "Asignando None a los tres argumentos de excepción (exc_type, exc_val, exc_tb) pasados al método __exit__."
+    ],
+    "correct_index": 0,
+    "hint": "Si se produce una excepción dentro del bloque 'with', __exit__(exc_type, exc_val, exc_tb) la recibe. Si __exit__ devuelve un valor evaluado como True, la excepción es suprimida y la ejecución continúa normalmente tras el with.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_074",
+    "difficulty": "advanced",
+    "question": "¿Qué garantiza el decorador @typing.final introducido en el PEP 591 sobre clases y métodos en Python?",
+    "options": [
+      "Compila la clase directamente a código de máquina nativo e impide que sea inspeccionada mediante el módulo inspect.",
+      "Indica a los verificadores estáticos de tipo que la clase no debe heredarse o que el método no debe sobrescribirse.",
+      "Provoca que CPython lance un error TypeError en tiempo de ejecución si alguna clase intenta heredar de ella.",
+      "Congela todos los atributos de las instancias de la clase en memoria impidiendo la adición de nuevos valores."
+    ],
+    "correct_index": 1,
+    "hint": "@typing.final es una directiva de tipado estático (para mypy, pyright, etc.). No impide la herencia ni la sobreescritura en runtime a nivel de CPython a menos que se use en combinación con metaclases de validación.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_075",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la función del método dunder __subclasshook__ en una clase base abstracta que utiliza abc.ABCMeta?",
+    "options": [
+      "Intercepta la creación de subclases para compilar sus métodos en bibliotecas dinámicas compartidas de C.",
+      "Registra automáticamente las subclases en una base de datos relacional para auditoría de esquemas de datos.",
+      "Permite personalizar el comportamiento de issubclass() para reconocer clases estructurales sin herencia explícita.",
+      "Bloquea la invocación de métodos en subclases que no cuenten con documentación completa en sus docstrings."
+    ],
+    "correct_index": 2,
+    "hint": "__subclasshook__ permite definir subclases virtuales (virtual subclasses) basadas en tipado de pato dinámico. Por ejemplo, collections.abc.Iterable usa __subclasshook__ para considerar subclase a cualquiera con __iter__.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_076",
+    "difficulty": "advanced",
+    "question": "¿Qué problema resuelve implementar el método dunder __radd__ en una clase personalizada frente a implementar solo __add__?",
+    "options": [
+      "Permite realizar sumas acumulativas en reversa ordenando los operandos de mayor a menor valor aritmético.",
+      "Acelera las operaciones de suma aritmética ejecutando el cálculo en registros vectoriales SIMD del procesador.",
+      "Sincroniza la operación de suma entre múltiples hilos de ejecución evitando condiciones de carrera de memoria.",
+      "Permite la suma cuando el objeto personalizado aparece en el lado derecho de una operación con un tipo que no lo soporta."
+    ],
+    "correct_index": 3,
+    "hint": "En la operación 'a + b', si el tipo de 'a' no sabe sumar 'b' (su __add__ devuelve NotImplemented), CPython invoca el método reflejado o reverso 'b.__radd__(a)' en el operando derecho.",
+    "subtopic": "poo"
+  },
+  {
+    "id": "py_077",
+    "difficulty": "basic",
+    "question": "¿Qué objeto retorna la invocación de una función de Python que contiene la palabra clave 'yield'?",
+    "options": [
+      "Retorna un objeto generador (generator iterator) que suspende y reanuda su estado de ejecución.",
+      "Retorna una lista completamente materializada con todos los elementos calculados de antemano.",
+      "Retorna un valor booleano indicando si la función pudo compilarse sin errores en el bytecode.",
+      "Retorna una tupla inmutable de solo lectura con los identificadores de variables de la función."
+    ],
+    "correct_index": 0,
+    "hint": "Cualquier función que contenga 'yield' se convierte en una función generadora. Al invocarla, no ejecuta el código de inmediato, sino que devuelve un generador que produce valores sucesivamente con cada llamada a next().",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_078",
+    "difficulty": "basic",
+    "question": "¿Cuál es la función del decorador @functools.wraps al construir un decorador de funciones personalizado?",
+    "options": [
+      "Bloquea la función original en memoria para que no pueda ser alterada por el recolector de basura de Python.",
+      "Copia los metadatos de la función original (__name__, __doc__, __annotations__) a la función envolvente (wrapper).",
+      "Ejecuta la función decorada dentro de un proceso de multiprocessing aislado para prevenir errores fatales.",
+      "Convierte automáticamente todos los argumentos de la función a tipos primitivos inmutables en tiempo de ejecución."
+    ],
+    "correct_index": 1,
+    "hint": "@functools.wraps actualiza el wrapper para que refleje los atributos de introspección (__name__, __doc__, __module__, etc.) de la función decorada original, evitando que aparezca como 'wrapper' en logs o depuradores.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_079",
+    "difficulty": "basic",
+    "question": "¿Qué excepción lanza el método integrado next() cuando un iterador o generador ha producido todos sus valores?",
+    "options": [
+      "Lanza una excepción IndexError indicando que el índice solicitado desbordó los límites del arreglo.",
+      "Lanza un error GeneratorExit que destruye de inmediato la pila de llamadas de la función envolvente.",
+      "Lanza la excepción StopIteration para señalar que el ciclo de iteración ha concluido de forma natural.",
+      "Lanza un RuntimeError alertando de que el bucle de eventos se ha quedado sin tareas pendientes."
+    ],
+    "correct_index": 2,
+    "hint": "El protocolo de iteración de Python utiliza StopIteration para notificar la finalización. Las estructuras de control como el bucle 'for' capturan esta excepción internamente de manera silenciosa.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_080",
+    "difficulty": "basic",
+    "question": "¿Qué representa el Global Interpreter Lock (GIL) en la implementación de CPython?",
+    "options": [
+      "Un cortafuegos integrado que bloquea conexiones de red salientes que no cuenten con cifrado TLS activo.",
+      "Un bloqueo a nivel de disco que impide que dos programas de Python lean el mismo archivo JSON a la vez.",
+      "Una directiva de compilación que fuerza a todos los enteros a comportarse como tipos atómicos de 64 bits.",
+      "Un mutex que impide que múltiples hilos nativos ejecuten bytecode de Python simultáneamente en un solo proceso."
+    ],
+    "correct_index": 3,
+    "hint": "El GIL es un mecanismo de sincronización en CPython que asegura que solo un hilo ejecute bytecode a la vez. Protege la gestión de memoria interna (evitando carreras en refcounts), pero limita el paralelismo multinúcleo en tareas CPU-bound con hilos.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_081",
+    "difficulty": "basic",
+    "question": "¿Cuál es la función del decorador @contextmanager provisto por el módulo estándar contextlib?",
+    "options": [
+      "Permite definir un gestor de contexto usando una función generadora simple con una sola cláusula yield.",
+      "Convierte una función sincrónica ordinaria en una corrutina asíncrona compatible con el bucle asyncio.",
+      "Obliga a que todos los recursos abiertos dentro de una función se cierren automáticamente al reiniciar.",
+      "Registra métricas de tiempo de ejecución de la función y las almacena en un archivo de configuración JSON."
+    ],
+    "correct_index": 0,
+    "hint": "@contextlib.contextmanager permite crear un context manager con la sintaxis 'with' escribiendo una función con un generador: el código previo al yield actúa como __enter__ y el posterior (en un try/finally) como __exit__.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_082",
+    "difficulty": "basic",
+    "question": "¿Para qué se utiliza el módulo 'pickle' en la biblioteca estándar de Python?",
+    "options": [
+      "Para comprimir archivos de texto plano utilizando algoritmos de compresión sin pérdida basados en LZMA.",
+      "Para serializar y deserializar jerarquías complejas de objetos de Python a secuencias de bytes y viceversa.",
+      "Para cifrar credenciales de usuario y claves criptográficas mediante algoritmos asimétricos RSA de 4096 bits.",
+      "Para validar esquemas de datos estructurados en formato JSON garantizando compatibilidad con API REST."
+    ],
+    "correct_index": 1,
+    "hint": "pickle es el protocolo estándar de serialización binaria en Python. Permite guardar objetos arbitrarios en disco o transmitirlos por red, aunque nunca debe deserializarse información no confiable debido a riesgos de ejecución de código.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_083",
+    "difficulty": "basic",
+    "question": "¿Qué módulo de la biblioteca estándar de Python permite desensamblar y ver el bytecode compilado de una función?",
+    "options": [
+      "El módulo 'ctypes', que expone los encabezados de bajo nivel de las bibliotecas dinámicas compartidas de C.",
+      "El módulo 'sys', mediante la llamada a sys.get_instructions() que inspecciona los registros del CPU.",
+      "El módulo 'dis', mediante funciones como dis.dis() que imprimen las instrucciones de la máquina virtual.",
+      "El módulo 'inspect', que únicamente recompila el código fuente en tiempo real a binarios nativos ELF."
+    ],
+    "correct_index": 2,
+    "hint": "El módulo 'dis' (disassembler) permite analizar el bytecode de CPython para funciones, métodos, clases o cadenas de código, facilitando el análisis de rendimiento e introspección de la pila virtual.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_084",
+    "difficulty": "basic",
+    "question": "¿Qué diferencia existe entre un hilo (threading.Thread) y un proceso (multiprocessing.Process) en Python en cuanto a memoria?",
+    "options": [
+      "Los hilos poseen memorias virtuales aisladas; los procesos comparten de forma nativa todos sus objetos en el heap.",
+      "Los hilos solo pueden ejecutarse en sistemas Unix; los procesos están restringidos de forma exclusiva a Windows.",
+      "Los hilos tienen un límite máximo de 256 variables en memoria; los procesos admiten memoria virtual ilimitada.",
+      "Los hilos comparten el mismo espacio de direcciones de memoria; los procesos poseen espacios de memoria aislados."
+    ],
+    "correct_index": 3,
+    "hint": "En threading, los hilos de un mismo proceso comparten el heap y variables globales (sujetos al GIL en CPython). En multiprocessing, cada proceso tiene su propio intérprete y espacio de memoria separado, superando el GIL.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_085",
+    "difficulty": "basic",
+    "question": "¿Cuál es la función del decorador @functools.lru_cache en la optimización de funciones deterministas?",
+    "options": [
+      "Memoriza los resultados de la función basándose en los argumentos usando una política Least Recently Used.",
+      "Almacena los resultados de la llamada en una base de datos SQLite embebida de forma permanente en el disco.",
+      "Paraleliza las llamadas recurrentes distribuyendo las evaluaciones en múltiples hilos de procesamiento en CPU.",
+      "Valida que los argumentos pasados pertenezcan a la memoria caché L2 del microprocesador para evitar fallos."
+    ],
+    "correct_index": 0,
+    "hint": "@functools.lru_cache envuelve una función con una caché que guarda los valores devueltos para argumentos dados. Cuando la caché se llena, descarta los elementos menos recientemente usados (LRU), evitando recálculos pesados.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_086",
+    "difficulty": "basic",
+    "question": "¿Qué estructura de datos del módulo 'weakref' permite almacenar objetos sin incrementar su conteo de referencias?",
+    "options": [
+      "weakref.GhostPointer, que clona los bytes del objeto en la memoria swap del sistema de archivos local.",
+      "weakref.ref, que crea una referencia débil que no impide que el recolector de basura elimine el objeto.",
+      "weakref.VolatileContainer, que elimina el objeto de memoria en caso de que el sistema sufra falta de RAM.",
+      "weakref.SoftLink, que conecta dos objetos en un grafo acíclico garantizando persistencia en segundo plano."
+    ],
+    "correct_index": 1,
+    "hint": "Las referencias débiles (weak references) permiten referenciar un objeto sin incrementar su reference count. Son esenciales para construir cachés circulares o mapas de observadores sin provocar fugas de memoria.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_087",
+    "difficulty": "basic",
+    "question": "¿Qué método se utiliza para inspeccionar la cantidad actual de referencias que apuntan a un objeto en CPython?",
+    "options": [
+      "gc.get_references_count(obj), que devuelve el total de referencias sin alterar en ningún caso la medición.",
+      "ctypes.pointer_count(obj), que consulta directamente la tabla de descriptores de memoria en el sistema operativo.",
+      "sys.getrefcount(obj), el cual retorna el conteo de referencias (siendo normalmente 1 unidad mayor por el argumento).",
+      "obj.__refcount__, que lee un atributo numérico inmutable almacenado en la cabecera de la instancia en memoria."
+    ],
+    "correct_index": 2,
+    "hint": "sys.getrefcount(x) devuelve el conteo de referencias de 'x'. Siempre es al menos 1 unidad mayor de lo esperado porque pasar 'x' a la propia función getrefcount crea una referencia temporal adicional.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_088",
+    "difficulty": "basic",
+    "question": "¿Cuál es la función del módulo 'ctypes' en la biblioteca estándar de Python?",
+    "options": [
+      "Permite verificar estáticamente los tipos de datos de un script antes de compilarlo a bytecode en CPython.",
+      "Gestiona el ciclo de vida de los tipos primitivos en memoria convirtiendo dinámicamente enteros a flotantes.",
+      "Provee una interfaz gráfica de usuario para depurar la asignación de memoria en aplicaciones basadas en Linux.",
+      "Permite cargar bibliotecas dinámicas compartidas (.so/.dll) e invocar funciones escritas en C desde Python."
+    ],
+    "correct_index": 3,
+    "hint": "ctypes es una biblioteca de funciones foráneas (FFI) para Python que permite invocar funciones en bibliotecas compartidas de C y construir tipos de datos compatibles con C directamente en Python sin compilar extensiones.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_089",
+    "difficulty": "medium",
+    "question": "¿Cómo opera la palabra clave 'yield from' introducida en Python 3.3 (PEP 380) en generadores?",
+    "options": [
+      "Delega la generación a un subgenerador y establece un canal bidireccional de valores, excepciones y retornos.",
+      "Es una macro sintáctica idéntica a un bucle for ordinario que solo produce valores en sentido unidireccional.",
+      "Cancela de manera inmediata la ejecución del generador llamador y transfiere la memoria al subgenerador.",
+      "Permite importar generadores desde módulos remotos a través de protocolos HTTP sin bloquear la aplicación."
+    ],
+    "correct_index": 0,
+    "hint": "'yield from' delega la producción de valores a otro iterable/subgenerador. Establece un canal bidireccional transparente donde .send(), .throw() y el valor devuelto por 'return' del subgenerador se transmiten automáticamente.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_090",
+    "difficulty": "medium",
+    "question": "¿Qué método de un generador permite reanudarlo enviándole un valor que es evaluado por la expresión yield activa?",
+    "options": [
+      "generator.push(valor), que agrega el dato a una cola interna de espera gestionada por el bucle de eventos.",
+      "generator.send(valor), permitiendo que el generador actúe como una corrutina receptora de información.",
+      "generator.write(valor), que serializa el contenido en el flujo de entrada estándar del marco de ejecución.",
+      "generator.emit(valor), que dispara un evento asíncrono capturado por los observadores registrados en el hilo."
+    ],
+    "correct_index": 1,
+    "hint": "El método .send(valor) reanuda el generador y hace que la expresión 'yield' activa evalúe al valor enviado, lo que fundamentó la implementación de corrutinas basadas en generadores antes de 'async/await'.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_091",
+    "difficulty": "medium",
+    "question": "¿Cuál es la firma y comportamiento de los tres argumentos requeridos al invocar la función 'type()' para crear clases dinámicamente?",
+    "options": [
+      "type(class_id, methods, docstring), donde se configuran los métodos compilados y la ayuda en formato de texto.",
+      "type(module, scope, permissions), donde se definen las políticas de seguridad y aislamiento del espacio de nombres.",
+      "type(name, bases, dict), donde 'name' es el nombre, 'bases' la tupla de clases padre y 'dict' los atributos.",
+      "type(target, interfaces, slots), donde se establecen los descriptores de acceso fijo para el recolector gc."
+    ],
+    "correct_index": 2,
+    "hint": "'type' con 3 argumentos actúa como metaclase: type('MiClase', (object,), {'attr': 42}) crea dinámicamente una nueva clase idéntica a declararla con la palabra clave 'class'.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_092",
+    "difficulty": "medium",
+    "question": "¿Qué peligro crítico de seguridad presenta el uso de la función pickle.loads() con datos no confiables?",
+    "options": [
+      "Provoca desbordamientos de búfer en memoria física destruyendo la partición raíz del sistema de archivos.",
+      "Inyecta sentencias SQL no autorizadas en cualquier servidor de base de datos conectado en la misma red local.",
+      "Consume todos los descriptores de archivos del kernel del sistema operativo provocando un bloqueo general.",
+      "Permite ejecución remota de código arbitrario explotando el método especial de reconstrucción __reduce__."
+    ],
+    "correct_index": 3,
+    "hint": "El formato pickle permite que los objetos definan el método __reduce__() para especificar cómo deben reconstruirse. Un atacante puede crear un pickle malicioso que invoque 'os.system' o cualquier código arbitrario al deserializarse.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_093",
+    "difficulty": "medium",
+    "question": "¿Cómo gestiona CPython la memoria de objetos pequeños (<= 512 bytes) mediante el asignador PyMalloc?",
+    "options": [
+      "Agrupa la memoria en arenas de 256KB subdivididas en pools de 4KB con bloques de tamaño de clase predeterminado.",
+      "Delega directamente cada pequeña asignación a la llamada de sistema malloc() del kernel de Linux.",
+      "Almacena todos los objetos pequeños en una matriz global contigua de memoria estática de 1 gigabyte.",
+      "Comprime los objetos pequeños utilizando el algoritmo Huffman antes de escribirlos en la memoria RAM."
+    ],
+    "correct_index": 0,
+    "hint": "PyMalloc es el asignador especializado de CPython para objetos <= 512 bytes: organiza la memoria en Arenas (256 KB) divididas en Pools (4 KB), que a su vez contienen Bloques de tamaño uniforme, reduciendo la fragmentación de malloc().",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_094",
+    "difficulty": "medium",
+    "question": "¿Qué representa un objeto Future en el módulo concurrent.futures de la biblioteca estándar de Python?",
+    "options": [
+      "Un contenedor de tipos que valida las anotaciones de las funciones antes de enviarlas al compilador de CPython.",
+      "Representa la ejecución diferida de una operación asíncrona cuyo resultado o excepción estará disponible más tarde.",
+      "Una promesa matemática inmutable que calcula aproximaciones probabilísticas sobre valores de punto flotante.",
+      "Un proceso demonio de segundo plano que vigila el estado de la batería y el consumo energético de la máquina."
+    ],
+    "correct_index": 1,
+    "hint": "Un Future encapsula una operación pendiente de computación. Permite consultar si ha terminado (.done()), esperar el resultado (.result()), o registrar funciones de callback (.add_done_callback()).",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_095",
+    "difficulty": "medium",
+    "question": "¿Qué diferencia existe entre ThreadPoolExecutor y ProcessPoolExecutor en concurrent.futures frente a cargas de trabajo CPU-bound?",
+    "options": [
+      "ThreadPoolExecutor utiliza paralelismo multinúcleo real en CPU mientras que ProcessPoolExecutor solo usa un núcleo.",
+      "ProcessPoolExecutor no puede devolver valores de retorno debido al aislamiento absoluto de memoria entre procesos.",
+      "ProcessPoolExecutor elude las limitaciones del GIL utilizando procesos separados, acelerando tareas de CPU intensiva.",
+      "ThreadPoolExecutor requiere que todos los argumentos sean serializables con pickle; ProcessPoolExecutor no lo exige."
+    ],
+    "correct_index": 2,
+    "hint": "En tareas intensivas en CPU (CPU-bound), ThreadPoolExecutor está restringido por el GIL en un solo núcleo. ProcessPoolExecutor crea procesos independientes con su propio intérprete, aprovechando todos los núcleos de la CPU.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_096",
+    "difficulty": "medium",
+    "question": "¿Cuál es la función del módulo contextlib.ExitStack en el manejo programático de múltiples gestores de contexto?",
+    "options": [
+      "Monitorea el uso de la pila de llamadas del intérprete para evitar excepciones del tipo RecursionError.",
+      "Fuerza el cierre inmediato de todas las aplicaciones activas en el entorno gráfico Wayland de Linux.",
+      "Genera volcados de memoria (core dumps) cuando una aplicación de Python termina de manera anormal.",
+      "Permite registrar y desenrollar dinámicamente un número variable de gestores de contexto de forma segura y limpia."
+    ],
+    "correct_index": 3,
+    "hint": "ExitStack facilita trabajar con un número dinámico de context managers (como abrir una lista arbitraria de archivos). Garantiza que todos los __exit__ se invoquen en orden inverso (LIFO) independientemente de excepciones.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_097",
+    "difficulty": "medium",
+    "question": "¿Qué hace el recolector de basura generacional de Python con los objetos que sobreviven a una recolección en la generación 0?",
+    "options": [
+      "Los promueve a la generación 1, asumiendo la hipótesis de que objetos que sobreviven tienden a ser más longevos.",
+      "Los destruye inmediatamente para liberar espacio en la memoria caché L1 del procesador principal.",
+      "Los traslada a un archivo temporal swap en el sistema de almacenamiento secundario del sistema operativo.",
+      "Los convierte de manera permanente en objetos inmutables eliminando su diccionario de atributos dinámico."
+    ],
+    "correct_index": 0,
+    "hint": "El recolector de ciclos de CPython tiene 3 generaciones (0, 1 y 2). La generación 0 se recolecta con frecuencia; los objetos que sobreviven son promovidos a generaciones superiores, que se analizan con menor frecuencia.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_098",
+    "difficulty": "medium",
+    "question": "¿Cuál es la función del decorador @typing.overload en las firmas de funciones de Python?",
+    "options": [
+      "Permite definir implementaciones múltiples de la misma función que Python despacha dinámicamente por tipo.",
+      "Declara múltiples signaturas válidas para analizadores estáticos de tipo sin proporcionar implementación en runtime.",
+      "Sobrecarga la función en hardware ejecutando diferentes ramas en paralelo según la carga del procesador.",
+      "Convierte la función en un método genérico de C que se compila en tiempo real al iniciar el módulo."
+    ],
+    "correct_index": 1,
+    "hint": "@typing.overload permite documentar diferentes combinaciones de tipos de argumentos y sus correspondientes tipos de retorno para herramientas como mypy. Las signaturas decoradas se escriben sin cuerpo (con '...') y una sola función final las implementa.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_099",
+    "difficulty": "medium",
+    "question": "¿Qué información provee la variable especial sys.meta_path en el sistema de importación de módulos de Python?",
+    "options": [
+      "Define la ruta física en disco donde se almacenan las configuraciones de los entornos virtuales venv.",
+      "Almacena los certificados de seguridad SSL utilizados por el instalador pip al descargar paquetes externos.",
+      "Contiene una lista de objetos finder (meta path finders) que buscan y cargan módulos durante la sentencia import.",
+      "Registra los metadatos de las clases para el analizador sintáctico del compilador de bytecode en C."
+    ],
+    "correct_index": 2,
+    "hint": "sys.meta_path es el punto de entrada extensible del sistema de importación de Python (PEP 302). Cuando se importa un módulo, Python itera por cada finder en sys.meta_path hasta que uno puede localizar y cargar el módulo.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_100",
+    "difficulty": "medium",
+    "question": "¿Qué representa typing.ParamSpec (PEP 612) en el sistema de tipado estático moderno de Python?",
+    "options": [
+      "Define los parámetros del kernel de Linux que deben configurarse para ejecutar hilos en paralelo.",
+      "Valida que los parámetros numéricos de una función se encuentren dentro de un rango predefinido de enteros.",
+      "Restringe la cantidad máxima de argumentos que una función puede recibir a un valor estrictamente menor a diez.",
+      "Permite capturar y reenviar la especificación completa de parámetros de un invocable conservando sus tipos."
+    ],
+    "correct_index": 3,
+    "hint": "ParamSpec resuelve el problema de tipar decoradores de forma precisa: captura la firma completa de parámetros (posicionales, nombrados, defaults) del callable original para preservarla en el callable retornado.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_101",
+    "difficulty": "advanced",
+    "question": "¿En qué consiste la arquitectura de 'Free-threaded CPython' introducida de forma experimental en Python 3.13 (PEP 703)?",
+    "options": [
+      "Elimina el GIL reemplazándolo por asignación de memoria thread-safe, biased reference counting e inmortalidad.",
+      "Reemplaza todo el código de CPython por una máquina virtual Java manteniendo compatibilidad total de sintaxis.",
+      "Elimina el soporte de hilos en Python forzando a que todas las aplicaciones usen exclusivamente procesos fork.",
+      "Introduce un GIL individual para cada variable global declarada dentro del cuerpo principal del módulo."
+    ],
+    "correct_index": 0,
+    "hint": "PEP 703 permite compilar CPython sin el GIL (build nogil). Requiere técnicas avanzadas como biased reference counting, objetos inmortales y sincronización a nivel de mimalloc para permitir verdadera ejecución concurrente multinúcleo en hilos de Python.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_102",
+    "difficulty": "advanced",
+    "question": "¿Cómo optimiza el 'Specializing Adaptive Interpreter' introducido en Python 3.11 (PEP 659) la ejecución del bytecode?",
+    "options": [
+      "Compila funciones completas directamente a código de máquina x86_64 usando el backend de optimización LLVM.",
+      "Monitorea instrucciones en runtime y las reescribe dinámicamente con versiones especializadas para tipos observados.",
+      "Elimina la máquina virtual de Python transformando el código en árboles de sintaxis abstracta estáticos.",
+      "Reduce el uso de memoria RAM cacheando los nombres de todas las variables locales en registros del procesador."
+    ],
+    "correct_index": 1,
+    "hint": "PEP 659 implementa un intérprete adaptativo: instrucciones genéricas (como BINARY_OP o LOAD_ATTR) analizan los tipos pasados con frecuencia y se sobreescriben inline por opcodes superoptimizados (como BINARY_OP_ADD_INT) que evitan chequeos dinámicos.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_103",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la diferencia técnica entre covarianza y contravarianza en genéricos al definir un typing.TypeVar en Python?",
+    "options": [
+      "Covariante permite tipos mutables en colecciones; contravariante restringe las variables a datos inmutables.",
+      "Covariante se utiliza exclusivamente en funciones asíncronas; contravariante se aplica a métodos de clase estáticos.",
+      "Covariante (covariant=True) preserva la jerarquía de subtipos en salidas; contravariante la invierte en entradas.",
+      "Covariante indica herencia múltiple de interfaces; contravariante bloquea el polimorfismo dinámico en runtime."
+    ],
+    "correct_index": 2,
+    "hint": "Si G es covariante con T y SubClase hereda de SuperClase, entonces G[SubClase] es subtipo de G[SuperClase] (típico en contenedores de solo lectura o retornos). Contravariante invierte la relación: G[SuperClase] es subtipo de G[SubClase] (típico en argumentos de callbacks).",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_104",
+    "difficulty": "advanced",
+    "question": "¿Qué función cumple el método dunder __prepare__ dentro de una metaclase en Python 3?",
+    "options": [
+      "Compila de manera preliminar los métodos de la clase a código binario nativo antes de ejecutar __new__.",
+      "Reserva un bloque de memoria contigua en el heap del sistema operativo para evitar la fragmentación de pools.",
+      "Valida que todos los identificadores de la clase cumplan con las directivas de estilo oficiales PEP 8.",
+      "Crea y retorna el objeto de mapeo (espacio de nombres) que se utiliza para almacenar los miembros de la clase al definirse."
+    ],
+    "correct_index": 3,
+    "hint": "metaclass.__prepare__(name, bases, **kwds) es invocado antes de evaluar el cuerpo de la clase. Retorna el mapeo (por defecto dict, pero puede ser un OrderedDict o mapeo personalizado) que actuará como namespace durante la definición de la clase.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_105",
+    "difficulty": "advanced",
+    "question": "¿Cómo opera la comunicación y serialización de datos entre procesos a través de un multiprocessing.Queue?",
+    "options": [
+      "Utiliza un hilo secundario que serializa con pickle y transmite los datos mediante tuberías (pipes) del sistema operativo.",
+      "Comparte un puntero directo a memoria heap común entre los procesos eliminando la necesidad de serializar.",
+      "Escribe los mensajes en un archivo temporal JSON en el disco duro y los lee mediante sondeo continuo.",
+      "Transmite los datos a través de una conexión TCP local en el puerto 8080 gestionada por el bucle asyncio."
+    ],
+    "correct_index": 0,
+    "hint": "multiprocessing.Queue se apoya en un Pipe de Unix/Windows y un thread de alimentación en background (feeder thread). Los objetos enviados se serializan con pickle y se escriben en el pipe del kernel, requiriendo que todo contenido sea 'picklable'.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_106",
+    "difficulty": "advanced",
+    "question": "¿Qué efecto tiene invocar gc.freeze() disponible a partir de Python 3.7 en arquitecturas multi-proceso con fork?",
+    "options": [
+      "Convierte permanentemente todos los objetos del heap en variables inmutables protegidas contra escritura.",
+      "Congela los objetos existentes omitiéndolos de futuras recolecciones, optimizando la memoria copy-on-write tras el fork.",
+      "Detiene por completo la ejecución de todos los hilos del sistema operativo hasta recibir la llamada gc.unfreeze().",
+      "Vuelca la memoria RAM de la aplicación en un archivo de imagen binario ejecutable sin requerir el intérprete."
+    ],
+    "correct_index": 1,
+    "hint": "En servidores web prefork (como Gunicorn o Celery), las recolecciones de gc modifican los encabezados de los objetos (rompiendo Copy-on-Write y duplicando memoria física entre procesos). gc.freeze() mueve los objetos a una lista congelada ignorada por el GC.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_107",
+    "difficulty": "advanced",
+    "question": "¿Qué garantiza la clase contextlib.nullcontext en el diseño de código flexible con context managers?",
+    "options": [
+      "Fuerza a que cualquier variable asignada en el bloque 'with' tome el valor None al finalizar el bloque.",
+      "Suprime incondicionalmente todas las excepciones que ocurran dentro del bloque with sin reportarlas.",
+      "Actúa como un gestor de contexto inocuo que no realiza ninguna operación de entrada ni de salida de recursos.",
+      "Impide que el recolector de basura libere las variables locales creadas dentro del ámbito de ejecución."
+    ],
+    "correct_index": 2,
+    "hint": "nullcontext(enter_result=None) es una herramienta excelente para crear gestores de contexto opcionales: si no se desea aplicar un lock o recurso condicional, nullcontext() proporciona una alternativa no-op sin requerir ramas if/else duplicadas.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_108",
+    "difficulty": "advanced",
+    "question": "¿Cómo se implementa un decorador que admite tanto argumentos opcionales como invocación sin paréntesis?",
+    "options": [
+      "Heredando obligatoriamente de la clase built-in functools.Decorator e implementando el método __fallback__.",
+      "Utilizando el operador morsa ':=' en el encabezado del decorador para reasignar la referencia dinámicamente.",
+      "Definiendo dos funciones con el mismo nombre dentro del módulo para que CPython resuelva la sobrecarga en runtime.",
+      "Comprobando si el primer argumento es invocable (callable): si lo es, se decora la función; si no, se devuelve un wrapper."
+    ],
+    "correct_index": 3,
+    "hint": "Para permitir '@mi_dec' y '@mi_dec(param=1)', la función decoradora evalúa 'if _func is None: return partial(mi_dec, **kwargs) else: return wrapper(_func)'. Esto unifica ambas formas sintácticas.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_109",
+    "difficulty": "advanced",
+    "question": "¿Qué representa la estructura PyObject en la capa C de CPython y qué campos obligatorios componen su encabezado?",
+    "options": [
+      "La base de todos los objetos en CPython; contiene un contador de referencias (ob_refcnt) y un puntero a su tipo (ob_type).",
+      "Una tabla de símbolos que contiene el nombre del archivo fuente, la línea de ejecución y la clave criptográfica.",
+      "Un descriptor de archivo del kernel de Linux que gestiona la entrada y salida de datos estándar del proceso.",
+      "Una tupla de enteros que guarda las marcas de tiempo de creación y última lectura del objeto en memoria."
+    ],
+    "correct_index": 0,
+    "hint": "A nivel del código fuente de CPython, todo objeto comienza con la macro PyObject_HEAD, que contiene ob_refcnt (conteo de referencias) y ob_type (puntero a la estructura PyTypeObject que define su tipo y operaciones).",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_110",
+    "difficulty": "advanced",
+    "question": "¿Qué garantiza el tipo de datos typing.TypedDict cuando se define con 'total=False' en las anotaciones?",
+    "options": [
+      "Impide que el diccionario pueda almacenar valores de tipo numérico o flotante en cualquiera de sus campos.",
+      "Indica que ninguna de las claves declaradas en el diccionario es estrictamente obligatoria al instanciarlo.",
+      "Fuerza a que todos los valores asignados al diccionario sean evaluados de forma perezosa por un generador.",
+      "Convierte el diccionario en una estructura inmutable de solo lectura protegida contra modificaciones en runtime."
+    ],
+    "correct_index": 1,
+    "hint": "En un TypedDict, por defecto total=True (todas las claves declaradas son requeridas). Especificar total=False hace que todas las claves sean opcionales. En Python 3.11+, esto se combina a nivel de clave con Required[] y NotRequired[].",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_111",
+    "difficulty": "advanced",
+    "question": "¿Qué propósito cumple la función sys.settrace() en el desarrollo de herramientas de diagnóstico en Python?",
+    "options": [
+      "Configura la cantidad máxima de sockets TCP que el proceso puede mantener en estado de escucha activa.",
+      "Inicia un hilo de monitoreo que mide el uso térmico y la frecuencia de reloj del microprocesador en Linux.",
+      "Registra una función de rastreo que se invoca en cada línea, llamada, retorno o excepción del intérprete.",
+      "Establece una conexión remota segura con un servidor de telemetría externo utilizando el protocolo gRPC."
+    ],
+    "correct_index": 2,
+    "hint": "sys.settrace() es el gancho que utilizan los depuradores (como pdb) y herramientas de cobertura de código (como coverage.py) para inspeccionar la ejecución instrucción por instrucción en cada marco de la pila.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_112",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la función del módulo 'dis' al analizar el impacto del 'peephole optimizer' en expresiones constantes?",
+    "options": [
+      "Muestra cómo las variables locales se convierten en llamadas dinámicas al sistema de archivos del sistema.",
+      "Verifica que las expresiones constantes se cifren para evitar su inspección mediante ingeniería inversa.",
+      "Evita que las funciones con bucles infinitos provoquen congelamientos en la máquina virtual del sistema.",
+      "Permite observar cómo operaciones constantes (como 60 * 60) son precalculadas en tiempo de compilación a un único literal."
+    ],
+    "correct_index": 3,
+    "hint": "El optimizador peephole (y ahora el compilador de bytecode moderno de CPython) realiza 'constant folding': operaciones entre literales como '60 * 60 * 24' se resuelven en la fase de compilación del AST, emitiendo directamente el valor 86400 en bytecode.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_113",
+    "difficulty": "advanced",
+    "question": "¿Cómo se previene el consumo desmedido de memoria en CPython al compartir grandes conjuntos de datos entre procesos?",
+    "options": [
+      "Utilizando multiprocessing.shared_memory para crear bloques de memoria compartida cruda sin serialización.",
+      "Configurando variables de entorno globales con el tamaño de las estructuras de datos en formato hexadecimal.",
+      "Duplicando los procesos mediante llamadas continuas al método threading.Thread con memoria virtual ilimitada.",
+      "Serializando los datos en una cadena de texto codificada en base64 transmitida por la entrada estándar stdin."
+    ],
+    "correct_index": 0,
+    "hint": "multiprocessing.shared_memory (introducido en Python 3.8) permite a distintos procesos acceder al mismo segmento de memoria física compartida (a través de shm de POSIX o memoria compartida de Windows), eliminando la penalización de serializar con pickle.",
+    "subtopic": "avanzado"
+  },
+  {
+    "id": "py_114",
+    "difficulty": "basic",
+    "question": "¿Cuál es el modelo de concurrencia fundamental en el que se basa el módulo 'asyncio' en Python?",
+    "options": [
+      "Concurrencia preventiva multinúcleo con interrupción forzosa de hilos del kernel del sistema operativo.",
+      "Concurrencia cooperativa monohilo basada en un bucle de eventos (event loop) y suspensión voluntaria.",
+      "Paralelismo distribuido basado en paso de mensajes aislados entre procesos de red independientes.",
+      "Compilación estática de hilos nativos gestionados directamente por el planificador del microprocesador."
+    ],
+    "correct_index": 1,
+    "hint": "asyncio utiliza concurrencia cooperativa (cooperative multitasking): corre en un único hilo y las tareas ceden voluntariamente el control al bucle de eventos mediante 'await' en puntos de suspensión explícitos.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_115",
+    "difficulty": "basic",
+    "question": "¿Qué objeto retorna la llamada directa a una función definida con 'async def' si no se utiliza la palabra 'await'?",
+    "options": [
+      "Retorna el valor final de retorno especificado en la última instrucción return del cuerpo de la función.",
+      "Retorna un identificador numérico de proceso del sistema operativo que se ejecuta en segundo plano.",
+      "Retorna un objeto de tipo corrutina (coroutine object) sin haber iniciado la ejecución de su código interno.",
+      "Retorna un valor booleano True indicando que la función fue registrada con éxito en el bucle de eventos."
+    ],
+    "correct_index": 2,
+    "hint": "Invocar 'mi_coroutine()' simplemente instancia un objeto coroutine. El código interno de la corrutina no comienza a ejecutarse hasta que sea esperada con 'await' o programada en el bucle con asyncio.create_task().",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_116",
+    "difficulty": "basic",
+    "question": "¿Cuál es la forma estándar recomendada para arrancar la corrutina principal de un programa en Python 3.7+?",
+    "options": [
+      "loop = asyncio.get_event_loop(); loop.start_forever(main()), dejando el bucle en escucha indefinida.",
+      "asyncio.start(main()), que bifurca un subproceso en segundo plano ejecutando la función en paralelo.",
+      "main.execute(), que invoca los métodos de bajo nivel del intérprete para despachar las tareas activas.",
+      "asyncio.run(main()), que gestiona automáticamente la creación, ejecución y cierre limpio del event loop."
+    ],
+    "correct_index": 3,
+    "hint": "asyncio.run() es la función de alto nivel introducida en Python 3.7 que crea un nuevo event loop, ejecuta la corrutina pasada hasta completarla y se encarga de cancelar las tareas pendientes y cerrar el bucle adecuadamente.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_117",
+    "difficulty": "basic",
+    "question": "¿Qué función cumple la llamada asyncio.create_task(coro) dentro de una función asíncrona?",
+    "options": [
+      "Envuelve la corrutina en una Task y la programa inmediatamente en el bucle de eventos para ejecución concurrente.",
+      "Ejecuta la corrutina en un nuevo hilo nativo del sistema operativo evitando el bloqueo del bucle principal.",
+      "Suspende la corrutina actual hasta que la tarea secundaria termine y retorne su resultado de manera síncrona.",
+      "Compila la corrutina a código binario nativo y reserva memoria dedicada en el segmento de intercambio swap."
+    ],
+    "correct_index": 0,
+    "hint": "asyncio.create_task(coro) planifica la corrutina en el bucle de eventos activo para que se ejecute en cuanto el bucle tenga un ciclo disponible, permitiendo concurrencia sin bloquear la ejecución de la función llamadora.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_118",
+    "difficulty": "basic",
+    "question": "¿Por qué no se debe utilizar 'time.sleep()' dentro de una corrutina en un programa basado en asyncio?",
+    "options": [
+      "Porque time.sleep() reinicia el contador de referencias de las variables locales provocando fugas de memoria.",
+      "Porque time.sleep() bloquea el hilo completo del sistema operativo impidiendo que el event loop ejecute otras tareas.",
+      "Porque time.sleep() lanza una excepción de tipo BlockingIOError cuando detecta que se ejecuta en Wayland.",
+      "Porque time.sleep() solo admite intervalos de tiempo especificados en microsegundos y no en segundos flotantes."
+    ],
+    "correct_index": 1,
+    "hint": "time.sleep() es una llamada bloqueante sincrónica que detiene el hilo entero. En asyncio se debe utilizar 'await asyncio.sleep(segundos)', lo cual cede el control al event loop para que otras corrutinas puedan procesarse.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_119",
+    "difficulty": "basic",
+    "question": "¿Cuál es la función del método asyncio.gather(*aws) en la ejecución de múltiples operaciones asíncronas?",
+    "options": [
+      "Ejecuta los awaitables secuencialmente uno tras otro descartando cualquier excepción que ocurra en ellos.",
+      "Cancela todas las tareas que tarden más de 1 segundo en completarse sin notificar al proceso principal.",
+      "Ejecuta concurrentemente una colección de awaitables y retorna una lista con los resultados en el orden original.",
+      "Crea un grupo de procesos en el sistema operativo asignando un núcleo de CPU a cada una de las tareas."
+    ],
+    "correct_index": 2,
+    "hint": "asyncio.gather() toma múltiples corrutinas/tareas, las programa concurrentemente en el event loop y espera a que todas terminen, devolviendo una lista agregada con los resultados en el orden exacto de los argumentos.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_120",
+    "difficulty": "basic",
+    "question": "¿Qué método dunder se utiliza para implementar un gestor de contexto asíncrono compatible con 'async with'?",
+    "options": [
+      "__enter__ y __exit__, configurando el atributo booleano async_mode=True en el cuerpo de la clase base.",
+      "__start__ y __finish__, que se conectan directamente a las señales de interrupción del sistema operativo.",
+      "__open_async__ y __close_async__, que registran descriptores de archivos en la tabla epoll del kernel.",
+      "__aenter__ y __aexit__, ambos definidos como métodos que retornan corrutinas esperables con await."
+    ],
+    "correct_index": 3,
+    "hint": "El protocolo de context managers asíncronos requiere implementar async def __aenter__(self) y async def __aexit__(self, exc_type, exc_val, exc_tb), invocados respectivamente al entrar y salir de un bloque 'async with'.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_121",
+    "difficulty": "basic",
+    "question": "¿Qué método dunder se implementa para soportar el protocolo de iteración asíncrona consumible mediante 'async for'?",
+    "options": [
+      "__aiter__ y __anext__, donde __anext__ debe retornar un awaitable que produzca valores o lance StopAsyncIteration.",
+      "__iter__ y __next__, modificando el valor devuelto para que retorne objetos Future en lugar de datos normales.",
+      "__async_step__, que define la tasa de transferencia de datos sobre un socket de red no bloqueante.",
+      "__poll__, que consulta repetidamente el estado de una cola de mensajes en memoria RAM compartida."
+    ],
+    "correct_index": 0,
+    "hint": "Un iterable asíncrono implementa __aiter__() (que devuelve un iterador asíncrono) y __anext__() (que devuelve un awaitable cuyo resultado es el siguiente elemento o lanza la excepción StopAsyncIteration).",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_122",
+    "difficulty": "basic",
+    "question": "¿Cómo se cancela una tarea de tipo asyncio.Task que se encuentra pendiente o en ejecución en el bucle?",
+    "options": [
+      "Llamando a task.kill(), lo que aborta inmediatamente el hilo de ejecución mediante una señal SIGKILL.",
+      "Invocando task.cancel(), lo que inyecta una excepción asyncio.CancelledError en la corrutina en su siguiente ciclo.",
+      "Eliminando la variable que referencia a la tarea para que el recolector gc desasigne su memoria de inmediato.",
+      "Invocando task.stop(), lo que congela el estado de la tarea en disco para su posterior restauración manual."
+    ],
+    "correct_index": 1,
+    "hint": "task.cancel() solicita la cancelación de la tarea. En la siguiente oportunidad que la corrutina cede el control o es reanudada, se le arroja la excepción CancelledError, la cual puede capturar para realizar tareas de limpieza.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_123",
+    "difficulty": "basic",
+    "question": "¿Cuál es la función de la clase asyncio.Lock en la sincronización de corrutinas en un programa asíncrono?",
+    "options": [
+      "Bloquea la interfaz de usuario del sistema operativo impidiendo clics de ratón durante la ejecución.",
+      "Cifra los paquetes de datos transmitidos por la red local utilizando certificados de seguridad simétricos.",
+      "Garantiza exclusión mutua para que solo una corrutina acceda a una sección crítica compartida a la vez.",
+      "Impide que el recolector de basura elimine las variables utilizadas dentro del ámbito de la corrutina."
+    ],
+    "correct_index": 2,
+    "hint": "asyncio.Lock es el equivalente a threading.Lock pero diseñado para corrutinas: al usar 'async with lock:', solo una corrutina puede ejecutar la sección protegida; las demás se suspenden sin bloquear el event loop.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_124",
+    "difficulty": "basic",
+    "question": "¿Qué primitiva de sincronización permite a una corrutina notificar a una o múltiples corrutinas que ha ocurrido un evento?",
+    "options": [
+      "asyncio.Signal, que emite una interrupción hardware que detiene la máquina virtual de Python por completo.",
+      "asyncio.Beacon, que transmite un mensaje broadcast a todos los procesos conectados al socket local.",
+      "asyncio.Trigger, que reinicia la corrutina llamadora desde su primera instrucción de forma recurrente.",
+      "asyncio.Event, mediante el cual las corrutinas esperan con await event.wait() hasta que otra llama a event.set()."
+    ],
+    "correct_index": 3,
+    "hint": "asyncio.Event maneja una bandera booleana interna (inicialmente en False). Las corrutinas que ejecutan 'await event.wait()' se suspenden hasta que alguna corrutina invoque 'event.set()', momento en que todas son despertadas.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_125",
+    "difficulty": "basic",
+    "question": "¿Qué utilidad ofrece asyncio.Queue en la comunicación entre corrutinas productoras y consumidoras?",
+    "options": [
+      "Provee una cola FIFO diseñada para transferir datos de forma segura sin bloquear el hilo principal del bucle.",
+      "Almacena los mensajes en una tabla persistente de SQLite garantizando recuperación ante caídas del sistema.",
+      "Ordena de forma automática los elementos por su tamaño en bytes para priorizar las cargas más ligeras.",
+      "Sincroniza datos exclusivamente entre procesos remotos a través del protocolo de red seguro HTTPS."
+    ],
+    "correct_index": 0,
+    "hint": "asyncio.Queue ofrece métodos asíncronos 'await queue.put(item)' y 'await queue.get()' que suspenden cooperativamente al productor (si la cola está llena) o al consumidor (si está vacía), desacoplando tareas.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_126",
+    "difficulty": "medium",
+    "question": "¿Cómo se ejecuta una función sincrónica bloqueante de I/O sin congelar el event loop en Python 3.9+?",
+    "options": [
+      "Invocando func directamente precedida por la palabra clave await para que el compilador la vuelva asíncrona.",
+      "Utilizando await asyncio.to_thread(func, *args), que delega la ejecución de func a un hilo separado en segundo plano.",
+      "Llamando a asyncio.run_sync(func), que convierte las llamadas de bajo nivel en instrucciones no bloqueantes.",
+      "Configurando la propiedad loop.blocking = False en el objeto de bucle de eventos antes de llamar a func."
+    ],
+    "correct_index": 1,
+    "hint": "asyncio.to_thread() toma una función síncrona ordinaria y la corre en un hilo de trabajo separado dentro del ThreadPoolExecutor por defecto de asyncio, permitiendo que el bucle de eventos continúe atendiendo otras tareas.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_127",
+    "difficulty": "medium",
+    "question": "¿Qué comportamiento tiene asyncio.gather(*tasks, return_exceptions=True) en comparación con su valor por defecto?",
+    "options": [
+      "Suprime las excepciones eliminando de forma silenciosa cualquier tarea que haya fallado durante la llamada.",
+      "Reintenta la ejecución de las tareas fallidas de manera indefinida hasta que completen satisfactoriamente.",
+      "Captura las excepciones como resultados normales dentro de la lista retornada en vez de propagar el error de inmediato.",
+      "Convierte las excepciones en advertencias de tipo UserWarning enviadas al flujo de salida de error estándar."
+    ],
+    "correct_index": 2,
+    "hint": "Con return_exceptions=False (defecto), la primera excepción producida se propaga de inmediato al llamador de gather. Con return_exceptions=True, los errores se tratan como valores exitosos y se colocan en la lista de resultados.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_128",
+    "difficulty": "medium",
+    "question": "¿Cómo opera la característica 'Structured Concurrency' mediante asyncio.TaskGroup introducida en Python 3.11 (PEP 654)?",
+    "options": [
+      "Ejecuta las tareas en procesos paralelos de multiprocessing asignando afinidad de núcleo por cada grupo.",
+      "Impide que cualquier tarea del grupo pueda ser cancelada antes de que transcurra un tiempo mínimo de un segundo.",
+      "Reemplaza el bucle de eventos de Python por un planificador preemptivo de tiempo real basado en hilos de C.",
+      "Garantiza que si una tarea falla en el grupo, las demás se cancelan automáticamente y se espera a que todas terminen."
+    ],
+    "correct_index": 3,
+    "hint": "asyncio.TaskGroup implementa concurrencia estructurada: al usar 'async with asyncio.TaskGroup() as tg:', todas las tareas creadas con tg.create_task() están delimitadas por el bloque. Si alguna falla, cancela el resto y agrupa los errores en un ExceptionGroup.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_129",
+    "difficulty": "medium",
+    "question": "¿Cuál es la diferencia entre utilizar asyncio.shield(coro) y esperar directamente a la corrutina en asyncio?",
+    "options": [
+      "Protege la corrutina interna contra cancelaciones externas provenientes del contexto en el que se encuentra esperando.",
+      "Cifra el contenido de las variables locales de la corrutina para evitar que sean leídas por otros subprocesos.",
+      "Ejecuta la corrutina con permisos elevados de administrador del sistema operativo eludiendo restricciones de red.",
+      "Obliga a que la corrutina finalice en un tiempo máximo de 10 milisegundos elevando un error en caso contrario."
+    ],
+    "correct_index": 0,
+    "hint": "asyncio.shield(awaitable) protege una tarea de ser cancelada si el llamador que hace el await es cancelado. La tarea subyacente continúa ejecutándose hasta completarse aunque el llamador reciba un CancelledError.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_130",
+    "difficulty": "medium",
+    "question": "¿Cuál es la forma moderna recomendada para establecer límites de tiempo (timeout) en corrutinas en Python 3.11+?",
+    "options": [
+      "Invocar el método coro.set_timeout(delay) antes de realizar el await para programar el temporizador interno.",
+      "Utilizar el gestor de contexto 'async with asyncio.timeout(delay):', el cual cancela el bloque al expirar el tiempo.",
+      "Configurar la variable de entorno ASYNCIO_TIMEOUT con el valor en segundos deseado para todas las corrutinas.",
+      "Lanzar manualmente una excepción TimeoutError desde un hilo secundario utilizando el módulo threading."
+    ],
+    "correct_index": 1,
+    "hint": "Python 3.11 introdujo 'async with asyncio.timeout(secs):' como un gestor de contexto asíncrono limpio y eficiente que sustituye al anterior asyncio.wait_for(), integrándose a la perfección con la concurrencia estructurada.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_131",
+    "difficulty": "medium",
+    "question": "¿Qué diferencia existe entre un asyncio.Semaphore y un asyncio.BoundedSemaphore en el control de concurrencia?",
+    "options": [
+      "Semaphore solo opera en entornos Linux; BoundedSemaphore es la implementación especializada para Windows y macOS.",
+      "BoundedSemaphore restringe el tamaño de memoria que las corrutinas pueden reservar mientras retienen el semáforo.",
+      "BoundedSemaphore lanza ValueError si el número de llamadas a release() excede el valor de capacidad inicial configurado.",
+      "Semaphore admite un número ilimitado de adquisiciones simultáneas sin reducir su contador numérico interno."
+    ],
+    "correct_index": 2,
+    "hint": "Un BoundedSemaphore valida que no se libere más veces de las que fue adquirido: si se llama a release() y el valor supera el initial_value especificado, lanza ValueError, ayudando a detectar bugs de liberación doble.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_132",
+    "difficulty": "medium",
+    "question": "¿Cuál es el rol de asyncio.as_completed(aws) al procesar una colección de corrutinas concurrentes?",
+    "options": [
+      "Espera a que todas las tareas finalicen de manera síncrona y devuelve los resultados ordenados alfabéticamente.",
+      "Cancela de manera automática cualquier tarea que finalice después de la primera corrutina que tenga éxito.",
+      "Garantiza que las corrutinas se ejecuten en una secuencia estrictamente serial para evitar colisiones en memoria.",
+      "Retorna un iterador de futuros conforme se van completando las tareas, sin importar el orden en que fueron pasadas."
+    ],
+    "correct_index": 3,
+    "hint": "asyncio.as_completed(aws) devuelve un iterador donde cada 'await f' entrega el resultado del siguiente futuro que termine en el tiempo, ideal para procesar respuestas de red a medida que van llegando.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_133",
+    "difficulty": "medium",
+    "question": "¿Cómo se debe gestionar adecuadamente la excepción asyncio.CancelledError al capturarla dentro de una corrutina?",
+    "options": [
+      "Se deben ejecutar las tareas de limpieza necesarias y luego re-lanzar la excepción para permitir la cancelación completa.",
+      "Se debe silenciar siempre con un bloque 'pass' para evitar que el programa se cierre accidentalmente en consola.",
+      "Se debe transformar en una excepción TypeError para notificar al bucle de eventos que la tarea terminó con éxito.",
+      "Se debe invocar loop.stop() inmediatamente para reiniciar el bucle de eventos y restaurar el estado del hilo."
+    ],
+    "correct_index": 0,
+    "hint": "Si una corrutina captura CancelledError para limpiar recursos (cerrar archivos, sockets), DEBE volver a lanzar la excepción (raise) o no suprimirla; de lo contrario, la tarea se considerará completada en vez de cancelada.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_134",
+    "difficulty": "medium",
+    "question": "¿Cuál es la función del método loop.run_in_executor(executor, func, *args) en el bucle de eventos de asyncio?",
+    "options": [
+      "Compila la función func a código máquina ejecutable por el procesador sin pasar por la máquina virtual de Python.",
+      "Permite ejecutar funciones síncronas en un concurrent.futures.Executor (como ThreadPool o ProcessPool) de forma awaitable.",
+      "Ejecuta la función en un clúster remoto utilizando el protocolo de invocación remota de métodos RMI en red.",
+      "Fuerza a la función a ejecutarse con la prioridad más alta de tiempo real del planificador del kernel del sistema."
+    ],
+    "correct_index": 1,
+    "hint": "run_in_executor() es el método de bajo nivel que permite integrar tareas síncronas bloqueantes con asyncio: toma un executor (None usa el ThreadPool por defecto) y retorna un Future de asyncio que se puede esperar con await.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_135",
+    "difficulty": "medium",
+    "question": "¿Qué función cumple el decorador @contextlib.asynccontextmanager en la biblioteca estándar de Python?",
+    "options": [
+      "Convierte cualquier función ordinaria en una corrutina que corre automáticamente en un hilo del sistema operativo.",
+      "Monitorea el consumo de memoria de la corrutina y cierra el bucle si detecta un desbordamiento de pila en memoria.",
+      "Permite definir un gestor de contexto asíncrono compatible con 'async with' mediante una función generadora asíncrona.",
+      "Bloquea las señales de interrupción SIGINT mientras se ejecutan las instrucciones contenidas dentro del contexto."
+    ],
+    "correct_index": 2,
+    "hint": "@contextlib.asynccontextmanager permite escribir un context manager asíncrono con 'async def' y un único 'yield', análogo a cómo @contextmanager opera con funciones síncronas estándar.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_136",
+    "difficulty": "medium",
+    "question": "¿Qué diferencia existe entre asyncio.Future y una corrutina nativa en la arquitectura interna de asyncio?",
+    "options": [
+      "Un Future solo puede correr en sistemas distribuidos; una corrutina está limitada exclusivamente al hilo local.",
+      "Una corrutina es inmutable y no puede devolver valores; un Future siempre retorna colecciones de tipo diccionario.",
+      "Un Future se ejecuta en paralelo en hardware; una corrutina se compila directamente en el analizador léxico.",
+      "Un Future es un objeto de bajo nivel que almacena un resultado eventual; una corrutina es código con lógica de control."
+    ],
+    "correct_index": 3,
+    "hint": "Un Future es un contenedor de estado de bajo nivel (pendiente, resuelto, cancelado) que no ejecuta código por sí mismo hasta que alguien llama a .set_result() o .set_exception(). Una corrutina es un generador de control que ejecuta instrucciones.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_137",
+    "difficulty": "medium",
+    "question": "¿Cuál es la función del parámetro 'return_when' en la función asyncio.wait(fs, return_when=...) de asyncio?",
+    "options": [
+      "Define la condición de finalización de la espera, como FIRST_COMPLETED, FIRST_EXCEPTION o ALL_COMPLETED.",
+      "Establece la zona horaria en la que se deben evaluar las marcas de tiempo de las tareas asíncronas concurrentes.",
+      "Especifica si los resultados de las tareas deben devolverse como una tupla inmutable o como una lista dinámica.",
+      "Indica el número de milisegundos exactos que debe durar cada ciclo del bucle de eventos del sistema operativo."
+    ],
+    "correct_index": 0,
+    "hint": "asyncio.wait() permite pausar hasta que se cumpla la condición elegida en return_when: FIRST_COMPLETED (útil para responder al primero que conteste), FIRST_EXCEPTION o ALL_COMPLETED (por defecto).",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_138",
+    "difficulty": "advanced",
+    "question": "¿Cómo opera el mecanismo de ContextVar del módulo 'contextvars' al ser utilizado en corrutinas de asyncio?",
+    "options": [
+      "Almacena variables en memoria compartida accesible por cualquier proceso de Linux sin requerir serialización.",
+      "Mantiene valores aislados por contexto que se propagan de forma transparente a las tareas secundarias creadas.",
+      "Sobrescribe las variables globales del módulo principal cada vez que una corrutina realiza una asignación.",
+      "Destruye las variables tan pronto como la corrutina realiza su primera suspensión mediante la instrucción await."
+    ],
+    "correct_index": 1,
+    "hint": "ContextVar (PEP 567) provee almacenamiento local de contexto para corrutinas (similar a thread-local pero para async). Al crear una Task secundaria con create_task(), esta hereda una copia del contexto activo de forma aislada.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_139",
+    "difficulty": "advanced",
+    "question": "¿Qué función cumple el método loop.add_signal_handler(sig, callback, *args) en entornos compatibles con POSIX?",
+    "options": [
+      "Emite una señal de radiofrecuencia a los dispositivos periféricos conectados a los puertos serie de la máquina.",
+      "Cancela todas las conexiones HTTP entrantes que no presenten una firma digital reconocida por el kernel.",
+      "Registra una función callback síncrona en el event loop para manejar señales del sistema operativo como SIGINT o SIGTERM.",
+      "Crea una alarma en hardware que reinicia la computadora si el proceso de Python se bloquea durante diez segundos."
+    ],
+    "correct_index": 2,
+    "hint": "loop.add_signal_handler() permite asociar callbacks a señales Unix (SIGINT, SIGTERM) de forma segura dentro del bucle de eventos, facilitando el apagado ordenado (graceful shutdown) de servidores asíncronos.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_140",
+    "difficulty": "advanced",
+    "question": "¿Por qué es crucial invocar 'await writer.drain()' tras escribir datos en un asyncio.StreamWriter de red?",
+    "options": [
+      "Porque cierra la conexión de red enviando un paquete TCP FIN a la máquina remota para finalizar la sesión.",
+      "Porque cifra los bytes pendientes en el búfer utilizando el protocolo criptográfico Diffie-Hellman en memoria.",
+      "Porque valida que la dirección IP del destinatario siga respondiendo a paquetes ICMP ping en la red local.",
+      "Porque suspende la corrutina hasta que el búfer de salida del socket se haya vaciado si superó la marca de agua alta."
+    ],
+    "correct_index": 3,
+    "hint": "writer.write() solo coloca los bytes en el búfer en memoria de Python. Si la red es lenta, el búfer puede crecer desmesuradamente; 'await writer.drain()' implementa control de flujo (backpressure), pausando la escritura si el búfer está lleno.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_141",
+    "difficulty": "advanced",
+    "question": "¿Cómo se comunican de forma segura un hilo síncrono secundario y un bucle de eventos de asyncio en ejecución?",
+    "options": [
+      "Utilizando asyncio.run_coroutine_threadsafe(coro, loop), que programa la corrutina en el bucle y devuelve un Future concurrente.",
+      "Invocando directamente 'await coro' desde el hilo síncrono para que el intérprete suspenda ambos contextos a la vez.",
+      "Escribiendo la corrutina en una variable global compartida protegida con un candado de tipo threading.Lock.",
+      "Enviando una señal SIGUSR1 al proceso principal para que el bucle de eventos ejecute la función en su próximo ciclo."
+    ],
+    "correct_index": 0,
+    "hint": "El bucle de eventos de asyncio NO es thread-safe. Para interactuar con él desde otro hilo, asyncio.run_coroutine_threadsafe(coro, loop) es el puente oficial thread-safe que retorna un concurrent.futures.Future consultable por el hilo.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_142",
+    "difficulty": "advanced",
+    "question": "¿Qué método permite registrar un manejador de excepciones personalizado para capturar errores no manejados en el bucle?",
+    "options": [
+      "sys.set_async_handler(handler), que redefine las tablas de interrupción de excepciones a nivel de la máquina virtual.",
+      "loop.set_exception_handler(handler), que recibe un diccionario de contexto con detalles de la excepción y la tarea.",
+      "asyncio.trap_errors(handler), que intercepta los fallos de segmentación provocados por librerías compiladas en C.",
+      "loop.catch_all(handler), que suprime de manera incondicional cualquier error producido por llamadas de red."
+    ],
+    "correct_index": 1,
+    "hint": "loop.set_exception_handler(callback) define un manejador global para excepciones que ocurren en callbacks o tareas sin await directo, recibiendo (loop, context) donde context['exception'] detalla el fallo.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_143",
+    "difficulty": "advanced",
+    "question": "¿Cómo se integran descriptores de archivos de bajo nivel con el bucle de eventos mediante selectores del sistema operativo?",
+    "options": [
+      "Creando un hilo dedicado de threading por cada descriptor de archivo abierto para consultar datos en bucle.",
+      "Invocando la llamada de sistema poll() directamente en el código de Python bloqueando el hilo principal.",
+      "Mediante loop.add_reader(fd, callback) y add_writer(fd, callback), que vigilan la disponibilidad para lectura o escritura.",
+      "Asignando el descriptor de archivo a una instancia de multiprocessing.Queue mediante el protocolo pickle."
+    ],
+    "correct_index": 2,
+    "hint": "loop.add_reader(fd, callback) registra el descriptor de archivo (socket, pipe) en el selector del bucle (epoll en Linux, kqueue en BSD/macOS), invocando el callback cuando esté listo para I/O sin bloquear.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_144",
+    "difficulty": "advanced",
+    "question": "¿Qué efecto tiene activar el modo de depuración de asyncio mediante 'asyncio.run(main(), debug=True)'?",
+    "options": [
+      "Detiene la ejecución del programa en cada instrucción 'await' abriendo de forma interactiva una consola pdb.",
+      "Compila todas las corrutinas a código ensamblador e imprime las instrucciones en la salida estándar de error.",
+      "Reduce artificialmente la velocidad de la red para simular condiciones de alta latencia y pérdida de paquetes.",
+      "Emite advertencias sobre corrutinas nunca esperadas y registra en el log callbacks que bloquean el bucle más de 100ms."
+    ],
+    "correct_index": 3,
+    "hint": "El modo debug de asyncio monitorea el rendimiento: advierte si se olvida hacer await a una corrutina (que de otro modo es un aviso sutil), valida que los callbacks sean thread-safe y registra avisos si una función bloquea el event loop más del slow_callback_duration.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_145",
+    "difficulty": "advanced",
+    "question": "¿Cómo se implementa un generador asíncrono y qué protocolo dunder gobierna su comportamiento en Python?",
+    "options": [
+      "Definiendo una función con 'async def' que contiene 'yield'; implementa __aiter__ y __anext__ retornando un awaitable.",
+      "Decorando un generador síncrono ordinario con @asyncio.coroutine y devolviendo tuplas de valores en memoria.",
+      "Invocando iter(asyncio.Queue) para transformar una estructura de datos de cola en una secuencia perezosa.",
+      "Heredando obligatoriamente de la clase collections.abc.AsyncGenerator e implementando métodos estáticos."
+    ],
+    "correct_index": 0,
+    "hint": "Una función con 'async def' y 'yield' es un generador asíncrono. Soporta 'await anext(agen)' o 'async for item in agen:' y permite emitir secuencias de datos calculadas de forma asíncrona (como streams de red).",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_146",
+    "difficulty": "advanced",
+    "question": "¿Por qué la llamada a asyncio.run() falla con un RuntimeError si se invoca dentro de un entorno como Jupyter Notebook o FastAPI?",
+    "options": [
+      "Porque Jupyter Notebook compila el código en una máquina virtual que no soporta la biblioteca estándar de Python.",
+      "Porque asyncio.run() no permite ser llamado cuando ya existe un bucle de eventos activo en el mismo hilo de ejecución.",
+      "Porque los servidores web prohíben la creación de corrutinas que contengan más de diez operaciones de entrada y salida.",
+      "Porque asyncio.run() requiere permisos de superusuario root para configurar descriptores de sockets en Linux."
+    ],
+    "correct_index": 1,
+    "hint": "asyncio.run() crea un nuevo event loop y asume que es el único controlador del hilo. Si ya hay un bucle corriendo (como en notebooks interactivos o dentro de un request de FastAPI/Tornado), lanza 'RuntimeError: This event loop is already running'.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_147",
+    "difficulty": "advanced",
+    "question": "¿Cuál es la función del método loop.call_soon_threadsafe(callback, *args) frente a loop.call_soon(callback, *args)?",
+    "options": [
+      "call_soon_threadsafe ejecuta el callback en un nuevo subproceso independiente para aislar fallos fatales de memoria.",
+      "call_soon_threadsafe cifra los argumentos pasados al callback garantizando confidencialidad entre hilos.",
+      "call_soon_threadsafe interrumpe el selector del bucle de forma segura desde otro hilo para procesar el callback de inmediato.",
+      "call_soon_threadsafe suspende todos los demás hilos del sistema operativo hasta que el callback finalice su labor."
+    ],
+    "correct_index": 2,
+    "hint": "call_soon() solo es seguro invocarlo desde el mismo hilo donde corre el event loop. call_soon_threadsafe() escribe un byte en un pipe interno (self-pipe trick o socket de notificación) para despertar al selector si está esperando en epoll/kqueue.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_148",
+    "difficulty": "advanced",
+    "question": "¿Cómo se gestiona la creación asíncrona de subprocesos externos y la lectura de sus salidas con asyncio?",
+    "options": [
+      "Invocando os.system() dentro de una expresión lambda precedida de la palabra clave await en la corrutina.",
+      "Utilizando el módulo subprocess.Popen tradicional bloqueando el bucle de eventos hasta que el comando retorne.",
+      "Creando un archivo FIFO de Linux y leyendo los datos periódicamente con un bucle while y time.sleep().",
+      "Mediante asyncio.create_subprocess_exec(), que retorna un Process con flujos asíncronos stdin, stdout y stderr."
+    ],
+    "correct_index": 3,
+    "hint": "asyncio.create_subprocess_exec() (o create_subprocess_shell) ejecuta comandos del SO y provee objetos StreamReader/StreamWriter en proc.stdout/proc.stdin, permitiendo interactuar con procesos externos sin bloquear el bucle.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_149",
+    "difficulty": "advanced",
+    "question": "¿Qué representa la política de bucle de eventos (AbstractEventLoopPolicy) en la arquitectura interna de asyncio?",
+    "options": [
+      "Es el objeto global que gestiona la creación, obtención y configuración del event loop para el proceso y sus hilos.",
+      "Una regla del cortafuegos de Linux que restringe la cantidad de conexiones entrantes por segundo a un puerto.",
+      "Un algoritmo de ordenamiento que organiza las corrutinas según su consumo acumulado de memoria RAM en tiempo real.",
+      "Una clase abstracta de tipado estático que verifica que todas las corrutinas contengan sentencias docstring válidas."
+    ],
+    "correct_index": 0,
+    "hint": "asyncio.set_event_loop_policy() permite reemplazar la política por defecto (por ejemplo por uvloop.EventLoopPolicy para mayor rendimiento). La política define cómo get_event_loop() y new_event_loop() instancian los bucles.",
+    "subtopic": "asyncio"
+  },
+  {
+    "id": "py_150",
+    "difficulty": "advanced",
+    "question": "¿Qué ventaja fundamental aporta la librería uvloop como reemplazo del bucle de eventos por defecto de asyncio en Linux?",
+    "options": [
+      "Permite ejecutar código de Python en tarjetas gráficas NVIDIA mediante núcleos CUDA sin alterar el código.",
+      "Implementa el event loop sobre libuv en C y Cython, alcanzando un rendimiento comparable al de programas en Go o Node.js.",
+      "Elimina la necesidad de utilizar la palabra clave await permitiendo escribir corrutinas sin suspensión voluntaria.",
+      "Convierte automáticamente todas las consultas de bases de datos relacionales en flujos de datos binarios en memoria."
+    ],
+    "correct_index": 1,
+    "hint": "uvloop es un reemplazo drop-in ultrarrápido para el event loop estándar de asyncio. Está construido sobre libuv (el mismo motor que utiliza Node.js) y escrito en Cython, logrando entre 2x y 4x más rendimiento en I/O de red.",
+    "subtopic": "asyncio"
   }
 ]
