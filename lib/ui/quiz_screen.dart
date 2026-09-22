@@ -25,6 +25,7 @@ class _QuizScreenState extends State<QuizScreen> {
   final WindowService _windowService = WindowService();
   final FocusNode _focusNode = FocusNode();
   int? _selectedIndex;
+  final Set<int> _failedIndices = {};
   bool _answered = false;
   bool _isCorrect = false;
   String _feedbackMessage = '';
@@ -57,7 +58,7 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   void _checkAnswer(int index) {
-    if (_answered) return;
+    if (_answered || _failedIndices.contains(index)) return;
 
     final isCorrect = (index == widget.question.correctIndex);
 
@@ -75,6 +76,9 @@ class _QuizScreenState extends State<QuizScreen> {
       _selectedIndex = index;
       _answered = true;
       _isCorrect = isCorrect;
+      if (!isCorrect) {
+        _failedIndices.add(index);
+      }
       _feedbackMessage = _isCorrect
           ? '¡Correcto! Excelente retención.'
           : 'Incorrecto. Revisa el concepto e inténtalo de nuevo.';
@@ -91,7 +95,7 @@ class _QuizScreenState extends State<QuizScreen> {
         if (mounted) Navigator.of(context).pop();
       });
     } else {
-      Future.delayed(const Duration(milliseconds: 1800), () {
+      Future.delayed(const Duration(milliseconds: 1500), () {
         if (mounted) {
           setState(() {
             _answered = false;
@@ -172,16 +176,16 @@ class _QuizScreenState extends State<QuizScreen> {
     final key = event.logicalKey;
     if (!_answered) {
       if (key == LogicalKeyboardKey.digit1 || key == LogicalKeyboardKey.numpad1) {
-        if (widget.question.options.isNotEmpty) _checkAnswer(0);
+        if (widget.question.options.isNotEmpty && !_failedIndices.contains(0)) _checkAnswer(0);
         return KeyEventResult.handled;
       } else if (key == LogicalKeyboardKey.digit2 || key == LogicalKeyboardKey.numpad2) {
-        if (widget.question.options.length > 1) _checkAnswer(1);
+        if (widget.question.options.length > 1 && !_failedIndices.contains(1)) _checkAnswer(1);
         return KeyEventResult.handled;
       } else if (key == LogicalKeyboardKey.digit3 || key == LogicalKeyboardKey.numpad3) {
-        if (widget.question.options.length > 2) _checkAnswer(2);
+        if (widget.question.options.length > 2 && !_failedIndices.contains(2)) _checkAnswer(2);
         return KeyEventResult.handled;
       } else if (key == LogicalKeyboardKey.digit4 || key == LogicalKeyboardKey.numpad4) {
-        if (widget.question.options.length > 3) _checkAnswer(3);
+        if (widget.question.options.length > 3 && !_failedIndices.contains(3)) _checkAnswer(3);
         return KeyEventResult.handled;
       }
     }
@@ -290,31 +294,69 @@ class _QuizScreenState extends State<QuizScreen> {
                     // Options List
                     ...List.generate(widget.question.options.length, (index) {
                       final bool isSelected = _selectedIndex == index;
+                      final bool isFailed = _failedIndices.contains(index);
                       Color cardBg = const Color(0xFF191D26);
                       Color borderColor = const Color(0xFF29303F);
                       Color textColor = const Color(0xFFE5E7EB);
                       Color badgeBg = const Color(0xFF222836);
                       Color badgeText = const Color(0xFF9CA3AF);
+                      Widget badgeChild = Text(
+                        '${index + 1}',
+                        style: TextStyle(
+                          color: badgeText,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      );
 
                       if (_answered) {
-                        if (index == widget.question.correctIndex) {
-                          cardBg = const Color(0xFF063F2D);
-                          borderColor = const Color(0xFF10B981);
-                          textColor = Colors.white;
-                          badgeBg = const Color(0xFF10B981);
-                          badgeText = Colors.black;
-                        } else if (isSelected) {
-                          cardBg = const Color(0xFF451A1A);
-                          borderColor = const Color(0xFFEF4444);
-                          textColor = Colors.white;
-                          badgeBg = const Color(0xFFEF4444);
-                          badgeText = Colors.white;
+                        if (isSelected) {
+                          if (_isCorrect) {
+                            cardBg = const Color(0xFF063F2D);
+                            borderColor = const Color(0xFF10B981);
+                            textColor = Colors.white;
+                            badgeBg = const Color(0xFF10B981);
+                            badgeText = Colors.black;
+                          } else {
+                            cardBg = const Color(0xFF451A1A);
+                            borderColor = const Color(0xFFEF4444);
+                            textColor = Colors.white;
+                            badgeBg = const Color(0xFFEF4444);
+                            badgeText = Colors.white;
+                          }
+                          badgeChild = Text(
+                            '${index + 1}',
+                            style: TextStyle(
+                              color: badgeText,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          );
+                        } else if (isFailed) {
+                          cardBg = const Color(0xFF141720);
+                          borderColor = const Color(0xFF2D1F24);
+                          textColor = const Color(0xFF6B7280);
+                          badgeBg = const Color(0xFF2B1C22);
+                          badgeText = const Color(0xFFEF4444);
+                          badgeChild = const Icon(Icons.close, size: 14, color: Color(0xFFEF4444));
                         } else {
+                          // NUNCA revelar la respuesta correcta al equivocarse:
+                          // permanece en estado neutral inactivo
                           cardBg = const Color(0xFF11141A);
                           borderColor = const Color(0xFF1E222A);
                           textColor = const Color(0xFF6B7280);
                         }
+                      } else if (isFailed) {
+                        // Opción descartada en un intento previo
+                        cardBg = const Color(0xFF141720);
+                        borderColor = const Color(0xFF2D1F24);
+                        textColor = const Color(0xFF6B7280);
+                        badgeBg = const Color(0xFF2B1C22);
+                        badgeText = const Color(0xFFEF4444);
+                        badgeChild = const Icon(Icons.close, size: 14, color: Color(0xFFEF4444));
                       }
+
+                      final bool isClickable = !_answered && !isFailed;
 
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 12),
@@ -329,7 +371,7 @@ class _QuizScreenState extends State<QuizScreen> {
                             color: Colors.transparent,
                             child: InkWell(
                               borderRadius: BorderRadius.circular(14),
-                              onTap: _answered ? null : () => _checkAnswer(index),
+                              onTap: isClickable ? () => _checkAnswer(index) : null,
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
                                 child: Row(
@@ -343,14 +385,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                         color: badgeBg,
                                         borderRadius: BorderRadius.circular(8),
                                       ),
-                                      child: Text(
-                                        '${index + 1}',
-                                        style: TextStyle(
-                                          color: badgeText,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12,
-                                        ),
-                                      ),
+                                      child: badgeChild,
                                     ),
                                     const SizedBox(width: 14),
                                     Expanded(
@@ -361,6 +396,8 @@ class _QuizScreenState extends State<QuizScreen> {
                                           height: 1.35,
                                           color: textColor,
                                           fontWeight: FontWeight.w400,
+                                          decoration: isFailed ? TextDecoration.lineThrough : null,
+                                          decorationColor: const Color(0xFF6B7280),
                                         ),
                                       ),
                                     ),
