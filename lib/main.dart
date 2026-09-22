@@ -3,12 +3,15 @@ import 'package:window_manager/window_manager.dart';
 import 'core/content_manager.dart';
 import 'core/storage_service.dart';
 import 'core/reminder_scheduler.dart';
+import 'core/window_service.dart';
 import 'models/app_settings.dart';
 import 'models/question.dart';
 import 'ui/quiz_screen.dart';
 import 'ui/topics_page.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+AppSettings _currentSettings = const AppSettings();
+bool _isQuizOpen = false;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +21,7 @@ void main() async {
   final storage = StorageService();
   final settings = await storage.loadSettings();
   final progressMap = await storage.loadProgressMap();
+  _currentSettings = settings;
 
   final contentManager = ContentManager();
   await contentManager.loadAllPacks();
@@ -35,75 +39,105 @@ void main() async {
   runApp(ConceptsReminderApp(initialSettings: settings));
 }
 
-bool _isQuizOpen = false;
-
 void _triggerReminderQuiz() {
   if (_isQuizOpen) {
     debugPrint("Recordatorio omitido: ya hay un cuestionario en pantalla esperando que el usuario lo resuelva.");
     return;
   }
 
-  final currentContext = navigatorKey.currentContext;
-  if (currentContext == null) return;
+  final navState = navigatorKey.currentState;
+  if (navState == null) {
+    debugPrint("Recordatorio pospuesto: navegador aún no disponible.");
+    return;
+  }
 
-  final storage = StorageService();
-  storage.loadSettings().then((settings) {
-    // Check quiet hours
-    if (settings.quietHoursEnabled) {
-      final nowHour = DateTime.now().hour;
-      final start = settings.quietStartHour;
-      final end = settings.quietEndHour;
-      bool isQuiet = false;
-      if (start > end) {
-        // e.g. 22 to 8 (crosses midnight)
-        isQuiet = (nowHour >= start || nowHour < end);
-      } else {
-        isQuiet = (nowHour >= start && nowHour < end);
-      }
-      if (isQuiet) {
-        debugPrint("Recordatorio omitido por Horas de Silencio ($nowHour:00 dentro de $start:00-$end:00)");
-        return;
-      }
+  final settings = _currentSettings;
+
+  // Verificar horas de silencio
+  if (settings.quietHoursEnabled) {
+    final nowHour = DateTime.now().hour;
+    final start = settings.quietStartHour;
+    final end = settings.quietEndHour;
+    bool isQuiet = false;
+    if (start > end) {
+      // Cruzando medianoche (ej. 22 a 8)
+      isQuiet = (nowHour >= start || nowHour < end);
+    } else {
+      isQuiet = (nowHour >= start && nowHour < end);
     }
+    if (isQuiet) {
+      debugPrint("Recordatorio omitido por Horas de Silencio ($nowHour:00 dentro de $start:00-$end:00)");
+      return;
+    }
+  }
 
-    final contentManager = ContentManager();
-    final activeLangs = settings.activeLanguages;
-    final activeSub = settings.activeSubtopics;
+  final contentManager = ContentManager();
+  final activeLangs = settings.activeLanguages;
+  final activeSub = settings.activeSubtopics;
 
-    Question? selectedQuestion;
+  Question? selectedQuestion;
+  // 1. Priorizar preguntas pendientes o nuevas dentro de los temas activos del usuario
+  for (final lang in activeLangs) {
+    final allowed = activeSub[lang.toLowerCase().trim()];
+    final topicDiff = settings.topicDifficulties[lang.toLowerCase().trim()] ?? settings.difficulty;
+    selectedQuestion = contentManager.getDueQuestion(
+      lang.toLowerCase(),
+      false,
+      topicDiff,
+      allowed,
+    );
+    if (selectedQuestion != null) break;
+  }
+
+  // 2. Si no hay preguntas estrictamente vencidas, tomar cualquier repaso dentro de los temas activos
+  if (selectedQuestion == null) {
     for (final lang in activeLangs) {
       final allowed = activeSub[lang.toLowerCase().trim()];
       final topicDiff = settings.topicDifficulties[lang.toLowerCase().trim()] ?? settings.difficulty;
       selectedQuestion = contentManager.getDueQuestion(
         lang.toLowerCase(),
-        false,
+        true,
         topicDiff,
         allowed,
       );
       if (selectedQuestion != null) break;
     }
-    selectedQuestion ??= contentManager.getDueQuestion(
-      null,
-      true,
-      settings.difficulty,
-    );
+  }
 
-    if (selectedQuestion != null) {
-      _isQuizOpen = true;
-      navigatorKey.currentState?.push(
-        MaterialPageRoute(
-          builder: (context) => QuizScreen(
-            question: selectedQuestion!,
-            fullScreenLock: settings.fullScreenLock,
-            hapticsEnabled: settings.hapticsEnabled,
-          ),
-        ),
-      ).then((_) {
-        _isQuizOpen = false;
-        // El reconteo del próximo recordatorio inicia exactamente cuando el usuario resuelve y cierra la pantalla
-        ReminderScheduler().updateFrequency(settings.frequencyMinutes);
-      });
+  // 3. Fallback general a cualquier pregunta cargada en caso de no encontrar en temas activos
+  selectedQuestion ??= contentManager.getDueQuestion(
+    null,
+    true,
+    settings.difficulty,
+  );
+
+  if (selectedQuestion == null) {
+    debugPrint("No hay preguntas disponibles para recordar.");
+    return;
+  }
+
+  _isQuizOpen = true;
+
+  // Activar overlay Hyprland inmediatamente para garantizar foco en primer plano
+  if (settings.fullScreenLock) {
+    WindowService().enterOverlayMode();
+  }
+
+  navState.push(
+    MaterialPageRoute(
+      builder: (context) => QuizScreen(
+        question: selectedQuestion!,
+        fullScreenLock: settings.fullScreenLock,
+        hapticsEnabled: settings.hapticsEnabled,
+      ),
+    ),
+  ).whenComplete(() {
+    _isQuizOpen = false;
+    if (settings.fullScreenLock) {
+      WindowService().exitOverlayMode();
     }
+    // El reconteo del próximo recordatorio inicia exactamente cuando el usuario resuelve y cierra la pantalla
+    ReminderScheduler().updateFrequency(_currentSettings.frequencyMinutes);
   });
 }
 
@@ -122,12 +156,14 @@ class _ConceptsReminderAppState extends State<ConceptsReminderApp> {
   void initState() {
     super.initState();
     _settings = widget.initialSettings;
+    _currentSettings = _settings;
   }
 
   void _updateSettings(AppSettings newSettings) {
     setState(() {
       _settings = newSettings;
     });
+    _currentSettings = newSettings;
     StorageService().saveSettings(newSettings);
     ReminderScheduler().updateFrequency(newSettings.frequencyMinutes);
   }
