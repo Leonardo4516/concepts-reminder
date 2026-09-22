@@ -135,6 +135,47 @@ void main() {
       expect(duePy!.id, isNot(qId)); // qId is no longer due
     });
 
+    test('validates spring_boot.json has 500 questions and tiered difficulty', () {
+      final file = File('assets/packs/spring_boot.json');
+      expect(file.existsSync(), isTrue);
+
+      final decoded = jsonDecode(file.readAsStringSync()) as List<dynamic>;
+      expect(decoded.length, equals(500), reason: 'spring_boot.json must have exactly 500 questions');
+
+      final expectedSubtopics = {
+        'core_beans',
+        'web_rest',
+        'data_jpa',
+        'security',
+        'actuator_cloud',
+      };
+      final foundSubtopics = <String>{};
+
+      for (final item in decoded) {
+        final q = Question.fromJson(Map<String, dynamic>.from(item as Map));
+        expect(q.id, isNotEmpty);
+        expect(q.question, isNotEmpty);
+        expect(q.options.length, 4);
+        expect(q.correctIndex, inInclusiveRange(0, 3));
+        expect(q.hint, isNotEmpty);
+        expect(['basic', 'medium', 'advanced'], contains(q.difficulty));
+        expect(q.subtopic, isNotEmpty);
+        foundSubtopics.add(q.subtopic);
+      }
+
+      expect(foundSubtopics, equals(expectedSubtopics));
+
+      // Test subtopics metadata in ContentManager
+      final manager = ContentManager();
+      final sbSubtopics = manager.getSubtopicsForPack('spring_boot');
+      expect(sbSubtopics.length, equals(5));
+      expect(sbSubtopics.containsKey('core_beans'), isTrue);
+      expect(sbSubtopics.containsKey('web_rest'), isTrue);
+      expect(sbSubtopics.containsKey('data_jpa'), isTrue);
+      expect(sbSubtopics.containsKey('security'), isTrue);
+      expect(sbSubtopics.containsKey('actuator_cloud'), isTrue);
+    });
+
     test('validates all 7 language packs have 150 questions and tiered difficulty', () {
       final langFiles = [
         'assets/packs/python_basico.json',

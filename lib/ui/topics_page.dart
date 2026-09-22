@@ -76,6 +76,12 @@ class _TopicsPageState extends State<TopicsPage> {
       icon: Icons.code_rounded,
     ),
     TopicCategory(
+      id: 'frameworks',
+      name: 'Frameworks & Backend',
+      emoji: '🍃',
+      icon: Icons.hub_rounded,
+    ),
+    TopicCategory(
       id: 'fundamentals',
       name: 'POO & Fundamentos',
       emoji: '🏛️',
@@ -156,6 +162,18 @@ class _TopicsPageState extends State<TopicsPage> {
       defaultQuestionCount: 28,
       accentColor: Color(0xFFFB923C),
       tags: ['java', 'jvm', 'backend', 'enterprise', 'threading'],
+    ),
+    TopicItem(
+      id: 'spring_boot',
+      title: 'Spring Boot & Java',
+      categoryId: 'frameworks',
+      categoryName: '🍃 Framework',
+      icon: Icons.eco_rounded,
+      description:
+          'Inversión de Control (IoC), Spring MVC REST, Data JPA/Hibernate, Spring Security JWT y Actuator/Cloud.',
+      defaultQuestionCount: 500,
+      accentColor: Color(0xFF6DB33F),
+      tags: ['spring', 'springboot', 'java', 'backend', 'jpa', 'security', 'rest', 'mvc', 'actuator', 'microservicios'],
     ),
     TopicItem(
       id: 'JavaScript',

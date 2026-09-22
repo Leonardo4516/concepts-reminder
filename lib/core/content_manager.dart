@@ -24,6 +24,7 @@ class ContentManager {
     'go': 'assets/packs/go_basico.json',
     'rust': 'assets/packs/rust_basico.json',
     'dart': 'assets/packs/dart_basico.json',
+    'spring_boot': 'assets/packs/spring_boot.json',
     'poo_conceptos': 'assets/packs/poo_conceptos.json',
     'principios_solid': 'assets/packs/principios_solid.json',
     'patrones_diseno': 'assets/packs/patrones_diseno.json',
@@ -45,6 +46,7 @@ class ContentManager {
 
   /// Category definitions and their associated pack identifiers
   static const Map<String, List<String>> categoryPacks = {
+    'Frameworks & Backend': ['spring_boot'],
     'Lenguajes': ['python', 'java', 'javascript', 'typescript', 'go', 'rust', 'dart'],
     'POO & Fundamentos': ['poo_conceptos'],
     'Metodologías & Agile': ['principios_solid', 'metodologia_scrum'],
@@ -66,6 +68,7 @@ class ContentManager {
     'go': 'Go',
     'rust': 'Rust',
     'dart': 'Dart',
+    'spring_boot': 'Spring Boot',
     'poo_conceptos': 'POO Conceptos',
     'principios_solid': 'Principios SOLID',
     'patrones_diseno': 'Patrones de Diseño',
@@ -94,6 +97,7 @@ class ContentManager {
     'go': 'Lenguajes',
     'rust': 'Lenguajes',
     'dart': 'Lenguajes',
+    'spring_boot': 'Frameworks & Backend',
     'poo_conceptos': 'POO & Fundamentos',
     'principios_solid': 'Metodologías & Agile',
     'metodologia_scrum': 'Metodologías & Agile',
@@ -246,6 +250,9 @@ class ContentManager {
     'sqlite': 'sqlite',
     'sql': 'bases_de_datos',
     'bases de datos': 'bases_de_datos',
+    'spring': 'spring_boot',
+    'springboot': 'spring_boot',
+    'spring boot': 'spring_boot',
   };
 
   /// Predefined subtopic metadata with friendly display names
@@ -344,6 +351,13 @@ class ContentManager {
       'fundamentos_oop': 'Sintaxis & Clases',
       'null_safety': 'Sound Null Safety',
       'asincronia_streams': 'Async/Await & Streams',
+    },
+    'spring_boot': {
+      'core_beans': 'IoC, Beans & Configuración',
+      'web_rest': 'Spring MVC & REST APIs',
+      'data_jpa': 'Spring Data JPA & Hibernate',
+      'security': 'Spring Security & JWT',
+      'actuator_cloud': 'Actuator, Cloud & Testing',
     },
   };
 
